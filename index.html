@@ -1094,11 +1094,21 @@ body {
   .phase-cards { grid-template-columns: 1fr; }
   .page-nav { flex-direction: column; }
   .page-nav-btn.hidden { display: none; }
+  #glossary-panel { width: 100%; right: -100%; }
+  .prompt-lib-panel, .cheat-panel { width: 96%; max-width: none; max-height: 90vh; }
+  .glossary-btn { font-size: 12px; padding: 4px 8px; }
+  .glossary-tooltip { width: 200px; font-size: 11px; }
+  .path-cards { grid-template-columns: 1fr; }
+  .tour-popover { max-width: 260px; left: 50% !important; transform: translateX(-50%); top: auto !important; bottom: 20px; }
 }
 
 @media (max-width: 480px) {
   .welcome h2 { font-size: 24px; }
   .markdown-body pre code { font-size: 12px; padding: 14px; }
+  .topbar-right { gap: 4px; }
+  .glossary-btn { font-size: 11px; padding: 3px 6px; }
+  .diff-badge-header { font-size: 10px; padding: 1px 6px; }
+  .team-grid { gap: 20px; }
 }
 
 /* Scrollbar for sidebar */
