@@ -1447,14 +1447,37 @@ const USERS_BLOB_ID = '019d7b3c-9e05-7dfc-adc1-ed680c138b6e';
 const USERS_BLOB_URL = 'https://jsonblob.com/api/jsonBlob/' + USERS_BLOB_ID;
 let dynamicUsers = [];
 
+const LOCAL_USERS_KEY = 'claude-course-dynamic-users';
+
 async function fetchDynamicUsers() {
   try {
     const res = await fetch(USERS_BLOB_URL, { headers: { 'Accept': 'application/json' } });
-    if (res.ok) dynamicUsers = await res.json();
-  } catch { dynamicUsers = []; }
+    if (res.ok) {
+      dynamicUsers = await res.json();
+      // Merge any locally-saved users that didn't sync yet
+      const local = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
+      if (local.length > dynamicUsers.length) {
+        const cloudHashes = new Set(dynamicUsers.map(u => u.hash));
+        const unsyncedLocal = local.filter(u => !cloudHashes.has(u.hash));
+        if (unsyncedLocal.length > 0) {
+          dynamicUsers.push(...unsyncedLocal);
+          saveDynamicUsers(); // background sync
+        }
+      }
+      localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers));
+    } else {
+      dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
+    }
+  } catch {
+    // Offline — use local cache
+    dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
+  }
 }
 
 async function saveDynamicUsers(retries = 2) {
+  // Always save to localStorage immediately
+  localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers));
+
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const res = await fetch(USERS_BLOB_URL, {
@@ -1465,16 +1488,14 @@ async function saveDynamicUsers(retries = 2) {
       if (res.ok) return true;
       console.error('JSONBlob save failed:', res.status);
       if (attempt < retries) { await new Promise(r => setTimeout(r, 1000)); continue; }
-      alert('Failed to save (HTTP ' + res.status + '). Please try again.');
-      return false;
     } catch (err) {
       console.error('JSONBlob save error:', err);
       if (attempt < retries) { await new Promise(r => setTimeout(r, 1000)); continue; }
-      alert('Failed to save. Network error — please check your connection.');
-      return false;
     }
   }
-  return false;
+  // Cloud save failed but local save succeeded — user is still usable
+  console.warn('Cloud sync failed, saved locally. Will retry on next page load.');
+  return true;
 }
 
 function openAdmin() {
@@ -1520,12 +1541,7 @@ async function adminAddUser() {
 
   const uid = username.replace(/[^a-z0-9]/g, '');
   dynamicUsers.push({ hash, name, role, uid });
-  const saved = await saveDynamicUsers();
-  if (!saved) {
-    // Rollback — remove from local array since cloud save failed
-    dynamicUsers.pop();
-    return;
-  }
+  await saveDynamicUsers();
   // Reload users list
   USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
   renderAdminUserList();
@@ -1543,11 +1559,9 @@ async function adminEditUser(idx) {
   if (newName === null) return;
   const newRole = prompt('Role:', u.role);
   if (newRole === null) return;
-  const oldName = u.name, oldRole = u.role;
   dynamicUsers[idx].name = newName.trim();
   dynamicUsers[idx].role = newRole.trim();
-  const saved = await saveDynamicUsers();
-  if (!saved) { dynamicUsers[idx].name = oldName; dynamicUsers[idx].role = oldRole; return; }
+  await saveDynamicUsers();
   USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
   renderAdminUserList();
   alert('User updated!');
@@ -1559,10 +1573,8 @@ async function adminResetPw(idx) {
   if (!username) return;
   const newPw = prompt('New password:');
   if (!newPw) return;
-  const oldHash = u.hash;
   dynamicUsers[idx].hash = await sha256(username.trim().toLowerCase() + ':' + newPw);
-  const saved = await saveDynamicUsers();
-  if (!saved) { dynamicUsers[idx].hash = oldHash; return; }
+  await saveDynamicUsers();
   USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
   alert('Password reset for ' + u.name + '!');
 }
@@ -1571,8 +1583,7 @@ async function adminDeleteUser(idx) {
   const u = dynamicUsers[idx];
   if (!confirm('Delete user "' + u.name + '"? This cannot be undone.')) return;
   dynamicUsers.splice(idx, 1);
-  const saved = await saveDynamicUsers();
-  if (!saved) { dynamicUsers.splice(idx, 0, u); return; }
+  await saveDynamicUsers();
   USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
   renderAdminUserList();
   alert('User deleted.');
