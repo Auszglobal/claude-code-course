@@ -1098,19 +1098,22 @@ async function tryLogin() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-  await Promise.all([fetchUsers(), fetchSharedProgress()]);
-  try {
-    const saved = JSON.parse(localStorage.getItem('claude-course-user'));
-    if (saved && saved.name) {
-      // Migrate old Chinese role to English
-      if (saved.role === '管理員') saved.role = 'Admin';
-      if (saved.role === '學員') saved.role = 'Student';
-      if (saved.role === '試用') saved.role = 'Demo';
-      localStorage.setItem('claude-course-user', JSON.stringify(saved));
-      setCurrentUser(saved);
-    }
-  } catch {}
+let _dataReady = null;
+document.addEventListener('DOMContentLoaded', () => {
+  _dataReady = (async () => {
+    await Promise.all([fetchUsers(), fetchSharedProgress()]);
+    try {
+      const saved = JSON.parse(localStorage.getItem('claude-course-user'));
+      if (saved && saved.name) {
+        // Migrate old Chinese role to English
+        if (saved.role === '管理員') saved.role = 'Admin';
+        if (saved.role === '學員') saved.role = 'Student';
+        if (saved.role === '試用') saved.role = 'Demo';
+        localStorage.setItem('claude-course-user', JSON.stringify(saved));
+        setCurrentUser(saved);
+      }
+    } catch {}
+  })();
 });
 document.getElementById('auth-pass')?.addEventListener('keypress', e => { if (e.key === 'Enter') tryLogin(); });
 document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('auth-pass').focus(); });
@@ -1768,7 +1771,7 @@ function handleKeyboard(e) {
 }
 
 // ── Init ──
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   configureMarked();
   loadProgress();
   buildSidebar();
@@ -1783,6 +1786,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Clicking the sidebar header goes home
   document.querySelector('.sidebar-header').addEventListener('click', showWelcome);
   document.querySelector('.sidebar-header').style.cursor = 'pointer';
+
+  // Wait for users + shared progress to load before rendering welcome page
+  if (_dataReady) await _dataReady;
 
   // Check URL hash
   const hash = window.location.hash.slice(1);
