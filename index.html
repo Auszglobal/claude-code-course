@@ -60,6 +60,34 @@
 .auth-box button:hover { background: var(--accent); }
 .auth-error { color: #ff6b6b; font-size: 13px; margin-top: 8px; min-height: 20px; }
 
+/* User profile in sidebar */
+#user-profile {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: auto;
+}
+.profile-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.profile-info { flex: 1; min-width: 0; }
+.profile-name { display: block; font-size: 13px; font-weight: 600; color: #e2e8f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.profile-role { display: block; font-size: 11px; color: var(--accent); }
+.logout-btn {
+  background: none; border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5); border-radius: 6px;
+  padding: 4px 10px; font-size: 11px; cursor: pointer;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.logout-btn:hover { border-color: #ff6b6b; color: #ff6b6b; }
+
 [data-theme="dark"] {
   --bg: #0f1117;
   --bg-card: #1a1d2e;
@@ -91,6 +119,8 @@ body {
   color: #cbd5e0;
   overflow-y: auto;
   z-index: 100;
+  display: flex;
+  flex-direction: column;
   display: flex;
   flex-direction: column;
   transition: transform var(--transition);
@@ -639,29 +669,69 @@ body {
   </div>
 </div>
 <script>
-// Simple client-side auth gate — SHA-256 hashed credentials
-// Username: student / Password: claudecode2026
-const VALID_HASH = '64a5ad1f47a65851d8b587f18d42b6ad2948e95732b0c5d9bcefb26aee4aa136';
+// Multi-user auth with profiles — each user gets independent progress tracking
+const USERS = [
+  { hash: '64a5ad1f47a65851d8b587f18d42b6ad2948e95732b0c5d9bcefb26aee4aa136', name: 'Student', role: '學員' },
+  { hash: '3ced387db877d5d56993f6d59fabbcb9e6c4a7505b264b873115f40812b0c21a', name: 'Kin', role: '管理員' },
+  { hash: 'a47234d601dc8d41b1719939ebdfe033d7307389c30e645ad3877cbea49873a8', name: 'Sandy', role: '管理員' },
+  { hash: '83f2c30abc8c942d6221703c9f3a4f17e4696ab2f5a052e67fecbc6eef6535a4', name: 'Matthew', role: '管理員' },
+  { hash: 'b0c2e639eedf612b7f964a045c290a0b0df0dff23a803fc606ebbaf5a9342b85', name: 'Demo User', role: '試用' },
+];
+let currentUser = null;
+
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
+
+function setCurrentUser(user) {
+  currentUser = user;
+  localStorage.setItem('claude-course-user', JSON.stringify(user));
+  document.getElementById('auth-gate').classList.add('hidden');
+  updateProfileUI();
+}
+
+function updateProfileUI() {
+  const el = document.getElementById('user-profile');
+  if (el && currentUser) {
+    document.getElementById('profile-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+    document.getElementById('profile-name-display').textContent = currentUser.name;
+    document.getElementById('profile-role-display').textContent = currentUser.role;
+    el.style.display = 'flex';
+  }
+  loadProgress();
+  updateProgressUI();
+}
+
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('claude-course-user');
+  document.getElementById('auth-gate').classList.remove('hidden');
+  document.getElementById('auth-user').value = '';
+  document.getElementById('auth-pass').value = '';
+  document.getElementById('auth-error').textContent = '';
+  const el = document.getElementById('user-profile');
+  if (el) el.style.display = 'none';
+}
+
 async function tryLogin() {
-  const u = document.getElementById('auth-user').value.trim();
+  const u = document.getElementById('auth-user').value.trim().toLowerCase();
   const p = document.getElementById('auth-pass').value;
   const hash = await sha256(u + ':' + p);
-  if (hash === VALID_HASH) {
-    localStorage.setItem('claude-course-auth', 'ok');
-    document.getElementById('auth-gate').classList.add('hidden');
+  const found = USERS.find(user => user.hash === hash);
+  if (found) {
+    setCurrentUser({ name: found.name, role: found.role, uid: u });
   } else {
     document.getElementById('auth-error').textContent = '帳號或密碼錯誤，請重試';
     document.getElementById('auth-pass').value = '';
   }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('claude-course-auth') === 'ok') {
-    document.getElementById('auth-gate').classList.add('hidden');
-  }
+  try {
+    const saved = JSON.parse(localStorage.getItem('claude-course-user'));
+    if (saved && saved.name) { setCurrentUser(saved); }
+  } catch {}
 });
 document.getElementById('auth-pass')?.addEventListener('keypress', e => { if (e.key === 'Enter') tryLogin(); });
 document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('auth-pass').focus(); });
@@ -685,6 +755,15 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
   </div>
 
   <nav class="sidebar-nav" id="sidebar-nav"></nav>
+
+  <div id="user-profile">
+    <div class="profile-avatar" id="profile-avatar"></div>
+    <div class="profile-info">
+      <span class="profile-name" id="profile-name-display"></span>
+      <span class="profile-role" id="profile-role-display"></span>
+    </div>
+    <button class="logout-btn" onclick="logout()">登出</button>
+  </div>
 </aside>
 
 <!-- Overlay -->
@@ -808,14 +887,19 @@ const ALL_MODULES = PHASES.flatMap(p => p.modules.map(m => ({ ...m, phase: p }))
 let currentModuleId = null;
 let progress = {};
 
+function progressKey() {
+  const uid = currentUser ? currentUser.uid : '_anonymous';
+  return 'claude-course-progress-' + uid;
+}
+
 function loadProgress() {
   try {
-    progress = JSON.parse(localStorage.getItem('claude-course-progress') || '{}');
+    progress = JSON.parse(localStorage.getItem(progressKey()) || '{}');
   } catch { progress = {}; }
 }
 
 function saveProgress() {
-  localStorage.setItem('claude-course-progress', JSON.stringify(progress));
+  localStorage.setItem(progressKey(), JSON.stringify(progress));
 }
 
 function getCompletedCount() {
