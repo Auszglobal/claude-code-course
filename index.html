@@ -2691,6 +2691,9 @@ const FLASHCARD_DATA = {
     { q: 'What are sub-agents?', a: 'Child agents spawned by Claude Code to work on independent tasks in parallel, each with their own context.' },
     { q: 'What does Plan Mode do?', a: 'Analyses code and proposes a step-by-step implementation plan without making changes, waiting for your approval.' },
     { q: 'What does claude -p "prompt" do?', a: 'Runs Claude Code in headless/one-shot mode — processes a single prompt and exits without interactive input.' },
+    { q: 'What is the difference between CLI, SDK, and Agent SDK?', a: 'CLI is interactive terminal use. SDK calls Claude API from your code. Agent SDK builds autonomous agents with tool use and decision loops.' },
+    { q: 'What are the two /loop modes?', a: 'Fixed interval (/loop 5m "task") runs on a timer. Dynamic mode (/loop "task") lets Claude self-pace based on cache-aware timing (under 270s stays warm).' },
+    { q: 'What is a Remote Trigger?', a: 'A scheduled agent that runs on a cron schedule in the cloud, executing Claude Code tasks automatically without manual intervention.' },
   ],
   'phase-bonus': [
     { q: 'What is a Claude Code Skill?', a: 'A SKILL.md file that acts as an operations manual — giving Claude Code specialised knowledge for specific tasks.' },
