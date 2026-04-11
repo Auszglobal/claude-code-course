@@ -257,23 +257,128 @@
 /* Team leaderboard */
 .team-leaderboard { margin-top: 40px; }
 .team-leaderboard h3 { font-size: 18px; margin-bottom: 16px; color: var(--text); }
-.team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
-.team-card {
-  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
-  padding: 20px; display: flex; flex-direction: column; align-items: center;
-  gap: 8px; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+.team-grid { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; }
+.team-member {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  transition: transform 0.2s;
 }
-.team-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.team-member:hover { transform: translateY(-3px); }
+.team-avatar-ring {
+  position: relative; width: 80px; height: 80px;
+}
+.team-avatar-ring svg { position: absolute; top: 0; left: 0; width: 80px; height: 80px; transform: rotate(-90deg); }
+.team-avatar-ring .ring-bg { fill: none; stroke: var(--border); stroke-width: 4; }
+.team-avatar-ring .ring-fill { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
 .team-avatar {
-  width: 48px; height: 48px; border-radius: 50%; background: var(--teal);
+  width: 64px; height: 64px; border-radius: 50%; background: var(--teal);
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px; font-weight: 700; color: #fff;
+  font-size: 24px; font-weight: 700; color: #fff;
+  position: absolute; top: 8px; left: 8px;
 }
-.team-name { font-size: 14px; font-weight: 600; color: var(--text); }
-.team-role { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
-.team-progress-bar { width: 100%; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-top: 4px; }
-.team-progress-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--accent)); border-radius: 3px; transition: width 0.5s ease; }
-.team-progress-text { font-size: 12px; color: var(--text-secondary); }
+.team-name { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; }
+.team-pct { font-size: 12px; color: var(--accent); font-weight: 700; }
+
+/* Glossary tooltip */
+.glossary-term {
+  border-bottom: 1px dashed var(--accent); cursor: help; position: relative;
+  color: var(--text); transition: color 0.2s;
+}
+.glossary-term:hover { color: var(--accent); }
+.glossary-tooltip {
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--dark); color: #e2e8f0; padding: 10px 14px; border-radius: 8px;
+  font-size: 12px; line-height: 1.5; width: 260px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 1000;
+  text-align: left;
+}
+.glossary-tooltip::after {
+  content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 6px solid transparent; border-top-color: var(--dark);
+}
+.glossary-term:hover .glossary-tooltip { opacity: 1; pointer-events: auto; }
+#glossary-panel {
+  position: fixed; top: 0; right: -380px; width: 380px; height: 100vh;
+  background: var(--bg); border-left: 1px solid var(--border); z-index: 2000;
+  transition: right 0.3s ease; overflow-y: auto; box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+}
+#glossary-panel.open { right: 0; }
+#glossary-panel .gp-header {
+  padding: 20px 24px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+#glossary-panel .gp-header h3 { font-size: 16px; color: var(--text); margin: 0; }
+#glossary-panel .gp-close {
+  background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text-secondary);
+}
+#glossary-panel .gp-search {
+  margin: 12px 24px; padding: 8px 12px; width: calc(100% - 48px);
+  border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card);
+  color: var(--text); font-size: 13px;
+}
+#glossary-panel .gp-item {
+  padding: 12px 24px; border-bottom: 1px solid var(--border);
+}
+#glossary-panel .gp-term { font-weight: 700; color: var(--accent); font-size: 14px; }
+#glossary-panel .gp-def { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.5; }
+.glossary-btn {
+  background: none; border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 10px; cursor: pointer; color: var(--text-secondary); font-size: 14px;
+  transition: all 0.2s;
+}
+.glossary-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Toast notification */
+.toast-container {
+  position: fixed; top: 20px; right: 20px; z-index: 3000;
+  display: flex; flex-direction: column; gap: 10px; pointer-events: none;
+}
+.toast {
+  background: var(--dark); color: #e2e8f0; padding: 16px 24px;
+  border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  border-left: 4px solid var(--accent); display: flex; align-items: center; gap: 12px;
+  animation: toastIn 0.4s ease, toastOut 0.4s ease 3s forwards;
+  pointer-events: auto; min-width: 280px; max-width: 400px;
+}
+.toast-icon { font-size: 28px; flex-shrink: 0; }
+.toast-body { flex: 1; }
+.toast-title { font-weight: 700; font-size: 14px; color: var(--accent); }
+.toast-msg { font-size: 12px; color: #a0aec0; margin-top: 2px; }
+@keyframes toastIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-10px); } }
+
+/* Onboarding tour */
+.tour-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6); z-index: 4000;
+}
+.tour-highlight {
+  position: absolute; z-index: 4001; border-radius: 8px;
+  box-shadow: 0 0 0 4000px rgba(0,0,0,0.55), 0 0 0 4px var(--accent);
+  transition: all 0.4s ease;
+}
+.tour-popover {
+  position: absolute; z-index: 4002; background: var(--bg-card); color: var(--text);
+  border-radius: 12px; padding: 20px 24px; max-width: 320px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3); border: 1px solid var(--accent);
+}
+.tour-popover h4 { color: var(--accent); font-size: 15px; margin-bottom: 8px; }
+.tour-popover p { font-size: 13px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 16px; }
+.tour-footer { display: flex; justify-content: space-between; align-items: center; }
+.tour-dots { display: flex; gap: 6px; }
+.tour-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--border);
+}
+.tour-dot.active { background: var(--accent); }
+.tour-next {
+  background: var(--accent); color: #fff; border: none; border-radius: 8px;
+  padding: 8px 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background 0.2s;
+}
+.tour-next:hover { background: var(--teal); }
+.tour-skip {
+  background: none; border: none; color: var(--text-secondary); font-size: 12px;
+  cursor: pointer; text-decoration: underline;
+}
 
 [data-theme="dark"] {
   --bg: #0f1117;
@@ -836,6 +941,216 @@ body {
   border-radius: 2px;
 }
 
+/* ── Code Copy Button ── */
+.code-block-wrapper { position: relative; }
+.copy-btn {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  color: #a0aec0; border-radius: 6px; padding: 4px 10px;
+  font-size: 11px; cursor: pointer; transition: all 0.2s;
+  z-index: 2; font-family: inherit;
+}
+.copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.copy-btn.copied { background: #48bb78; border-color: #48bb78; color: #fff; }
+
+/* ── Search Bar ── */
+.search-container {
+  padding: 8px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;
+}
+.search-input {
+  width: 100%; padding: 8px 12px 8px 32px; border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px; background: rgba(255,255,255,0.06); color: #e2e8f0;
+  font-size: 13px; outline: none; transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: rgba(255,255,255,0.35); }
+.search-container { position: relative; }
+.search-icon {
+  position: absolute; left: 30px; top: 50%; transform: translateY(-50%);
+  color: rgba(255,255,255,0.35); font-size: 13px; pointer-events: none;
+}
+.search-results {
+  position: absolute; left: 20px; right: 20px; top: 100%;
+  background: var(--dark); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px; max-height: 300px; overflow-y: auto;
+  z-index: 200; display: none; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.search-results.active { display: block; }
+.search-result-item {
+  padding: 10px 14px; cursor: pointer; font-size: 13px; color: #a0aec0;
+  border-bottom: 1px solid rgba(255,255,255,0.06); transition: background 0.15s;
+}
+.search-result-item:hover { background: rgba(0,180,166,0.15); color: #e2e8f0; }
+.search-result-item .sr-phase { font-size: 10px; color: var(--accent); text-transform: uppercase; }
+.search-result-item .sr-title { font-weight: 600; }
+.search-result-item mark { background: rgba(0,180,166,0.3); color: #fff; border-radius: 2px; padding: 0 2px; }
+
+/* ── Bookmark ── */
+.bookmark-btn {
+  background: none; border: none; color: #4a5568; font-size: 18px;
+  cursor: pointer; transition: all 0.2s; padding: 0; line-height: 1;
+}
+.bookmark-btn:hover, .bookmark-btn.bookmarked { color: #ecc94b; }
+.bookmarks-section { margin-top: 24px; }
+.bookmarks-section h3 { font-size: 18px; margin-bottom: 16px; color: var(--text); }
+
+/* ── Reading Time ── */
+.reading-time {
+  display: inline-block; font-size: 12px; color: var(--text-secondary);
+  background: var(--bg); padding: 4px 12px; border-radius: 20px;
+  margin-bottom: 16px; border: 1px solid var(--border);
+}
+
+/* ── Personal Notes ── */
+.module-notes {
+  margin-top: 32px; padding: 20px; border-radius: 12px;
+  background: var(--bg); border: 1px solid var(--border);
+}
+.module-notes h4 { font-size: 14px; color: var(--accent); margin-bottom: 10px; }
+.notes-textarea {
+  width: 100%; min-height: 100px; padding: 12px; border: 1px solid var(--border);
+  border-radius: 8px; background: var(--bg-card); color: var(--text);
+  font-size: 13px; font-family: inherit; resize: vertical; outline: none;
+  transition: border-color 0.2s; line-height: 1.6;
+}
+.notes-textarea:focus { border-color: var(--accent); }
+.notes-saved { font-size: 11px; color: var(--accent); margin-top: 6px; opacity: 0; transition: opacity 0.3s; }
+.notes-saved.show { opacity: 1; }
+
+/* ── Expandable Hints ── */
+.hint-box {
+  margin: 12px 0; border: 1px dashed var(--accent); border-radius: 8px; overflow: hidden;
+}
+.hint-toggle {
+  width: 100%; padding: 10px 16px; background: rgba(0,180,166,0.05);
+  border: none; color: var(--accent); font-size: 13px; font-weight: 600;
+  cursor: pointer; text-align: left; transition: background 0.2s;
+  font-family: inherit;
+}
+.hint-toggle:hover { background: rgba(0,180,166,0.1); }
+.hint-content {
+  padding: 0 16px; max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+}
+.hint-box.open .hint-content { max-height: 500px; padding: 12px 16px; }
+
+/* ── Progress Streak ── */
+.streak-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; color: #ecc94b; font-weight: 600;
+  background: rgba(236,201,75,0.1); padding: 3px 10px;
+  border-radius: 20px; border: 1px solid rgba(236,201,75,0.3);
+}
+
+/* ── Flashcard Review ── */
+.flashcard-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+}
+.flashcard-overlay.hidden { display: none; }
+.flashcard-container {
+  width: 480px; max-width: 90vw; text-align: center;
+}
+.flashcard {
+  perspective: 1000px; width: 100%; height: 280px; cursor: pointer; margin-bottom: 20px;
+}
+.flashcard-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.6s; transform-style: preserve-3d;
+}
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  border-radius: 16px; padding: 32px; display: flex;
+  align-items: center; justify-content: center; flex-direction: column;
+  font-size: 16px; line-height: 1.6;
+}
+.flashcard-front {
+  background: linear-gradient(135deg, var(--dark), #0d1b2a);
+  color: #e2e8f0; border: 2px solid var(--accent);
+}
+.flashcard-back {
+  background: linear-gradient(135deg, var(--teal), var(--accent));
+  color: #fff; transform: rotateY(180deg);
+}
+.flashcard-front .fc-label, .flashcard-back .fc-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 16px; opacity: 0.6;
+}
+.flashcard-nav { display: flex; gap: 12px; justify-content: center; }
+.flashcard-nav button {
+  padding: 10px 24px; border-radius: 8px; font-size: 14px;
+  font-weight: 600; cursor: pointer; transition: all 0.2s; border: none;
+}
+.fc-prev, .fc-next { background: var(--teal); color: #fff; }
+.fc-prev:hover, .fc-next:hover { background: var(--accent); }
+.fc-close { background: none; border: 1px solid rgba(255,255,255,0.3) !important; color: #fff; }
+.fc-close:hover { border-color: #fff !important; }
+.flashcard-counter { color: rgba(255,255,255,0.6); font-size: 13px; margin-bottom: 12px; }
+
+/* ── Drag & Drop Matching ── */
+.dnd-exercise { margin: 20px 0; padding: 20px; background: var(--bg); border-radius: 12px; border: 1px solid var(--border); }
+.dnd-exercise h4 { color: var(--accent); margin-bottom: 16px; font-size: 15px; }
+.dnd-columns { display: flex; gap: 20px; }
+.dnd-terms, .dnd-targets { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.dnd-item {
+  padding: 10px 14px; background: var(--bg-card); border: 2px solid var(--border);
+  border-radius: 8px; cursor: grab; font-size: 13px; font-weight: 600;
+  transition: all 0.2s; user-select: none; color: var(--text);
+}
+.dnd-item:active { cursor: grabbing; }
+.dnd-item.dragging { opacity: 0.5; border-color: var(--accent); }
+.dnd-target {
+  padding: 10px 14px; background: rgba(0,180,166,0.05);
+  border: 2px dashed var(--border); border-radius: 8px;
+  min-height: 42px; font-size: 13px; color: var(--text-secondary);
+  transition: all 0.2s; display: flex; align-items: center; justify-content: space-between;
+}
+.dnd-target.over { border-color: var(--accent); background: rgba(0,180,166,0.1); }
+.dnd-target.matched { border-style: solid; border-color: #48bb78; background: rgba(72,187,120,0.1); }
+.dnd-target.wrong { border-style: solid; border-color: #f56565; background: rgba(245,101,101,0.1); }
+.dnd-target .placed-item { font-weight: 600; color: var(--text); }
+.dnd-check { margin-top: 12px; padding: 10px 20px; background: var(--teal); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+.dnd-check:hover { background: var(--accent); }
+.dnd-result { margin-top: 10px; font-size: 14px; font-weight: 600; }
+
+/* ── Certificate ── */
+.cert-btn {
+  display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, var(--teal), var(--accent));
+  color: #fff; border: none; border-radius: 10px; font-size: 16px;
+  font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(0,180,166,0.3); margin-top: 20px;
+}
+.cert-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,180,166,0.4); }
+
+/* ── Terminal Simulator ── */
+.terminal-sim {
+  background: #1a1a2e; border-radius: 12px; overflow: hidden;
+  margin: 20px 0; box-shadow: var(--shadow-lg); border: 1px solid #2d3748;
+}
+.terminal-header {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 14px; background: #0d1117;
+}
+.terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+.terminal-dot.red { background: #ff5f56; }
+.terminal-dot.yellow { background: #ffbd2e; }
+.terminal-dot.green { background: #27c93f; }
+.terminal-title { margin-left: 8px; font-size: 11px; color: #718096; }
+.terminal-body { padding: 16px; font-family: 'Fira Code', 'Consolas', monospace; font-size: 13px; }
+.terminal-line { margin-bottom: 4px; color: #e2e8f0; line-height: 1.6; }
+.terminal-line .prompt { color: var(--accent); }
+.terminal-line .output { color: #a0aec0; }
+.terminal-input-line { display: flex; align-items: center; margin-top: 8px; }
+.terminal-input {
+  flex: 1; background: none; border: none; color: #e2e8f0;
+  font-family: 'Fira Code', 'Consolas', monospace; font-size: 13px;
+  outline: none; caret-color: var(--accent);
+}
+.terminal-input-line .prompt { color: var(--accent); margin-right: 8px; white-space: nowrap; }
+
 /* Print */
 @media print {
   .sidebar, .topbar, .page-nav { display: none !important; }
@@ -1157,6 +1472,12 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
     </div>
   </div>
 
+  <div class="search-container">
+    <span class="search-icon">&#x1F50D;</span>
+    <input class="search-input" id="search-input" type="text" placeholder="Search modules..." autocomplete="off">
+    <div class="search-results" id="search-results"></div>
+  </div>
+
   <nav class="sidebar-nav" id="sidebar-nav"></nav>
 
   <div id="user-profile">
@@ -1183,6 +1504,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
       <div class="breadcrumb" id="breadcrumb">Home</div>
     </div>
     <div class="topbar-right">
+      <button class="glossary-btn" onclick="toggleGlossary()" title="Glossary">&#x1F4D6; Glossary</button>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">&#9790;</button>
     </div>
   </header>
@@ -1201,6 +1523,43 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
     </div>
   </div>
 </div>
+
+<!-- Flashcard Overlay -->
+<div class="flashcard-overlay hidden" id="flashcard-overlay">
+  <div class="flashcard-container">
+    <div class="flashcard-counter" id="fc-counter"></div>
+    <div class="flashcard" id="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div class="fc-label">Question</div>
+          <div id="fc-question"></div>
+        </div>
+        <div class="flashcard-back">
+          <div class="fc-label">Answer</div>
+          <div id="fc-answer"></div>
+        </div>
+      </div>
+    </div>
+    <div class="flashcard-nav">
+      <button class="fc-prev" onclick="fcNav(-1)">&#8592; Prev</button>
+      <button class="fc-close" onclick="closeFlashcards()">Close</button>
+      <button class="fc-next" onclick="fcNav(1)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- Glossary Panel -->
+<div id="glossary-panel">
+  <div class="gp-header">
+    <h3>&#x1F4D6; Glossary</h3>
+    <button class="gp-close" onclick="toggleGlossary()">&times;</button>
+  </div>
+  <input class="gp-search" id="glossary-search" type="text" placeholder="Search terms..." oninput="filterGlossary(this.value)">
+  <div id="glossary-list"></div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
 
 <script>
 // ── Module data ──
@@ -1317,13 +1676,15 @@ const PHASES = [
     label: 'Phase 9',
     title: 'Production',
     icon: '&#x1F3ED;',
-    desc: 'Sub-agents, planning, databases, CI/CD, Docker, and security',
+    desc: 'Sub-agents, planning, databases, CI/CD, Docker, security, SDK, and autonomous agents',
     modules: [
       { id: '9.1', file: 'output/phase-9/module-9.1-subagents.md', title: 'Sub-agents & Parallel Execution' },
       { id: '9.2', file: 'output/phase-9/module-9.2-plan-mode.md', title: 'Plan Mode & Architecture' },
       { id: '9.3', file: 'output/phase-9/module-9.3-database-operations.md', title: 'Database Operations' },
       { id: '9.4', file: 'output/phase-9/module-9.4-headless-cicd.md', title: 'Headless Mode & CI/CD' },
       { id: '9.5', file: 'output/phase-9/module-9.5-docker-security.md', title: 'Docker & Security' },
+      { id: '9.6', file: 'output/phase-9/module-9.6-sdk-agent-sdk.md', title: 'SDK & Agent SDK' },
+      { id: '9.7', file: 'output/phase-9/module-9.7-loop-autonomous.md', title: '/loop & Autonomous Agents' },
     ]
   },
   {
@@ -1429,6 +1790,7 @@ function buildSidebar() {
         progress[mid] = !progress[mid];
         saveProgress();
         updateProgressUI();
+        checkNewBadges();
         return;
       }
       loadModule(link.dataset.moduleId, link.dataset.file);
@@ -1487,8 +1849,20 @@ async function loadModule(moduleId, filePath) {
       }
     });
 
+    // Add copy buttons to code blocks
+    addCopyButtons();
+
+    // Add reading time + bookmark
+    addReadingTime(md);
+
     // Initialize quizzes
     initQuizzes(moduleId);
+
+    // Add personal notes section
+    addNotesSection(moduleId);
+
+    // Highlight glossary terms in content
+    highlightGlossaryTerms();
 
     // Render mermaid diagrams
     contentEl.querySelectorAll('pre code.language-mermaid').forEach(block => {
@@ -1627,6 +2001,7 @@ function handleQuizSubmit(quiz, moduleId) {
     progress[moduleId] = true;
     saveProgress();
     updateProgressUI();
+    checkNewBadges();
   } else {
     resultEl.className = 'quiz-result fail';
     resultEl.innerHTML = `You scored ${correct}/${total} (${pct}%) — Need 70% to pass. <br><button class="quiz-retry" onclick="retryQuiz(this)">Try Again</button>`;
@@ -1711,27 +2086,32 @@ function showWelcome() {
     </div>`;
   });
 
-  // Build team leaderboard (uses sharedProgress from cloud, falls back to localStorage)
+  // Build team leaderboard — students only (exclude Admin)
   let teamCards = '';
-  USERS.forEach(user => {
+  const circumference = 2 * Math.PI * 35;
+  USERS.filter(u => u.role !== 'Admin').forEach(user => {
     const uid = user.uid || user.name.toLowerCase().replace(/\s+/g, '');
-    // Prefer shared cloud progress, fallback to localStorage
     const progressData = sharedProgress[uid]
       || JSON.parse(localStorage.getItem('claude-course-progress-' + uid) || '{}');
     const completed = ALL_MODULES.filter(m => progressData[m.id]).length;
     const pct = Math.round((completed / ALL_MODULES.length) * 100);
+    const offset = circumference - (circumference * pct / 100);
     const avatarData = localStorage.getItem('claude-course-avatar-' + uid);
     const avatarHtml = avatarData
       ? `<img src="${avatarData}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`
       : user.name.charAt(0).toUpperCase();
     const isCurrentUser = currentUser && currentUser.uid === uid;
     const youBadge = isCurrentUser ? ' <span style="font-size:10px;color:var(--accent);">(you)</span>' : '';
-    teamCards += `<div class="team-card" ${isCurrentUser ? 'style="border-color:var(--accent);"' : ''}>
-      <div class="team-avatar">${avatarHtml}</div>
+    teamCards += `<div class="team-member">
+      <div class="team-avatar-ring">
+        <svg viewBox="0 0 80 80">
+          <circle class="ring-bg" cx="40" cy="40" r="35"/>
+          <circle class="ring-fill" cx="40" cy="40" r="35" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
+        </svg>
+        <div class="team-avatar">${avatarHtml}</div>
+      </div>
       <div class="team-name">${user.name}${youBadge}</div>
-      <div class="team-role">${user.role}</div>
-      <div class="team-progress-bar"><div class="team-progress-fill" style="width:${pct}%"></div></div>
-      <div class="team-progress-text">${completed}/${ALL_MODULES.length} completed (${pct}%)</div>
+      <div class="team-pct">${pct}%</div>
     </div>`;
   });
 
@@ -1749,6 +2129,270 @@ function showWelcome() {
     </div>
     <div class="phase-cards">${cards}</div>
   </div>`;
+}
+
+// ── Code Copy Buttons ──
+function addCopyButtons() {
+  document.querySelectorAll('.markdown-body pre').forEach(pre => {
+    if (pre.querySelector('.copy-btn')) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block-wrapper';
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(pre);
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = 'Copy';
+    btn.onclick = () => {
+      const code = pre.querySelector('code');
+      navigator.clipboard.writeText(code.textContent).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
+    };
+    wrapper.appendChild(btn);
+  });
+}
+
+// ── Search ──
+function initSearch() {
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    if (q.length < 2) { results.classList.remove('active'); return; }
+    const matches = ALL_MODULES.filter(m =>
+      m.title.toLowerCase().includes(q) || m.id.toLowerCase().includes(q) ||
+      m.phase.title.toLowerCase().includes(q) || m.phase.desc.toLowerCase().includes(q)
+    ).slice(0, 10);
+    if (matches.length === 0) { results.innerHTML = '<div class="search-result-item">No results found</div>'; }
+    else {
+      results.innerHTML = matches.map(m => {
+        const highlighted = m.title.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>');
+        return `<div class="search-result-item" onclick="loadModule('${m.id}','${m.file}');document.getElementById('search-results').classList.remove('active');document.getElementById('search-input').value='';">
+          <div class="sr-phase">${m.phase.label} — ${m.phase.title}</div>
+          <div class="sr-title">${m.id} ${highlighted}</div>
+        </div>`;
+      }).join('');
+    }
+    results.classList.add('active');
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.search-container')) results.classList.remove('active');
+  });
+}
+
+// ── Bookmarks ──
+function getBookmarks() {
+  try { return JSON.parse(localStorage.getItem('claude-course-bookmarks') || '[]'); } catch { return []; }
+}
+function toggleBookmark(moduleId) {
+  let bm = getBookmarks();
+  if (bm.includes(moduleId)) bm = bm.filter(id => id !== moduleId);
+  else bm.push(moduleId);
+  localStorage.setItem('claude-course-bookmarks', JSON.stringify(bm));
+  // Update button state
+  const btn = document.querySelector('.bookmark-btn');
+  if (btn) { btn.classList.toggle('bookmarked', bm.includes(moduleId)); btn.innerHTML = bm.includes(moduleId) ? '&#9733;' : '&#9734;'; }
+}
+
+// ── Reading Time ──
+function getReadingTime(text) {
+  const words = text.trim().split(/\s+/).length;
+  const mins = Math.max(1, Math.ceil(words / 200));
+  return mins;
+}
+
+// ── Personal Notes ──
+function getNotesKey(moduleId) { return 'claude-course-notes-' + (currentUser ? currentUser.uid + '-' : '') + moduleId; }
+function addNotesSection(moduleId) {
+  const content = document.getElementById('content');
+  const existing = content.querySelector('.module-notes');
+  if (existing) return;
+  const saved = localStorage.getItem(getNotesKey(moduleId)) || '';
+  const div = document.createElement('div');
+  div.className = 'module-notes';
+  div.innerHTML = `<h4>&#x1F4DD; Personal Notes</h4>
+    <textarea class="notes-textarea" placeholder="Write your notes for this module...">${saved}</textarea>
+    <div class="notes-saved" id="notes-saved">Saved!</div>`;
+  content.querySelector('.markdown-body').appendChild(div);
+  let saveTimer;
+  div.querySelector('.notes-textarea').addEventListener('input', (e) => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      localStorage.setItem(getNotesKey(moduleId), e.target.value);
+      const indicator = document.getElementById('notes-saved');
+      indicator.classList.add('show');
+      setTimeout(() => indicator.classList.remove('show'), 1500);
+    }, 500);
+  });
+}
+
+// ── Progress Streak ──
+function updateStreak() {
+  if (!currentUser) return;
+  const key = 'claude-course-streak-' + currentUser.uid;
+  const data = JSON.parse(localStorage.getItem(key) || '{"count":0,"lastDate":""}');
+  const today = new Date().toISOString().split('T')[0];
+  if (data.lastDate === today) return data.count;
+  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+  if (data.lastDate === yesterday) { data.count++; }
+  else if (data.lastDate !== today) { data.count = 1; }
+  data.lastDate = today;
+  localStorage.setItem(key, JSON.stringify(data));
+  return data.count;
+}
+function getStreakCount() {
+  if (!currentUser) return 0;
+  const key = 'claude-course-streak-' + currentUser.uid;
+  const data = JSON.parse(localStorage.getItem(key) || '{"count":0}');
+  return data.count;
+}
+
+// ── Flashcard System ──
+const FLASHCARD_DATA = {
+  'phase-1': [
+    { q: 'What is the difference between Claude Code and Claude Chat?', a: 'Claude Code takes real actions (read/write files, run commands) while Claude Chat only generates text responses.' },
+    { q: 'What are the three permission options when Claude Code wants to use a tool?', a: 'Allow (once), Deny (block), and Allow Always (auto-approve going forward).' },
+    { q: 'What is the working directory in Claude Code?', a: 'The folder where Claude Code starts — all file paths are relative to this location.' },
+  ],
+  'phase-2': [
+    { q: 'What is CLAUDE.md?', a: 'A configuration file in your project root that gives Claude Code persistent instructions about your project, conventions, and rules.' },
+    { q: 'What is the difference between Write and Edit tools?', a: 'Write creates or completely overwrites a file. Edit makes targeted changes to specific parts of an existing file.' },
+    { q: 'When should you use Glob vs Grep?', a: 'Glob finds files by name pattern (*.py). Grep searches inside file contents for text patterns.' },
+  ],
+  'phase-3': [
+    { q: 'What is refactoring?', a: 'Restructuring existing code without changing its external behaviour — improving readability, organisation, or performance.' },
+    { q: 'Name the three types of errors.', a: 'Syntax errors (typos/grammar), Logic errors (wrong behaviour), Runtime errors (crashes during execution).' },
+    { q: 'What is the Arrange-Act-Assert pattern?', a: 'A test structure: Arrange (set up data), Act (run the code), Assert (check the result matches expectations).' },
+  ],
+  'phase-4': [
+    { q: 'What roles do HTML, CSS, and JavaScript play?', a: 'HTML = structure/content, CSS = styling/layout, JavaScript = interactivity/behaviour.' },
+    { q: 'What is an API?', a: 'Application Programming Interface — a way for programs to communicate with each other, like a waiter between you and the kitchen.' },
+    { q: 'What is GitHub Pages?', a: 'A free hosting service from GitHub that serves static websites directly from a git repository.' },
+  ],
+  'phase-5': [
+    { q: 'What is MCP?', a: 'Model Context Protocol — like an App Store for Claude Code, letting it connect to external tools and services.' },
+    { q: 'What are the three hook types?', a: 'PreToolUse (before a tool runs), PostToolUse (after a tool runs), Notification (when Claude needs attention).' },
+    { q: 'Where does the team CLAUDE.md go?', a: 'In the project root, committed to git — so everyone on the team gets the same instructions.' },
+  ],
+  'phase-6': [
+    { q: 'What is the Einstein Principle in Cowork?', a: 'Don\'t send Opus for simple tasks — choose the right model for the job to save cost and time.' },
+    { q: 'What is the Project Isolation Principle?', a: 'Each Cowork project should have its own context, instructions, and memory — don\'t mix unrelated work.' },
+    { q: 'What are the three capability layers?', a: 'Layer 1: Connectors/MCP (most reliable), Layer 2: Browser extension, Layer 3: Computer Use (most flexible).' },
+  ],
+  'phase-7': [
+    { q: 'What is the gh CLI tool?', a: 'GitHub\'s official command-line tool for working with PRs, issues, and repos without leaving the terminal.' },
+    { q: 'How does Claude Code connect to Google Sheets?', a: 'Using gspread library with a Google service account (credentials JSON file).' },
+    { q: 'What is Tier 1 integration depth?', a: 'Built-in, native tools that work without any setup — Git, GitHub, npm/pip, Terminal.' },
+  ],
+  'phase-8': [
+    { q: 'Name 3 prompting patterns for Claude Code.', a: 'Task Decomposition (step-by-step), Constraint-First (say what NOT to do), Example-Driven (point to existing code).' },
+    { q: 'What does /compact do?', a: 'Summarises the conversation history to free up context window space while preserving key information.' },
+    { q: 'What are the three layers of Claude Code\'s memory?', a: 'CLAUDE.md (manual), Auto-memory (automatic, persists), Conversation context (ephemeral, current session only).' },
+  ],
+  'phase-9': [
+    { q: 'What are sub-agents?', a: 'Child agents spawned by Claude Code to work on independent tasks in parallel, each with their own context.' },
+    { q: 'What does Plan Mode do?', a: 'Analyses code and proposes a step-by-step implementation plan without making changes, waiting for your approval.' },
+    { q: 'What does claude -p "prompt" do?', a: 'Runs Claude Code in headless/one-shot mode — processes a single prompt and exits without interactive input.' },
+  ],
+  'phase-bonus': [
+    { q: 'What is a Claude Code Skill?', a: 'A SKILL.md file that acts as an operations manual — giving Claude Code specialised knowledge for specific tasks.' },
+    { q: 'What is Progressive Disclosure?', a: 'A 3-stage loading system for Skills — only loading detailed instructions when the skill is actually triggered, saving tokens.' },
+    { q: 'Name 3 methods to install Skills.', a: 'npx command (recommended), Manual copy to ~/.claude/commands/, Claude Code /plugin command.' },
+  ],
+};
+
+let fcCards = [], fcIndex = 0;
+function openFlashcards(phaseId) {
+  fcCards = FLASHCARD_DATA[phaseId] || [];
+  if (!fcCards.length) return;
+  fcIndex = 0;
+  renderFlashcard();
+  document.getElementById('flashcard-overlay').classList.remove('hidden');
+}
+function renderFlashcard() {
+  document.getElementById('fc-question').textContent = fcCards[fcIndex].q;
+  document.getElementById('fc-answer').textContent = fcCards[fcIndex].a;
+  document.getElementById('fc-counter').textContent = `${fcIndex + 1} / ${fcCards.length}`;
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+function fcNav(dir) {
+  fcIndex = (fcIndex + dir + fcCards.length) % fcCards.length;
+  renderFlashcard();
+}
+function closeFlashcards() {
+  document.getElementById('flashcard-overlay').classList.add('hidden');
+}
+
+// ── Completion Certificate ──
+function generateCertificate() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1200; canvas.height = 800;
+  const ctx = canvas.getContext('2d');
+  // Background
+  const grad = ctx.createLinearGradient(0, 0, 1200, 800);
+  grad.addColorStop(0, '#1A1A2E'); grad.addColorStop(1, '#0d1b2a');
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, 1200, 800);
+  // Border
+  ctx.strokeStyle = '#00B4A6'; ctx.lineWidth = 4;
+  ctx.strokeRect(30, 30, 1140, 740);
+  ctx.strokeStyle = 'rgba(0,180,166,0.3)'; ctx.lineWidth = 1;
+  ctx.strokeRect(40, 40, 1120, 720);
+  // Title
+  ctx.fillStyle = '#00B4A6'; ctx.font = 'bold 16px Arial'; ctx.textAlign = 'center';
+  ctx.fillText('CERTIFICATE OF COMPLETION', 600, 120);
+  ctx.fillStyle = '#e2e8f0'; ctx.font = 'bold 42px Georgia';
+  ctx.fillText('Claude Code Complete Guide', 600, 200);
+  // Subtitle
+  ctx.fillStyle = '#718096'; ctx.font = '18px Arial';
+  ctx.fillText('This certifies that', 600, 290);
+  // Name
+  ctx.fillStyle = '#00B4A6'; ctx.font = 'bold 36px Georgia';
+  ctx.fillText(currentUser ? currentUser.name : 'Student', 600, 350);
+  // Details
+  ctx.fillStyle = '#a0aec0'; ctx.font = '16px Arial';
+  ctx.fillText('has successfully completed all ' + ALL_MODULES.length + ' modules', 600, 420);
+  ctx.fillText('covering the complete learning path from installation to production.', 600, 450);
+  // Phases completed
+  const completedPhases = PHASES.filter(p => isPhaseComplete(p)).length;
+  ctx.fillText(completedPhases + ' phases completed | ' + ALL_MODULES.length + ' modules | ' + (ALL_MODULES.length * 3) + ' quiz questions passed', 600, 490);
+  // Date
+  ctx.fillStyle = '#718096'; ctx.font = '14px Arial';
+  ctx.fillText('Issued on ' + new Date().toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' }), 600, 560);
+  // Logo text
+  ctx.fillStyle = '#008B8B'; ctx.font = 'bold 20px Arial';
+  ctx.fillText('AUSZ Global', 600, 640);
+  ctx.fillStyle = '#718096'; ctx.font = '13px Arial';
+  ctx.fillText('auszglobal.com.au', 600, 665);
+  // Download
+  const link = document.createElement('a');
+  link.download = 'claude-code-certificate-' + (currentUser ? currentUser.name.toLowerCase().replace(/\s+/g, '-') : 'student') + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// ── Estimated Reading Time ──
+function addReadingTime(text) {
+  const mins = getReadingTime(text);
+  const content = document.getElementById('content');
+  const md = content.querySelector('.markdown-body');
+  if (!md) return;
+  const h1 = md.querySelector('h1');
+  if (!h1) return;
+  const badge = document.createElement('span');
+  badge.className = 'reading-time';
+  badge.innerHTML = `&#x1F552; ${mins} min read`;
+  h1.insertAdjacentElement('afterend', badge);
+  // Also add bookmark button
+  const bm = getBookmarks();
+  const isBookmarked = bm.includes(currentModuleId);
+  const bmBtn = document.createElement('button');
+  bmBtn.className = 'bookmark-btn' + (isBookmarked ? ' bookmarked' : '');
+  bmBtn.innerHTML = isBookmarked ? '&#9733;' : '&#9734;';
+  bmBtn.title = 'Bookmark this module';
+  bmBtn.onclick = () => toggleBookmark(currentModuleId);
+  badge.insertAdjacentElement('afterend', bmBtn);
 }
 
 // ── Theme toggle ──
@@ -1798,6 +2442,200 @@ function handleKeyboard(e) {
   }
 }
 
+// ── Glossary System ──
+const GLOSSARY = [
+  { term: 'API', full: 'Application Programming Interface', def: 'A way for programs to communicate with each other, like a waiter taking your order to the kitchen and bringing back the food.' },
+  { term: 'CLI', full: 'Command Line Interface', def: 'A text-based way to interact with your computer by typing commands, as opposed to clicking with a mouse.' },
+  { term: 'SDK', full: 'Software Development Kit', def: 'A toolbox of pre-built code that developers use to build applications. Like a LEGO set with all the pieces you need.' },
+  { term: 'MCP', full: 'Model Context Protocol', def: 'An "App Store" for Claude Code — lets it connect to external tools and services like GitHub, databases, and more.' },
+  { term: 'Git', def: 'A version control system that tracks changes to your files over time, like a detailed "undo history" for your entire project.' },
+  { term: 'GitHub', def: 'A cloud platform for storing Git repositories and collaborating with others. Like Google Drive, but specifically designed for code.' },
+  { term: 'CI/CD', full: 'Continuous Integration / Continuous Deployment', def: 'Automated pipelines that test your code and deploy it to production whenever you push changes.' },
+  { term: 'Hook', def: 'A script that runs automatically before or after certain actions (e.g., before Claude edits a file). Like a security guard checking IDs at the door.' },
+  { term: 'CLAUDE.md', def: 'A configuration file that gives Claude Code persistent instructions about your project — like a notebook the AI reads every time it starts working.' },
+  { term: 'Node.js', def: 'A runtime that lets you run JavaScript code outside of a web browser, commonly used for building server-side applications.' },
+  { term: 'npm', full: 'Node Package Manager', def: 'A tool for installing and managing JavaScript packages (pre-built code libraries) from the npm registry.' },
+  { term: 'Docker', def: 'A tool that packages your application and all its dependencies into a container — like a shipping container that works the same everywhere.' },
+  { term: 'Headless Mode', def: 'Running Claude Code without an interactive terminal — it processes a single command and exits. Used in automation and CI/CD pipelines.' },
+  { term: 'Sub-agent', def: 'A child agent spawned by Claude Code to work on an independent task in parallel, like delegating work to a team member.' },
+  { term: 'Plan Mode', def: 'A mode where Claude analyses code and proposes a step-by-step plan without making changes, waiting for your approval before acting.' },
+  { term: '/loop', def: 'A command that tells Claude Code to repeat a task on an interval or let it self-pace — like setting a recurring alarm.' },
+  { term: 'Prompt', def: 'The instruction or question you give to Claude. A well-written prompt gets better results, like giving clear directions to a taxi driver.' },
+  { term: 'Token', def: 'The basic unit Claude uses to process text. Roughly 1 token = 0.75 words. More tokens = higher cost.' },
+  { term: 'Context Window', def: 'The maximum amount of text Claude can "see" at once during a conversation. Like the size of a desk — bigger desk means more documents open.' },
+  { term: 'Markdown', def: 'A simple formatting language that uses symbols like # for headings, ** for bold, and - for lists. Used in CLAUDE.md and course content.' },
+  { term: 'Playwright', def: 'A browser automation tool that can control web browsers programmatically — clicking buttons, filling forms, and scraping data automatically.' },
+  { term: 'OAuth', def: 'An authentication standard that lets apps access your data without knowing your password — like a valet key that only opens the car door.' },
+  { term: 'Worktree', def: 'A Git feature that lets you work on multiple branches simultaneously in separate directories, without switching back and forth.' },
+  { term: 'Agent SDK', def: 'A toolkit for building custom AI agents programmatically using Python or Node.js, giving you fine-grained control over Claude\'s capabilities.' },
+  { term: 'Skill', def: 'A SKILL.md file that acts as an operations manual for Claude Code — giving it specialised knowledge for specific tasks like deployment or debugging.' },
+  { term: 'Remote Trigger', def: 'A scheduled agent that runs on a cron schedule in the cloud, executing Claude Code tasks automatically without manual intervention.' },
+  { term: 'Cron', def: 'A time-based job scheduler. Cron expressions like "0 9 * * 1" mean "every Monday at 9 AM". Used to automate recurring tasks.' },
+  { term: 'Refactoring', def: 'Restructuring existing code without changing what it does — like reorganising a messy closet. The clothes are the same, but now you can find them.' },
+];
+
+function renderGlossaryPanel(filter = '') {
+  const list = document.getElementById('glossary-list');
+  const q = filter.toLowerCase();
+  const filtered = q ? GLOSSARY.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q) || (g.full || '').toLowerCase().includes(q)) : GLOSSARY;
+  list.innerHTML = filtered.map(g => `<div class="gp-item">
+    <div class="gp-term">${g.term}${g.full ? ` <span style="font-weight:400;color:var(--text-secondary);font-size:12px;">(${g.full})</span>` : ''}</div>
+    <div class="gp-def">${g.def}</div>
+  </div>`).join('') || '<div class="gp-item"><div class="gp-def">No matching terms found.</div></div>';
+}
+
+function toggleGlossary() {
+  const panel = document.getElementById('glossary-panel');
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open')) renderGlossaryPanel();
+}
+
+function filterGlossary(val) { renderGlossaryPanel(val); }
+
+function highlightGlossaryTerms() {
+  const body = document.querySelector('.markdown-body');
+  if (!body) return;
+  const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, {
+    acceptNode: (node) => {
+      const parent = node.parentElement;
+      if (!parent) return NodeFilter.FILTER_REJECT;
+      const tag = parent.tagName;
+      if (['CODE', 'PRE', 'A', 'SCRIPT', 'STYLE', 'H1', 'H2', 'H3'].includes(tag)) return NodeFilter.FILTER_REJECT;
+      if (parent.closest('.glossary-term, code, pre, .module-quiz, .module-notes')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const textNodes = [];
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+  const sortedTerms = [...GLOSSARY].sort((a, b) => b.term.length - a.term.length);
+  const pattern = new RegExp(`\\b(${sortedTerms.map(g => g.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\b`, 'g');
+
+  const seen = new Set();
+  textNodes.forEach(node => {
+    if (!pattern.test(node.textContent)) return;
+    pattern.lastIndex = 0;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    let match;
+    while ((match = pattern.exec(node.textContent)) !== null) {
+      const term = match[1];
+      const entry = GLOSSARY.find(g => g.term === term);
+      if (!entry || seen.has(term)) {
+        continue;
+      }
+      seen.add(term);
+      if (match.index > last) frag.appendChild(document.createTextNode(node.textContent.slice(last, match.index)));
+      const span = document.createElement('span');
+      span.className = 'glossary-term';
+      span.textContent = term;
+      const tip = document.createElement('span');
+      tip.className = 'glossary-tooltip';
+      tip.textContent = entry.def;
+      span.appendChild(tip);
+      frag.appendChild(span);
+      last = match.index + term.length;
+    }
+    if (last === 0) return;
+    if (last < node.textContent.length) frag.appendChild(document.createTextNode(node.textContent.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  });
+}
+
+// ── Toast Notifications ──
+function showToast(icon, title, msg, duration = 3500) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<div class="toast-icon">${icon}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+  container.appendChild(toast);
+  setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, duration + 500);
+}
+
+// Track which badges were earned before progress update
+let prevEarnedBadges = new Set();
+function snapshotBadges() {
+  prevEarnedBadges = new Set();
+  PHASES.forEach(p => { if (isPhaseComplete(p)) prevEarnedBadges.add(p.id); });
+}
+function checkNewBadges() {
+  PHASES.forEach(p => {
+    if (isPhaseComplete(p) && !prevEarnedBadges.has(p.id)) {
+      const icon = BADGE_ICONS[p.id] || '&#x1F3C6;';
+      showToast(icon, `Badge Unlocked!`, `You completed ${p.label} — ${p.title}!`);
+    }
+  });
+  snapshotBadges();
+}
+
+// ── Onboarding Tour ──
+const TOUR_STEPS = [
+  { target: '.sidebar-nav', title: 'Course Navigation', desc: 'This is your course directory. All modules are organised by phase — click any module to start learning.', pos: 'right' },
+  { target: '.progress-container', title: 'Your Progress', desc: 'This bar tracks how many modules you have completed. Watch it fill up as you learn!', pos: 'right' },
+  { target: '.search-container', title: 'Quick Search', desc: 'Looking for a specific topic? Type here to find any module instantly.', pos: 'right' },
+  { target: '.topbar-right', title: 'Tools', desc: 'Open the Glossary to look up technical terms, or toggle dark/light mode. You are ready to start learning!', pos: 'below' },
+];
+let tourStep = 0;
+
+function startTour() {
+  if (localStorage.getItem('claude-course-tour-done')) return;
+  tourStep = 0;
+  renderTourStep();
+}
+
+function renderTourStep() {
+  // Remove existing
+  document.querySelectorAll('.tour-overlay,.tour-highlight,.tour-popover').forEach(e => e.remove());
+
+  if (tourStep >= TOUR_STEPS.length) {
+    localStorage.setItem('claude-course-tour-done', '1');
+    return;
+  }
+
+  const step = TOUR_STEPS[tourStep];
+  const el = document.querySelector(step.target);
+  if (!el) { tourStep++; renderTourStep(); return; }
+
+  const rect = el.getBoundingClientRect();
+
+  // Overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'tour-overlay';
+  document.body.appendChild(overlay);
+
+  // Highlight
+  const hl = document.createElement('div');
+  hl.className = 'tour-highlight';
+  hl.style.cssText = `top:${rect.top - 6}px;left:${rect.left - 6}px;width:${rect.width + 12}px;height:${rect.height + 12}px;`;
+  document.body.appendChild(hl);
+
+  // Popover
+  const pop = document.createElement('div');
+  pop.className = 'tour-popover';
+  const dots = TOUR_STEPS.map((_, i) => `<span class="tour-dot${i === tourStep ? ' active' : ''}"></span>`).join('');
+  const isLast = tourStep === TOUR_STEPS.length - 1;
+  pop.innerHTML = `<h4>${step.title}</h4><p>${step.desc}</p>
+    <div class="tour-footer">
+      <div><div class="tour-dots">${dots}</div><button class="tour-skip" onclick="endTour()">Skip tour</button></div>
+      <button class="tour-next" onclick="nextTourStep()">${isLast ? "Let's Go!" : 'Next'}</button>
+    </div>`;
+
+  if (step.pos === 'right') {
+    pop.style.top = rect.top + 'px';
+    pop.style.left = (rect.right + 16) + 'px';
+  } else {
+    pop.style.top = (rect.bottom + 12) + 'px';
+    pop.style.left = Math.max(16, rect.left - 100) + 'px';
+  }
+  document.body.appendChild(pop);
+}
+
+function nextTourStep() { tourStep++; renderTourStep(); }
+function endTour() {
+  document.querySelectorAll('.tour-overlay,.tour-highlight,.tour-popover').forEach(e => e.remove());
+  localStorage.setItem('claude-course-tour-done', '1');
+}
+
 // ── Init ──
 document.addEventListener('DOMContentLoaded', async () => {
   configureMarked();
@@ -1805,6 +2643,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   buildSidebar();
   updateProgressUI();
   initTheme();
+  snapshotBadges();
 
   document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
   document.getElementById('hamburger').addEventListener('click', openMobileSidebar);
@@ -1834,6 +2673,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
   showWelcome();
+
+  // Start onboarding tour for first-time users
+  setTimeout(() => startTour(), 800);
 });
 </script>
 </body>
