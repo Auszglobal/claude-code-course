@@ -475,6 +475,78 @@
 }
 .prompt-tmpl:hover .prompt-tmpl-copy { opacity: 1; }
 
+/* Learning Paths */
+.learning-paths { margin: 32px 0; }
+.learning-paths h3 { font-size: 18px; margin-bottom: 16px; color: var(--text); }
+.path-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.path-card {
+  background: var(--bg-card); border: 2px solid var(--border); border-radius: 12px;
+  padding: 18px; cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.path-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.path-card.active { border-color: var(--accent); background: rgba(0,180,166,0.05); }
+.path-card .path-icon { font-size: 28px; margin-bottom: 8px; }
+.path-card h4 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.path-card p { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
+.path-card .path-count { font-size: 11px; color: var(--accent); font-weight: 700; margin-top: 8px; }
+.path-active-bar {
+  margin: 12px 0 0; padding: 10px 16px; border-radius: 8px;
+  background: rgba(0,180,166,0.08); border: 1px solid rgba(0,180,166,0.2);
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; color: var(--accent);
+}
+.path-active-bar button {
+  background: none; border: 1px solid var(--accent); color: var(--accent);
+  border-radius: 6px; padding: 4px 12px; font-size: 11px; cursor: pointer;
+}
+.path-active-bar button:hover { background: var(--accent); color: #fff; }
+.module-link.path-highlight { border-left: 3px solid var(--accent); padding-left: 9px; }
+
+/* XP & Level System */
+.xp-display {
+  display: flex; align-items: center; gap: 8px; margin-top: 4px;
+}
+.xp-level {
+  font-size: 10px; font-weight: 700; color: #fff; background: var(--accent);
+  padding: 1px 7px; border-radius: 10px;
+}
+.xp-bar-track {
+  flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;
+}
+.xp-bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--teal), var(--accent));
+  border-radius: 2px; transition: width 0.5s ease;
+}
+.xp-text { font-size: 9px; color: var(--text-secondary); white-space: nowrap; }
+.xp-toast-bonus { font-size: 11px; color: #ffd700; font-weight: 700; }
+
+/* Cheat Sheet overlay */
+.cheat-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center; }
+.cheat-overlay.hidden { display: none; }
+.cheat-panel {
+  background: var(--bg); border-radius: 16px; width: 90%; max-width: 700px;
+  max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.cheat-header {
+  padding: 24px 28px 16px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; background: var(--bg); z-index: 1;
+}
+.cheat-header h3 { font-size: 18px; color: var(--text); }
+.cheat-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-secondary); }
+.cheat-section { padding: 16px 28px; }
+.cheat-section-title { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+.cheat-item {
+  display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-size: 13px;
+}
+.cheat-cmd {
+  font-family: monospace; background: rgba(0,180,166,0.08); color: var(--accent);
+  padding: 2px 8px; border-radius: 4px; white-space: nowrap; font-weight: 600;
+  font-size: 12px; flex-shrink: 0; max-width: 45%;
+}
+.cheat-desc { color: var(--text-secondary); line-height: 1.4; }
+
 [data-theme="dark"] {
   --bg: #0f1117;
   --bg-card: #1a1d2e;
@@ -1384,12 +1456,19 @@ async function fetchDynamicUsers() {
 
 async function saveDynamicUsers() {
   try {
-    await fetch(USERS_BLOB_URL, {
+    const res = await fetch(USERS_BLOB_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(dynamicUsers)
     });
-  } catch { alert('Failed to save. Please try again.'); }
+    if (!res.ok) {
+      console.error('JSONBlob save failed:', res.status, await res.text().catch(() => ''));
+      alert('Failed to save (HTTP ' + res.status + '). The JSONBlob service may be temporarily unavailable. Please try again.');
+    }
+  } catch (err) {
+    console.error('JSONBlob save error:', err);
+    alert('Failed to save. Network error — please check your internet connection and try again.');
+  }
 }
 
 function openAdmin() {
@@ -1581,6 +1660,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
       <span class="profile-name" id="profile-name-display"></span>
       <span class="profile-role" id="profile-role-display"></span>
       <span class="profile-progress" id="profile-progress-display"></span>
+      <div class="xp-display" id="xp-display"></div>
     </div>
     <button class="logout-btn" onclick="logout()">Logout</button>
     <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
@@ -1666,10 +1746,22 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
   </div>
 </div>
 
+<!-- Cheat Sheet Overlay -->
+<div class="cheat-overlay hidden" id="cheat-overlay" onclick="if(event.target===this)closeCheatSheet()">
+  <div class="cheat-panel">
+    <div class="cheat-header">
+      <h3 id="cheat-title">Cheat Sheet</h3>
+      <button class="cheat-close" onclick="closeCheatSheet()">&times;</button>
+    </div>
+    <div id="cheat-content"></div>
+  </div>
+</div>
+
 <!-- Toast Container -->
 <div class="toast-container" id="toast-container"></div>
 
 <script src="tldr-data.js"></script>
+<script src="cheat-sheets.js"></script>
 <script src="prompt-templates.js"></script>
 <script>
 // ── Module data ──
@@ -1897,10 +1989,15 @@ function buildSidebar() {
       if (e.target.classList.contains('check')) {
         e.stopPropagation();
         const mid = e.target.dataset.moduleId;
+        const wasComplete = progress[mid];
         progress[mid] = !progress[mid];
         saveProgress();
         updateProgressUI();
         checkNewBadges();
+        if (!wasComplete && progress[mid]) {
+          addXP('module', XP_PER_MODULE, mid);
+          updateXPDisplay();
+        }
         return;
       }
       loadModule(link.dataset.moduleId, link.dataset.file);
@@ -2122,6 +2219,9 @@ function handleQuizSubmit(quiz, moduleId) {
     saveProgress();
     updateProgressUI();
     checkNewBadges();
+    addXP('module', XP_PER_MODULE, moduleId);
+    addXP('quiz', XP_PER_QUIZ, moduleId);
+    updateXPDisplay();
   } else {
     resultEl.className = 'quiz-result fail';
     resultEl.innerHTML = `You scored ${correct}/${total} (${pct}%) — Need 70% to pass. <br><button class="quiz-retry" onclick="retryQuiz(this)">Try Again</button>`;
@@ -2203,6 +2303,7 @@ function showWelcome() {
       <div class="card-icon">${phase.icon}</div>
       <h3>${phase.label} &mdash; ${phase.title}${statusIcon}</h3>
       <p>${phase.modules.length} modules &middot; ${phase.desc}</p>
+      <div style="margin-top:8px;"><button style="font-size:11px;padding:3px 10px;border:1px solid var(--accent);background:none;color:var(--accent);border-radius:6px;cursor:pointer;" onclick="event.stopPropagation();openCheatSheet('${phase.id}')">&#x1F4DD; Cheat Sheet</button></div>
     </div>`;
   });
 
@@ -2239,6 +2340,7 @@ function showWelcome() {
     <span class="welcome-icon">&#x1F4BB;</span>
     <h2>Claude Code Complete Guide</h2>
     <p>Learn AI-powered programming with Claude Code, step by step from zero.<br>${ALL_MODULES.length} modules covering the complete learning path from installation to real-world projects.</p>
+    ${getPathsHTML()}
     <div class="team-leaderboard">
       <h3>Team Progress</h3>
       <div class="team-grid">${teamCards}</div>
@@ -2348,6 +2450,149 @@ function addNotesSection(moduleId) {
   });
 }
 
+// ── Learning Paths ──
+const LEARNING_PATHS = [
+  {
+    id: 'web', icon: '&#x1F310;', title: 'Build Websites',
+    desc: 'Learn to build and deploy web projects with Claude Code',
+    modules: ['1.1','1.2','1.3','2.1','2.2','4.1','4.2','4.4','8.3']
+  },
+  {
+    id: 'auto', icon: '&#x2699;&#xFE0F;', title: 'Automation',
+    desc: 'Automate tasks, scripts, and workflows with AI',
+    modules: ['1.1','1.2','1.3','2.1','3.2','5.2','6.5','9.4','9.7']
+  },
+  {
+    id: 'dev', icon: '&#x1F680;', title: 'Developer Fast Track',
+    desc: 'For experienced devs — skip basics, go straight to power features',
+    modules: ['2.1','3.1','3.3','5.1','5.2','9.1','9.2','9.6','9.7']
+  }
+];
+let activePath = null;
+
+function setLearningPath(pathId) {
+  if (activePath === pathId) { activePath = null; }
+  else { activePath = pathId; }
+  localStorage.setItem('claude-course-path', activePath || '');
+  highlightPathModules();
+  showWelcome();
+}
+
+function highlightPathModules() {
+  document.querySelectorAll('.module-link').forEach(el => el.classList.remove('path-highlight'));
+  if (!activePath) return;
+  const path = LEARNING_PATHS.find(p => p.id === activePath);
+  if (!path) return;
+  path.modules.forEach(mid => {
+    const el = document.querySelector(`.module-link[data-module-id="${mid}"]`);
+    if (el) el.classList.add('path-highlight');
+  });
+}
+
+function getPathsHTML() {
+  const pathCards = LEARNING_PATHS.map(p => {
+    const isActive = activePath === p.id;
+    const completed = p.modules.filter(mid => progress[mid]).length;
+    return `<div class="path-card${isActive ? ' active' : ''}" onclick="setLearningPath('${p.id}')">
+      <div class="path-icon">${p.icon}</div>
+      <h4>${p.title}</h4>
+      <p>${p.desc}</p>
+      <div class="path-count">${completed}/${p.modules.length} completed</div>
+    </div>`;
+  }).join('');
+
+  let activeBar = '';
+  if (activePath) {
+    const path = LEARNING_PATHS.find(p => p.id === activePath);
+    activeBar = `<div class="path-active-bar">
+      <span>&#x1F3AF; Active path: <strong>${path.title}</strong> — highlighted modules in sidebar</span>
+      <button onclick="setLearningPath('${activePath}')">Clear</button>
+    </div>`;
+  }
+
+  return `<div class="learning-paths">
+    <h3>&#x1F6E4;&#xFE0F; Learning Paths</h3>
+    <div class="path-cards">${pathCards}</div>
+    ${activeBar}
+  </div>`;
+}
+
+// ── XP & Level System ──
+const XP_PER_MODULE = 100;
+const XP_PER_QUIZ = 50;
+const XP_PER_FLASHCARD = 20;
+const XP_PER_STREAK = 30;
+const LEVEL_THRESHOLDS = [0, 100, 300, 600, 1000, 1500, 2200, 3000, 4000, 5200];
+const LEVEL_NAMES = ['Newbie','Learner','Explorer','Builder','Maker','Pro','Expert','Master','Guru','Legend'];
+
+function xpKey() { return 'claude-course-xp-' + (currentUser ? currentUser.uid : '_anon'); }
+
+function getXP() {
+  return JSON.parse(localStorage.getItem(xpKey()) || '{"total":0,"log":{}}');
+}
+
+function addXP(source, amount, id) {
+  const data = getXP();
+  const logKey = source + ':' + (id || 'global');
+  if (data.log[logKey]) return data; // Already earned
+  data.total += amount;
+  data.log[logKey] = Date.now();
+  localStorage.setItem(xpKey(), JSON.stringify(data));
+  showToast('&#x2B50;', `+${amount} XP`, source === 'module' ? 'Module completed!' : source === 'quiz' ? 'Quiz passed!' : source === 'flashcard' ? 'Flashcards reviewed!' : 'Streak bonus!', 2500);
+  return data;
+}
+
+function getLevel(totalXP) {
+  let lvl = 0;
+  for (let i = LEVEL_THRESHOLDS.length - 1; i >= 0; i--) {
+    if (totalXP >= LEVEL_THRESHOLDS[i]) { lvl = i + 1; break; }
+  }
+  return Math.min(lvl, 10);
+}
+
+function getXPProgress(totalXP) {
+  const lvl = getLevel(totalXP);
+  if (lvl >= 10) return { pct: 100, current: totalXP, needed: totalXP };
+  const low = LEVEL_THRESHOLDS[lvl - 1] || 0;
+  const high = LEVEL_THRESHOLDS[lvl] || low + 100;
+  return { pct: Math.round(((totalXP - low) / (high - low)) * 100), current: totalXP - low, needed: high - low };
+}
+
+function updateXPDisplay() {
+  const data = getXP();
+  const lvl = getLevel(data.total);
+  const prog = getXPProgress(data.total);
+  const name = LEVEL_NAMES[lvl - 1] || 'Newbie';
+  const el = document.getElementById('xp-display');
+  if (el) {
+    el.innerHTML = `<span class="xp-level">Lv.${lvl} ${name}</span>
+      <div class="xp-bar-track"><div class="xp-bar-fill" style="width:${prog.pct}%"></div></div>
+      <span class="xp-text">${data.total} XP</span>`;
+  }
+}
+
+// ── Cheat Sheets ──
+function openCheatSheet(phaseId) {
+  if (typeof CHEAT_SHEETS === 'undefined') return;
+  const sheet = CHEAT_SHEETS[phaseId];
+  if (!sheet) return;
+  document.getElementById('cheat-title').innerHTML = `&#x1F4DD; ${sheet.title} — Cheat Sheet`;
+  let html = '';
+  sheet.sections.forEach(s => {
+    html += `<div class="cheat-section"><div class="cheat-section-title">${s.heading}</div>`;
+    s.items.forEach(item => {
+      const escaped = item.cmd.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      html += `<div class="cheat-item"><span class="cheat-cmd">${escaped}</span><span class="cheat-desc">${item.desc}</span></div>`;
+    });
+    html += '</div>';
+  });
+  document.getElementById('cheat-content').innerHTML = html;
+  document.getElementById('cheat-overlay').classList.remove('hidden');
+}
+function closeCheatSheet() {
+  document.getElementById('cheat-overlay').classList.add('hidden');
+}
+
 // ── Progress Streak ──
 function updateStreak() {
   if (!currentUser) return;
@@ -2360,6 +2605,10 @@ function updateStreak() {
   else if (data.lastDate !== today) { data.count = 1; }
   data.lastDate = today;
   localStorage.setItem(key, JSON.stringify(data));
+  if (data.count >= 2) {
+    addXP('streak', XP_PER_STREAK, 'streak-' + today);
+    updateXPDisplay();
+  }
   return data.count;
 }
 function getStreakCount() {
@@ -2443,6 +2692,11 @@ function fcNav(dir) {
 }
 function closeFlashcards() {
   document.getElementById('flashcard-overlay').classList.add('hidden');
+  // Award XP for reviewing flashcards
+  if (fcCards.length > 0) {
+    addXP('flashcard', XP_PER_FLASHCARD, 'review-' + new Date().toISOString().split('T')[0]);
+    updateXPDisplay();
+  }
 }
 
 // ── Completion Certificate ──
@@ -2841,6 +3095,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateProgressUI();
   initTheme();
   snapshotBadges();
+  // Restore saved learning path
+  activePath = localStorage.getItem('claude-course-path') || null;
+  highlightPathModules();
+  // Initialize XP display
+  updateXPDisplay();
 
   document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
   document.getElementById('hamburger').addEventListener('click', openMobileSidebar);
