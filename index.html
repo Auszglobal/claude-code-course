@@ -805,6 +805,32 @@ body {
 </div>
 <script>
 // Multi-user auth with profiles — each user gets independent progress tracking
+// ── Shared progress API (Google Apps Script) ──
+// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+const PROGRESS_API_URL = '';
+let sharedProgress = {}; // { uid: { moduleId: true, ... }, ... }
+
+async function fetchSharedProgress() {
+  if (!PROGRESS_API_URL) return;
+  try {
+    const res = await fetch(PROGRESS_API_URL);
+    sharedProgress = await res.json();
+  } catch { /* offline fallback */ }
+}
+
+async function pushProgressToCloud() {
+  if (!PROGRESS_API_URL || !currentUser) return;
+  try {
+    await fetch(PROGRESS_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ uid: currentUser.uid, progress })
+    });
+    // Also update local sharedProgress cache
+    sharedProgress[currentUser.uid] = { ...progress };
+  } catch { /* silent fail, localStorage still works */ }
+}
+
 let USERS = [];
 let currentUser = null;
 
@@ -925,7 +951,7 @@ async function tryLogin() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await fetchUsers();
+  await Promise.all([fetchUsers(), fetchSharedProgress()]);
   try {
     const saved = JSON.parse(localStorage.getItem('claude-course-user'));
     if (saved && saved.name) {
@@ -1136,6 +1162,7 @@ function loadProgress() {
 
 function saveProgress() {
   localStorage.setItem(progressKey(), JSON.stringify(progress));
+  pushProgressToCloud();
 }
 
 function getCompletedCount() {
@@ -1484,20 +1511,24 @@ function showWelcome() {
     </div>`;
   });
 
-  // Build team leaderboard
+  // Build team leaderboard (uses sharedProgress from cloud, falls back to localStorage)
   let teamCards = '';
   USERS.forEach(user => {
     const uid = user.uid || user.name.toLowerCase().replace(/\s+/g, '');
-    const progressData = JSON.parse(localStorage.getItem('claude-course-progress-' + uid) || '{}');
+    // Prefer shared cloud progress, fallback to localStorage
+    const progressData = sharedProgress[uid]
+      || JSON.parse(localStorage.getItem('claude-course-progress-' + uid) || '{}');
     const completed = ALL_MODULES.filter(m => progressData[m.id]).length;
     const pct = Math.round((completed / ALL_MODULES.length) * 100);
     const avatarData = localStorage.getItem('claude-course-avatar-' + uid);
     const avatarHtml = avatarData
       ? `<img src="${avatarData}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`
       : user.name.charAt(0).toUpperCase();
-    teamCards += `<div class="team-card">
+    const isCurrentUser = currentUser && currentUser.uid === uid;
+    const youBadge = isCurrentUser ? ' <span style="font-size:10px;color:var(--accent);">(you)</span>' : '';
+    teamCards += `<div class="team-card" ${isCurrentUser ? 'style="border-color:var(--accent);"' : ''}>
       <div class="team-avatar">${avatarHtml}</div>
-      <div class="team-name">${user.name}</div>
+      <div class="team-name">${user.name}${youBadge}</div>
       <div class="team-role">${user.role}</div>
       <div class="team-progress-bar"><div class="team-progress-fill" style="width:${pct}%"></div></div>
       <div class="team-progress-text">${completed}/${ALL_MODULES.length} completed (${pct}%)</div>
