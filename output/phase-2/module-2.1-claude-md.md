@@ -1,255 +1,255 @@
-# 模塊 2.1：CLAUDE.md — AI 的筆記本
+# Module 2.1: CLAUDE.md -- The AI's Notebook
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 理解 CLAUDE.md 的用途和重要性
-  - 知道 CLAUDE.md 應該放在哪裡
-  - 編寫一份基本的 CLAUDE.md 設定檔
-  - 讓 Claude Code 按照你的指示工作
-  - 掌握撰寫清晰指令的最佳實踐
+## Learning Objectives
+- After completing this lesson, you will be able to:
+  - Understand the purpose and importance of CLAUDE.md
+  - Know where CLAUDE.md should be placed
+  - Write a basic CLAUDE.md configuration file
+  - Have Claude Code follow your specific instructions
+  - Master best practices for writing clear directives
 
-## 📖 理論解釋
+## Theory
 
-### 什麼是 CLAUDE.md？
+### What Is CLAUDE.md?
 
-想像你請了一位新助理來上班。第一天，你會給他一份「入職須知」，上面寫著：
+Imagine you've hired a new assistant starting their first day. You'd give them an "onboarding guide" that says:
 
-- 「我們公司叫 XX，做的是 YY 業務」
-- 「文件要存在這個資料夾」
-- 「Email 用這個格式」
-- 「這些事情絕對不能做」
+- "Our company is called XX, and we do YY"
+- "Files should be stored in this folder"
+- "Use this format for emails"
+- "These things must never be done"
 
-**CLAUDE.md 就是你給 Claude Code 的「入職須知」。**
+**CLAUDE.md is the "onboarding guide" you give to Claude Code.**
 
-每次 Claude Code 開始工作時，它會先讀取這份文件，了解：
-- 這個項目是做什麼的
-- 你希望它遵守哪些規則
-- 有什麼特殊慣例要注意
-- 哪些事情不能做
+Every time Claude Code starts working, it reads this file first to understand:
+- What this project is about
+- What rules you want it to follow
+- Any special conventions to be aware of
+- What it must not do
 
-沒有 CLAUDE.md，Claude Code 就像一個沒有看過公司手冊的新員工 — 它仍然很聰明，但不了解你的具體需求。
+Without a CLAUDE.md, Claude Code is like a new employee who hasn't read the company handbook -- still smart, but unaware of your specific needs.
 
-### CLAUDE.md 放在哪裡？
+### Where Does CLAUDE.md Go?
 
-CLAUDE.md 放在你的**項目根目錄**（project root）— 也就是你項目的最上層資料夾。
+CLAUDE.md goes in your **project root directory** -- the top-level folder of your project.
 
 ```
-my-project/          <-- 項目根目錄
-├── CLAUDE.md        <-- 放在這裡！
+my-project/          <-- Project root directory
+├── CLAUDE.md        <-- Put it here!
 ├── src/
 │   └── app.js
 ├── README.md
 └── package.json
 ```
 
-> 💡 **小提示**：「項目根目錄」就像是你房子的大門口。所有東西都從這裡開始。CLAUDE.md 放在大門口，Claude Code 一進來就能看到。
+> Tip: The "project root directory" is like the front door of your house. Everything starts here. CLAUDE.md goes at the front door so Claude Code sees it the moment it enters.
 
-### CLAUDE.md 的基本結構
+### Basic Structure of CLAUDE.md
 
-一份好的 CLAUDE.md 通常包含以下幾個部分：
+A good CLAUDE.md typically contains the following sections:
 
-| 部分 | 說明 | 比喻 |
-|------|------|------|
-| 項目描述 | 這個項目是什麼、做什麼 | 公司簡介 |
-| 技術棧 | 用了哪些工具和語言 | 辦公室有哪些設備 |
-| 規則 | 必須遵守的規範 | 公司制度 |
-| 慣例 | 命名習慣、代碼風格 | 辦公室的不成文規定 |
-| 禁止事項 | 絕對不能做的事 | 公司紅線 |
+| Section | Description | Analogy |
+|---------|-------------|---------|
+| Project description | What this project is and what it does | Company overview |
+| Tech stack | What tools and languages are used | What equipment the office has |
+| Rules | Required standards to follow | Company policies |
+| Conventions | Naming habits, code style | Unwritten office norms |
+| Prohibited actions | Things that must never be done | Company red lines |
 
-### Claude Code 如何使用 CLAUDE.md？
+### How Does Claude Code Use CLAUDE.md?
 
-當你在一個項目資料夾中啟動 Claude Code 時：
+When you launch Claude Code in a project folder:
 
-1. Claude Code 自動掃描當前目錄
-2. 發現 CLAUDE.md 文件
-3. 讀取並理解其中的所有指令
-4. 在後續的每一次對話中都遵循這些指令
+1. Claude Code automatically scans the current directory
+2. It discovers the CLAUDE.md file
+3. It reads and understands all the instructions within
+4. It follows those instructions in every subsequent conversation
 
-這就像你的助理每天早上都會先翻看一遍手冊，確保自己不會犯錯。
+It's like your assistant reviewing the handbook every morning to make sure they don't make mistakes.
 
-## 💻 代碼示例 1：建立你的第一個 CLAUDE.md
+## Code Example 1: Creating Your First CLAUDE.md
 
-### 步驟一：建立一個練習用的項目資料夾
+### Step 1: Create a Practice Project Folder
 
-首先，打開你的終端機（Terminal），輸入以下指令：
+First, open your terminal and type the following:
 
-**Windows（命令提示字元或 Git Bash）：**
+**Windows (Command Prompt or Git Bash):**
 ```bash
-# 在桌面建立一個練習項目資料夾
+# Create a practice project folder on the desktop
 mkdir ~/Desktop/my-first-project
 
-# 進入這個資料夾
+# Navigate to this folder
 cd ~/Desktop/my-first-project
 ```
 
-**Mac / Linux：**
+**Mac / Linux:**
 ```bash
-# 在桌面建立一個練習項目資料夾
+# Create a practice project folder on the desktop
 mkdir ~/Desktop/my-first-project
 
-# 進入這個資料夾
+# Navigate to this folder
 cd ~/Desktop/my-first-project
 ```
 
-### 步驟二：啟動 Claude Code 並建立 CLAUDE.md
+### Step 2: Launch Claude Code and Create CLAUDE.md
 
-在該資料夾中啟動 Claude Code：
+Launch Claude Code in that folder:
 
 ```bash
 claude
 ```
 
-然後輸入以下指令：
+Then type the following command:
 
 ```
-請幫我建立一個 CLAUDE.md 文件，內容如下：
+Please create a CLAUDE.md file with the following content:
 
 # My First Project
 
-## 項目描述
-這是一個學習用的練習項目，用來練習使用 Claude Code。
+## Project Description
+This is a practice project for learning how to use Claude Code.
 
-## 規則
-- 所有文件使用 UTF-8 編碼
-- 代碼注釋使用繁體中文
-- 文件名使用小寫英文，用連字號分隔（例如：my-file.txt）
+## Rules
+- All files use UTF-8 encoding
+- Code comments should be in English
+- File names use lowercase English with hyphens (e.g., my-file.txt)
 
-## 禁止事項
-- 不要刪除任何現有文件
-- 不要使用簡體中文
+## Prohibited Actions
+- Do not delete any existing files
+- Do not use abbreviations in comments
 ```
 
-### 預期輸出：
+### Expected Output:
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌─────────────────────────────────────────────┐
-│ Claude Code                                 │
-│                                             │
-│ ✓ 已建立文件：CLAUDE.md                      │
-│                                             │
-│ 文件內容包含：                                │
-│ - 項目描述                                   │
-│ - 規則（3 條）                                │
-│ - 禁止事項（2 條）                            │
-└─────────────────────────────────────────────┘
++---------------------------------------------+
+| Claude Code                                 |
+|                                             |
+| Created file: CLAUDE.md                     |
+|                                             |
+| File contents include:                      |
+| - Project description                       |
+| - Rules (3 items)                           |
+| - Prohibited actions (2 items)              |
++---------------------------------------------+
 ```
 
-Claude Code 會建立這個文件，並從此刻開始遵循你寫的規則。
+Claude Code will create this file and start following your rules from this point on.
 
-## 💻 代碼示例 2：撰寫一份更完整的 CLAUDE.md
+## Code Example 2: Writing a More Complete CLAUDE.md
 
-以下是一份更完整的 CLAUDE.md 範例，適合用在一個小型網站項目中：
+Here is a more complete CLAUDE.md example, suitable for a small website project:
 
 ```markdown
-# 我的個人網站
+# My Personal Website
 
-## 項目描述
-這是我的個人作品集網站，展示我的設計作品和聯絡方式。
-使用 HTML 和 CSS 構建，不需要 JavaScript。
+## Project Description
+This is my personal portfolio website, showcasing my design work and contact information.
+Built with HTML and CSS, no JavaScript required.
 
-## 技術棧
+## Tech Stack
 - HTML5
 - CSS3
-- 靜態網站（不需要伺服器）
+- Static website (no server needed)
 
-## 文件結構
+## File Structure
 ```
 website/
-├── index.html      （首頁）
-├── about.html      （關於我）
-├── portfolio.html  （作品集）
+├── index.html      (Home page)
+├── about.html      (About me)
+├── portfolio.html  (Portfolio)
 ├── css/
-│   └── style.css   （樣式表）
-└── images/         （圖片資料夾）
+│   └── style.css   (Stylesheet)
+└── images/         (Images folder)
 ```
 
-## 設計規範
-- 主色調：#2C3E50（深藍灰）
-- 強調色：#E74C3C（紅色）
-- 字體：使用系統預設字體
-- 所有頁面必須是響應式設計（手機也能看）
+## Design Specifications
+- Primary colour: #2C3E50 (dark blue-grey)
+- Accent colour: #E74C3C (red)
+- Font: use system default fonts
+- All pages must be responsive (mobile-friendly)
 
-## 命名慣例
-- HTML 文件：小寫英文，用連字號分隔（my-page.html）
-- CSS class：使用 kebab-case（例如：main-header）
-- 圖片：描述性名稱（hero-banner.jpg，而非 img1.jpg）
+## Naming Conventions
+- HTML files: lowercase English with hyphens (my-page.html)
+- CSS classes: use kebab-case (e.g., main-header)
+- Images: descriptive names (hero-banner.jpg, not img1.jpg)
 
-## 禁止事項
-- 不要使用 JavaScript（這是純 HTML/CSS 項目）
-- 不要使用外部 CSS 框架（如 Bootstrap）
-- 不要在 HTML 中使用行內樣式（inline styles）
+## Prohibited Actions
+- Do not use JavaScript (this is a pure HTML/CSS project)
+- Do not use external CSS frameworks (like Bootstrap)
+- Do not use inline styles in HTML
 ```
 
-你可以告訴 Claude Code：
+You can tell Claude Code:
 
 ```
-請用上面這個範例的格式，幫我建立 CLAUDE.md
+Please create a CLAUDE.md using the format from the example above
 ```
 
-### 預期輸出：
+### Expected Output:
 
-Claude Code 會建立文件，之後當你請它建立新的 HTML 頁面時，它會自動：
-- 使用你指定的顏色 #2C3E50 和 #E74C3C
-- 不使用 JavaScript
-- 按照你的命名慣例命名文件
-- 確保響應式設計
+Claude Code will create the file, and from then on, whenever you ask it to create new HTML pages, it will automatically:
+- Use your specified colours #2C3E50 and #E74C3C
+- Not use JavaScript
+- Follow your naming conventions
+- Ensure responsive design
 
-這就是 CLAUDE.md 的威力 — **你只需要說一次，它永遠記得**。
+This is the power of CLAUDE.md -- **you only need to say it once, and it remembers forever**.
 
-## ✍️ 動手練習
+## Hands-On Practice
 
-### 練習 1：為你的興趣項目建立 CLAUDE.md
+### Exercise 1: Create a CLAUDE.md for a Project You're Interested In
 
-想一個你有興趣的項目（例如：食譜收藏網站、旅行日記、學習筆記），然後：
+Think of a project you're interested in (for example: a recipe collection site, a travel journal, study notes), then:
 
-1. 建立一個新的資料夾
-2. 啟動 Claude Code
-3. 請它幫你建立一份 CLAUDE.md，包含：
-   - 項目描述（至少 2 句話）
-   - 至少 3 條規則
-   - 至少 2 條禁止事項
+1. Create a new folder
+2. Launch Claude Code
+3. Ask it to create a CLAUDE.md that includes:
+   - A project description (at least 2 sentences)
+   - At least 3 rules
+   - At least 2 prohibited actions
 
-> 💡 **提示**：不需要太完美！CLAUDE.md 可以隨時修改和更新。先寫一個簡單的版本，以後再慢慢補充。
+> Tip: It doesn't need to be perfect! CLAUDE.md can be modified and updated at any time. Start with a simple version and add to it later.
 
-### 練習 2：測試 CLAUDE.md 是否生效
+### Exercise 2: Test Whether CLAUDE.md Takes Effect
 
-在練習 1 建立的項目中，試試以下操作：
+In the project from Exercise 1, try the following:
 
-1. 請 Claude Code 建立一個新文件
-2. 觀察它是否遵循了你在 CLAUDE.md 中設定的規則
-3. 如果沒有遵循，試著修改 CLAUDE.md 讓指令更清楚
+1. Ask Claude Code to create a new file
+2. Observe whether it followed the rules you set in CLAUDE.md
+3. If it didn't follow them, try editing CLAUDE.md to make the instructions clearer
 
-> 💡 **提示**：如果 Claude Code 沒有按照你的規則行事，可能是你的指令不夠明確。試著用更直接、具體的語句。例如，與其寫「注意代碼品質」，不如寫「每個函數都必須有注釋說明用途」。
+> Tip: If Claude Code doesn't follow your rules, your instructions might not be specific enough. Try using more direct, concrete language. For example, instead of writing "pay attention to code quality," write "every function must have a comment explaining its purpose."
 
-## ❓ 小測驗（3 條題目）
+## Quiz (3 Questions)
 
-1. CLAUDE.md 文件應該放在項目的什麼位置？
-   A. 放在 src/ 資料夾裡面
-   B. 放在項目根目錄（最上層資料夾）
-   C. 放在電腦桌面
-   D. 放在任何子資料夾都可以
+1. Where should the CLAUDE.md file be placed in a project?
+   A. Inside the src/ folder
+   B. In the project root directory (the top-level folder)
+   C. On the computer desktop
+   D. In any subfolder
 
-   答案：B — CLAUDE.md 必須放在項目根目錄，這樣 Claude Code 在進入項目時才能第一時間找到並讀取它。就像公司手冊要放在前台，新員工一進門就能拿到。
+   Answer: B -- CLAUDE.md must be placed in the project root directory so that Claude Code can find and read it the moment it enters the project. It's like putting a company handbook at the front desk where new employees can pick it up immediately.
 
-2. 以下哪一項是 CLAUDE.md 的最佳實踐？
-   A. 指令越模糊越好，給 AI 更多自由發揮空間
-   B. 寫得越長越好，越詳細越好
-   C. 使用清晰、具體的指令，避免模糊表述
-   D. 只需要寫禁止事項，不需要寫其他內容
+2. Which of the following is a best practice for CLAUDE.md?
+   A. The vaguer the instructions, the better, to give the AI more creative freedom
+   B. The longer the better, the more detailed the better
+   C. Use clear, specific instructions and avoid vague language
+   D. Only write prohibited actions, nothing else is needed
 
-   答案：C — 清晰、具體的指令能讓 Claude Code 更準確地理解你的需求。模糊的指令可能導致意料之外的結果。但也不需要寫到過長，重點是精確而非冗長。
+   Answer: C -- Clear, specific instructions help Claude Code understand your needs more accurately. Vague instructions can lead to unexpected results. But it doesn't need to be excessively long either -- the focus should be on precision, not length.
 
-3. 如果你修改了 CLAUDE.md，Claude Code 會在什麼時候讀取新的內容？
-   A. 永遠不會，因為它只在第一次讀取
-   B. 需要重新安裝 Claude Code
-   C. 下次開始新的對話時，它會讀取最新的內容
-   D. 需要手動執行一個特殊指令
+3. If you modify CLAUDE.md, when will Claude Code read the new content?
+   A. Never, because it only reads it the first time
+   B. You need to reinstall Claude Code
+   C. The next time you start a new conversation, it will read the latest content
+   D. You need to run a special command manually
 
-   答案：C — Claude Code 在每次啟動新的對話時都會重新讀取 CLAUDE.md，所以你的修改會在下一次互動中生效。你也可以在對話中要求 Claude Code 重新讀取 CLAUDE.md。
+   Answer: C -- Claude Code re-reads CLAUDE.md every time a new conversation starts, so your changes will take effect in the next session. You can also ask Claude Code to re-read CLAUDE.md during a conversation.
 
-## 🔗 下一步
+## Next Steps
 
-太棒了！你已經學會了如何用 CLAUDE.md 來「教」Claude Code 了解你的項目。
+Great work! You've learned how to use CLAUDE.md to "teach" Claude Code about your project.
 
-在下一個模塊 **2.2：文件讀取與編輯** 中，我們將學習如何讓 Claude Code 幫你讀取、建立和修改文件。這是 Claude Code 最常用的功能之一 — 你將學會如何讓 AI 幫你管理項目中的所有文件。
+In the next module, **2.2: Reading and Editing Files**, we'll learn how to have Claude Code help you read, create, and modify files. This is one of Claude Code's most commonly used features -- you'll learn how to let the AI manage all the files in your project.

@@ -1,257 +1,259 @@
-# 模塊 1.1：什麼是 Claude Code？
+# Module 1.1: What Is Claude Code?
 
-## 🎯 學習目標
+## Learning Objectives
 
-完成本課後你能夠：
-- 用自己的話解釋 Claude Code 是什麼
-- 分辨 Claude Code 與 ChatGPT 等聊天工具的不同之處
-- 理解 Claude Code 能幫你完成哪些工作
-- 認識「終端機」和「命令行」的基本概念
-- 了解為什麼 Claude Code 對零基礎學習者也很友善
-
----
-
-## 📖 理論解釋
-
-### 什麼是 Claude Code？
-
-想像你請了一位超級助手坐在你的電腦旁邊。這位助手不僅能跟你聊天，還能**直接幫你操作電腦**——建立文件、編輯程式碼、搜尋資料、甚至執行命令。
-
-這就是 **Claude Code**。
-
-更準確地說，Claude Code 是 Anthropic 公司推出的一款 **AI 命令行工具**（CLI Tool）。它運行在你電腦的「終端機」（Terminal）裡，讓你用日常語言指揮 AI 幫你完成各種軟體開發和自動化任務。
-
-### 用一個比喻來理解
-
-| 比喻 | 說明 |
-|---|---|
-| 💬 ChatGPT / Claude.ai（網頁版） | 就像**打電話問朋友**：你問問題，朋友回答，但朋友不能直接碰你的電腦 |
-| 💻 Claude Code（命令行版） | 就像**朋友坐在你旁邊**：你說想做什麼，朋友直接幫你在電腦上操作 |
-
-關鍵區別：**Claude Code 可以直接讀取和修改你電腦上的文件**。它不只是給你建議，而是真的動手幫你做。
-
-### Claude Code 能做什麼？
-
-作為一個零基礎的學習者，以下是你可以用 Claude Code 完成的事情：
-
-| 任務 | 例子 |
-|---|---|
-| 📁 建立和管理文件 | 「幫我在桌面建立一個叫 my-project 的資料夾」 |
-| ✏️ 編輯文件內容 | 「把 README.md 裡的標題改成繁體中文」 |
-| 🔍 搜尋文件 | 「幫我找出這個專案裡所有包含 'error' 的文件」 |
-| 🐛 修復問題 | 「這段程式報錯了，幫我看看問題在哪裡」 |
-| 🤖 自動化重複工作 | 「每天自動整理這個資料夾裡的文件」 |
-| 📝 撰寫程式碼 | 「幫我寫一個簡單的網頁」 |
-
-### 什麼是「終端機」？
-
-在繼續之前，讓我們先認識一個重要的概念——**終端機**（Terminal）。
-
-終端機就像是你電腦的**文字版遙控器**。平常你用滑鼠點擊圖示來打開程式，但用終端機，你用**打字**來告訴電腦做事。
-
-📸 [你應該看到的畫面]
-在 Windows 上打開終端機，你會看到類似這樣的介面：
-```
-┌──────────────────────────────────────────┐
-│ C:\Users\你的名字>                        │
-│                                          │
-│ （這裡是你輸入指令的地方）                 │
-│                                          │
-└──────────────────────────────────────────┘
-```
-
-在 Mac 上，它看起來像這樣：
-```
-┌──────────────────────────────────────────┐
-│ 你的名字@MacBook ~ %                     │
-│                                          │
-│ （這裡是你輸入指令的地方）                 │
-│                                          │
-└──────────────────────────────────────────┘
-```
-
-不用害怕！你不需要記住任何複雜的命令。Claude Code 的魅力就在於——**你只要用普通話說你想做什麼，它就幫你做**。
-
-### Claude Code 的運作方式
-
-Claude Code 的工作流程非常簡單，只有三步：
-
-```
-你（用文字描述任務）  →  Claude Code（理解並執行）  →  結果（顯示在終端機）
-```
-
-**第一步：你描述需求**
-> 「幫我建立一個叫 hello.txt 的文件，內容寫 Hello World」
-
-**第二步：Claude Code 規劃行動**
-Claude Code 會告訴你它打算做什麼，並請你確認（安全機制）。
-
-**第三步：執行並回報**
-Claude Code 動手完成任務，並告訴你結果。
-
-這個「先問再做」的設計讓你始終掌握控制權——Claude Code 不會在你不知情的情況下改動你的電腦。
+After completing this lesson, you will be able to:
+- Explain what Claude Code is in your own words
+- Distinguish Claude Code from chat tools like ChatGPT
+- Understand what tasks Claude Code can help you accomplish
+- Recognise the basic concepts of "terminal" and "command line"
+- Understand why Claude Code is beginner-friendly, even for those with zero experience
 
 ---
 
-## 💻 代碼示例 1：你的第一次 Claude Code 對話
+## Theory
 
-> ⚠️ 注意：這個示例是為了讓你預覽 Claude Code 的使用體驗。你還不需要實際操作——安裝步驟會在模塊 1.2 詳細說明。
+### What Is Claude Code?
 
-假設你已經安裝好 Claude Code，在終端機裡輸入 `claude` 啟動它：
+Imagine you've hired a super assistant sitting right next to your computer. This assistant can not only chat with you, but can also **directly operate your computer** -- creating files, editing code, searching for information, and even running commands.
+
+That is **Claude Code**.
+
+More precisely, Claude Code is an **AI command-line tool** (CLI Tool) developed by Anthropic. It runs in your computer's "terminal" and lets you use everyday language to instruct the AI to complete various software development and automation tasks.
+
+### An Analogy to Help You Understand
+
+| Analogy | Explanation |
+|---|---|
+| ChatGPT / Claude.ai (web version) | Like **calling a friend on the phone**: you ask questions, your friend answers, but your friend can't touch your computer |
+| Claude Code (command-line version) | Like **having a friend sit next to you**: you say what you want to do, and your friend does it directly on your computer |
+
+The key difference: **Claude Code can directly read and modify files on your computer**. It doesn't just give you suggestions -- it actually does the work for you.
+
+### What Can Claude Code Do?
+
+As a complete beginner, here are things you can accomplish with Claude Code:
+
+| Task | Example |
+|---|---|
+| Create and manage files | "Create a folder called my-project on the desktop" |
+| Edit file contents | "Change the title in README.md to English" |
+| Search files | "Find all files containing 'error' in this project" |
+| Fix problems | "This code is throwing an error, help me find the issue" |
+| Automate repetitive work | "Automatically organise the files in this folder every day" |
+| Write code | "Write me a simple web page" |
+
+### What Is a "Terminal"?
+
+Before we continue, let's get familiar with an important concept -- the **terminal**.
+
+The terminal is like a **text-based remote control** for your computer. Normally you click icons with a mouse to open programs, but with a terminal, you **type** to tell the computer what to do.
+
+[What you should see]
+On Windows, when you open the terminal, you'll see an interface like this:
+```
++------------------------------------------+
+| C:\Users\YourName>                       |
+|                                          |
+| (This is where you type commands)        |
+|                                          |
++------------------------------------------+
+```
+
+On Mac, it looks like this:
+```
++------------------------------------------+
+| YourName@MacBook ~ %                     |
+|                                          |
+| (This is where you type commands)        |
+|                                          |
++------------------------------------------+
+```
+
+Don't be afraid! You don't need to memorise any complicated commands. The beauty of Claude Code is that **you just describe what you want to do in plain language, and it does it for you**.
+
+### How Claude Code Works
+
+Claude Code's workflow is very simple -- just three steps:
+
+```
+You (describe the task in text)  ->  Claude Code (understands and executes)  ->  Result (displayed in the terminal)
+```
+
+**Step 1: You describe your request**
+> "Create a file called hello.txt with the content Hello World"
+
+**Step 2: Claude Code plans the action**
+Claude Code will tell you what it intends to do and ask for your confirmation (a safety mechanism).
+
+**Step 3: Execute and report**
+Claude Code completes the task and tells you the result.
+
+This "ask before acting" design ensures you always stay in control -- Claude Code won't make changes to your computer without your knowledge.
+
+---
+
+## Code Example 1: Your First Claude Code Conversation
+
+> Note: This example is meant to give you a preview of the Claude Code experience. You don't need to actually do this yet -- installation steps will be covered in detail in Module 1.2.
+
+Assuming you've already installed Claude Code, type `claude` in the terminal to start it:
 
 ```bash
-# 在終端機輸入 claude 啟動 Claude Code
+# Type claude in the terminal to start Claude Code
 claude
 ```
 
-然後你可以直接用自然語言跟它對話：
+Then you can talk to it directly in natural language:
 
 ```
-你：幫我看看現在這個資料夾裡有什麼文件
+You: Show me what files are in the current folder
 
-Claude Code：讓我幫你查看當前目錄的內容。
+Claude Code: Let me check the contents of the current directory for you.
 
-（Claude Code 會列出當前資料夾裡的所有文件和子資料夾）
+(Claude Code will list all files and subfolders in the current folder)
 ```
 
-### 預期輸出：
+### Expected Output:
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌──────────────────────────────────────────────────┐
-│ > claude                                         │
-│                                                  │
-│ ╭──────────────────────────────────────────────╮  │
-│ │ Claude Code v1.x                             │  │
-│ │ 輸入你的指令，或按 /help 查看可用命令        │  │
-│ ╰──────────────────────────────────────────────╯  │
-│                                                  │
-│ 你> 幫我看看現在這個資料夾裡有什麼文件           │
-│                                                  │
-│ Claude: 我來查看當前目錄的內容。                  │
-│                                                  │
-│ 📁 當前目錄包含：                                │
-│   - README.md                                    │
-│   - package.json                                 │
-│   - src/                                         │
-│   - ...                                          │
-└──────────────────────────────────────────────────┘
++--------------------------------------------------+
+| > claude                                         |
+|                                                  |
+| +----------------------------------------------+ |
+| | Claude Code v1.x                             | |
+| | Type your command, or press /help for         | |
+| | available commands                            | |
+| +----------------------------------------------+ |
+|                                                  |
+| You> Show me what files are in the current folder|
+|                                                  |
+| Claude: Let me check the contents of the current |
+| directory.                                       |
+|                                                  |
+| Current directory contains:                      |
+|   - README.md                                    |
+|   - package.json                                 |
+|   - src/                                         |
+|   - ...                                          |
++--------------------------------------------------+
 ```
 
-重點：你不需要記住任何「命令」！只要用你習慣的語言描述你想做的事。
+The key point: you don't need to memorise any "commands"! Just describe what you want to do in your own words.
 
 ---
 
-## 💻 代碼示例 2：讓 Claude Code 幫你建立文件
+## Code Example 2: Having Claude Code Create a File for You
 
-這是一個稍微進階的例子，展示 Claude Code 如何幫你建立一個完整的文件：
+Here's a slightly more advanced example showing how Claude Code can create a complete file for you:
 
 ```
-你：幫我建立一個叫 self-intro.txt 的文件，內容是我的自我介紹模板
+You: Create a file called self-intro.txt with a self-introduction template
 
-Claude Code：好的，我來幫你建立這個文件。
+Claude Code: Sure, I'll create that file for you.
 
-（Claude Code 會生成文件內容，並詢問你是否確認建立）
+(Claude Code will generate the file content and ask you to confirm before creating it)
 ```
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌──────────────────────────────────────────────────┐
-│ 你> 幫我建立一個叫 self-intro.txt 的文件，        │
-│     內容是我的自我介紹模板                        │
-│                                                  │
-│ Claude: 我來幫你建立 self-intro.txt。             │
-│                                                  │
-│ 📝 將建立文件 self-intro.txt：                    │
-│ ┌────────────────────────────────────────────┐    │
-│ │ 自我介紹                                   │    │
-│ │                                            │    │
-│ │ 姓名：                                     │    │
-│ │ 職業：                                     │    │
-│ │ 興趣愛好：                                 │    │
-│ │ 學習目標：                                 │    │
-│ └────────────────────────────────────────────┘    │
-│                                                  │
-│ 確認建立？(Y/n)                                   │
-└──────────────────────────────────────────────────┘
++--------------------------------------------------+
+| You> Create a file called self-intro.txt with    |
+|      a self-introduction template                |
+|                                                  |
+| Claude: I'll create self-intro.txt for you.      |
+|                                                  |
+| Will create file self-intro.txt:                 |
+| +--------------------------------------------+   |
+| | Self-Introduction                          |   |
+| |                                            |   |
+| | Name:                                      |   |
+| | Occupation:                                |   |
+| | Hobbies:                                   |   |
+| | Learning goals:                            |   |
+| +--------------------------------------------+   |
+|                                                  |
+| Confirm creation? (Y/n)                          |
++--------------------------------------------------+
 ```
 
-注意到了嗎？Claude Code 在真正建立文件之前，會先讓你看內容，並**請求你的確認**。這就是我們前面說的安全機制——你永遠擁有最終決定權。
+Did you notice? Before actually creating the file, Claude Code shows you the content first and **asks for your confirmation**. This is the safety mechanism we mentioned earlier -- you always have the final say.
 
 ---
 
-## ✍️ 動手練習
+## Hands-On Practice
 
-### 練習 1：思考你的使用場景
+### Exercise 1: Think About Your Use Cases
 
-在紙上或筆記本裡寫下 3 個你希望 Claude Code 幫你完成的任務。例如：
-- 整理電腦裡的文件
-- 學習寫一個簡單的網頁
-- 自動化某個每天都要重複做的工作
+On paper or in a notebook, write down 3 tasks you'd like Claude Code to help you with. For example:
+- Organise files on your computer
+- Learn to build a simple web page
+- Automate some task you repeat every day
 
-> 💡 提示：不要限制自己的想像！Claude Code 的能力可能比你想像的更強大。把這些想法記下來，我們在後面的課程中會逐步教你實現它們。
+> Tip: Don't limit your imagination! Claude Code might be more capable than you think. Write down these ideas -- we'll teach you how to accomplish them in later lessons.
 
-### 練習 2：認識你的終端機
+### Exercise 2: Get to Know Your Terminal
 
-嘗試在你的電腦上找到終端機並打開它：
+Try to find and open the terminal on your computer:
 
-**Windows 用戶：**
-1. 按下鍵盤上的 `Windows 鍵`
-2. 輸入 `Terminal` 或 `cmd`
-3. 點擊「終端機」或「命令提示字元」
+**Windows users:**
+1. Press the `Windows key` on your keyboard
+2. Type `Terminal` or `cmd`
+3. Click "Terminal" or "Command Prompt"
 
-**Mac 用戶：**
-1. 按下 `Command + 空白鍵` 打開 Spotlight
-2. 輸入 `Terminal`
-3. 按 Enter 打開
+**Mac users:**
+1. Press `Command + Space` to open Spotlight
+2. Type `Terminal`
+3. Press Enter to open
 
-> 💡 提示：打開後不需要輸入任何東西！只要看看它長什麼樣子就好。我們在模塊 1.2 會正式開始使用它。
-
----
-
-## ❓ 小測驗（3 條題目）
-
-**1. Claude Code 與一般 AI 聊天機器人（如 ChatGPT 網頁版）最大的區別是什麼？**
-
-A. Claude Code 比較聰明  
-B. Claude Code 可以直接讀取和修改你電腦上的文件  
-C. Claude Code 是免費的  
-D. Claude Code 只能用英文  
-
-答案：B — Claude Code 最大的特色是它能直接與你的電腦互動，不只是回答問題，而是真的動手幫你操作文件和執行命令。
+> Tip: Once it's open, you don't need to type anything! Just see what it looks like. We'll start using it properly in Module 1.2.
 
 ---
 
-**2. 什麼是「終端機」（Terminal）？**
+## Quiz (3 Questions)
 
-A. 一種特殊的瀏覽器  
-B. 一種用文字來操作電腦的介面  
-C. 一個購物網站  
-D. Claude Code 的官方網站  
+**1. What is the biggest difference between Claude Code and a regular AI chatbot (like the web version of ChatGPT)?**
 
-答案：B — 終端機是一個用文字指令來操作電腦的介面。你輸入文字命令，電腦就執行對應的操作。Claude Code 就運行在終端機裡。
+A. Claude Code is smarter  
+B. Claude Code can directly read and modify files on your computer  
+C. Claude Code is free  
+D. Claude Code can only be used in English  
 
----
-
-**3. 當 Claude Code 要修改你的文件時，它會怎麼做？**
-
-A. 直接修改，不會通知你  
-B. 先告訴你它打算做什麼，等你確認後才執行  
-C. 發一封 email 通知你  
-D. 自動備份後直接修改  
-
-答案：B — Claude Code 有安全機制，在執行可能影響你文件的操作之前，它會先說明計劃並請求你的確認。你始終擁有最終控制權。
+Answer: B -- Claude Code's most distinctive feature is its ability to interact directly with your computer. It doesn't just answer questions -- it actually helps you operate files and run commands.
 
 ---
 
-## 🔗 下一步
+**2. What is a "terminal"?**
 
-恭喜你完成了第一課！現在你已經了解了 Claude Code 是什麼以及它能做什麼。
+A. A special type of browser  
+B. A text-based interface for operating your computer  
+C. A shopping website  
+D. Claude Code's official website  
 
-在下一個模塊 **1.2《安裝 Claude Code》** 中，我們會手把手教你：
-- 安裝 Node.js（Claude Code 運行所需的基礎環境）
-- 獲取 Anthropic API 密鑰
-- 在你的電腦上安裝 Claude Code
-- 驗證安裝是否成功
+Answer: B -- A terminal is an interface where you operate your computer using text commands. You type a command, and the computer carries out the corresponding action. Claude Code runs inside the terminal.
 
-準備好了嗎？讓我們繼續前進！
+---
+
+**3. When Claude Code needs to modify your files, what does it do?**
+
+A. Modifies them directly without notifying you  
+B. First tells you what it plans to do, then waits for your confirmation before executing  
+C. Sends you an email notification  
+D. Automatically backs up and then modifies directly  
+
+Answer: B -- Claude Code has a safety mechanism. Before performing any action that could affect your files, it explains its plan and asks for your confirmation. You always have ultimate control.
+
+---
+
+## Next Steps
+
+Congratulations on completing the first lesson! Now you understand what Claude Code is and what it can do.
+
+In the next module, **1.2: Installing Claude Code**, we'll walk you through step by step:
+- Installing Node.js (the runtime environment Claude Code needs)
+- Getting your Anthropic API key
+- Installing Claude Code on your computer
+- Verifying that the installation was successful
+
+Ready? Let's keep going!

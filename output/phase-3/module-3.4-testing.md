@@ -1,223 +1,223 @@
-# 模塊 3.4：測試與品質保證 (Testing and Quality Assurance)
+# Module 3.4: Testing and Quality Assurance
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 理解什麼是測試，以及為什麼測試很重要
-  - 請 Claude Code 為你的程式碼撰寫測試
-  - 執行測試並理解測試結果（通過/失敗）
-  - 理解測試如何在長期節省時間
-  - 為一個簡單的函數編寫完整的測試
+## 🎯 Learning Objectives
+- After completing this lesson, you will be able to:
+  - Understand what testing is and why it's important
+  - Ask Claude Code to write tests for your code
+  - Run tests and understand the results (pass/fail)
+  - Understand how testing saves time in the long run
+  - Write comprehensive tests for a simple function
 
-## 📖 理論解釋
+## 📖 Theory
 
-### 什麼是測試？
+### What Is Testing?
 
-想像你要**買一輛二手車**。你會怎麼做？
-- 試開看看引擎有沒有問題
-- 檢查煞車是否正常
-- 開開關關車燈、雨刷
-- 確認冷氣能不能用
+Imagine you're **buying a used car**. What would you do?
+- Test drive it to check if the engine has any problems
+- Check whether the brakes work properly
+- Toggle the lights and windshield wipers on and off
+- Make sure the air conditioning works
 
-這些「試一試」的動作，就是**測試**。
+These "try it and see" actions are **testing**.
 
-在程式開發中，測試就是寫一些「小程式」來自動檢查你的主程式是否正確運作。比如：
-- 加法函數：輸入 2 + 3，結果應該是 5
-- 折扣函數：100 元打 8 折，結果應該是 80 元
-- 排序函數：輸入 [3, 1, 2]，結果應該是 [1, 2, 3]
+In software development, testing means writing small programs that automatically check whether your main program works correctly. For example:
+- Addition function: input 2 + 3, result should be 5
+- Discount function: $100 at 20% off, result should be $80
+- Sort function: input [3, 1, 2], result should be [1, 2, 3]
 
-### 為什麼要寫測試？
+### Why Write Tests?
 
-| 不寫測試 | 有寫測試 |
+| Without Tests | With Tests |
 |---------|---------|
-| 改了一個地方，不知道會不會影響其他功能 | 改完後跑一次測試，馬上知道有沒有問題 |
-| 上線後才發現 bug，修復代價大 | 發布前就發現 bug，修復成本低 |
-| 過了三個月回來改程式，不確定什麼能動 | 跑測試就知道一切是否正常 |
-| 每次都要手動測試每個功能 | 一個指令自動測試全部功能 |
+| Change one thing, no idea if it breaks something else | Run tests after every change, immediately know if there's a problem |
+| Discover bugs after going live — expensive to fix | Catch bugs before release — cheap to fix |
+| Come back to the code three months later, not sure what still works | Run tests and you'll know right away if everything is fine |
+| Manually test every feature each time | One command to automatically test everything |
 
-**日常比喻**：測試就像做菜時**邊做邊試味道**。如果你做完一整道菜才嚐第一口，發現鹽太多就來不及了。但如果每加一次調味料就試一口，就能確保最後的味道剛好。
+**Everyday analogy**: Testing is like **tasting as you cook**. If you wait until the entire dish is done to take your first bite and discover there's too much salt, it's too late. But if you taste after each seasoning, you can make sure the flavor is just right.
 
-### 測試的基本概念
+### Basic Concepts of Testing
 
-一個測試包含三個部分（想像成三步驟）：
+A test consists of three parts (think of it as three steps):
 
-1. **準備 (Arrange)** — 準備測試需要的數據
-2. **執行 (Act)** — 執行你要測試的功能
-3. **驗證 (Assert)** — 檢查結果是否符合預期
+1. **Arrange** — Prepare the data needed for the test
+2. **Act** — Execute the feature you want to test
+3. **Assert** — Check whether the result matches expectations
 
-就像試車的流程：
-1. **準備**：坐上駕駛座，繫好安全帶
-2. **執行**：轉動鑰匙，踩油門
-3. **驗證**：引擎有沒有正常啟動？
+Like the process of test-driving a car:
+1. **Arrange**: Sit in the driver's seat, buckle up
+2. **Act**: Turn the key, press the gas pedal
+3. **Assert**: Did the engine start normally?
 
-### Python 的測試工具：pytest
+### Python's Testing Tool: pytest
 
-Python 有一個非常好用的測試工具叫 `pytest`。它可以：
-- 自動找到所有測試文件
-- 執行所有測試
-- 用清楚的方式告訴你哪些通過、哪些失敗
+Python has a very useful testing tool called `pytest`. It can:
+- Automatically find all test files
+- Run all tests
+- Clearly tell you which passed and which failed
 
-先安裝 pytest：
+First, install pytest:
 
-**Windows (Git Bash)：**
+**Windows (Git Bash):**
 ```bash
 pip install pytest
 ```
 
-**Mac/Linux：**
+**Mac/Linux:**
 ```bash
 pip3 install pytest
 ```
 
-## 💻 代碼示例 1：為計算器寫測試
+## 💻 Code Example 1: Writing Tests for a Calculator
 
-讓我們建立一個簡單的計算器，然後為它寫測試。
+Let's build a simple calculator, then write tests for it.
 
-建立練習環境：
+Set up the practice environment:
 
 ```bash
 mkdir -p ~/claude-practice/testing
 cd ~/claude-practice/testing
 ```
 
-首先，建立我們要測試的程式 `calculator.py`：
+First, create the program we want to test, `calculator.py`:
 
 ```python
-# calculator.py — 簡易計算器
+# calculator.py — Simple calculator
 
 def add(a, b):
-    """兩個數相加"""
+    """Add two numbers"""
     return a + b
 
 def subtract(a, b):
-    """兩個數相減"""
+    """Subtract two numbers"""
     return a - b
 
 def multiply(a, b):
-    """兩個數相乘"""
+    """Multiply two numbers"""
     return a * b
 
 def divide(a, b):
-    """兩個數相除，除以零時回傳錯誤訊息"""
+    """Divide two numbers, returns error when dividing by zero"""
     if b == 0:
-        raise ValueError("不能除以零")
+        raise ValueError("Cannot divide by zero")
     return a / b
 
 def percentage(amount, percent):
-    """計算百分比，例如 200 的 15% = 30"""
+    """Calculate a percentage, e.g., 15% of 200 = 30"""
     return amount * percent / 100
 ```
 
-現在啟動 Claude Code：
+Now start Claude Code:
 
 ```bash
 cd ~/claude-practice/testing
 claude
 ```
 
-對 Claude Code 說：
+Tell Claude Code:
 
 ```
-請為 calculator.py 中的所有函數寫測試。
-用 pytest 格式，保存到 test_calculator.py。
-每個函數至少要有 3 個測試案例，包含：
-1. 正常情況
-2. 邊界情況（例如 0、負數）
-3. 錯誤情況（例如除以零）
+Please write tests for all the functions in calculator.py.
+Use pytest format and save to test_calculator.py.
+Each function should have at least 3 test cases, including:
+1. Normal cases
+2. Edge cases (e.g., 0, negative numbers)
+3. Error cases (e.g., division by zero)
 ```
 
-Claude Code 會生成類似這樣的測試文件：
+Claude Code will generate a test file similar to this:
 
 ```python
-# test_calculator.py — calculator.py 的測試文件
-import pytest                              # 引入測試框架
+# test_calculator.py — Test file for calculator.py
+import pytest                              # Import the testing framework
 from calculator import add, subtract, multiply, divide, percentage
 
-# ===== 測試 add 函數 =====
+# ===== Tests for the add function =====
 
 def test_add_positive_numbers():
-    """測試：兩個正數相加"""
-    result = add(2, 3)                     # 執行：計算 2 + 3
-    assert result == 5                     # 驗證：結果應該是 5
+    """Test: adding two positive numbers"""
+    result = add(2, 3)                     # Act: calculate 2 + 3
+    assert result == 5                     # Assert: result should be 5
 
 def test_add_negative_numbers():
-    """測試：負數相加"""
+    """Test: adding negative numbers"""
     result = add(-1, -1)
     assert result == -2
 
 def test_add_zero():
-    """測試：加零"""
+    """Test: adding zero"""
     result = add(5, 0)
-    assert result == 5                     # 任何數加零應該等於自己
+    assert result == 5                     # Any number plus zero should equal itself
 
-# ===== 測試 subtract 函數 =====
+# ===== Tests for the subtract function =====
 
 def test_subtract_basic():
-    """測試：基本減法"""
+    """Test: basic subtraction"""
     assert subtract(10, 3) == 7
 
 def test_subtract_negative_result():
-    """測試：結果為負數"""
+    """Test: result is negative"""
     assert subtract(3, 10) == -7
 
 def test_subtract_same_numbers():
-    """測試：相同的數相減"""
+    """Test: subtracting equal numbers"""
     assert subtract(5, 5) == 0
 
-# ===== 測試 multiply 函數 =====
+# ===== Tests for the multiply function =====
 
 def test_multiply_basic():
-    """測試：基本乘法"""
+    """Test: basic multiplication"""
     assert multiply(4, 5) == 20
 
 def test_multiply_by_zero():
-    """測試：乘以零"""
-    assert multiply(100, 0) == 0           # 任何數乘以零都是零
+    """Test: multiplying by zero"""
+    assert multiply(100, 0) == 0           # Any number times zero is zero
 
 def test_multiply_negative():
-    """測試：負數相乘"""
-    assert multiply(-3, -4) == 12          # 負負得正
+    """Test: multiplying negative numbers"""
+    assert multiply(-3, -4) == 12          # Negative times negative is positive
 
-# ===== 測試 divide 函數 =====
+# ===== Tests for the divide function =====
 
 def test_divide_basic():
-    """測試：基本除法"""
+    """Test: basic division"""
     assert divide(10, 2) == 5
 
 def test_divide_decimal_result():
-    """測試：結果是小數"""
+    """Test: result is a decimal"""
     assert divide(7, 2) == 3.5
 
 def test_divide_by_zero():
-    """測試：除以零應該報錯"""
-    with pytest.raises(ValueError):        # 期望拋出 ValueError
+    """Test: dividing by zero should raise an error"""
+    with pytest.raises(ValueError):        # Expect a ValueError to be raised
         divide(10, 0)
 
-# ===== 測試 percentage 函數 =====
+# ===== Tests for the percentage function =====
 
 def test_percentage_basic():
-    """測試：基本百分比"""
-    assert percentage(200, 15) == 30       # 200 的 15% = 30
+    """Test: basic percentage"""
+    assert percentage(200, 15) == 30       # 15% of 200 = 30
 
 def test_percentage_hundred():
-    """測試：100% 就是原數"""
+    """Test: 100% equals the original number"""
     assert percentage(50, 100) == 50
 
 def test_percentage_zero():
-    """測試：0% 就是零"""
+    """Test: 0% equals zero"""
     assert percentage(1000, 0) == 0
 ```
 
-### 預期輸出：
+### Expected Output:
 
-要求 Claude Code 執行測試：
+Ask Claude Code to run the tests:
 
 ```
-請執行 pytest test_calculator.py -v
+Please run pytest test_calculator.py -v
 ```
 
-`-v` 表示 verbose（詳細模式），會顯示每個測試的結果。
+`-v` stands for verbose mode, which shows the result of each individual test.
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌────────────────────────────────────────────────────────┐
 │ ======================== test session starts ========== │
@@ -243,37 +243,37 @@ def test_percentage_zero():
 └────────────────────────────────────────────────────────┘
 ```
 
-**15 passed** — 所有 15 個測試都通過了！綠色的 PASSED 表示成功。
+**15 passed** — All 15 tests passed! A green PASSED indicates success.
 
-## 💻 代碼示例 2：測試失敗時會怎樣？
+## 💻 Code Example 2: What Happens When a Test Fails?
 
-讓我們故意讓一個測試失敗，看看會怎樣。
+Let's intentionally break a test to see what happens.
 
-對 Claude Code 說：
+Tell Claude Code:
 
 ```
-請修改 calculator.py 的 percentage 函數，故意把它改壞（例如忘了除以 100），
-然後重新跑測試，讓我看看測試失敗的樣子。
+Please modify the percentage function in calculator.py and deliberately break it
+(e.g., forget to divide by 100), then rerun the tests so I can see what a failure looks like.
 ```
 
-Claude Code 會把 `percentage` 函數改成：
+Claude Code will change the `percentage` function to:
 
 ```python
 def percentage(amount, percent):
-    """計算百分比（故意寫錯了！）"""
-    return amount * percent    # 忘了除以 100！
+    """Calculate a percentage (deliberately broken!)"""
+    return amount * percent    # Forgot to divide by 100!
 ```
 
-然後執行測試：
+Then run the tests:
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌────────────────────────────────────────────────────────┐
 │ ======================== test session starts ========== │
 │ collected 15 items                                     │
 │                                                        │
 │ test_calculator.py::test_add_positive_numbers PASSED   │
-│ ...（前 12 個測試都通過）...                              │
+│ ...(first 12 tests all pass)...                        │
 │ test_calculator.py::test_percentage_basic FAILED       │
 │ test_calculator.py::test_percentage_hundred FAILED     │
 │ test_calculator.py::test_percentage_zero PASSED        │
@@ -289,168 +289,168 @@ def percentage(amount, percent):
 └────────────────────────────────────────────────────────┘
 ```
 
-看到了嗎？測試清楚地告訴你：
-- `percentage(200, 15)` 應該回傳 `30`，但實際回傳了 `3000`
-- 這就是因為忘了除以 100：200 * 15 = 3000，而不是 200 * 15 / 100 = 30
+See that? The test clearly tells you:
+- `percentage(200, 15)` should return `30`, but it actually returned `3000`
+- That's because it forgot to divide by 100: 200 * 15 = 3000, instead of 200 * 15 / 100 = 30
 
-**這就是測試的價值**：如果沒有測試，你可能要等到客戶投訴帳單金額錯誤時才會發現問題！
+**This is the value of testing**: Without tests, you might not discover the problem until a customer complains about an incorrect bill!
 
-然後告訴 Claude Code：
+Then tell Claude Code:
 
 ```
-測試失敗了，請把 percentage 函數改回正確的版本。
+The tests failed. Please change the percentage function back to the correct version.
 ```
 
-## 📖 測試的最佳實踐
+## 📖 Testing Best Practices
 
-### 1. 測試命名要清楚
+### 1. Use Clear Test Names
 
 ```python
-# 好的命名：看函數名就知道在測什麼
+# Good naming: you can tell what's being tested just by reading the function name
 def test_divide_by_zero_raises_error():
     ...
 
-# 不好的命名：看不出在測什麼
+# Bad naming: no idea what's being tested
 def test_1():
     ...
 ```
 
-### 2. 每個測試只驗證一件事
+### 2. Each Test Should Verify Only One Thing
 
 ```python
-# 好：一個測試一件事
+# Good: one test, one thing
 def test_add_returns_correct_sum():
     assert add(2, 3) == 5
 
-# 不好：一個測試塞太多東西
+# Bad: too many things crammed into one test
 def test_everything():
     assert add(2, 3) == 5
     assert subtract(5, 3) == 2
     assert multiply(2, 3) == 6
 ```
 
-### 3. 測試邊界情況
+### 3. Test Edge Cases
 
-邊界情況就是「極端」的輸入，例如：
-- 零 (0)
-- 負數
-- 非常大的數字
-- 空字串 `""`
-- 空列表 `[]`
+Edge cases are "extreme" inputs, such as:
+- Zero (0)
+- Negative numbers
+- Very large numbers
+- Empty string `""`
+- Empty list `[]`
 
-這些邊界情況往往是最容易出 bug 的地方。
+These edge cases are often where bugs are most likely to occur.
 
-### 4. 讓 Claude Code 幫你想測試案例
+### 4. Let Claude Code Help You Think of Test Cases
 
-你可以這樣問：
+You can ask something like:
 
 ```
-我有一個函數可以計算年齡。請幫我想想有哪些需要測試的情況，
-包括正常情況和可能出問題的邊界情況。
+I have a function that calculates age. Please help me think of all the cases
+that need testing, including normal cases and edge cases that might cause problems.
 ```
 
-Claude Code 會幫你想到你可能遺漏的場景。
+Claude Code will help you think of scenarios you might have missed.
 
-## ✍️ 動手練習
+## ✍️ Hands-on Exercises
 
-### 練習 1：為字串工具函數寫測試
+### Exercise 1: Write Tests for String Utility Functions
 
-先建立 `string_utils.py`：
+First, create `string_utils.py`:
 
 ```python
-# string_utils.py — 字串工具函數
+# string_utils.py — String utility functions
 
 def reverse_string(text):
-    """反轉字串，例如 'hello' -> 'olleh'"""
+    """Reverse a string, e.g., 'hello' -> 'olleh'"""
     return text[::-1]
 
 def count_vowels(text):
-    """計算母音數量 (a, e, i, o, u)"""
+    """Count the number of vowels (a, e, i, o, u)"""
     vowels = 'aeiouAEIOU'
     return sum(1 for char in text if char in vowels)
 
 def is_palindrome(text):
-    """檢查是否為回文（正反讀都一樣）"""
+    """Check if a string is a palindrome (reads the same forwards and backwards)"""
     cleaned = text.lower().replace(' ', '')
     return cleaned == cleaned[::-1]
 
 def truncate(text, max_length):
-    """截斷文字，超過長度時加上 '...'"""
+    """Truncate text, adding '...' if it exceeds the max length"""
     if len(text) <= max_length:
         return text
     return text[:max_length - 3] + '...'
 ```
 
-對 Claude Code 說：
+Tell Claude Code:
 
 ```
-請為 string_utils.py 的每個函數寫至少 3 個測試，
-包含正常情況和邊界情況（空字串、單一字元等）。
-保存到 test_string_utils.py，然後執行測試。
+Please write at least 3 tests for each function in string_utils.py,
+including normal cases and edge cases (empty strings, single characters, etc.).
+Save to test_string_utils.py, then run the tests.
 ```
 
-**提示**：注意 `is_palindrome` 函數——"racecar"、"A man a plan a canal Panama" 都是回文。空字串呢？
+**Tip**: Pay attention to the `is_palindrome` function — "racecar" and "A man a plan a canal Panama" are both palindromes. What about an empty string?
 
-### 練習 2：測試驅動修復
+### Exercise 2: Test-driven Bug Fixing
 
-建立一個有 bug 的函數和它的測試，讓 Claude Code 通過修復函數來讓所有測試通過：
+Create a buggy function along with its tests, and let Claude Code fix the function to make all tests pass:
 
 ```python
-# temperature.py — 溫度轉換（有 bug）
+# temperature.py — Temperature conversion (buggy)
 
 def celsius_to_fahrenheit(celsius):
-    """攝氏轉華氏：F = C * 9/5 + 32"""
+    """Celsius to Fahrenheit: F = C * 9/5 + 32"""
     return celsius * 9 / 5 + 32
 
 def fahrenheit_to_celsius(fahrenheit):
-    """華氏轉攝氏：C = (F - 32) * 5/9"""
-    return fahrenheit - 32 * 5 / 9          # Bug！運算優先順序錯了
+    """Fahrenheit to Celsius: C = (F - 32) * 5/9"""
+    return fahrenheit - 32 * 5 / 9          # Bug! Operator precedence is wrong
 
 def is_freezing(celsius):
-    """判斷是否為冰點以下"""
-    return celsius < 0                       # Bug！冰點是 0 度，0 度也算冰點
+    """Check if the temperature is at or below freezing"""
+    return celsius < 0                       # Bug! 0 degrees is also freezing
 ```
 
-對 Claude Code 說：
+Tell Claude Code:
 
 ```
-請先為 temperature.py 寫完整的測試（test_temperature.py）。
-然後執行測試，找出哪些測試失敗了，並修復 temperature.py 中的 bug，
-讓所有測試都能通過。
+Please first write comprehensive tests for temperature.py (test_temperature.py).
+Then run the tests, find which ones fail, and fix the bugs in temperature.py
+so that all tests pass.
 ```
 
-## ❓ 小測驗（3 條題目）
+## ❓ Quiz (3 Questions)
 
-1. 為什麼要寫測試？
-   A. 因為老闆要求
-   B. 讓程式跑得更快
-   C. 自動檢查程式碼是否正確，修改後能快速確認沒有壞掉
-   D. 讓程式碼看起來更多
+1. Why should you write tests?
+   A. Because the boss requires it
+   B. To make the program run faster
+   C. To automatically check if code is correct, and quickly confirm nothing broke after changes
+   D. To make the codebase look bigger
 
-   答案：C — 測試的核心價值是自動化驗證。當你修改了程式碼，只需要跑一次測試就能知道有沒有不小心弄壞其他功能。這比每次都手動檢查快得多，也可靠得多。
+   Answer: C — The core value of testing is automated verification. When you modify code, you only need to run the tests once to know if you accidentally broke something else. This is much faster and more reliable than manual checking every time.
 
-2. 當 pytest 顯示 `3 failed, 12 passed`，這代表什麼？
-   A. 整個程式都壞了，要全部重寫
-   B. 15 個測試中有 12 個通過了，3 個發現了問題需要修復
-   C. 要安裝 3 個新套件
-   D. 電腦需要重新啟動
+2. When pytest shows `3 failed, 12 passed`, what does that mean?
+   A. The entire program is broken and needs to be rewritten
+   B. Out of 15 tests, 12 passed and 3 found issues that need fixing
+   C. 3 new packages need to be installed
+   D. The computer needs to be restarted
 
-   答案：B — pytest 會清楚地告訴你哪些測試通過了、哪些失敗了。3 個失敗表示有 3 個地方的功能不符合預期，你只需要修復那 3 個問題就好。
+   Answer: B — pytest clearly tells you which tests passed and which failed. 3 failures mean 3 places where the functionality doesn't match expectations — you only need to fix those 3 issues.
 
-3. 以下哪個是好的測試案例？
+3. Which of the following is a good test case?
    A. `def test_1(): pass`
    B. `def test_add_two_positive_numbers(): assert add(2, 3) == 5`
    C. `def test(): add(2, 3)`
    D. `def check_add(): return add(2, 3) == 5`
 
-   答案：B — 好的測試需要：清楚的命名（說明在測什麼）、使用 `assert` 來驗證結果、函數名以 `test_` 開頭（pytest 才能找到它）。選項 A 什麼都沒測，C 沒有驗證結果，D 不是 pytest 格式。
+   Answer: B — A good test needs: a clear name (describes what's being tested), uses `assert` to verify the result, and the function name starts with `test_` (so pytest can find it). Option A tests nothing, C doesn't verify the result, and D isn't in pytest format.
 
-## 🔗 下一步
+## 🔗 Next Steps
 
-恭喜你完成了 Phase 3 的所有模塊！你已經學會了：
-- 多文件操作與重構（3.1）
-- 自動化腳本撰寫（3.2）
-- 調試與錯誤修復（3.3）
-- 測試與品質保證（3.4）
+Congratulations on completing all of Phase 3! You've learned:
+- Multi-file operations and refactoring (3.1)
+- Writing automation scripts (3.2)
+- Debugging and error fixing (3.3)
+- Testing and quality assurance (3.4)
 
-在接下來的 **Phase 4：進階應用篇**，你將開始使用 Claude Code 來建立真正實用的專案——包括 API 串接、網頁開發、和更複雜的自動化工作流程。你已經有了堅實的基礎，準備好迎接更大的挑戰！
+In the upcoming **Phase 4: Advanced Applications**, you'll start using Claude Code to build truly practical projects — including API integration, web development, and more complex automation workflows. You now have a solid foundation and are ready for bigger challenges!

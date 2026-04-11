@@ -1,71 +1,71 @@
-# 7.5 第三方整合全景圖
+# 7.5 The Complete Third-Party Integration Map
 
-## Claude Code 整合密切度排名
+## Claude Code Integration Ranking by Depth
 
-不同第三方工具與 Claude Code 的整合程度差異很大。以下按密切度從高到低排列：
+Different third-party tools vary significantly in how deeply they integrate with Claude Code. Listed below from deepest to lightest:
 
-### Tier 1 — 深度整合（幾乎每次都用）
+### Tier 1 — Deep Integration (Used Almost Every Time)
 
-| 工具 | 密切度 | 說明 |
-|------|--------|------|
-| **Git** | ★★★★★ | 內建支援，幾乎每個任務都涉及版本控制 |
-| **GitHub** | ★★★★★ | `gh` CLI 完整支援 — PR、Issue、Actions、Review |
-| **npm / pip** | ★★★★★ | 套件管理是日常開發核心 |
-| **Terminal** | ★★★★★ | Claude Code 的運行環境本身 |
+| Tool | Depth | Description |
+|------|-------|-------------|
+| **Git** | ★★★★★ | Built-in support, version control is part of nearly every task |
+| **GitHub** | ★★★★★ | Full `gh` CLI support — PRs, Issues, Actions, Reviews |
+| **npm / pip** | ★★★★★ | Package management is a core part of daily development |
+| **Terminal** | ★★★★★ | The runtime environment for Claude Code itself |
 
-### Tier 2 — 緊密整合（經常使用）
+### Tier 2 — Tight Integration (Used Frequently)
 
-| 工具 | 密切度 | 說明 |
-|------|--------|------|
-| **VS Code / JetBrains** | ★★★★☆ | 官方 IDE 擴充套件，內嵌 Claude Code |
-| **AWS CLI** | ★★★★☆ | 部署、資料庫、伺服器管理 |
-| **Docker** | ★★★★☆ | 容器化部署和開發環境 |
-| **Google Sheets** | ★★★☆☆ | 透過 `gspread` + 服務帳號 |
-| **Gmail API** | ★★★☆☆ | 自動化郵件通知和報表 |
+| Tool | Depth | Description |
+|------|-------|-------------|
+| **VS Code / JetBrains** | ★★★★☆ | Official IDE extensions with embedded Claude Code |
+| **AWS CLI** | ★★★★☆ | Deployment, database, and server management |
+| **Docker** | ★★★★☆ | Containerized deployment and development environments |
+| **Google Sheets** | ★★★☆☆ | Via `gspread` + service account |
+| **Gmail API** | ★★★☆☆ | Automated email notifications and reports |
 
-### Tier 3 — 中度整合（按需使用）
+### Tier 3 — Moderate Integration (Used as Needed)
 
-| 工具 | 密切度 | 說明 |
-|------|--------|------|
-| **Slack** | ★★★☆☆ | Webhook 或 API — 通知和協作 |
-| **Notion** | ★★★☆☆ | API 整合 — 知識庫和專案管理 |
-| **Playwright** | ★★★☆☆ | 瀏覽器自動化和爬蟲 |
-| **Firebase** | ★★☆☆☆ | FCM 推送通知 |
-| **PostgreSQL** | ★★★☆☆ | 資料庫操作和遷移 |
+| Tool | Depth | Description |
+|------|-------|-------------|
+| **Slack** | ★★★☆☆ | Webhook or API — notifications and collaboration |
+| **Notion** | ★★★☆☆ | API integration — knowledge base and project management |
+| **Playwright** | ★★★☆☆ | Browser automation and web scraping |
+| **Firebase** | ★★☆☆☆ | FCM push notifications |
+| **PostgreSQL** | ★★★☆☆ | Database operations and migrations |
 
-### Tier 4 — 輕度整合（透過 MCP 或 API）
+### Tier 4 — Light Integration (Via MCP or API)
 
-| 工具 | 密切度 | 說明 |
-|------|--------|------|
-| **Figma** | ★★☆☆☆ | 透過 MCP connector 讀取設計 |
-| **Jira** | ★★☆☆☆ | API 整合 — Issue 追蹤 |
-| **Zapier** | ★★☆☆☆ | 透過 MCP 連接 8000+ 應用 |
-| **Apify** | ★★☆☆☆ | 透過 MCP — 網頁爬蟲 |
+| Tool | Depth | Description |
+|------|-------|-------------|
+| **Figma** | ★★☆☆☆ | Read designs via MCP connector |
+| **Jira** | ★★☆☆☆ | API integration — issue tracking |
+| **Zapier** | ★★☆☆☆ | Connect 8,000+ apps via MCP |
+| **Apify** | ★★☆☆☆ | Web scraping via MCP |
 
-## 選擇整合方式的決策樹
+## Decision Tree for Choosing an Integration Method
 
 ```
-需要整合一個第三方工具？
+Need to integrate a third-party tool?
 │
-├── Claude Code 有內建支援嗎？（Git, npm, CLI 工具）
-│   └── ✅ 直接用
+├── Does Claude Code have built-in support? (Git, npm, CLI tools)
+│   └── ✅ Use it directly
 │
-├── 有官方 MCP server 嗎？
-│   └── ✅ 配置在 settings.json
+├── Is there an official MCP server?
+│   └── ✅ Configure it in settings.json
 │
-├── 有 REST API 嗎？
-│   └── ✅ 讓 Claude Code 寫 API 整合腳本
+├── Does it have a REST API?
+│   └── ✅ Have Claude Code write an API integration script
 │
-├── 有 Zapier 支援嗎？
-│   └── ✅ 透過 Zapier MCP（Cowork 限定）
+├── Is it supported by Zapier?
+│   └── ✅ Use Zapier MCP (Cowork only)
 │
-└── 都沒有？
-    └── 用 Playwright 做瀏覽器自動化
+└── None of the above?
+    └── Use Playwright for browser automation
 ```
 
-## MCP 整合配置範例
+## MCP Integration Configuration Example
 
-在 `~/.claude/settings.json` 中配置：
+Configure in `~/.claude/settings.json`:
 
 ```json
 {
@@ -92,41 +92,41 @@
 }
 ```
 
-## Claude Code vs Cowork 整合比較
+## Claude Code vs Cowork Integration Comparison
 
-| 場景 | 推薦工具 | 原因 |
-|------|----------|------|
-| 寫程式碼 + Git + 部署 | Claude Code | 原生開發環境 |
-| 整理文件 + 發郵件 | Cowork | connector 更方便 |
-| 自動化腳本 + cron | Claude Code | 終端 + Task Scheduler |
-| 跨應用工作流 | Cowork | Plugin + connector |
-| 資料分析 + 報表 | 視乎技術能力 | Code 更強，Cowork 更易用 |
+| Scenario | Recommended Tool | Reason |
+|----------|-----------------|--------|
+| Write code + Git + deploy | Claude Code | Native development environment |
+| Organize documents + send emails | Cowork | Connectors are more convenient |
+| Automation scripts + cron | Claude Code | Terminal + Task Scheduler |
+| Cross-application workflows | Cowork | Plugin + connector |
+| Data analysis + reports | Depends on technical ability | Code is more powerful, Cowork is easier |
 
-## 整合安全守則
+## Integration Security Guidelines
 
-1. **API 密鑰永不提交到 Git** — 用 `.env` 或環境變數
-2. **最小權限原則** — 只給必要的存取權限
-3. **定期輪換 Token** — 特別是長期運行的自動化
-4. **外部 Skill 必須審查** — prompt injection 是真實風險
-5. **Webhook URL 保密** — 洩漏等於任何人都能觸發
-
----
-
-## 總結
-
-掌握第三方整合是從「用 Claude Code 寫程式碼」升級到「用 Claude Code 管理整個業務」的關鍵。
-
-核心心法：
-- **GitHub** 是基礎設施 — 每個項目都要用
-- **Google 生態** 是數據中心 — Sheets + Gmail 覆蓋大部分需求
-- **Slack/Notion** 是協作樞紐 — 團隊溝通和知識管理
-- **AWS** 是部署目標 — 把成果推向生產環境
-- **MCP** 是萬能膠水 — 連接一切
+1. **Never commit API keys to Git** — Use `.env` or environment variables
+2. **Principle of least privilege** — Only grant the access that's necessary
+3. **Rotate tokens regularly** — Especially for long-running automations
+4. **Always review external Skills** — Prompt injection is a real risk
+5. **Keep Webhook URLs secret** — A leaked URL means anyone can trigger it
 
 ---
 
-## 練習
+## Summary
 
-1. 畫出你自己的「第三方整合地圖」— 列出你日常用的工具，標記整合方式
-2. 選擇一個 Tier 3/4 的工具，嘗試用 MCP 或 API 整合
-3. 設計一個跨 3 個工具的自動化工作流
+Mastering third-party integrations is the key to upgrading from "using Claude Code to write code" to "using Claude Code to manage your entire business."
+
+Core principles:
+- **GitHub** is infrastructure — use it on every project
+- **Google ecosystem** is your data hub — Sheets + Gmail covers most needs
+- **Slack/Notion** is the collaboration hub — team communication and knowledge management
+- **AWS** is your deployment target — push results to production
+- **MCP** is the universal glue — connects everything
+
+---
+
+## Exercises
+
+1. Draw your own "third-party integration map" — list the tools you use daily and label how they integrate
+2. Pick a Tier 3/4 tool and try integrating it via MCP or API
+3. Design an automation workflow that spans 3 different tools

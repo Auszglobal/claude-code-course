@@ -1,58 +1,59 @@
-# 模塊 B5：為真實業務打造專屬 Skills
+# Module B5: Building Custom Skills for a Real Business
 
-## 🎯 學習目標
-- 理解如何將真實業務流程轉化為 Claude Code Skills
-- 學會為發票自動化（invoice-automation）編寫完整的 SKILL.md
-- 學會為預約處理（booking-intake）編寫完整的 SKILL.md
-- 學會為每日營運報告（daily-ops-reporter）編寫完整的 SKILL.md
-- 掌握 Skill 中如何引用現有程式碼、API 和資料格式
+## Learning Objectives
+- Understand how to turn real business processes into Claude Code Skills
+- Learn to write a complete SKILL.md for invoice automation
+- Learn to write a complete SKILL.md for booking intake
+- Learn to write a complete SKILL.md for a daily operations report
+- Master how to reference existing code, APIs, and data formats within a Skill
 
-## 📖 理論解釋
+## Theory
 
-### 為什麼真實業務需要自定義 Skills？
+### Why Does a Real Business Need Custom Skills?
 
-想像你僱用了一位新助理。第一天上班時，你不會只說「去處理發票」——你會給他一份詳細的工作手冊：哪些客戶要開發票、用什麼格式、發送到哪個 email。
+Imagine you've hired a new assistant. On their first day, you wouldn't just say "go handle the invoices" -- you'd hand them a detailed operations manual: which clients need invoices, what format to use, which email address to send them to.
 
-Claude Code 的 Skills 就是這份「工作手冊」。沒有 Skill，Claude 每次都要重新猜測你的業務邏輯。有了 Skill，它就像一位訓練有素的員工，知道每一步該怎麼做。
+Claude Code Skills are that "operations manual." Without a Skill, Claude has to guess your business logic every time. With a Skill, it's like a well-trained employee who knows exactly what to do at each step.
 
-### 本課的真實案例：AUSZ Global
+### Real-World Case Study: AUSZ Global
 
-AUSZ Global 是一家高端禮賓車服務平台，營運範圍涵蓋 Sydney、Melbourne、Brisbane、Perth。他們有三個核心自動化需求：
+AUSZ Global is a premium chauffeur service marketplace operating across Sydney, Melbourne, Brisbane, and Perth. They have three core automation needs:
 
-| 需求 | 對應 Skill | 現有腳本 |
-|------|-----------|----------|
-| 每日發票生成與發送 | `invoice-automation` | `invoice_agent.py` |
-| 新預約自動錄入系統 | `booking-intake` | `ausz_booking_agent.py` |
-| 每日營運摘要報告 | `daily-ops-reporter` | `main.py` + `analytics_engine.py` |
+| Need | Corresponding Skill | Existing Script |
+|------|---------------------|-----------------|
+| Daily invoice generation and delivery | `invoice-automation` | `invoice_agent.py` |
+| Automatic new booking intake | `booking-intake` | `ausz_booking_agent.py` |
+| Daily operations summary report | `daily-ops-reporter` | `main.py` + `analytics_engine.py` |
 
-### Skill 設計三步法
+### Three-Step Skill Design Method
 
-1. **列出業務規則** — 例如：發票 Skill 需要知道 9 家合作夥伴的名稱和佣金比例
-2. **定義輸入與輸出** — 例如：輸入是「今天的預約資料」，輸出是「PDF 發票 + 電子郵件」
-3. **指定技術細節** — 例如：使用 Gmail API（OAuth2）發送郵件，用 `fpdf2` 產生 PDF
+1. **List the business rules** -- e.g., the invoice Skill needs to know the names and commission rates for 9 partner clients
+2. **Define inputs and outputs** -- e.g., input is "today's booking data," output is "PDF invoices + emails"
+3. **Specify technical details** -- e.g., use Gmail API (OAuth2) to send emails, use `fpdf2` to generate PDFs
 
-### 第三個 Skill：daily-ops-reporter
+### The Third Skill: daily-ops-reporter
 
-這個 Skill 負責每天彙整所有自動化腳本的執行結果，產生一份簡潔的營運摘要。以下是完整的 SKILL.md（儲存為 `~/.claude/skills/daily-ops-reporter.md`）：
+This Skill aggregates the execution results of all automation scripts each day and produces a concise operations summary. Here's the complete SKILL.md (save as `~/.claude/skills/daily-ops-reporter.md`):
 
 ````markdown
 # daily-ops-reporter
 
-## 角色
-你是 AUSZ Global 的每日營運報告助理。你的工作是讀取今日所有自動化腳本的 logs，
-彙整成一份簡明報告，並發送到管理者信箱。
+## Role
+You are the daily operations report assistant for AUSZ Global. Your job is to read today's
+logs from all automation scripts, compile them into a concise report, and send it to the
+manager's email.
 
-## 日誌來源
-讀取以下 log 檔案（位於 logs/ 目錄）：
-- invoice_agent.log — 發票處理結果
-- booking_agent.log — 預約抓取結果
-- send_booking_reminders.log — 乘客提醒發送結果
-- weekly_earnings.log — 司機收入報告（僅週一）
+## Log Sources
+Read the following log files (located in the logs/ directory):
+- invoice_agent.log -- Invoice processing results
+- booking_agent.log -- Booking scrape results
+- send_booking_reminders.log -- Passenger reminder delivery results
+- weekly_earnings.log -- Driver earnings report (Mondays only)
 
-## 報告格式
-郵件主題：AUSZ Daily Ops Report — {YYYY-MM-DD}
+## Report Format
+Email subject: AUSZ Daily Ops Report -- {YYYY-MM-DD}
 
-郵件內容使用以下結構：
+Email body uses the following structure:
 ```
 === AUSZ DAILY OPS REPORT ===
 Date: {today}
@@ -78,48 +79,49 @@ Date: {today}
 Status: ALL GREEN / ATTENTION NEEDED
 ```
 
-## 錯誤分類規則
-將 log 中的錯誤分為以下類別：
-- NETWORK — 連線逾時、DNS 失敗、HTTP 5xx
-- AUTH — 登入失敗、token 過期、OAuth 錯誤
-- DATA — 欄位缺失、格式不符、解析失敗
-- BROWSER — Playwright 逾時、元素未找到、頁面崩潰
+## Error Classification Rules
+Classify errors from logs into the following categories:
+- NETWORK -- Connection timeout, DNS failure, HTTP 5xx
+- AUTH -- Login failure, expired token, OAuth error
+- DATA -- Missing fields, format mismatch, parse failure
+- BROWSER -- Playwright timeout, element not found, page crash
 
-## 收件人
-發送至：kin.yip@auszglobal.com.au
+## Recipient
+Send to: kin.yip@auszglobal.com.au
 
-## 技術要求
-- 使用 ausz_shared.log() 進行所有日誌輸出（避免 Windows cp1252 編碼錯誤）
-- 使用 Gmail API（OAuth2）發送郵件
-- 時區：Sydney AEST
-- 如果所有指標正常，Status 顯示 "ALL GREEN"
-- 如果任何錯誤數 > 0，Status 顯示 "ATTENTION NEEDED"
+## Technical Requirements
+- Use ausz_shared.log() for all log output (to avoid Windows cp1252 encoding errors)
+- Use Gmail API (OAuth2) to send emails
+- Timezone: Sydney AEST
+- If all metrics are normal, set Status to "ALL GREEN"
+- If any error count > 0, set Status to "ATTENTION NEEDED"
 ````
 
-這個 Skill 的關鍵在於**錯誤分類規則**——它教會 Claude 如何把雜亂的 log 訊息歸類為有意義的類別，讓管理者一眼就能看出問題在哪裡。
+The key to this Skill is the **error classification rules** -- they teach Claude how to categorise messy log messages into meaningful categories, letting the manager see at a glance where the problems are.
 
 ---
 
-## 💻 代碼示例 1：invoice-automation SKILL.md（完整版）
+## Code Example 1: invoice-automation SKILL.md (Complete Version)
 
-現在讓我們來看最複雜的 Skill——發票自動化。這個檔案你可以直接複製貼上，儲存到你的 `.claude/skills/` 目錄。
+Now let's look at the most complex Skill -- invoice automation. You can copy and paste this file directly, saving it to your `.claude/skills/` directory.
 
-首先建立資料夾（Windows Git Bash / Mac / Linux 通用）：
+First, create the folder (works in Windows Git Bash / Mac / Linux):
 ```bash
 mkdir -p ~/.claude/skills
 ```
 
-然後將以下內容儲存為 `~/.claude/skills/invoice-automation.md`：
+Then save the following as `~/.claude/skills/invoice-automation.md`:
 
 ```markdown
 # invoice-automation
 
-## 角色
-你是 AUSZ Global 的發票自動化助理。你負責為合作夥伴生成每日/每週發票，
-處理過路費（tolls），並透過 Gmail API 發送發票郵件。
+## Role
+You are the invoice automation assistant for AUSZ Global. You are responsible for generating
+daily/weekly invoices for partner clients, handling tolls, and sending invoice emails via
+the Gmail API.
 
-## 合作夥伴清單（PARTNER_CLIENTS）
-以下是 9 家合作夥伴，每家都有各自的佣金比例和聯絡 email：
+## Partner Client List (PARTNER_CLIENTS)
+The following are 9 partner clients, each with their own commission rate and contact email:
 - Instyle
 - TVA
 - Melbourne Chauffeur
@@ -130,156 +132,159 @@ mkdir -p ~/.claude/skills
 - Exoticar
 - Grandeur
 
-佣金比例和 email 定義在 config.py 的 PARTNER_CLIENTS 字典中。
-絕對不要硬編碼這些值——永遠從 config.py 讀取。
+Commission rates and emails are defined in the PARTNER_CLIENTS dictionary in config.py.
+Never hardcode these values -- always read them from config.py.
 
-## 執行模式
-invoice_agent.py 支援三種模式：
-1. `--period today` — 處理今天的預約發票
-2. `--period week` — 處理本週的預約發票
-3. `--tolls` — 處理過路費發票
+## Execution Modes
+invoice_agent.py supports three modes:
+1. `--period today` -- Process today's booking invoices
+2. `--period week` -- Process this week's booking invoices
+3. `--tolls` -- Process toll invoices
 
-所有模式都可加上 `--auto` 旗標來跳過確認提示。
+All modes can add the `--auto` flag to skip confirmation prompts.
 
-## 過路費偵測邏輯（Toll Detection）
-- 從預約記錄中尋找包含 toll 費用的行程
-- Toll 金額從行程詳細資料中提取
-- 每筆 toll 費用會附加在對應合作夥伴的發票上
-- 如果找不到 toll 金額，記錄警告但不中斷流程
+## Toll Detection Logic
+- Search booking records for trips that include toll charges
+- Toll amounts are extracted from trip details
+- Each toll charge is appended to the corresponding partner's invoice
+- If no toll amount is found, log a warning but don't interrupt the process
 
-## 跳過邏輯（Skip Logic）
-- 使用 invoice_agent_state.json 追蹤已處理的預約
-- 如果某筆預約的發票已經發送過，自動跳過
-- 狀態檔案格式：{"processed_booking_ids": ["BK001", "BK002", ...]}
-- 每次成功發送後，將 booking ID 寫入狀態檔案
+## Skip Logic
+- Uses invoice_agent_state.json to track processed bookings
+- If an invoice has already been sent for a booking, automatically skip it
+- State file format: {"processed_booking_ids": ["BK001", "BK002", ...]}
+- After each successful send, write the booking ID to the state file
 
-## 發票 PDF 生成
-- 使用 fpdf2 庫生成 PDF
-- 模板素材位於 invoice_images/ 目錄（logo、印章等）
-- PDF 儲存至 invoices/ 目錄
-- 檔名格式：{partner}_{date}_{booking_id}.pdf
+## Invoice PDF Generation
+- Uses the fpdf2 library to generate PDFs
+- Template assets are in the invoice_images/ directory (logo, stamps, etc.)
+- PDFs are saved to the invoices/ directory
+- Filename format: {partner}_{date}_{booking_id}.pdf
 
-## 郵件格式與發送
-- 每位合作夥伴收到一封彙整郵件
-- 主題：AUSZ Invoice — {Partner Name} — {Date Range}
-- 內文：行程摘要（日期、乘客、路線、金額）
-- 附件：對應的 PDF 發票
-- 使用 Gmail API（OAuth2），認證：credentials.json + token.json
-- 寄件者顯示名稱："Ausz Admin"
-- 絕對不要 commit credentials.json 或 token.json 到 Git
-- 日誌使用 ausz_shared.log()，輸出至 logs/invoice_agent.log
+## Email Format and Delivery
+- Each partner receives one consolidated email
+- Subject: AUSZ Invoice -- {Partner Name} -- {Date Range}
+- Body: Trip summary (date, passenger, route, amount)
+- Attachment: Corresponding PDF invoice
+- Uses Gmail API (OAuth2), authentication: credentials.json + token.json
+- Sender display name: "Ausz Admin"
+- Never commit credentials.json or token.json to Git
+- Logging uses ausz_shared.log(), output to logs/invoice_agent.log
 
-## 錯誤處理
-- 如果某位合作夥伴的 email 找不到，發送至 fallback 信箱
-- 如果 PDF 生成失敗，記錄錯誤並繼續處理下一筆
-- 如果 Gmail API 認證過期，提示用戶重新授權
-- 絕對不要因為單筆失敗而中斷整個批次
+## Error Handling
+- If a partner's email can't be found, send to the fallback address
+- If PDF generation fails, log the error and continue processing the next one
+- If Gmail API authentication expires, prompt the user to re-authorise
+- Never let a single failure interrupt the entire batch
 ```
 
-### 設計重點解析
+### Design Highlights
 
-- **「合作夥伴清單」** 列出名稱但強調**不要硬編碼佣金比例**。資料應從 config.py 讀取，新增或刪除客戶時不需要改 Skill。
-- **「跳過邏輯」** 防止重複發送——就像助理有本記事本，記錄「哪些發票已寄出」。
-- **「錯誤處理」** 的核心原則：**絕不因單筆失敗而中斷整個批次**。50 筆發票不能因第 3 筆出錯就放棄剩下 47 筆。
+- **"Partner Client List"** lists names but emphasises **not to hardcode commission rates**. Data should be read from config.py, so adding or removing clients doesn't require changing the Skill.
+- **"Skip Logic"** prevents duplicate sends -- like an assistant with a notebook recording "which invoices have already been sent."
+- **"Error Handling"** core principle: **never let a single failure interrupt the entire batch**. You can't abandon 47 remaining invoices just because the 3rd one failed.
 
-### 預期輸出：
+### Expected Output:
 
 ```
-📸 [你應該看到的畫面]
-> claude "幫我執行今天的發票處理"
+[What you should see]
+> claude "Help me process today's invoices"
 
-┌─────────────────────────────────────────┐
-│ 檢查 invoice_agent_state.json...        │
-│ 找到 12 筆待處理，跳過 3 筆已處理        │
-│ Instyle 發票... 完成                    │
-│ TVA 發票... 完成                        │
-│ 已發送 9 封發票郵件，狀態檔案已更新       │
-└─────────────────────────────────────────┘
++-----------------------------------------+
+| Checking invoice_agent_state.json...     |
+| Found 12 pending, skipping 3 processed  |
+| Instyle invoice... done                 |
+| TVA invoice... done                     |
+| Sent 9 invoice emails, state file       |
+| updated                                 |
++-----------------------------------------+
 ```
 
 ---
 
-## 💻 代碼示例 2：booking-intake SKILL.md（完整版）
+## Code Example 2: booking-intake SKILL.md (Complete Version)
 
-將以下內容儲存為 `~/.claude/skills/booking-intake.md`：
+Save the following as `~/.claude/skills/booking-intake.md`:
 
 ```markdown
 # booking-intake
 
-## 角色
-你是 AUSZ Global 的預約處理助理。你的工作是從指定的 email 中讀取
-新預約請求，解析預約資料，然後透過 Playwright 瀏覽器自動化填寫到
-Django 管理後台。
+## Role
+You are the booking intake assistant for AUSZ Global. Your job is to read new booking
+requests from designated emails, parse the booking data, and use Playwright browser
+automation to enter them into the Django admin backend.
 
-## 預約來源
-- 從 Gmail 收件匣讀取特定寄件者的 email
-- 使用 Gmail API（OAuth2）存取信箱
-- 認證檔案：credentials.json + token.json
+## Booking Sources
+- Read emails from specific senders in the Gmail inbox
+- Use Gmail API (OAuth2) to access the mailbox
+- Authentication files: credentials.json + token.json
 - SCOPES: gmail.send, gmail.readonly
 
-## Django 管理後台
+## Django Admin Backend
 - URL: https://system.auszglobal.com.au/admin/bookings/booking/
-- 使用 Playwright 進行瀏覽器自動化
-- 登入方式：填寫 username + password 欄位 → 點擊提交
-- 帳號密碼儲存在 .env 檔案（透過 python-dotenv 載入），絕不硬編碼
+- Use Playwright for browser automation
+- Login method: fill username + password fields -> click submit
+- Credentials stored in .env file (loaded via python-dotenv), never hardcoded
 
-## Playwright 自動化流程
-1. 啟動瀏覽器（Windows 需要 headless=False）
-2. 登入：填寫 username/password → 點擊 submit → 等待 networkidle
-3. 導航至 booking 新增頁面
-4. 填寫表單欄位：passenger name、pickup datetime、pickup/dropoff location、vehicle type、special requests、flight number（如適用）
-5. 提交表單並驗證成功
+## Playwright Automation Flow
+1. Launch browser (Windows requires headless=False)
+2. Login: fill username/password -> click submit -> wait for networkidle
+3. Navigate to the booking creation page
+4. Fill in form fields: passenger name, pickup datetime, pickup/dropoff location, vehicle type, special requests, flight number (if applicable)
+5. Submit the form and verify success
 
-## 車型對應
-AUSZ 只使用歐洲車款：
-- Mercedes-Benz（S-Class、E-Class、V-Class）
-- BMW（7 Series、5 Series）
-- Audi（A8、A6）
-絕不使用 Camry 或 Kluger。
+## Vehicle Type Mapping
+AUSZ uses European vehicles only:
+- Mercedes-Benz (S-Class, E-Class, V-Class)
+- BMW (7 Series, 5 Series)
+- Audi (A8, A6)
+Never use Camry or Kluger.
 
-## 資料驗證
-填寫表單前檢查：日期格式（DD/MM/YYYY 或 YYYY-MM-DD）、24 小時制時間、乘客姓名與上車地點不為空。必填欄位缺失則跳過並記錄警告。
+## Data Validation
+Before filling the form, check: date format (DD/MM/YYYY or YYYY-MM-DD), 24-hour time format, passenger name and pickup location are not empty. If a required field is missing, skip the entry and log a warning.
 
-## Google Sheets 同步與日誌
-- 成功錄入的預約同時寫入 Google Sheet（gspread + service account）
-- 使用 ausz_shared.log() 記錄每筆預約的乘客名、日期、狀態
-- 絕不 commit google_credentials.json 到 Git
+## Google Sheets Sync and Logging
+- Successfully entered bookings are also written to Google Sheets (gspread + service account)
+- Use ausz_shared.log() to record each booking's passenger name, date, and status
+- Never commit google_credentials.json to Git
 
-## 錯誤處理
-- Playwright 逾時：等待最多 30 秒，超時則截圖並記錄
-- 表單提交失敗：檢查頁面上的錯誤訊息並記錄
-- Email 解析失敗：跳過該封 email 並記錄原始內容
-- 絕不因為單筆失敗而中斷整個批次
+## Error Handling
+- Playwright timeout: wait up to 30 seconds, then take a screenshot and log
+- Form submission failure: check for error messages on the page and log them
+- Email parse failure: skip that email and log the raw content
+- Never let a single failure interrupt the entire batch
 ```
 
-### 設計重點解析
+### Design Highlights
 
-- **「Playwright 自動化流程」** 是核心——像教新員工操作系統，每一步寫清楚，Claude 不需要猜測。
-- **「車型對應」** 反映品牌定位。明確告訴 Claude「絕不使用 Camry」，避免填入不符合品牌形象的選項。
-- **「headless=False」** 是 Windows Task Scheduler 的硬性限制，漏掉這點腳本會在排程執行時失敗。
+- **"Playwright Automation Flow"** is the core -- like teaching a new employee how to use the system, every step written clearly so Claude doesn't need to guess.
+- **"Vehicle Type Mapping"** reflects brand positioning. Explicitly telling Claude "never use Camry" prevents entering options that don't match the brand image.
+- **"headless=False"** is a hard requirement for Windows Task Scheduler. Missing this detail would cause the script to fail during scheduled execution.
 
-### 預期輸出：
+### Expected Output:
 
 ```
-📸 [你應該看到的畫面]
-> claude "處理今天的新預約 email"
+[What you should see]
+> claude "Process today's new booking emails"
 
-┌─────────────────────────────────────────┐
-│ Gmail API 連接成功，找到 3 封新預約       │
-│ 1/3 John Smith → Django 填表完成         │
-│ 2/3 Sarah Lee → Django 填表完成          │
-│ 3/3 [欄位缺失] 跳過並記錄警告            │
-│ 完成：2 筆成功、1 筆跳過                 │
-└─────────────────────────────────────────┘
++-----------------------------------------+
+| Gmail API connected, found 3 new        |
+| bookings                                |
+| 1/3 John Smith -> Django form filled    |
+| 2/3 Sarah Lee -> Django form filled     |
+| 3/3 [missing fields] skipped, warning   |
+|     logged                              |
+| Done: 2 successful, 1 skipped          |
++-----------------------------------------+
 ```
 
 ---
 
-## ✍️ 動手練習
+## Hands-On Exercises
 
-### 練習 1：修改 daily-ops-reporter 加入新指標
+### Exercise 1: Add New Metrics to daily-ops-reporter
 
-打開你剛才學到的 `daily-ops-reporter` SKILL.md，試著加入一個新的段落：
+Open the `daily-ops-reporter` SKILL.md you just learned about and try adding a new section:
 
 ```markdown
 [DRIVER PERFORMANCE]
@@ -288,62 +293,62 @@ AUSZ 只使用歐洲車款：
 - Complaints: {count}
 ```
 
-**提示：** 想想看——你還需要告訴 Claude 這些資料從哪裡來嗎？是的！你需要加一個「資料來源」說明，告訴它去哪個 log 檔案或資料庫取得司機資料。
+**Hint:** Think about it -- do you also need to tell Claude where this data comes from? Yes! You'll need to add a "data source" explanation, telling it which log file or database to pull driver data from.
 
-### 練習 2：為你自己的業務設計一個 Skill
+### Exercise 2: Design a Skill for Your Own Business
 
-用這個精簡模板，為你自己的工作設計一個 Skill：
+Using this simplified template, design a Skill for your own work:
 
 ```markdown
-# {skill 名稱}
-## 角色 — 你是 {公司} 的 {角色}
-## 資料來源 — 從 {哪裡} 取得資料
-## 處理規則 — 規則 1... 規則 2...
-## 輸出格式 — {最終產出}
-## 錯誤處理 — 如果 {情況}，則 {處理方式}
+# {skill name}
+## Role -- You are {company}'s {role}
+## Data Sources -- Retrieve data from {where}
+## Processing Rules -- Rule 1... Rule 2...
+## Output Format -- {final deliverable}
+## Error Handling -- If {situation}, then {action}
 ```
 
-**提示：** 回想你每天重複做的工作——哪些步驟可以寫成規則？
+**Hint:** Think about the work you repeat every day -- which steps could be written as rules?
 
 ---
 
-## ❓ 小測驗（3 條題目）
+## Quiz (3 Questions)
 
-**1. 為什麼 SKILL.md 中的「合作夥伴清單」段落強調「不要硬編碼佣金比例」？**
+**1. Why does the "Partner Client List" section in the SKILL.md emphasise "do not hardcode commission rates"?**
 
-A. 因為 Claude 無法讀取數字
-B. 因為佣金比例可能隨時變更，應從 config.py 動態讀取
-C. 因為硬編碼會讓檔案太大
-D. 因為 SKILL.md 不支援數字
+A. Because Claude can't read numbers
+B. Because commission rates may change at any time and should be read dynamically from config.py
+C. Because hardcoding would make the file too large
+D. Because SKILL.md doesn't support numbers
 
-答案：B — 佣金比例可能隨時更新。寫死在 SKILL.md 中，每次變更都要改兩個地方，容易出錯。應讓 Claude 從 config.py 讀取最新資料。
+Answer: B -- Commission rates may be updated at any time. Hardcoding them in SKILL.md means you'd have to change two places every time, making errors likely. Claude should read the latest data from config.py instead.
 
-**2. booking-intake Skill 中為什麼要特別註明「Windows 上需要 headless=False」？**
+**2. Why does the booking-intake Skill specifically note "headless=False required on Windows"?**
 
-A. 因為 Windows 不支援瀏覽器
-B. 因為 headless 模式在 Mac 上無法使用
-C. 因為 Windows Task Scheduler 需要互動式會話，headless 模式會導致腳本失敗
-D. 因為 headless=False 可以讓腳本跑得更快
+A. Because Windows doesn't support browsers
+B. Because headless mode doesn't work on Mac
+C. Because Windows Task Scheduler requires an interactive session, and headless mode causes the script to fail
+D. Because headless=False makes the script run faster
 
-答案：C — Windows Task Scheduler 需要互動式會話。Playwright 使用 headless=True 會因缺少顯示環境而失敗。
+Answer: C -- Windows Task Scheduler requires an interactive session. Playwright using headless=True will fail due to the lack of a display environment.
 
-**3. daily-ops-reporter 中的「錯誤分類規則」將錯誤分為四類。如果 log 中出現 "OAuth token expired"，它應該歸類為哪一類？**
+**3. The daily-ops-reporter classifies errors into four categories. If a log shows "OAuth token expired," which category should it fall under?**
 
 A. NETWORK
 B. AUTH
 C. DATA
 D. BROWSER
 
-答案：B — "OAuth token expired" 是認證問題，屬於 AUTH 類別。清晰的錯誤分類讓管理者快速判斷問題性質。
+Answer: B -- "OAuth token expired" is an authentication issue, belonging to the AUTH category. Clear error classification lets managers quickly identify the nature of the problem.
 
 ---
 
-## 🔗 下一步
+## Next Steps
 
-恭喜你完成了 Bonus 模塊 B5！你已經學會了如何為真實業務打造三個完整的 Claude Code Skills。
+Congratulations on completing Bonus Module B5! You've now learned how to build three complete Claude Code Skills for a real business.
 
-接下來你可以：
-- 將這三個 SKILL.md 部署到 `~/.claude/skills/` 目錄，在 Claude Code 中測試
-- 根據實際使用情況持續調整 SKILL.md 的內容
+Next steps:
+- Deploy these three SKILL.md files to the `~/.claude/skills/` directory and test them in Claude Code
+- Continuously adjust the SKILL.md content based on actual usage
 
-記住：好的 Skill 會隨業務一起成長。每次 Claude 做了「不太對」的事，就回來更新 SKILL.md。這就是 AI 自動化的核心：**持續迭代、持續改進**。
+Remember: Good Skills grow with the business. Every time Claude does something "not quite right," come back and update the SKILL.md. This is the core of AI automation: **continuous iteration, continuous improvement**.

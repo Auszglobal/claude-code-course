@@ -1,125 +1,129 @@
-# 模塊 B1：What Are Claude Code Skills?
+# Module B1: What Are Claude Code Skills?
 
-## 🎯 學習目標
+## Learning Objectives
 
-- 完成本課後你能夠：
-  - 解釋什麼是 Claude Code Skill，以及它如何改變 Claude 的行為
-  - 理解 Skills 的「漸進式載入」架構（Progressive Disclosure）
-  - 區分 Skills、MCP Servers 和 Subagents 的使用場景
-  - 找到 Anthropic 官方的 Skills Marketplace
-  - 閱讀並理解一個 SKILL.md 文件的結構
+- After completing this lesson you will be able to:
+  - Explain what a Claude Code Skill is and how it changes Claude's behaviour
+  - Understand the Progressive Disclosure architecture of Skills
+  - Distinguish between the use cases for Skills, MCP Servers, and Subagents
+  - Find the official Anthropic Skills Marketplace
+  - Read and understand the structure of a SKILL.md file
 
 ---
 
-## 📖 理論解釋
+## Theory
 
-### Skills 是什麼？
+### What Are Skills?
 
-想像你請了一位非常聰明的助手（Claude Code），他什麼都懂一點，但不一定知道**你公司的具體做法**。
+Imagine you've hired a very smart assistant (Claude Code) who knows a bit about everything, but doesn't necessarily know **your company's specific procedures**.
 
-**Skill 就像一本「專屬操作手冊」**，你放在助手的桌上，當他需要做某件特定任務時，就會翻開來看。
+**A Skill is like a dedicated operations manual** that you place on your assistant's desk. When they need to perform a specific task, they open it up and follow the instructions.
 
-技術上來說，Skill 是一個 **SKILL.md 文件**，放在特定的資料夾裡。當 Claude Code 啟動時，它會掃描這些文件，在需要時載入對應的指引。
+Technically, a Skill is a **SKILL.md file** placed in a specific folder. When Claude Code starts up, it scans these files and loads the relevant guidance when needed.
 
-### 為什麼需要 Skills？
+### Why Do You Need Skills?
 
-沒有 Skill 的 Claude Code 就像一位通才醫生——什麼病都能看，但可能不知道你醫院的特殊流程。
+Claude Code without Skills is like a general practitioner -- they can treat anything, but might not know your hospital's specific procedures.
 
-有了 Skill 的 Claude Code 就像一位**帶著專科手冊的醫生**——遇到心臟問題時，會自動翻開心臟科的標準流程，確保每一步都正確。
+Claude Code with Skills is like a **doctor carrying specialist handbooks** -- when a heart issue comes up, they automatically open the cardiology standards and follow each step correctly.
 
-### 漸進式載入架構（Progressive Disclosure）
+### Progressive Disclosure Architecture
 
-Skills 的設計非常聰明，它不會一次把所有內容塞進 Claude 的腦子裡（那樣會浪費 tokens 和記憶體）。它分三個階段：
+Skills are designed very cleverly. They don't dump all their content into Claude's context at once (that would waste tokens and memory). Instead, they work in three stages:
 
-| 階段 | 載入內容 | Token 成本 | 何時發生 |
-|------|---------|-----------|---------|
-| 第一階段 | Skill 名稱 + 簡短描述（metadata） | ~100 tokens | Claude Code 啟動時 |
-| 第二階段 | 完整 SKILL.md 內容 | < 5,000 tokens | 任務匹配到該 Skill 時 |
-| 第三階段 | 附帶的資源文件（模板、範例等） | 視文件大小 | Skill 執行時按需載入 |
+| Stage | What's Loaded | Token Cost | When It Happens |
+|-------|--------------|-----------|----------------|
+| Stage 1 | Skill name + short description (metadata) | ~100 tokens | When Claude Code starts up |
+| Stage 2 | Full SKILL.md content | < 5,000 tokens | When a task matches the Skill |
+| Stage 3 | Accompanying resource files (templates, examples, etc.) | Varies by file size | Loaded on demand during execution |
 
-這就像一間圖書館：
+Think of it like a library:
 
-- 第一階段 = 看書名和簡介（快速瀏覽）
-- 第二階段 = 把書借回家仔細讀（需要時才拿）
-- 第三階段 = 打開書裡附的光碟或練習冊（真正動手時才用）
+- Stage 1 = Reading the book title and blurb (quick browse)
+- Stage 2 = Borrowing the book to read in detail (only when needed)
+- Stage 3 = Opening the CD or workbook that comes with the book (only when you're actually doing the work)
 
-### 工作流程圖
+### Workflow Diagram
 
-以下是 Claude Code 處理 Skills 的完整流程：
+Here's the complete flow of how Claude Code processes Skills:
 
 ```
 Claude Code starts
-      │
-      ▼
-Scans ~/.claude/skills/  ←── (100 tokens per skill, very cheap)
-      │
-      ▼
-Task matches a skill? ──No──→ Normal operation
-      │
+      |
+      v
+Scans ~/.claude/skills/  <-- (100 tokens per skill, very cheap)
+      |
+      v
+Task matches a skill? --No--> Normal operation
+      |
      Yes
-      ▼
-Loads full SKILL.md ←── (up to 5k tokens)
-      │
-      ▼
+      v
+Loads full SKILL.md <-- (up to 5k tokens)
+      |
+      v
 Executes with skill context
 ```
 
-📸 [你可以這樣理解這個流程]
+[How to understand this flow]
 ```
-┌─────────────────────────────────────────────────────┐
-│  Claude Code 啟動                                    │
-│  → 掃描 skills 資料夾（就像看一排書的書名）            │
-│  → 發現 5 個 Skill：前端設計、TDD、部署、文件、SEO      │
-│  → 只記住名字和簡介（非常省資源）                      │
-│                                                      │
-│  你說：「幫我寫一個 React 元件」                       │
-│  → Claude 想：這跟「前端設計」Skill 有關！              │
-│  → 載入完整的 frontend-design SKILL.md                │
-│  → 按照 Skill 裡的指引來寫代碼                        │
-└─────────────────────────────────────────────────────┘
++-----------------------------------------------------+
+|  Claude Code starts                                  |
+|  -> Scans the skills folder (like reading book       |
+|     titles on a shelf)                               |
+|  -> Discovers 5 Skills: frontend-design, TDD,        |
+|     deploy, docs, SEO                                |
+|  -> Only remembers names and descriptions (very      |
+|     resource-efficient)                              |
+|                                                      |
+|  You say: "Help me write a React component"          |
+|  -> Claude thinks: This relates to the               |
+|     "frontend-design" Skill!                         |
+|  -> Loads the full frontend-design SKILL.md          |
+|  -> Writes code following the Skill's guidance       |
++-----------------------------------------------------+
 ```
 
 ### Skills vs MCP Servers vs Subagents
 
-初學者常常搞混這三個概念，以下用一張表格來釐清：
+Beginners often confuse these three concepts. Here's a table to clarify:
 
-| 特性 | Skills | MCP Servers | Subagents |
-|------|--------|-------------|-----------|
-| **是什麼** | 一份文字指南（SKILL.md） | 一個持續運行的外部服務 | 一個獨立的 Claude 實例 |
-| **比喻** | 操作手冊 | 外接的專用工具 | 請來的外部顧問 |
-| **安裝難度** | 複製文件即可 | 需要配置和啟動服務 | 需要程式碼設定 |
-| **適合場景** | 改變 Claude 的工作方式 | 連接外部資料來源（資料庫、API） | 需要多個 AI 並行處理複雜任務 |
-| **資源消耗** | 極低（純文字） | 中等（需要運行服務） | 較高（多個 AI 實例） |
-| **舉例** | TDD 開發流程、代碼風格指南 | GitHub、Slack、資料庫連接 | 自動化研究、大型重構 |
+| Feature | Skills | MCP Servers | Subagents |
+|---------|--------|-------------|-----------|
+| **What it is** | A text-based guide (SKILL.md) | A continuously running external service | An independent Claude instance |
+| **Analogy** | Operations manual | An external specialised tool | An outside consultant you've brought in |
+| **Installation difficulty** | Just copy a file | Requires configuration and running a service | Requires code setup |
+| **Best for** | Changing how Claude works | Connecting to external data sources (databases, APIs) | Multiple AIs processing complex tasks in parallel |
+| **Resource usage** | Very low (plain text) | Moderate (requires a running service) | Higher (multiple AI instances) |
+| **Examples** | TDD workflow, code style guide | GitHub, Slack, database connections | Automated research, large-scale refactoring |
 
-**簡單判斷法：**
-- 想讓 Claude **用不同方式做事** → 用 Skill
-- 想讓 Claude **連接新的工具或資料** → 用 MCP Server
-- 想讓 Claude **同時處理多件事** → 用 Subagent
+**Quick decision guide:**
+- Want Claude to **do things differently** -> Use a Skill
+- Want Claude to **connect to new tools or data** -> Use an MCP Server
+- Want Claude to **handle multiple things at once** -> Use a Subagent
 
-### Anthropic 官方 Skills Marketplace
+### The Official Anthropic Skills Marketplace
 
-Anthropic 和社群開發者提供了許多現成的 Skills，你可以直接安裝使用。常見的來源：
+Anthropic and community developers provide many ready-made Skills you can install directly. Common sources:
 
-1. **Anthropic 官方 Skills** — `anthropics/claude-code` GitHub repo 中的 skills 資料夾
-2. **社群 Skills** — 例如 `obra/superpowers`，由社群開發者貢獻
-3. **自己寫的 Skills** — 針對你自己的工作流程定制
+1. **Official Anthropic Skills** -- in the skills folder of the `anthropics/claude-code` GitHub repo
+2. **Community Skills** -- e.g., `obra/superpowers`, contributed by community developers
+3. **Your own Skills** -- customised for your specific workflow
 
-### Skills 的跨平台特性
+### Cross-Platform Nature of Skills
 
-一個很棒的特點：Skills 不只在 Claude Code（命令行）中運作。同一份 SKILL.md 可以在以下平台使用：
+A great feature: Skills don't only work in Claude Code (the command line). The same SKILL.md can be used across:
 
-- **Claude Code**（命令行工具）
-- **Claude.ai**（網頁版）
-- **Claude API**（程式化呼叫）
+- **Claude Code** (command-line tool)
+- **Claude.ai** (web version)
+- **Claude API** (programmatic access)
 
-這意味著你寫一次 Skill，到處都能用。
+This means you write a Skill once and use it everywhere.
 
 ---
 
-## 💻 代碼示例 1：一個最簡單的 SKILL.md 文件
+## Code Example 1: A Simple SKILL.md File
 
-讓我們看看一個 Skill 文件長什麼樣子。以下是一個幫助寫 Git commit 訊息的 Skill：
+Let's see what a Skill file looks like. Here's a Skill that helps write Git commit messages:
 
 ```markdown
 ---
@@ -155,63 +159,64 @@ Good: `fix(cart): prevent negative quantity on item removal`
 Bad:  `fixed bug`
 ```
 
-### 各部分解釋：
+### Explanation of Each Section:
 
-| 部分 | 作用 | 類比 |
-|------|------|------|
-| `name` | Skill 的唯一名稱 | 書名 |
-| `description` | 簡短描述（第一階段載入） | 書的副標題 |
-| `triggers` | 什麼關鍵字會觸發這個 Skill | 書的分類標籤 |
-| `# 標題以下` | 完整的操作指引（第二階段載入） | 書的正文 |
+| Section | Purpose | Analogy |
+|---------|---------|---------|
+| `name` | The Skill's unique name | Book title |
+| `description` | Short description (loaded in Stage 1) | Book subtitle |
+| `triggers` | Keywords that activate this Skill | Category labels on the book |
+| `# Heading onwards` | Complete operating instructions (loaded in Stage 2) | The body of the book |
 
-### 預期輸出：
+### Expected Output:
 
-安裝這個 Skill 之後，當你在 Claude Code 中說「幫我 commit」，Claude 會：
+After installing this Skill, when you say "help me commit" in Claude Code, Claude will:
 
-📸 [安裝 Skill 後的行為變化]
+[Behaviour change after installing the Skill]
 ```
-┌──────────────────────────────────────────────────┐
-│ > 幫我把這些改動 commit                            │
-│                                                   │
-│ Claude: 讓我先檢查你的改動...                      │
-│ [執行 git diff --cached]                          │
-│                                                   │
-│ 根據改動內容，我建議這個 commit message：            │
-│                                                   │
-│   feat(invoice): add automatic retry on           │
-│   email send failure                              │
-│                                                   │
-│   When Gmail API returns a 429 rate limit error,  │
-│   the agent now waits 30s and retries up to 3     │
-│   times before marking the invoice as failed.     │
-│                                                   │
-│ 要我用這個訊息來 commit 嗎？                        │
-└──────────────────────────────────────────────────┘
++--------------------------------------------------+
+| > Help me commit these changes                   |
+|                                                  |
+| Claude: Let me review your changes first...      |
+| [runs git diff --cached]                         |
+|                                                  |
+| Based on the changes, I suggest this commit      |
+| message:                                         |
+|                                                  |
+|   feat(invoice): add automatic retry on          |
+|   email send failure                             |
+|                                                  |
+|   When Gmail API returns a 429 rate limit error, |
+|   the agent now waits 30s and retries up to 3    |
+|   times before marking the invoice as failed.    |
+|                                                  |
+| Shall I commit with this message?                |
++--------------------------------------------------+
 ```
 
 ---
 
-## 💻 代碼示例 2：有 Skill vs 沒有 Skill 的對比
+## Code Example 2: With Skill vs Without Skill Comparison
 
-讓我們看看同一個任務，Claude Code 在**有 Skill** 和**沒有 Skill** 時的行為差異。
+Let's see how Claude Code behaves differently on the same task **with** and **without** a Skill.
 
-### 場景：你說「幫我寫一個登入頁面」
+### Scenario: You say "Help me build a login page"
 
-**沒有 Skill 時：**
+**Without a Skill:**
 
 ```
-> 幫我寫一個登入頁面
+> Help me build a login page
 
-Claude: 好的，這是一個簡單的登入頁面：
+Claude: Sure, here's a simple login page:
 
-[生成一個基本的 HTML/CSS 登入表單]
-[可能用任何框架或純 HTML]
-[風格和結構隨機]
+[Generates a basic HTML/CSS login form]
+[Could use any framework or plain HTML]
+[Random style and structure]
 ```
 
-**安裝了 `frontend-design` Skill 後：**
+**After installing the `frontend-design` Skill:**
 
-假設你的 Skill 這樣寫：
+Suppose your Skill is written like this:
 
 ```markdown
 ---
@@ -221,8 +226,7 @@ triggers:
   - UI
   - component
   - page
-  - 頁面
-  - 登入
+  - login
 ---
 
 # Frontend Design Skill
@@ -242,45 +246,47 @@ triggers:
 - Include unit test file alongside component
 ```
 
-**Claude 的行為會完全不同：**
+**Claude's behaviour will be completely different:**
 
 ```
-> 幫我寫一個登入頁面
+> Help me build a login page
 
-Claude: 根據我們的設計系統，我會用 React + TypeScript + 
-Tailwind CSS 來建立登入頁面。
+Claude: Following our design system, I'll build the login page
+using React + TypeScript + Tailwind CSS.
 
-[生成 LoginPage.tsx — 使用 React Hook Form]
-[使用品牌色 #008B8B 和 #00B4A6]
-[包含 loading state 和 error handling]
-[包含 accessibility labels]
-[Mobile-first 響應式設計]
-[同時生成 LoginPage.test.tsx]
+[Generates LoginPage.tsx -- using React Hook Form]
+[Uses brand colours #008B8B and #00B4A6]
+[Includes loading state and error handling]
+[Includes accessibility labels]
+[Mobile-first responsive design]
+[Also generates LoginPage.test.tsx]
 ```
 
-📸 [對比效果]
+[Comparison]
 ```
-┌─────────────────────┬──────────────────────────┐
-│    沒有 Skill        │    有 Skill               │
-├─────────────────────┼──────────────────────────┤
-│ 隨機選擇框架         │ 固定用 React+TypeScript   │
-│ 普通 CSS 或隨機      │ 固定用 Tailwind CSS       │
-│ 隨機配色             │ 使用品牌色 #008B8B        │
-│ 可能沒有錯誤處理      │ 包含完整錯誤處理          │
-│ 可能沒有測試          │ 自動生成測試文件          │
-│ 可能不是手機優先      │ Mobile-first 設計         │
-└─────────────────────┴──────────────────────────┘
++---------------------+--------------------------+
+|    Without Skill     |    With Skill             |
++---------------------+--------------------------+
+| Random framework     | Always React+TypeScript   |
+| Random CSS           | Always Tailwind CSS       |
+| Random colours       | Brand colour #008B8B      |
+| May lack error       | Includes complete error   |
+|   handling           |   handling                |
+| May lack tests       | Auto-generates test file  |
+| May not be mobile-   | Mobile-first design       |
+|   first              |                           |
++---------------------+--------------------------+
 ```
 
-**這就是 Skill 的威力 —— 它把 Claude 從「通才」變成「你團隊的專家」。**
+**This is the power of Skills -- they turn Claude from a "generalist" into "your team's expert".**
 
 ---
 
-## ✍️ 動手練習
+## Hands-On Exercises
 
-### 練習 1：閱讀理解
+### Exercise 1: Reading Comprehension
 
-看看以下的 SKILL.md 片段，回答問題：
+Look at the following SKILL.md snippet and answer the questions:
 
 ```markdown
 ---
@@ -300,66 +306,66 @@ triggers:
 - All endpoints must have description and error codes
 ```
 
-問題：
-1. 這個 Skill 會在什麼時候被觸發？
-2. 它會讓 Claude 用什麼格式來生成文件？
-3. 它的 metadata 大約佔多少 tokens？
+Questions:
+1. When will this Skill be triggered?
+2. What format will it make Claude use for generating documentation?
+3. Approximately how many tokens does its metadata use?
 
-> 提示：答案都在上面的表格和流程圖裡！
+> Hint: The answers are all in the tables and flow diagram above!
 
-### 練習 2：設計你自己的 Skill
+### Exercise 2: Design Your Own Skill
 
-想一個你日常工作或學習中經常重複的任務，用以下模板寫出你的 Skill 概念（不需要真的建文件，先在紙上或筆記本寫）：
+Think of a task you frequently repeat in your daily work or studies. Using the template below, sketch out your Skill concept (no need to create an actual file yet -- just write it on paper or in a notebook):
 
 ```
-Skill 名稱：_______________
-簡短描述：_______________
-觸發關鍵字：_______________
-主要規則（3-5 條）：
+Skill name: _______________
+Short description: _______________
+Trigger keywords: _______________
+Main rules (3-5): 
 1. _______________
 2. _______________
 3. _______________
 ```
 
-> 提示：好的 Skill 通常解決「每次都要重複解釋同樣的事」這種問題。比如：每次都要提醒 Claude 用某個特定框架、遵守某個代碼風格、或按照某個流程來做事。
+> Hint: Good Skills typically solve the problem of "having to explain the same thing every time." For example: always having to remind Claude to use a specific framework, follow a particular code style, or follow a certain process.
 
 ---
 
-## ❓ 小測驗（3 條題目）
+## Quiz (3 Questions)
 
-**1. Claude Code Skills 的核心本質是什麼？**
+**1. What is the core essence of Claude Code Skills?**
 
-A. 一個需要安裝的軟體外掛  
-B. 一份 Markdown 格式的指引文件（SKILL.md）  
-C. 一個持續運行的背景服務  
-D. Claude 內建的功能模塊  
+A. A software plugin that needs to be installed  
+B. A Markdown-format guidance document (SKILL.md)  
+C. A continuously running background service  
+D. A built-in Claude feature module  
 
-答案：**B** — Skill 本質上就是一個 SKILL.md 文件，放在指定資料夾裡。它是純文字的，不需要安裝軟體或運行服務。
-
----
-
-**2. 漸進式載入（Progressive Disclosure）的第一階段載入什麼？**
-
-A. 完整的 SKILL.md 內容（約 5,000 tokens）  
-B. Skill 的名稱和簡短描述（約 100 tokens）  
-C. Skill 附帶的所有資源文件  
-D. 所有已安裝 Skills 的完整內容  
-
-答案：**B** — 第一階段只載入 metadata（名稱 + 描述），大約 100 tokens。這樣即使安裝了很多 Skills，啟動時也不會浪費資源。只有當任務真正匹配到某個 Skill 時，才會載入完整內容。
+Answer: **B** -- A Skill is essentially a SKILL.md file placed in a designated folder. It's pure text -- no software installation or running service required.
 
 ---
 
-**3. 以下哪個場景最適合用 Skill 來解決？**
+**2. What does Progressive Disclosure load in Stage 1?**
 
-A. 需要連接公司的 Slack 頻道來發送通知  
-B. 需要同時翻譯 50 份文件  
-C. 每次寫代碼都要提醒 Claude 遵守公司的命名規範  
-D. 需要從資料庫讀取客戶資料  
+A. The full SKILL.md content (~5,000 tokens)  
+B. The Skill's name and short description (~100 tokens)  
+C. All the Skill's accompanying resource files  
+D. The complete contents of all installed Skills  
 
-答案：**C** — Skill 最適合「改變 Claude 的工作方式」，像是遵守特定規範或流程。A 和 D 需要連接外部服務（用 MCP Server），B 需要並行處理（用 Subagent）。
+Answer: **B** -- Stage 1 only loads the metadata (name + description), approximately 100 tokens. This means even if you have many Skills installed, startup won't waste resources. The full content is only loaded when a task actually matches a Skill.
 
 ---
 
-## 🔗 下一步
+**3. Which scenario is best solved with a Skill?**
 
-現在你已經了解什麼是 Skills，接下來在**模塊 B2：Installing Skills — 3 Methods**中，我們會實際動手安裝 Skills！你會學到三種不同的安裝方法，從最簡單的一行指令到手動複製文件，確保你在任何環境下都能安裝成功。
+A. Need to connect to the company's Slack channel to send notifications  
+B. Need to translate 50 documents simultaneously  
+C. Every time you write code, you need to remind Claude to follow your company's naming conventions  
+D. Need to read customer data from a database  
+
+Answer: **C** -- Skills are best suited for "changing how Claude works," like following specific conventions or processes. A and D require connecting to external services (use MCP Server), B requires parallel processing (use Subagent).
+
+---
+
+## Next Steps
+
+Now that you understand what Skills are, in **Module B2: Installing Skills -- 3 Methods**, we'll get hands-on with installing Skills! You'll learn three different installation methods, from the simplest one-line command to manual file copying, ensuring you can install successfully in any environment.

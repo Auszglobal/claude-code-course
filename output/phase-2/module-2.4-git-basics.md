@@ -1,316 +1,318 @@
-# 模塊 2.4：Git 基礎與版本控制 — 給你的項目加上「存檔」功能
+# Module 2.4: Git Basics and Version Control -- Adding a "Save Game" Feature to Your Project
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 理解什麼是 Git 以及為什麼它如此重要
-  - 讓 Claude Code 幫你檢查項目的 Git 狀態
-  - 讓 Claude Code 幫你保存（commit）工作進度
-  - 讓 Claude Code 幫你查看歷史記錄
-  - 理解基本的版本控制概念
+## Learning Objectives
+- After completing this lesson, you will be able to:
+  - Understand what Git is and why it's so important
+  - Have Claude Code check the Git status of your project
+  - Have Claude Code save (commit) your work progress
+  - Have Claude Code view the commit history
+  - Understand basic version control concepts
 
-## 📖 理論解釋
+## Theory
 
-### 什麼是 Git？
+### What Is Git?
 
-你有沒有過這種經驗？
+Have you ever had this experience?
 
-- 寫報告時不斷另存新檔：`報告v1.docx`、`報告v2.docx`、`報告最終版.docx`、`報告最終版(真的最終).docx`
-- 改了一堆東西之後，發現改壞了，想回到之前的版本，但已經忘了改了什麼
+- While writing a report, you keep saving new copies: `report-v1.docx`, `report-v2.docx`, `report-final.docx`, `report-final(really-final).docx`
+- After making a bunch of changes, you realise you've broken something and want to go back to a previous version, but you can't remember what you changed
 
-**Git 就是為了解決這個問題而生的。**
+**Git was created to solve exactly this problem.**
 
-把 Git 想像成電子遊戲的「存檔」系統：
+Think of Git as a video game's "save" system:
 
-| 遊戲存檔 | Git |
-|----------|-----|
-| 存檔點 | Commit（提交） |
-| 存檔描述（例如：「打敗第三關 Boss 後」） | Commit message（提交訊息） |
-| 讀取存檔（回到之前的進度） | 查看或恢復歷史版本 |
-| 存檔列表 | Git log（提交歷史） |
+| Game Save | Git |
+|-----------|-----|
+| Save point | Commit |
+| Save description (e.g., "After defeating the Level 3 boss") | Commit message |
+| Load save (go back to a previous point) | View or restore a historical version |
+| Save file list | Git log (commit history) |
 
-每次你「存檔」（commit），Git 會記錄：
-- 哪些文件被修改了
-- 修改了什麼內容
-- 是誰修改的
-- 什麼時候修改的
-- 你的描述（為什麼修改）
+Each time you "save" (commit), Git records:
+- Which files were modified
+- What was changed
+- Who made the changes
+- When the changes were made
+- Your description (why the changes were made)
 
-### 為什麼版本控制重要？
+### Why Is Version Control Important?
 
-1. **安全網**：改壞了？回到上一個存檔就好
-2. **歷史記錄**：清楚知道每一次修改的原因
-3. **協作**：多人同時工作不會互相覆蓋（進階概念，以後會學到）
-4. **自信**：有了存檔，你可以大膽嘗試，不怕搞壞東西
+1. **Safety net**: Broke something? Just go back to the last save
+2. **History**: Clearly know the reason for every change
+3. **Collaboration**: Multiple people can work simultaneously without overwriting each other (an advanced concept we'll cover later)
+4. **Confidence**: With saves in place, you can experiment boldly without fear of breaking things
 
-### 好消息：Claude Code 幫你處理 Git
+### Good News: Claude Code Handles Git for You
 
-Git 的命令其實有很多，對初學者來說可能有點嚇人。但好消息是 — **你不需要記任何 Git 命令**！
+Git actually has a lot of commands, which can be a bit intimidating for beginners. But the good news is -- **you don't need to memorise any Git commands**!
 
-你只需要用自然語言告訴 Claude Code 你想做什麼，它會幫你執行正確的 Git 操作。
+Just tell Claude Code what you want to do in natural language, and it will execute the correct Git operations.
 
-| 你說的話 | Claude Code 幫你做的事 |
-|----------|----------------------|
-| 「現在項目是什麼狀態？」 | 執行 `git status` 檢查狀態 |
-| 「幫我存檔，描述是...」 | 執行 `git add` + `git commit` |
-| 「給我看看之前的修改記錄」 | 執行 `git log` 顯示歷史 |
-| 「上次改了什麼？」 | 執行 `git diff` 顯示差異 |
+| What you say | What Claude Code does for you |
+|--------------|-------------------------------|
+| "What's the current status of the project?" | Runs `git status` to check the status |
+| "Save my progress with the description..." | Runs `git add` + `git commit` |
+| "Show me the previous change history" | Runs `git log` to display the history |
+| "What was changed last time?" | Runs `git diff` to show the differences |
 
-### Git 的基本概念
+### Basic Git Concepts
 
-在開始實作之前，讓我們理解幾個基本概念：
+Before we start hands-on work, let's understand a few basic concepts:
 
 ```
-┌─────────────────────────────────────────────┐
-│                 Git 工作流程                  │
-│                                              │
-│  工作目錄        暫存區          歷史記錄      │
-│ (Working)    (Staging)      (History)        │
-│                                              │
-│  修改文件  ──→  準備存檔  ──→  正式存檔       │
-│  [編輯中]      [待確認]      [已記錄]         │
-│                                              │
-│  比喻：                                      │
-│  在桌上工作  →  放到待寄區  →  寄出郵件        │
-└─────────────────────────────────────────────┘
++---------------------------------------------+
+|              Git Workflow                     |
+|                                              |
+|  Working Dir     Staging Area    History      |
+|  (Working)       (Staging)       (History)   |
+|                                              |
+|  Edit files  -->  Prepare to  --> Officially |
+|  [editing]        save [ready]    saved      |
+|                                  [recorded]  |
+|                                              |
+|  Analogy:                                    |
+|  Working at  ->  Put in the   -> Mail sent   |
+|  your desk       outbox                      |
++---------------------------------------------+
 ```
 
-- **工作目錄**：你正在編輯的文件（桌上的文件）
-- **暫存區**：準備好要「存檔」的修改（放到待寄區的信件）
-- **提交**：正式記錄這些修改（寄出郵件，無法撤回）
+- **Working directory**: The files you're currently editing (documents on your desk)
+- **Staging area**: Changes ready to be "saved" (letters placed in the outbox)
+- **Commit**: Officially recording those changes (mailing the letter -- can't take it back)
 
-> 💡 **別擔心**：這些概念在實際操作中會自然理解。而且 Claude Code 會幫你處理這些步驟，你只需要說「幫我存檔」就好。
+> Don't worry: These concepts will make sense naturally as you practise. And Claude Code handles these steps for you -- just say "save my work" and you're done.
 
-## 💻 代碼示例 1：初始化 Git 並做第一次提交
+## Code Example 1: Initialising Git and Making Your First Commit
 
-### 步驟一：建立新項目並初始化 Git
+### Step 1: Create a New Project and Initialise Git
 
-打開終端機，輸入以下指令：
+Open the terminal and type the following:
 
-**Windows（Git Bash）和 Mac / Linux：**
+**Windows (Git Bash) and Mac / Linux:**
 ```bash
-# 建立一個新的練習項目
+# Create a new practice project
 mkdir ~/Desktop/git-practice
 
-# 進入這個資料夾
+# Navigate to this folder
 cd ~/Desktop/git-practice
 
-# 啟動 Claude Code
+# Launch Claude Code
 claude
 ```
 
-在 Claude Code 中輸入：
+Type the following in Claude Code:
 
 ```
-請幫我初始化一個 Git 倉庫（repository），然後建立一個簡單的 index.html 文件，內容是一個歡迎頁面
+Please initialise a Git repository, then create a simple index.html file with a welcome page
 ```
 
-### 預期輸出：
+### Expected Output:
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌──────────────────────────────────────────────┐
-│ Claude Code                                  │
-│                                              │
-│ ✓ 已初始化 Git 倉庫                           │
-│ ✓ 已建立文件：index.html                      │
-│                                              │
-│ 提示：目前有 1 個新文件尚未提交（commit）。     │
-└──────────────────────────────────────────────┘
-```
-
-### 步驟二：檢查項目狀態
-
-輸入：
-
-```
-現在項目的 Git 狀態是什麼？
++----------------------------------------------+
+| Claude Code                                  |
+|                                              |
+| Initialised Git repository                   |
+| Created file: index.html                     |
+|                                              |
+| Note: There is 1 new file not yet committed. |
++----------------------------------------------+
 ```
 
-### 預期輸出：
+### Step 2: Check the Project Status
 
-Claude Code 會執行 `git status` 並告訴你：
+Type:
 
 ```
-目前 Git 狀態：
-- 分支：main（主分支）
-- 有 1 個未追蹤的新文件：
+What is the current Git status of the project?
+```
+
+### Expected Output:
+
+Claude Code will run `git status` and tell you:
+
+```
+Current Git status:
+- Branch: main
+- 1 untracked new file:
   - index.html
 
-這個文件尚未被「存檔」（commit）。
+This file has not yet been "saved" (committed).
 ```
 
-「未追蹤」就是 Git 說「我看到這個文件了，但你還沒告訴我要不要記錄它」。
+"Untracked" means Git is saying "I see this file, but you haven't told me whether to track it yet."
 
-### 步驟三：做第一次提交（存檔）
+### Step 3: Make Your First Commit (Save)
 
-輸入：
-
-```
-請幫我把 index.html 提交到 Git，提交訊息寫「建立歡迎頁面」
-```
-
-### 預期輸出：
-
-📸 [你應該看到的畫面]
-```
-┌──────────────────────────────────────────────┐
-│ Claude Code                                  │
-│                                              │
-│ ✓ 已將 index.html 加入暫存區                  │
-│ ✓ 已提交：「建立歡迎頁面」                     │
-│                                              │
-│ 提交摘要：                                    │
-│ - 1 個文件被修改                              │
-│ - 新增了 15 行內容                            │
-└──────────────────────────────────────────────┘
-```
-
-恭喜！你的第一個「遊戲存檔」已經建立了！
-
-## 💻 代碼示例 2：修改文件並建立更多存檔點
-
-### 步驟一：修改文件
-
-輸入：
+Type:
 
 ```
-請在 index.html 中加上一個導航欄，包含「首頁」、「關於」和「聯絡」三個連結
+Please commit index.html to Git with the commit message "Create welcome page"
 ```
 
-Claude Code 會修改 index.html，並顯示 diff。接受修改後，輸入：
+### Expected Output:
 
+[What you should see]
 ```
-現在 Git 狀態是什麼？
-```
-
-### 預期輸出：
-
-```
-目前 Git 狀態：
-- 有 1 個已修改的文件：
-  - index.html（已修改）
-
-這些修改尚未提交（commit）。
-```
-
-### 步驟二：建立第二個存檔點
-
-輸入：
-
-```
-請提交這次修改，描述是「新增導航欄」
++----------------------------------------------+
+| Claude Code                                  |
+|                                              |
+| Added index.html to staging area             |
+| Committed: "Create welcome page"             |
+|                                              |
+| Commit summary:                              |
+| - 1 file changed                             |
+| - 15 lines added                             |
++----------------------------------------------+
 ```
 
-### 步驟三：查看歷史記錄
+Congratulations! Your first "game save" has been created!
 
-現在讓我們看看所有的存檔記錄。輸入：
+## Code Example 2: Modifying Files and Creating More Save Points
 
-```
-請給我看 Git 的提交歷史
-```
+### Step 1: Modify a File
 
-### 預期輸出：
-
-📸 [你應該看到的畫面]
-```
-┌──────────────────────────────────────────────┐
-│ Git 提交歷史                                  │
-│                                              │
-│ 2. abc1234 — 新增導航欄                       │
-│    日期：2026-04-11 15:30                     │
-│                                              │
-│ 1. def5678 — 建立歡迎頁面                     │
-│    日期：2026-04-11 15:25                     │
-└──────────────────────────────────────────────┘
-```
-
-你可以清楚看到每一次「存檔」的時間和描述。這就是版本控制的價值 — 你的每一步都有記錄。
-
-### 步驟四：查看特定提交的修改內容
-
-你還可以問：
+Type:
 
 ```
-上一次提交修改了什麼內容？
+Please add a navigation bar to index.html with three links: "Home," "About," and "Contact"
 ```
 
-Claude Code 會顯示 diff，讓你看到具體新增了哪些代碼。
+Claude Code will modify index.html and show the diff. After accepting the changes, type:
 
-### 好的提交訊息 vs 不好的提交訊息
+```
+What's the Git status now?
+```
 
-提交訊息（commit message）就像遊戲存檔的描述，好的描述能讓你在未來快速找到正確的版本。
+### Expected Output:
 
-| 不好的訊息 | 好的訊息 |
-|-----------|---------|
-| 「更新」 | 「新增聯絡表單頁面」 |
-| 「修了一些東西」 | 「修復導航欄在手機上不顯示的問題」 |
-| 「改了改」 | 「將主色調從藍色改為綠色」 |
-| 「asdf」 | 「移除未使用的測試文件」 |
+```
+Current Git status:
+- 1 modified file:
+  - index.html (modified)
 
-> 💡 **秘訣**：好的提交訊息回答的是「為什麼要修改」而不是「改了什麼」。Git 已經記錄了你改了什麼（diff），所以訊息應該解釋原因。
+These changes have not been committed yet.
+```
 
-## ✍️ 動手練習
+### Step 2: Create a Second Save Point
 
-### 練習 1：完成三次提交的工作流程
+Type:
 
-在 git-practice 項目中完成以下操作：
+```
+Please commit these changes with the description "Add navigation bar"
+```
 
-1. 請 Claude Code 建立一個 `about.html`（關於頁面），然後提交，訊息：「新增關於頁面」
-2. 請 Claude Code 建立一個 `style.css`（樣式表），然後提交，訊息：「新增基本樣式表」
-3. 請 Claude Code 修改 `index.html`，連結到新建立的頁面，然後提交，訊息：「更新首頁連結」
-4. 最後，請 Claude Code 顯示完整的 Git 歷史
+### Step 3: View the Commit History
 
-你應該能看到 5 個提交記錄（之前 2 個 + 新的 3 個）。
+Now let's see all of our save records. Type:
 
-> 💡 **提示**：你可以一步一步做，每次都用自然語言告訴 Claude Code 你要做什麼。例如：「幫我建立 about.html，然後提交到 Git」。
+```
+Please show me the Git commit history
+```
 
-### 練習 2：體驗「查看歷史」的實用性
+### Expected Output:
 
-完成練習 1 後，試試以下操作：
+[What you should see]
+```
++----------------------------------------------+
+| Git Commit History                           |
+|                                              |
+| 2. abc1234 -- Add navigation bar             |
+|    Date: 2026-04-11 15:30                    |
+|                                              |
+| 1. def5678 -- Create welcome page            |
+|    Date: 2026-04-11 15:25                    |
++----------------------------------------------+
+```
 
-1. 請 Claude Code「顯示所有提交的歷史記錄」
-2. 請 Claude Code「顯示第二次提交和最新提交之間有什麼不同」
-3. 請 Claude Code「顯示 index.html 的修改歷史」
+You can clearly see the time and description of each "save." This is the value of version control -- every step you take is recorded.
 
-感受一下版本控制的威力 — 你可以隨時回顧項目的演變過程。
+### Step 4: View the Changes in a Specific Commit
 
-> 💡 **提示**：你不需要記任何 Git 命令。用中文問 Claude Code 就好：「index.html 的歷史修改記錄是什麼？」
+You can also ask:
 
-## ❓ 小測驗（3 條題目）
+```
+What was changed in the last commit?
+```
 
-1. Git 的 commit（提交）最像下面哪一個比喻？
-   A. 刪除文件
-   B. 遊戲存檔 — 記錄當前的項目狀態
-   C. 安裝新軟體
-   D. 上傳文件到網路
+Claude Code will show the diff, letting you see exactly what code was added.
 
-   答案：B — Commit 就像遊戲存檔。它記錄了項目在某個時間點的完整狀態，你可以隨時查看或回到這個狀態。每個 commit 都有一個描述（commit message），就像存檔描述一樣。
+### Good Commit Messages vs Bad Commit Messages
 
-2. 使用 Claude Code 做 Git 操作時，你需要記住 Git 命令嗎？
-   A. 需要，每個命令都要記住
-   B. 不需要，用自然語言描述就好，Claude Code 會執行正確的命令
-   C. 只需要記住 `git commit` 這一個命令
-   D. 需要先學完整的 Git 教程才能使用
+A commit message is like a game save description. A good description lets you quickly find the right version in the future.
 
-   答案：B — Claude Code 的一大優勢就是你可以用自然語言描述你想做的事。你說「幫我存檔」，它會執行正確的 `git add` 和 `git commit`。你說「看看歷史」，它會執行 `git log`。你不需要記任何命令。
+| Bad message | Good message |
+|-------------|-------------|
+| "update" | "Add contact form page" |
+| "fixed some stuff" | "Fix navigation bar not displaying on mobile" |
+| "changes" | "Change primary colour from blue to green" |
+| "asdf" | "Remove unused test files" |
 
-3. 以下哪一個是好的 commit message（提交訊息）？
-   A. 「update」
-   B. 「fix」
-   C. 「新增用戶登入功能的表單頁面」
-   D. 「改了一些東西」
+> Tip: Good commit messages answer the question "why was this change made" rather than "what was changed." Git already records what was changed (the diff), so the message should explain the reason.
 
-   答案：C — 好的提交訊息應該清楚描述**為什麼**做了這次修改。「新增用戶登入功能的表單頁面」讓你在未來回顧歷史時，能立刻知道這次提交做了什麼。其他選項都太模糊，沒有提供有用的資訊。
+## Hands-On Practice
 
-## 🔗 下一步
+### Exercise 1: Complete a Three-Commit Workflow
 
-太棒了！你已經完成了 Phase 2 的全部課程！讓我們回顧一下你學到了什麼：
+In the git-practice project, complete the following:
 
-- **模塊 2.1**：用 CLAUDE.md 設定 AI 的行為規則
-- **模塊 2.2**：讀取、建立、編輯文件
-- **模塊 2.3**：在大量文件中搜尋和導航
-- **模塊 2.4**：用 Git 版本控制保護你的工作
+1. Ask Claude Code to create an `about.html` (About page), then commit with the message: "Add about page"
+2. Ask Claude Code to create a `style.css` (stylesheet), then commit with the message: "Add basic stylesheet"
+3. Ask Claude Code to modify `index.html` to link to the newly created pages, then commit with the message: "Update homepage links"
+4. Finally, ask Claude Code to display the complete Git history
 
-這四個技能是使用 Claude Code 的核心基礎。從 Phase 3 開始，我們將進入更進階的主題 — 學習如何讓 Claude Code 幫你建立真正的項目，從簡單的網頁到自動化工具。你已經準備好了！
+You should see 5 commit records (the previous 2 + the new 3).
 
-> 在 **Phase 3：實戰應用篇** 中，我們將學習如何用 Claude Code 從零開始建立一個完整的項目。敬請期待！
+> Tip: You can work step by step, telling Claude Code what to do each time in natural language. For example: "Create about.html for me, then commit it to Git."
+
+### Exercise 2: Experience the Power of "Viewing History"
+
+After completing Exercise 1, try the following:
+
+1. Ask Claude Code to "show all commit history records"
+2. Ask Claude Code to "show what's different between the second commit and the latest commit"
+3. Ask Claude Code to "show the modification history of index.html"
+
+Experience the power of version control -- you can review how your project has evolved at any time.
+
+> Tip: You don't need to remember any Git commands. Just ask Claude Code in plain language: "What's the change history for index.html?"
+
+## Quiz (3 Questions)
+
+1. Which of the following best describes a Git commit?
+   A. Deleting a file
+   B. A game save -- recording the current state of the project
+   C. Installing new software
+   D. Uploading a file to the internet
+
+   Answer: B -- A commit is like a game save. It records the complete state of the project at a specific point in time, and you can view or return to this state at any time. Each commit has a description (commit message), just like a save description.
+
+2. When using Claude Code for Git operations, do you need to memorise Git commands?
+   A. Yes, you need to memorise every command
+   B. No, just describe what you want in natural language and Claude Code will run the right commands
+   C. You only need to memorise `git commit`
+   D. You need to complete a full Git tutorial before you can use it
+
+   Answer: B -- One of Claude Code's biggest advantages is that you can describe what you want to do in natural language. Say "save my work" and it runs the correct `git add` and `git commit`. Say "show me the history" and it runs `git log`. You don't need to memorise any commands.
+
+3. Which of the following is a good commit message?
+   A. "update"
+   B. "fix"
+   C. "Add user login form page"
+   D. "changed some stuff"
+
+   Answer: C -- A good commit message should clearly describe **why** this change was made. "Add user login form page" lets you immediately know what this commit did when reviewing history in the future. The other options are too vague and don't provide useful information.
+
+## Next Steps
+
+Excellent! You've completed all of Phase 2! Let's recap what you've learned:
+
+- **Module 2.1**: Setting up AI behaviour rules with CLAUDE.md
+- **Module 2.2**: Reading, creating, and editing files
+- **Module 2.3**: Searching and navigating across large numbers of files
+- **Module 2.4**: Protecting your work with Git version control
+
+These four skills form the core foundation for using Claude Code. Starting in Phase 3, we'll move into more advanced topics -- learning how to have Claude Code help you build real projects, from simple web pages to automation tools. You're ready!
+
+> In **Phase 3: Practical Applications**, we'll learn how to use Claude Code to build a complete project from scratch. Stay tuned!

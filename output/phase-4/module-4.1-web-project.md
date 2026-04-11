@@ -1,253 +1,257 @@
-# 模塊 4.1：建立完整網頁項目 (Building a Complete Web Project)
+# Module 4.1: Building a Complete Web Project
 
-## 🎯 學習目標
-- 完成本課後你能夠...
-  - 理解網頁的三大組成部分：HTML、CSS、JavaScript
-  - 使用 Claude Code 從零開始建立一個個人作品集網站
-  - 了解網頁項目的檔案結構
-  - 修改網站的文字、顏色和版面配置
-  - 在瀏覽器中預覽你的網站
+## 🎯 Learning Objectives
+- After completing this lesson, you will be able to...
+  - Understand the three building blocks of a web page: HTML, CSS, JavaScript
+  - Use Claude Code to build a personal portfolio website from scratch
+  - Understand the file structure of a web project
+  - Modify text, colors, and layout of a website
+  - Preview your website in a browser
 
-## 📖 理論解釋
+## 📖 Theory
 
-### 網頁是怎樣組成的？
+### How Is a Web Page Put Together?
 
-想像你正在蓋一棟房子：
+Imagine you're building a house:
 
-- **HTML** 就像房子的**骨架結構** —— 牆壁在哪裡、門窗在哪裡、房間怎麼分。它定義了網頁上有什麼內容（標題、段落、圖片、按鈕）。
-- **CSS** 就像房子的**裝潢設計** —— 牆壁塗什麼顏色、地板用什麼材質、家具怎麼擺放。它決定網頁長什麼樣子（顏色、字體、排版）。
-- **JavaScript** 就像房子的**電器系統** —— 按開關燈會亮、按門鈴會響。它讓網頁能夠互動（點擊按鈕會發生事情、動畫效果）。
+- **HTML** is the **structural framework** of the house — where the walls go, where the doors and windows are, how the rooms are divided. It defines what content appears on the page (headings, paragraphs, images, buttons).
+- **CSS** is the **interior design** — what color to paint the walls, what material for the floors, how to arrange the furniture. It determines how the page looks (colors, fonts, layout).
+- **JavaScript** is the **electrical system** — flip a switch and the light turns on, press the doorbell and it rings. It makes the page interactive (things happen when you click a button, animation effects).
 
-對於初學者來說，好消息是：**你不需要自己寫這些代碼！** Claude Code 會幫你生成所有內容，你只需要告訴它你想要什麼。
+For beginners, the good news is: **You don't need to write any of this code yourself!** Claude Code will generate everything for you — you just need to tell it what you want.
 
-### 什麼是個人作品集網站？
+### What Is a Personal Portfolio Website?
 
-個人作品集網站（Portfolio Site）就像你的**數位名片**。它通常包含：
-- 你的名字和簡介
-- 你的技能或專長
-- 你做過的項目或作品
-- 聯繫方式
+A personal portfolio website is like your **digital business card**. It typically includes:
+- Your name and a brief introduction
+- Your skills or areas of expertise
+- Projects or work you've done
+- Contact information
 
-這是一個非常好的第一個項目，因為內容是關於你自己的，所以你會知道該放什麼！
+This is an excellent first project because the content is about you, so you'll know exactly what to include!
 
 ---
 
-## 💻 代碼示例 1：讓 Claude Code 建立網站骨架
+## 💻 Code Example 1: Have Claude Code Build the Website Skeleton
 
-首先，打開終端機，進入你的工作目錄：
+First, open your terminal and navigate to your working directory:
 
 ```bash
-# 建立一個新的項目資料夾
+# Create a new project folder
 mkdir my-portfolio
 
-# 進入資料夾
+# Enter the folder
 cd my-portfolio
 ```
 
-然後啟動 Claude Code：
+Then start Claude Code:
 
 ```bash
 claude
 ```
 
-現在，給 Claude Code 你的第一個指令：
+Now, give Claude Code your first instruction:
 
 ```
-幫我建立一個簡單的個人作品集網站，包含以下內容：
-- 頂部有導航列（名字、關於我、作品、聯繫）
-- 一個歡迎區域，有大標題和簡短介紹
-- 「關於我」區域，有一段自我介紹
-- 「我的技能」區域，列出 4-5 個技能
-- 「聯繫我」區域，有 email 和社交媒體連結
-- 底部有版權資訊
-使用純 HTML + CSS，不需要 JavaScript 框架。
-設計風格要現代簡潔，使用深藍色 (#1a1a2e) 和青色 (#00b4a6) 配色。
+Help me build a simple personal portfolio website with the following sections:
+- A navigation bar at the top (name, About Me, Work, Contact)
+- A hero section with a large heading and a short introduction
+- An "About Me" section with a self-introduction paragraph
+- A "My Skills" section listing 4-5 skills
+- A "Contact Me" section with email and social media links
+- A footer with copyright information
+Use plain HTML + CSS, no JavaScript frameworks needed.
+The design should be modern and clean, using dark blue (#1a1a2e) and teal (#00b4a6) as the color scheme.
 ```
 
-### 預期輸出：
+### Expected Output:
 
-Claude Code 會為你生成至少兩個檔案：
+Claude Code will generate at least two files for you:
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌─────────────────────────────────────────────────┐
-│ Claude Code 正在生成檔案...                       │
+│ Claude Code is generating files...               │
 │                                                   │
 │ ✓ Created index.html                              │
 │ ✓ Created styles.css                              │
 │                                                   │
-│ 我已經建立了一個個人作品集網站，包含：              │
-│ - index.html：網站的主要結構                       │
-│ - styles.css：網站的樣式設計                       │
+│ I've built a personal portfolio website with:     │
+│ - index.html: The main structure of the website   │
+│ - styles.css: The style design of the website     │
 │                                                   │
-│ 你可以用瀏覽器打開 index.html 來預覽。             │
+│ You can open index.html in your browser to        │
+│ preview it.                                       │
 └─────────────────────────────────────────────────┘
 ```
 
-生成後，看看檔案結構：
+After generation, check the file structure:
 
 ```bash
-# 在 Claude Code 中輸入
+# Enter this in Claude Code
 ls -la
 ```
 
-你應該會看到：
+You should see:
 
 ```
 my-portfolio/
-├── index.html      # 網頁結構（HTML）
-└── styles.css      # 網頁樣式（CSS）
+├── index.html      # Web page structure (HTML)
+└── styles.css      # Web page styling (CSS)
 ```
 
-### 預覽你的網站
+### Preview Your Website
 
-在你的電腦上找到 `index.html` 檔案，雙擊打開它，瀏覽器就會顯示你的網站！
+Find the `index.html` file on your computer and double-click to open it — your browser will display your website!
 
-**Windows 用戶**：在檔案總管中找到檔案，雙擊即可。
-**Mac 用戶**：在 Finder 中找到檔案，雙擊即可。
+**Windows users**: Find the file in File Explorer and double-click.
+**Mac users**: Find the file in Finder and double-click.
 
-或者在終端機中：
+Or from the terminal:
 
 ```bash
-# Windows — 用預設瀏覽器打開
+# Windows — open with default browser
 start index.html
 
-# Mac — 用預設瀏覽器打開
+# Mac — open with default browser
 open index.html
 ```
 
 ---
 
-## 💻 代碼示例 2：修改和客製化你的網站
+## 💻 Code Example 2: Modifying and Customizing Your Website
 
-網站建好後，你一定想要改成自己的內容。這就是 Claude Code 最方便的地方 —— 用自然語言告訴它你要改什麼！
+Once the website is built, you'll want to change it to your own content. This is where Claude Code is most convenient — just use natural language to tell it what to change!
 
-### 修改文字內容
+### Modify Text Content
 
-在 Claude Code 中輸入：
-
-```
-把 index.html 中的名字改成「陳小明」，
-自我介紹改成「我是一個熱愛學習新技術的人，目前正在學習 AI 工具的應用。
-平時喜歡攝影和旅行，希望用科技讓生活更美好。」
-```
-
-### 修改顏色
+Enter in Claude Code:
 
 ```
-把網站的主要顏色從深藍色改成深綠色 (#1b4332)，
-強調色從青色改成金色 (#f4a261)。
+Change the name in index.html to "Alex Chen",
+and change the self-introduction to "I'm someone who loves learning new technology,
+currently exploring AI tools and their applications.
+In my free time, I enjoy photography and traveling.
+I hope to use technology to make life better."
 ```
 
-### 修改版面配置
+### Modify Colors
 
 ```
-把「我的技能」區域改成兩列並排顯示（桌面版），
-手機版維持單列。加上簡單的 hover 動畫效果。
+Change the main color of the website from dark blue to dark green (#1b4332),
+and the accent color from teal to gold (#f4a261).
 ```
 
-### 預期輸出：
+### Modify Layout
 
-每次修改後，Claude Code 會告訴你它改了什麼：
+```
+Change the "My Skills" section to display in two columns side by side (on desktop),
+and keep it as a single column on mobile. Add a simple hover animation effect.
+```
 
-📸 [你應該看到的畫面]
+### Expected Output:
+
+After each modification, Claude Code will tell you what it changed:
+
+📸 [What you should see]
 ```
 ┌──────────────────────────────────────────────────┐
-│ 我已經完成以下修改：                                │
+│ I've made the following changes:                   │
 │                                                    │
 │ styles.css:                                        │
-│  - 主色調改為深綠色 (#1b4332)                       │
-│  - 強調色改為金色 (#f4a261)                         │
-│  - 技能區域改為 CSS Grid 兩列布局                    │
-│  - 加入 hover 放大效果                              │
+│  - Main color changed to dark green (#1b4332)      │
+│  - Accent color changed to gold (#f4a261)          │
+│  - Skills section changed to CSS Grid two-column   │
+│    layout                                          │
+│  - Added hover zoom effect                         │
 │                                                    │
-│ 請重新整理瀏覽器查看變更。                           │
+│ Please refresh your browser to see the changes.    │
 └──────────────────────────────────────────────────┘
 ```
 
-> **小提示**：修改完成後，回到瀏覽器按 `Ctrl + R`（Windows）或 `Cmd + R`（Mac）重新整理頁面，就能看到變更了。
+> **Tip**: After changes are made, go back to your browser and press `Ctrl + R` (Windows) or `Cmd + R` (Mac) to refresh the page and see the updates.
 
-### 加入更多功能
+### Add More Features
 
-你還可以請 Claude Code 加入更多元素：
+You can also ask Claude Code to add more elements:
 
 ```
-在「關於我」和「技能」之間加一個「我的作品」區域，
-用卡片式排版顯示 3 個項目，每個卡片有：
-- 項目名稱
-- 一段簡短描述
-- 一個「查看更多」按鈕
-先用假資料填充。
+Between the "About Me" and "Skills" sections, add a "My Work" section
+using a card-style layout displaying 3 projects. Each card should have:
+- A project name
+- A short description
+- A "Learn More" button
+Use placeholder data for now.
 ```
 
-這樣你的網站結構就變成：
+This will update your website structure to:
 
 ```
 my-portfolio/
-├── index.html      # 網頁結構 —— 現在有更多區域了
-└── styles.css      # 網頁樣式 —— 增加了卡片樣式
+├── index.html      # Web page structure — now with more sections
+└── styles.css      # Web page styling — card styles added
 ```
 
 ---
 
-## ✍️ 動手練習
+## ✍️ Hands-on Exercises
 
-### 練習 1：建立你自己的個人頁面
+### Exercise 1: Build Your Own Personal Page
 
-1. 建立一個新資料夾 `my-site`
-2. 在 Claude Code 中，用你自己的真實資料（或想像的資料）建立一個個人網站
-3. 至少包含：你的名字、簡介、3 個技能、聯繫方式
-4. 選擇你喜歡的配色方案
-5. 在瀏覽器中打開並截圖
+1. Create a new folder called `my-site`
+2. In Claude Code, create a personal website using your own real information (or made-up information)
+3. Include at minimum: your name, a bio, 3 skills, and contact information
+4. Choose a color scheme you like
+5. Open it in a browser and take a screenshot
 
-> **提示**：如果不知道用什麼顏色，可以告訴 Claude Code「幫我選一個專業又有活力的配色方案」，它會幫你決定！
+> **Tip**: If you're not sure what colors to use, tell Claude Code "Pick a professional yet vibrant color scheme for me" and it will decide for you!
 
-### 練習 2：添加一個新頁面
+### Exercise 2: Add a New Page
 
-1. 請 Claude Code 在你的網站中新增一個 `projects.html` 頁面
-2. 這個頁面要展示 3 個你做過的（或想做的）項目
-3. 確保導航列有連結到新頁面
-4. 確保新頁面的風格和首頁一致
+1. Ask Claude Code to add a `projects.html` page to your website
+2. This page should showcase 3 projects you've done (or want to do)
+3. Make sure the navigation bar links to the new page
+4. Make sure the new page's style matches the homepage
 
-> **提示**：告訴 Claude Code「新頁面要使用跟 index.html 相同的 styles.css，導航列也要一樣」
-
----
-
-## ❓ 小測驗（3 條題目）
-
-**1. HTML、CSS 和 JavaScript 分別負責什麼？**
-
-A. HTML 負責顏色、CSS 負責結構、JavaScript 負責動畫
-B. HTML 負責結構、CSS 負責樣式、JavaScript 負責互動
-C. HTML 負責互動、CSS 負責結構、JavaScript 負責樣式
-D. 三者功能完全相同，可以互換使用
-
-答案：B — HTML 定義網頁的內容結構（骨架），CSS 控制外觀樣式（裝潢），JavaScript 處理使用者互動（電器系統）。
+> **Tip**: Tell Claude Code "The new page should use the same styles.css as index.html, and the navigation bar should be the same"
 
 ---
 
-**2. 修改網站後，要怎樣在瀏覽器中看到最新的變更？**
+## ❓ Quiz (3 Questions)
 
-A. 需要重新安裝瀏覽器
-B. 按 Ctrl+R（Windows）或 Cmd+R（Mac）重新整理頁面
-C. 需要重新啟動電腦
-D. 變更會自動出現，不需要任何操作
+**1. What are HTML, CSS, and JavaScript each responsible for?**
 
-答案：B — 瀏覽器會快取（暫存）舊版本的頁面，按重新整理鍵可以讓瀏覽器重新載入最新的檔案內容。
+A. HTML handles colors, CSS handles structure, JavaScript handles animation
+B. HTML handles structure, CSS handles styling, JavaScript handles interactivity
+C. HTML handles interactivity, CSS handles structure, JavaScript handles styling
+D. All three do the same thing and are interchangeable
 
----
-
-**3. 想讓 Claude Code 建立一個好看的網站，以下哪種指令最有效？**
-
-A. 「建一個網站」
-B. 「建一個有導航列、自我介紹、技能展示的個人網站，用藍色和白色配色，現代簡潔風格」
-C. 「寫 500 行 HTML 代碼」
-D. 「複製 Google 的首頁」
-
-答案：B — 越具體的描述（包含內容、顏色、風格等），Claude Code 越能生成符合你期望的結果。模糊的指令會得到模糊的結果。
+Answer: B — HTML defines the content structure of the page (the skeleton), CSS controls the visual appearance (the interior design), and JavaScript handles user interaction (the electrical system).
 
 ---
 
-## 🔗 下一步
+**2. After modifying a website, how do you see the latest changes in the browser?**
 
-恭喜你建立了第一個完整的網站！在下一個模塊 **4.2：API 整合入門**中，我們將學習如何讓你的網站或程式連接到外部服務 —— 比如獲取即時天氣資料或隨機名言。這會讓你的項目從「靜態頁面」升級為「有真實數據的應用程式」！
+A. You need to reinstall the browser
+B. Press Ctrl+R (Windows) or Cmd+R (Mac) to refresh the page
+C. You need to restart your computer
+D. Changes appear automatically, no action needed
+
+Answer: B — Browsers cache (temporarily store) the old version of the page. Pressing the refresh key tells the browser to reload the latest file content.
+
+---
+
+**3. Which instruction is most effective for getting Claude Code to build a good-looking website?**
+
+A. "Build a website"
+B. "Build a personal website with a navigation bar, self-introduction, skills showcase, using blue and white colors, modern and clean style"
+C. "Write 500 lines of HTML code"
+D. "Copy Google's homepage"
+
+Answer: B — The more specific your description (including content, colors, style, etc.), the better Claude Code can generate results that match your expectations. Vague instructions lead to vague results.
+
+---
+
+## 🔗 Next Steps
+
+Congratulations on building your first complete website! In the next module, **4.2: Introduction to API Integration**, we'll learn how to connect your website or program to external services — such as fetching real-time weather data or random quotes. This will upgrade your project from a "static page" to an "application with real data"!

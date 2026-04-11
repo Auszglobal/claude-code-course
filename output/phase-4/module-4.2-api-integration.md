@@ -1,201 +1,201 @@
-# 模塊 4.2：API 整合入門 (Introduction to API Integration)
+# Module 4.2: Introduction to API Integration
 
-## 🎯 學習目標
-- 完成本課後你能夠...
-  - 理解什麼是 API 以及它的運作方式
-  - 知道 JSON 是什麼，能看懂基本的 JSON 格式
-  - 使用 Claude Code 撰寫呼叫 API 的程式
-  - 建立一個天氣查詢小工具
-  - 建立一個隨機名言顯示器
+## 🎯 Learning Objectives
+- After completing this lesson, you will be able to...
+  - Understand what an API is and how it works
+  - Know what JSON is and read basic JSON format
+  - Use Claude Code to write programs that call APIs
+  - Build a weather lookup tool
+  - Build a random quote display
 
-## 📖 理論解釋
+## 📖 Theory
 
-### 什麼是 API？
+### What Is an API?
 
-**API**（Application Programming Interface）聽起來很複雜，但概念其實很簡單。
+**API** (Application Programming Interface) sounds complicated, but the concept is actually quite simple.
 
-想像你去一家餐廳：
-- 你（程式）坐在座位上，想吃牛排
-- **服務員（API）** 接收你的點單
-- 服務員把點單送到**廚房（伺服器）**
-- 廚房做好菜後，服務員把**牛排（資料）** 端到你面前
+Imagine you're at a restaurant:
+- You (the program) are sitting at a table and want a steak
+- The **waiter (API)** takes your order
+- The waiter delivers the order to the **kitchen (server)**
+- The kitchen prepares the food, and the waiter brings the **steak (data)** to your table
 
-你不需要知道廚房怎麼運作，也不需要自己去廚房。你只需要跟服務員說你要什麼，服務員就會幫你搞定。
+You don't need to know how the kitchen works, and you don't need to go to the kitchen yourself. You just tell the waiter what you want, and the waiter handles the rest.
 
-**API 就是那個服務員** —— 它是你的程式和外部服務之間的溝通橋樑。
+**An API is that waiter** — it's the communication bridge between your program and an external service.
 
-### 什麼是 JSON？
+### What Is JSON?
 
-當 API 回傳資料時，它通常使用一種叫 **JSON** 的格式。你可以把 JSON 想像成一張**結構化的表單**：
+When an API returns data, it typically uses a format called **JSON**. Think of JSON as a **structured form**:
 
 ```json
 {
-  "城市": "台北",
-  "溫度": 28,
-  "天氣": "晴天",
-  "濕度": 65
+  "city": "Sydney",
+  "temperature": 28,
+  "weather": "Sunny",
+  "humidity": 65
 }
 ```
 
-看到了嗎？就像填表格一樣：
-- 左邊是**欄位名稱**（用引號包起來）
-- 右邊是**欄位的值**
-- 用大括號 `{}` 包住整張表單
-- 每一行用逗號分隔
+See? It's like filling out a form:
+- The left side is the **field name** (wrapped in quotes)
+- The right side is the **field value**
+- Curly braces `{}` wrap the entire form
+- Each line is separated by a comma
 
-### 常見的免費 API
+### Common Free APIs
 
-以下是一些不需要註冊就能使用的免費 API，非常適合練習：
+Here are some free APIs that don't require registration, perfect for practice:
 
-| API | 用途 | 網址 |
+| API | Purpose | URL |
 |-----|------|------|
-| wttr.in | 天氣資訊 | `https://wttr.in` |
-| quotable.io | 隨機名言 | `https://api.quotable.io` |
-| dog.ceo | 隨機狗狗圖片 | `https://dog.ceo/api` |
-| jsonplaceholder | 假資料練習 | `https://jsonplaceholder.typicode.com` |
+| wttr.in | Weather information | `https://wttr.in` |
+| quotable.io | Random quotes | `https://api.quotable.io` |
+| dog.ceo | Random dog pictures | `https://dog.ceo/api` |
+| jsonplaceholder | Fake data for practice | `https://jsonplaceholder.typicode.com` |
 
 ---
 
-## 💻 代碼示例 1：建立天氣查詢工具
+## 💻 Code Example 1: Build a Weather Lookup Tool
 
-讓我們用 Claude Code 建立一個能查詢任何城市天氣的小工具。
+Let's use Claude Code to build a small tool that can look up the weather for any city.
 
-首先，建立項目資料夾：
+First, create a project folder:
 
 ```bash
 mkdir weather-checker
 cd weather-checker
 ```
 
-啟動 Claude Code，然後輸入：
+Start Claude Code and enter:
 
 ```
-幫我用 Python 建立一個天氣查詢工具，要求：
-1. 使用 wttr.in 的 API（不需要 API key）
-2. 讓使用者輸入城市名稱
-3. 顯示該城市的：目前溫度、天氣狀況、濕度
-4. 輸出格式要美觀易讀
-5. 如果城市名稱錯誤，要顯示友善的錯誤提示
-6. 加上詳細的中文註釋
+Help me build a weather lookup tool in Python with these requirements:
+1. Use the wttr.in API (no API key needed)
+2. Let the user enter a city name
+3. Display the city's: current temperature, weather conditions, humidity
+4. Output should be nicely formatted and easy to read
+5. Show a friendly error message if the city name is invalid
+6. Add detailed comments in the code
 ```
 
-Claude Code 會生成類似這樣的程式：
+Claude Code will generate a program similar to this:
 
 ```python
-# weather.py — 天氣查詢工具
-import requests  # 用來發送網路請求的工具庫
-import json      # 用來處理 JSON 格式資料
+# weather.py — Weather lookup tool
+import requests  # Library for making web requests
+import json      # Library for handling JSON data
 
 def get_weather(city):
-    """查詢指定城市的天氣資訊"""
-    # 組合 API 的網址（就像告訴服務員你要什麼）
+    """Look up weather information for a given city"""
+    # Build the API URL (like telling the waiter what you want)
     url = f"https://wttr.in/{city}?format=j1"
 
     try:
-        # 發送請求給 API（就像把點單交給服務員）
+        # Send a request to the API (like handing your order to the waiter)
         response = requests.get(url, timeout=10)
 
-        # 檢查是否成功（服務員有沒有回來）
+        # Check if it was successful (did the waiter come back?)
         if response.status_code == 200:
-            # 解析 JSON 回應（打開服務員送來的餐盤）
+            # Parse the JSON response (open the plate the waiter brought)
             data = response.json()
 
-            # 從資料中取出我們需要的資訊
+            # Extract the information we need
             current = data["current_condition"][0]
-            temp = current["temp_C"]           # 目前溫度（攝氏）
-            desc = current["weatherDesc"][0]["value"]  # 天氣描述
-            humidity = current["humidity"]     # 濕度百分比
-            feels_like = current["FeelsLikeC"] # 體感溫度
+            temp = current["temp_C"]           # Current temperature (Celsius)
+            desc = current["weatherDesc"][0]["value"]  # Weather description
+            humidity = current["humidity"]     # Humidity percentage
+            feels_like = current["FeelsLikeC"] # Feels-like temperature
 
-            # 美觀地顯示結果
+            # Display the results nicely
             print(f"\n{'='*40}")
-            print(f"  {city} 目前天氣")
+            print(f"  Current Weather in {city}")
             print(f"{'='*40}")
-            print(f"  溫度：     {temp}°C")
-            print(f"  體感溫度： {feels_like}°C")
-            print(f"  天氣狀況： {desc}")
-            print(f"  濕度：     {humidity}%")
+            print(f"  Temperature:   {temp}°C")
+            print(f"  Feels Like:    {feels_like}°C")
+            print(f"  Conditions:    {desc}")
+            print(f"  Humidity:      {humidity}%")
             print(f"{'='*40}\n")
         else:
-            print(f"找不到「{city}」的天氣資訊，請確認城市名稱是否正確。")
+            print(f"Could not find weather info for '{city}'. Please check the city name.")
 
     except requests.exceptions.ConnectionError:
-        print("無法連接到網路，請檢查你的網路連線。")
+        print("Unable to connect to the internet. Please check your network connection.")
     except Exception as e:
-        print(f"發生錯誤：{e}")
+        print(f"An error occurred: {e}")
 
-# 主程式
+# Main program
 if __name__ == "__main__":
-    print("天氣查詢工具")
+    print("Weather Lookup Tool")
     print("-" * 20)
-    city = input("請輸入城市名稱（英文）：")  # 等待使用者輸入
-    get_weather(city)                          # 呼叫查詢函式
+    city = input("Enter a city name: ")       # Wait for user input
+    get_weather(city)                          # Call the lookup function
 ```
 
-### 預期輸出：
+### Expected Output:
 
-執行程式：
+Run the program:
 
 ```bash
 python weather.py
 ```
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌──────────────────────────────────────┐
-│ 天氣查詢工具                          │
+│ Weather Lookup Tool                   │
 │ --------------------                  │
-│ 請輸入城市名稱（英文）：Sydney         │
+│ Enter a city name: Sydney             │
 │                                       │
 │ ========================================│
-│   Sydney 目前天氣                      │
+│   Current Weather in Sydney            │
 │ ========================================│
-│   溫度：     22°C                      │
-│   體感溫度： 20°C                      │
-│   天氣狀況： Partly cloudy             │
-│   濕度：     65%                       │
+│   Temperature:   22°C                  │
+│   Feels Like:    20°C                  │
+│   Conditions:    Partly cloudy         │
+│   Humidity:      65%                   │
 │ ========================================│
 └──────────────────────────────────────┘
 ```
 
-> **注意**：執行前需要確保你有安裝 `requests` 套件。如果沒有，在終端機執行 `pip install requests`。
+> **Note**: Before running, make sure you have the `requests` package installed. If not, run `pip install requests` in the terminal.
 
 ---
 
-## 💻 代碼示例 2：隨機名言顯示器
+## 💻 Code Example 2: Random Quote Display
 
-接下來，讓我們建立一個能顯示隨機名言的小程式。在 Claude Code 中輸入：
+Next, let's build a small program that shows random quotes. Enter in Claude Code:
 
 ```
-幫我用 Python 建立一個隨機名言顯示器，要求：
-1. 使用 https://dummyjson.com/quotes/random API
-2. 每次執行顯示一條隨機名言和作者
-3. 加入一個迴圈功能，按 Enter 可以看下一條，輸入 q 退出
-4. 輸出要有漂亮的邊框
-5. 加上詳細的中文註釋
+Help me build a random quote display in Python with these requirements:
+1. Use the https://dummyjson.com/quotes/random API
+2. Each time it runs, show one random quote and its author
+3. Add a loop: press Enter to see the next quote, type q to quit
+4. Output should have a nice border
+5. Add detailed comments in the code
 ```
 
-Claude Code 會生成類似這樣的程式：
+Claude Code will generate a program similar to this:
 
 ```python
-# quotes.py — 隨機名言顯示器
-import requests  # 發送網路請求
+# quotes.py — Random quote display
+import requests  # For making web requests
 
 def get_random_quote():
-    """從 API 獲取一條隨機名言"""
-    # API 端點（服務員的窗口）
+    """Fetch a random quote from the API"""
+    # API endpoint (the waiter's window)
     url = "https://dummyjson.com/quotes/random"
 
     try:
-        # 向 API 發送請求
+        # Send a request to the API
         response = requests.get(url, timeout=10)
 
         if response.status_code == 200:
-            # 解析回傳的 JSON 資料
+            # Parse the returned JSON data
             data = response.json()
 
-            quote = data["quote"]    # 名言內容
-            author = data["author"]  # 作者名字
+            quote = data["quote"]    # The quote text
+            author = data["author"]  # The author's name
 
             return quote, author
         else:
@@ -205,14 +205,14 @@ def get_random_quote():
         return None, None
 
 def display_quote(quote, author):
-    """用漂亮的格式顯示名言"""
-    # 計算邊框寬度（名言長度 + 一些空間）
+    """Display a quote in a nice format"""
+    # Calculate border width (quote length + some padding)
     width = min(max(len(quote), len(author) + 4), 60)
 
     print()
     print("+" + "-" * (width + 2) + "+")
 
-    # 如果名言很長，分行顯示
+    # If the quote is long, wrap it across multiple lines
     words = quote.split()
     line = " "
     for word in words:
@@ -230,38 +230,38 @@ def display_quote(quote, author):
     print("+" + "-" * (width + 2) + "+")
     print()
 
-# 主程式
+# Main program
 if __name__ == "__main__":
-    print("=== 隨機名言顯示器 ===")
-    print("按 Enter 看下一條名言，輸入 q 退出\n")
+    print("=== Random Quote Display ===")
+    print("Press Enter for the next quote, type q to quit\n")
 
     while True:
-        # 取得一條隨機名言
+        # Fetch a random quote
         quote, author = get_random_quote()
 
         if quote:
             display_quote(quote, author)
         else:
-            print("無法取得名言，請檢查網路連線。")
+            print("Unable to fetch a quote. Please check your internet connection.")
 
-        # 等待使用者按鍵
-        user_input = input("繼續？(Enter/q) ")
+        # Wait for user input
+        user_input = input("Continue? (Enter/q) ")
         if user_input.lower() == "q":
-            print("感謝使用，再見！")
+            print("Thanks for using this tool. Goodbye!")
             break
 ```
 
-### 預期輸出：
+### Expected Output:
 
 ```bash
 python quotes.py
 ```
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌──────────────────────────────────────────────────────┐
-│ === 隨機名言顯示器 ===                                 │
-│ 按 Enter 看下一條名言，輸入 q 退出                      │
+│ === Random Quote Display ===                           │
+│ Press Enter for the next quote, type q to quit         │
 │                                                        │
 │ +--------------------------------------------------+  │
 │ |  The only way to do great work is to love what    |  │
@@ -270,77 +270,77 @@ python quotes.py
 │ |   -- Steve Jobs                                   |  │
 │ +--------------------------------------------------+  │
 │                                                        │
-│ 繼續？(Enter/q)                                        │
+│ Continue? (Enter/q)                                    │
 └──────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## ✍️ 動手練習
+## ✍️ Hands-on Exercises
 
-### 練習 1：狗狗圖片產生器
+### Exercise 1: Dog Picture Generator
 
-使用 Dog CEO API（`https://dog.ceo/api/breeds/image/random`）建立一個程式：
-1. 請 Claude Code 建立一個 Python 腳本
-2. 每次執行時取得一張隨機狗狗圖片的網址
-3. 在終端機中顯示網址，並嘗試自動用瀏覽器打開圖片
+Use the Dog CEO API (`https://dog.ceo/api/breeds/image/random`) to build a program:
+1. Ask Claude Code to create a Python script
+2. Each time it runs, fetch a random dog picture URL
+3. Display the URL in the terminal and try to automatically open it in the browser
 
-> **提示**：告訴 Claude Code「用 `webbrowser` 模組自動打開圖片連結」
+> **Tip**: Tell Claude Code "Use the `webbrowser` module to automatically open the image link"
 
-### 練習 2：把 API 加進你的網站
+### Exercise 2: Add an API to Your Website
 
-回到模塊 4.1 建立的個人網站，請 Claude Code 加入一個功能：
-1. 在網站底部加入一個「每日名言」區域
-2. 用 JavaScript 的 `fetch` 函式呼叫名言 API
-3. 每次載入網頁時自動顯示一條隨機名言
-4. 加一個「換一條」按鈕
+Go back to the personal website you built in Module 4.1 and ask Claude Code to add a feature:
+1. Add a "Quote of the Day" section at the bottom of the website
+2. Use JavaScript's `fetch` function to call the quote API
+3. Automatically display a random quote each time the page loads
+4. Add a "Get Another" button
 
-> **提示**：告訴 Claude Code「在 index.html 中加入一個每日名言區域，用 JavaScript fetch 呼叫 dummyjson.com 的 quotes API」
-
----
-
-## ❓ 小測驗（3 條題目）
-
-**1. API 最好的比喻是什麼？**
-
-A. 一本食譜 —— 教你怎麼煮菜
-B. 一個服務員 —— 接收你的請求，從廚房帶回結果
-C. 一個倉庫 —— 存放所有的資料
-D. 一台印表機 —— 把資料印出來
-
-答案：B — API 就像餐廳服務員，你不需要知道廚房（伺服器）怎麼運作，只需要透過服務員（API）點單（發送請求），就能拿到你要的餐點（資料）。
+> **Tip**: Tell Claude Code "Add a quote of the day section to index.html, using JavaScript fetch to call the dummyjson.com quotes API"
 
 ---
 
-**2. 以下 JSON 格式中，「溫度」的值是什麼？**
+## ❓ Quiz (3 Questions)
+
+**1. What is the best analogy for an API?**
+
+A. A cookbook — teaches you how to cook
+B. A waiter — takes your request and brings back results from the kitchen
+C. A warehouse — stores all the data
+D. A printer — prints out data
+
+Answer: B — An API is like a restaurant waiter. You don't need to know how the kitchen (server) works — you just place your order through the waiter (API) and receive the dish (data) you wanted.
+
+---
+
+**2. In the following JSON, what is the value of "temperature"?**
 ```json
 {
-  "城市": "台北",
-  "溫度": 28,
-  "天氣": "晴天"
+  "city": "Sydney",
+  "temperature": 28,
+  "weather": "Sunny"
 }
 ```
 
-A. "台北"
+A. "Sydney"
 B. 28
-C. "晴天"
-D. "溫度"
+C. "Sunny"
+D. "temperature"
 
-答案：B — 在 JSON 中，冒號左邊是欄位名稱（key），右邊是值（value）。「溫度」這個欄位對應的值是 28。
-
----
-
-**3. 如果 API 請求失敗（比如網路斷線），程式應該怎麼處理？**
-
-A. 直接當機，不需要處理
-B. 顯示一個友善的錯誤訊息，讓使用者知道出了什麼問題
-C. 無限重試直到成功
-D. 刪除所有檔案重新開始
-
-答案：B — 好的程式應該使用 try/except 處理可能的錯誤，並顯示友善的提示訊息。無限重試可能會造成程式卡住，直接當機則給使用者很差的體驗。
+Answer: B — In JSON, the left side of the colon is the field name (key), and the right side is the value. The "temperature" field has a value of 28.
 
 ---
 
-## 🔗 下一步
+**3. If an API request fails (e.g., the internet is disconnected), how should the program handle it?**
 
-太棒了！你已經學會了如何讓程式連接外部服務獲取資料。在下一個模塊 **4.3：數據處理與分析** 中，我們將學習如何處理和分析資料檔案 —— 例如讀取 CSV 表格、整理數據、甚至生成圖表。這是非常實用的技能，無論你從事什麼行業都會用到！
+A. Just crash — no handling needed
+B. Show a friendly error message so the user knows what went wrong
+C. Retry infinitely until it succeeds
+D. Delete all files and start over
+
+Answer: B — Good programs should use try/except to handle potential errors and show friendly messages. Infinite retries can cause the program to hang, and crashing outright gives users a terrible experience.
+
+---
+
+## 🔗 Next Steps
+
+Great job! You've learned how to connect your programs to external services to fetch data. In the next module, **4.3: Data Processing and Analysis**, we'll learn how to work with and analyze data files — such as reading CSV spreadsheets, organizing data, and even generating charts. This is an extremely practical skill that's useful regardless of your industry!

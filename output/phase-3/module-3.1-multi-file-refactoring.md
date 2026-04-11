@@ -1,76 +1,76 @@
-# 模塊 3.1：多文件操作與重構 (Multi-file Operations and Refactoring)
+# Module 3.1: Multi-file Operations and Refactoring
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 理解什麼時候需要同時修改多個文件
-  - 使用 Claude Code 進行跨文件的重構操作
-  - 理解 Claude Code 如何規劃多文件修改
-  - 安全地審查批量修改
-  - 將一個混亂的專案重新整理成乾淨的資料夾結構
+## 🎯 Learning Objectives
+- After completing this lesson, you will be able to:
+  - Understand when you need to modify multiple files at once
+  - Use Claude Code to perform cross-file refactoring operations
+  - Understand how Claude Code plans multi-file modifications
+  - Safely review batch changes
+  - Reorganize a messy project into a clean folder structure
 
-## 📖 理論解釋
+## 📖 Theory
 
-### 什麼是多文件操作？
+### What Are Multi-file Operations?
 
-想像你搬家的時候——你不會只搬一個箱子，而是要同時整理客廳、臥室、廚房的東西，把它們重新分類放到新家的不同房間。程式開發也一樣，很多時候你需要**同時修改好幾個文件**才能完成一個任務。
+Imagine you're moving to a new house — you don't just move one box. You need to sort through the living room, bedroom, and kitchen all at once, then reclassify everything into different rooms in your new home. Software development works the same way — many tasks require you to **modify several files at the same time**.
 
-舉個例子：
-- 你把一個函數的名字從 `calcPrice` 改成 `calculatePrice`，那所有用到這個函數的文件都要跟著改
-- 你想把散亂在一個資料夾裡的 20 個文件整理成 `images/`、`scripts/`、`styles/` 三個子資料夾
-- 你發現一段程式碼在 5 個文件裡重複出現，想把它提取成一個共用的模組
+For example:
+- You rename a function from `calcPrice` to `calculatePrice`, so every file that uses that function needs to be updated too
+- You want to organize 20 files scattered in one folder into three subfolders: `images/`, `scripts/`, `styles/`
+- You notice the same block of code repeated across 5 files and want to extract it into a shared module
 
-這些都是**多文件操作**的場景。
+These are all **multi-file operation** scenarios.
 
-### 什麼是重構 (Refactoring)？
+### What Is Refactoring?
 
-重構就像**整理衣櫃**——衣服還是那些衣服，但你重新分類、摺好、放到對的位置，之後找起來就更方便了。
+Refactoring is like **organizing your closet** — the clothes are still the same clothes, but you re-sort them, fold them neatly, and put them in the right places so they're easier to find later.
 
-在程式開發中，重構的意思是：
-- **不改變功能**，但改善程式碼的結構
-- 讓程式碼更容易閱讀、維護和擴展
-- 消除重複的程式碼
-- 給文件和變數取更好的名字
+In software development, refactoring means:
+- **Not changing the functionality**, but improving the structure of the code
+- Making the code easier to read, maintain, and extend
+- Eliminating duplicate code
+- Giving files and variables better names
 
-好消息是：Claude Code 非常擅長處理這類工作！你只需要用自然語言描述你想要的結果，Claude Code 就會幫你規劃和執行。
+The good news is: Claude Code is excellent at this kind of work! You just need to describe the result you want in natural language, and Claude Code will plan and execute it for you.
 
-### Claude Code 如何處理多文件修改？
+### How Does Claude Code Handle Multi-file Changes?
 
-當你要求 Claude Code 進行多文件操作時，它會：
-1. **分析** — 先理解目前的專案結構
-2. **規劃** — 列出需要修改哪些文件、怎麼改
-3. **執行** — 逐一修改每個文件
-4. **確認** — 在每一步都會詢問你是否同意
+When you ask Claude Code to perform multi-file operations, it will:
+1. **Analyze** — First understand the current project structure
+2. **Plan** — List which files need to be changed and how
+3. **Execute** — Modify each file one by one
+4. **Confirm** — Ask for your approval at each step
 
-這就像一個專業的搬家公司，會先跟你確認搬家計劃，然後一步一步執行。
+It's like a professional moving company that first confirms the moving plan with you, then executes it step by step.
 
-## 💻 代碼示例 1：重新命名與整理文件
+## 💻 Code Example 1: Renaming and Organizing Files
 
-假設你有一個混亂的專案，所有文件都塞在同一個資料夾裡：
+Suppose you have a messy project with all files stuffed in one folder:
 
 ```
 my-messy-project/
-├── app.py              # 主程式
-├── helpers.py          # 一些工具函數
-├── test1.py            # 測試文件
-├── test2.py            # 另一個測試文件
-├── style.css           # 樣式文件
-├── index.html          # 網頁文件
-├── logo.png            # 圖片
-├── banner.jpg          # 另一張圖片
-├── config.json         # 設定文件
-├── notes.txt           # 筆記
-└── README.md           # 說明文件
+├── app.py              # Main program
+├── helpers.py          # Some utility functions
+├── test1.py            # Test file
+├── test2.py            # Another test file
+├── style.css           # Stylesheet
+├── index.html          # Web page
+├── logo.png            # Image
+├── banner.jpg          # Another image
+├── config.json         # Configuration file
+├── notes.txt           # Notes
+└── README.md           # Documentation
 ```
 
-首先，讓我們建立這個練習環境。在終端機中執行：
+First, let's set up this practice environment. Run the following in your terminal:
 
-**Windows (Git Bash)：**
+**Windows (Git Bash):**
 ```bash
-# 建立練習用的混亂專案
+# Create a messy practice project
 mkdir -p ~/claude-practice/my-messy-project
 cd ~/claude-practice/my-messy-project
 
-# 建立一些範例文件
+# Create some sample files
 echo "print('Hello')" > app.py
 echo "def helper(): pass" > helpers.py
 echo "def test_one(): pass" > test1.py
@@ -82,9 +82,9 @@ echo "Some notes here" > notes.txt
 echo "# My Project" > README.md
 ```
 
-**Mac/Linux：**
+**Mac/Linux:**
 ```bash
-# 指令完全相同，Mac 和 Linux 通用
+# The commands are exactly the same for Mac and Linux
 mkdir -p ~/claude-practice/my-messy-project
 cd ~/claude-practice/my-messy-project
 
@@ -99,29 +99,29 @@ echo "Some notes here" > notes.txt
 echo "# My Project" > README.md
 ```
 
-現在，進入這個目錄並啟動 Claude Code：
+Now, navigate to this directory and start Claude Code:
 
 ```bash
 cd ~/claude-practice/my-messy-project
 claude
 ```
 
-然後對 Claude Code 說：
+Then tell Claude Code:
 
 ```
-請幫我把這個專案整理成乾淨的資料夾結構。
-把 Python 源碼放到 src/ 資料夾，測試文件放到 tests/ 資料夾，
-網頁相關的文件放到 web/ 資料夾，設定文件放到 config/ 資料夾。
+Please organize this project into a clean folder structure.
+Put Python source files in src/, test files in tests/,
+web-related files in web/, and configuration files in config/.
 ```
 
-### 預期輸出：
+### Expected Output:
 
-Claude Code 會分析你的專案，然後提出一個整理計劃：
+Claude Code will analyze your project and propose an organization plan:
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌─────────────────────────────────────────────────┐
-│ 我會把你的專案整理成以下結構：                      │
+│ I'll organize your project into this structure:  │
 │                                                   │
 │ my-messy-project/                                 │
 │ ├── src/                                          │
@@ -138,167 +138,167 @@ Claude Code 會分析你的專案，然後提出一個整理計劃：
 │ ├── notes.txt                                     │
 │ └── README.md                                     │
 │                                                   │
-│ 需要我執行這些變更嗎？                              │
+│ Shall I go ahead with these changes?              │
 └─────────────────────────────────────────────────┘
 ```
 
-Claude Code 會請求你的許可後才移動文件。你可以按 **y** 確認，或提出修改意見。
+Claude Code will ask for your permission before moving files. You can press **y** to confirm, or suggest modifications.
 
-## 💻 代碼示例 2：跨文件重構——重新命名函數
+## 💻 Code Example 2: Cross-file Refactoring — Renaming Functions
 
-這是一個更進階的場景。假設你有多個 Python 文件互相引用：
+This is a more advanced scenario. Suppose you have multiple Python files that reference each other:
 
-先建立練習文件：
+First, create the practice files:
 
 ```bash
 mkdir -p ~/claude-practice/rename-demo
 cd ~/claude-practice/rename-demo
 ```
 
-建立 `math_utils.py`：
+Create `math_utils.py`:
 ```python
-# math_utils.py — 數學工具函數
+# math_utils.py — Math utility functions
 def calc(a, b):
-    """計算兩個數的總和"""
+    """Calculate the sum of two numbers"""
     return a + b
 
 def calc2(a, b):
-    """計算兩個數的乘積"""
+    """Calculate the product of two numbers"""
     return a * b
 ```
 
-建立 `main.py`：
+Create `main.py`:
 ```python
-# main.py — 主程式
+# main.py — Main program
 from math_utils import calc, calc2
 
-# 使用簡短但不清楚的函數名
-result1 = calc(10, 20)       # 加法
-result2 = calc2(10, 20)      # 乘法
+# Using short, unclear function names
+result1 = calc(10, 20)       # Addition
+result2 = calc2(10, 20)      # Multiplication
 
 print(f"Sum: {result1}")
 print(f"Product: {result2}")
 ```
 
-建立 `report.py`：
+Create `report.py`:
 ```python
-# report.py — 報告生成器
+# report.py — Report generator
 from math_utils import calc, calc2
 
 def generate_report(items):
-    """生成銷售報告"""
-    total = calc(0, 0)  # 初始化
+    """Generate a sales report"""
+    total = calc(0, 0)  # Initialize
     for price, quantity in items:
         subtotal = calc2(price, quantity)
         total = calc(total, subtotal)
     return total
 ```
 
-現在啟動 Claude Code，要求重構：
+Now start Claude Code and request the refactoring:
 
 ```bash
 cd ~/claude-practice/rename-demo
 claude
 ```
 
-對 Claude Code 說：
+Tell Claude Code:
 
 ```
-這個專案裡的函數名太短了，不容易理解。請幫我：
-1. 把 calc 重新命名為 add_numbers
-2. 把 calc2 重新命名為 multiply_numbers
-3. 確保所有引用這些函數的文件都一起更新
+The function names in this project are too short and hard to understand. Please:
+1. Rename calc to add_numbers
+2. Rename calc2 to multiply_numbers
+3. Make sure all files that reference these functions are updated together
 ```
 
-### 預期輸出：
+### Expected Output:
 
-Claude Code 會列出所有需要修改的文件和位置：
+Claude Code will list all the files and locations that need to be changed:
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌──────────────────────────────────────────────────────┐
-│ 我會在以下 3 個文件中進行重新命名：                      │
+│ I'll rename across the following 3 files:             │
 │                                                        │
 │ 1. math_utils.py                                       │
-│    - calc → add_numbers (第 2 行)                       │
-│    - calc2 → multiply_numbers (第 6 行)                 │
+│    - calc → add_numbers (line 2)                       │
+│    - calc2 → multiply_numbers (line 6)                 │
 │                                                        │
 │ 2. main.py                                             │
-│    - import 語句更新 (第 2 行)                           │
-│    - calc → add_numbers (第 5 行)                       │
-│    - calc2 → multiply_numbers (第 6 行)                 │
+│    - import statement updated (line 2)                  │
+│    - calc → add_numbers (line 5)                       │
+│    - calc2 → multiply_numbers (line 6)                 │
 │                                                        │
 │ 3. report.py                                           │
-│    - import 語句更新 (第 2 行)                           │
-│    - calc → add_numbers (第 6 行)                       │
-│    - calc2 → multiply_numbers (第 7, 8 行)              │
+│    - import statement updated (line 2)                  │
+│    - calc → add_numbers (line 6)                       │
+│    - calc2 → multiply_numbers (lines 7, 8)             │
 │                                                        │
-│ 總共修改 3 個文件，8 處變更。                             │
+│ Total: 3 files modified, 8 changes.                    │
 └──────────────────────────────────────────────────────┘
 ```
 
-**重要提示**：Claude Code 修改文件前會顯示差異 (diff)，讓你看到哪些行被修改了。綠色表示新增的內容，紅色表示刪除的內容。
+**Important note**: Before modifying files, Claude Code will show a diff so you can see which lines are being changed. Green indicates added content, and red indicates removed content.
 
-## 📖 安全審查批量修改的技巧
+## 📖 Tips for Safely Reviewing Batch Changes
 
-當 Claude Code 提議修改多個文件時，你應該注意：
+When Claude Code proposes changes to multiple files, keep these things in mind:
 
-1. **仔細閱讀變更列表** — 確認每個修改都是你想要的
-2. **注意意外的修改** — 有時候名字相似的變數可能被誤改
-3. **一次確認一組修改** — 如果修改太多，可以要求 Claude Code 分批進行
-4. **修改後測試** — 確認程式還能正常運行
+1. **Read the change list carefully** — Make sure every modification is what you want
+2. **Watch for unintended changes** — Sometimes similarly named variables might get changed by mistake
+3. **Confirm one group of changes at a time** — If there are too many changes, you can ask Claude Code to do them in batches
+4. **Test after making changes** — Confirm the program still runs correctly
 
-你可以這樣跟 Claude Code 說：
-
-```
-請先只修改 math_utils.py，讓我確認沒問題後再修改其他文件。
-```
-
-或者：
+You can tell Claude Code something like:
 
 ```
-在修改之前，先顯示每個文件的修改預覽，不要直接改。
+Please modify only math_utils.py first. Let me confirm it looks good before you change the other files.
 ```
 
-## ✍️ 動手練習
+Or:
 
-### 練習 1：整理下載資料夾
+```
+Before making any changes, show me a preview of the changes for each file without actually modifying anything.
+```
 
-建立一個模擬的「下載資料夾」，然後用 Claude Code 整理它：
+## ✍️ Hands-on Exercises
+
+### Exercise 1: Organize a Downloads Folder
+
+Create a simulated "Downloads folder," then use Claude Code to organize it:
 
 ```bash
 mkdir -p ~/claude-practice/messy-downloads
 cd ~/claude-practice/messy-downloads
 
-# 建立各種類型的文件
+# Create various types of files
 touch report-2024.pdf vacation-photo.jpg notes.txt
 touch presentation.pptx budget.xlsx song.mp3
 touch screenshot.png archive.zip script.py
 touch document.docx movie-clip.mp4 data.csv
 ```
 
-啟動 Claude Code，然後說：
+Start Claude Code and say:
 
 ```
-請幫我把這些文件按類型整理到子資料夾：
-- documents/ 放文檔 (pdf, docx, pptx, xlsx, csv, txt)
-- images/ 放圖片 (jpg, png)
-- media/ 放影音 (mp3, mp4)
-- other/ 放其他文件 (zip, py)
+Please organize these files into subfolders by type:
+- documents/ for documents (pdf, docx, pptx, xlsx, csv, txt)
+- images/ for images (jpg, png)
+- media/ for audio/video (mp3, mp4)
+- other/ for everything else (zip, py)
 ```
 
-**提示**：觀察 Claude Code 如何規劃移動操作，注意它會在執行前列出每個文件要移到哪裡。
+**Tip**: Observe how Claude Code plans the move operations — notice how it lists where each file will be moved before executing.
 
-### 練習 2：重構 HTML 文件
+### Exercise 2: Refactor an HTML File
 
-建立一個簡單的網頁，把所有 CSS 都寫在 HTML 裡面，然後請 Claude Code 把 CSS 分離到獨立文件：
+Create a simple web page with all the CSS written inline in the HTML, then ask Claude Code to extract the CSS into a separate file:
 
 ```bash
 mkdir -p ~/claude-practice/refactor-html
 cd ~/claude-practice/refactor-html
 ```
 
-建立 `index.html`：
+Create `index.html`:
 ```html
 <!DOCTYPE html>
 <html>
@@ -319,38 +319,38 @@ cd ~/claude-practice/refactor-html
 </html>
 ```
 
-對 Claude Code 說：
+Tell Claude Code:
 ```
-請把 index.html 裡的 CSS 樣式提取到獨立的 style.css 文件，
-並在 HTML 中用 link 標籤引用它。
+Please extract the CSS styles from index.html into a separate style.css file,
+and add a link tag in the HTML to reference it.
 ```
 
-## ❓ 小測驗（3 條題目）
+## ❓ Quiz (3 Questions)
 
-1. 什麼是「重構」(Refactoring)？
-   A. 刪除所有程式碼重新寫
-   B. 不改變功能，但改善程式碼的結構和可讀性
-   C. 增加新功能到程式中
-   D. 修復程式中的 bug
+1. What is "Refactoring"?
+   A. Deleting all code and rewriting from scratch
+   B. Improving code structure and readability without changing functionality
+   C. Adding new features to a program
+   D. Fixing bugs in a program
 
-   答案：B — 重構的核心概念是在不改變程式功能的前提下，讓程式碼更乾淨、更容易維護。就像整理衣櫃，衣服還是一樣的，只是擺放得更整齊了。
+   Answer: B — The core idea of refactoring is to make code cleaner and easier to maintain without changing what the program does. It's like organizing your closet — the clothes are still the same, just arranged more neatly.
 
-2. 當 Claude Code 提議修改 10 個文件時，最安全的做法是什麼？
-   A. 直接全部接受，Claude Code 不會出錯
-   B. 拒絕所有修改，自己手動改
-   C. 仔細審查變更列表，必要時要求分批進行
-   D. 關閉 Claude Code 重新開始
+2. When Claude Code proposes changes to 10 files, what is the safest approach?
+   A. Accept everything immediately — Claude Code never makes mistakes
+   B. Reject all changes and do everything manually
+   C. Carefully review the change list and ask for batch processing if needed
+   D. Close Claude Code and start over
 
-   答案：C — 即使 Claude Code 非常聰明，你仍然應該審查每一處修改。可以要求它分批進行，或者先只修改一個文件來確認效果。
+   Answer: C — Even though Claude Code is very capable, you should still review every change. You can ask it to work in batches, or modify just one file first to confirm the result.
 
-3. 為什麼把一個函數重新命名時，需要修改多個文件？
-   A. 因為 Claude Code 喜歡修改很多文件
-   B. 因為其他文件可能引用了這個函數，必須保持一致
-   C. 因為電腦需要重新編譯所有文件
-   D. 因為舊的文件會自動刪除
+3. Why does renaming a function require changes to multiple files?
+   A. Because Claude Code likes to modify many files
+   B. Because other files may reference that function, and everything must stay consistent
+   C. Because the computer needs to recompile all files
+   D. Because old files are automatically deleted
 
-   答案：B — 當一個函數被多個文件使用（import）時，改了函數名就必須更新所有引用它的地方，否則程式會報錯找不到函數。這就是為什麼多文件操作很重要。
+   Answer: B — When a function is used (imported) by multiple files, renaming it means you must update all the places that reference it, or the program will throw an error saying the function can't be found. That's why multi-file operations are important.
 
-## 🔗 下一步
+## 🔗 Next Steps
 
-在下一個模塊 **3.2：自動化腳本入門**，你將學習如何讓 Claude Code 幫你寫腳本（script），讓電腦自動完成重複性的工作——例如自動整理文件、批量重新命名照片等。這是從「手動操作」到「自動化」的重要一步！
+In the next module, **3.2: Introduction to Automation Scripts**, you'll learn how to have Claude Code write scripts for you — letting your computer automatically handle repetitive tasks like organizing files or batch-renaming photos. This is an important step from "doing things manually" to "automation"!

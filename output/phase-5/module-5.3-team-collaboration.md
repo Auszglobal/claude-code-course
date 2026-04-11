@@ -1,194 +1,194 @@
-# 模塊 5.3：團隊協作最佳實踐
+# Module 5.3: Team Collaboration Best Practices
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 理解 CLAUDE.md 的全域與專案層級設定差異
-  - 使用 Claude Code 進行程式碼審查（Code Review）
-  - 透過 Claude Code 建立和管理 Pull Request
-  - 規劃團隊使用 Claude Code 的分支策略
-  - 了解權限模式與安全考量
+## Learning Objectives
+- After completing this lesson you will be able to:
+  - Understand the difference between global and project-level CLAUDE.md configurations
+  - Use Claude Code to conduct code reviews
+  - Create and manage Pull Requests through Claude Code
+  - Plan a branching strategy for your team's use of Claude Code
+  - Understand permission modes and security considerations
 
-## 📖 理論解釋
+## Theory
 
-### 團隊中的 Claude Code
+### Claude Code in a Team Setting
 
-想像一個廚房裡有多位廚師一起做菜。如果每個人都隨便拿食材、隨便放調味料，廚房很快就會亂成一團。但如果大家都遵循同一份食譜、使用相同的工具規範，就能協作出美味的料理。
+Imagine a kitchen with multiple chefs cooking together. If everyone grabs ingredients at random and adds seasoning however they like, the kitchen will quickly descend into chaos. But if everyone follows the same recipe and adheres to the same standards, they can collaborate to produce a delicious meal.
 
-**Claude Code 在團隊中的角色就像一份共享的食譜和廚房規範。**
+**Claude Code's role in a team is like a shared recipe and set of kitchen standards.**
 
-透過適當的設定，團隊中的每個人都能：
-- 使用相同的程式碼風格和規範
-- 自動化重複的審查流程
-- 安全地合併各自的工作成果
+With proper configuration, everyone on the team can:
+- Use the same code style and conventions
+- Automate repetitive review processes
+- Safely merge their individual work
 
-### CLAUDE.md 的兩個層級
+### The Two Levels of CLAUDE.md
 
-| 層級 | 檔案位置 | 誰能看到 | 用途 |
-|------|----------|----------|------|
-| **全域** | `~/.claude/CLAUDE.md` | 只有你自己 | 個人偏好、私人 API 金鑰提示 |
-| **專案** | `你的專案/CLAUDE.md` | 整個團隊（提交到 Git） | 專案規範、程式碼風格、協作規則 |
+| Level | File Location | Who Can See It | Purpose |
+|-------|--------------|----------------|---------|
+| **Global** | `~/.claude/CLAUDE.md` | Only you | Personal preferences, private API key reminders |
+| **Project** | `your-project/CLAUDE.md` | Entire team (committed to Git) | Project conventions, code style, collaboration rules |
 
-重要概念：**專案級的 CLAUDE.md 應該提交到 Git**，這樣團隊每個成員的 Claude Code 都會讀取相同的指示。
+Key concept: **The project-level CLAUDE.md should be committed to Git**, so that every team member's Claude Code reads the same instructions.
 
-## 💻 代碼示例 1：建立團隊共享的 CLAUDE.md
+## Code Example 1: Creating a Shared Team CLAUDE.md
 
-讓我們為一個團隊專案建立一份完整的 CLAUDE.md：
+Let's create a comprehensive CLAUDE.md for a team project:
 
 ```bash
-# 在專案根目錄建立 CLAUDE.md
+# Create CLAUDE.md in the project root directory
 cd ~/my-team-project
 ```
 
-以下是一個適合團隊使用的 CLAUDE.md 範本：
+Here's a CLAUDE.md template suitable for team use:
 
 ```markdown
-# 專案名稱 — Claude Code 團隊指南
+# Project Name -- Claude Code Team Guide
 
-## 專案概述
-這是一個線上商店專案，使用 React 前端 + Node.js 後端。
+## Project Overview
+This is an online store project using a React frontend + Node.js backend.
 
-## 程式碼風格規範
-- 使用 TypeScript，禁止 any 類型
-- 變數命名使用 camelCase
-- 檔案命名使用 kebab-case（例如：user-profile.tsx）
-- 每個函數都要有 JSDoc 註解
-- 最大行寬 100 字元
+## Code Style Conventions
+- Use TypeScript; the `any` type is forbidden
+- Variable naming uses camelCase
+- File naming uses kebab-case (e.g., user-profile.tsx)
+- Every function must have a JSDoc comment
+- Maximum line width is 100 characters
 
-## Git 規範
-- 分支命名：feature/功能名稱、fix/修復名稱、chore/雜務名稱
-- Commit 訊息格式：type(scope): description
-- 永遠不要直接推送到 main 分支
-- 所有變更必須通過 Pull Request
+## Git Conventions
+- Branch naming: feature/feature-name, fix/fix-name, chore/task-name
+- Commit message format: type(scope): description
+- Never push directly to the main branch
+- All changes must go through a Pull Request
 
-## 禁止事項
-- 不要修改 .env 或 .env.local 檔案
-- 不要刪除 package-lock.json
-- 不要安裝未經核准的依賴套件
-- 不要提交 node_modules/
+## Prohibited Actions
+- Do not modify .env or .env.local files
+- Do not delete package-lock.json
+- Do not install unapproved dependencies
+- Do not commit node_modules/
 
-## 測試要求
-- 新功能必須有對應的測試
-- 修復 Bug 前先寫失敗的測試
-- 測試檔案放在 __tests__/ 目錄
+## Testing Requirements
+- New features must have corresponding tests
+- Write a failing test before fixing a bug
+- Test files go in the __tests__/ directory
 
-## 部署流程
-1. 確認所有測試通過：npm test
-2. 建立 Pull Request 到 main 分支
-3. 至少一位團隊成員審查通過
-4. 合併後自動部署（CI/CD）
+## Deployment Process
+1. Confirm all tests pass: npm test
+2. Create a Pull Request to the main branch
+3. At least one team member must approve the review
+4. Merged changes are deployed automatically (CI/CD)
 ```
 
-把這個檔案提交到 Git：
+Commit this file to Git:
 
 ```bash
-# 將 CLAUDE.md 加入 Git 版本控制
+# Add CLAUDE.md to Git version control
 git add CLAUDE.md
 
-# 提交
+# Commit
 git commit -m "docs: add team CLAUDE.md for Claude Code collaboration"
 
-# 推送到遠端
+# Push to remote
 git push
 ```
 
-### 預期輸出：
-團隊中的每個成員拉取最新程式碼後，當他們使用 Claude Code 時，都會自動遵循 CLAUDE.md 中定義的規範。
+### Expected Output:
+After every team member pulls the latest code, their Claude Code will automatically follow the conventions defined in CLAUDE.md.
 
-## 💻 代碼示例 2：使用 Claude Code 進行程式碼審查
+## Code Example 2: Using Claude Code for Code Reviews
 
-Claude Code 可以幫你審查其他人的程式碼。以下是完整的審查流程：
+Claude Code can help you review other people's code. Here's the complete review workflow:
 
-### 步驟一：取得要審查的 Pull Request
+### Step 1: Get the Pull Request to Review
 
 ```bash
-# 查看目前開放的 Pull Request 列表
+# View the list of currently open Pull Requests
 gh pr list
 
-# 查看某個特定 PR 的詳細資訊（例如 PR #42）
+# View details for a specific PR (e.g., PR #42)
 gh pr view 42
 ```
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌───────────────────────────────────────────────────────┐
-│ $ gh pr list                                          │
-│                                                       │
-│ #42  新增用戶註冊功能  feature/user-registration  OPEN │
-│ #41  修復登入問題      fix/login-bug              OPEN │
-│ #40  更新文件          chore/update-docs          OPEN │
-└───────────────────────────────────────────────────────┘
++-------------------------------------------------------+
+| $ gh pr list                                          |
+|                                                       |
+| #42  Add user registration    feature/user-reg   OPEN |
+| #41  Fix login issue          fix/login-bug      OPEN |
+| #40  Update documentation     chore/update-docs  OPEN |
++-------------------------------------------------------+
 ```
 
-### 步驟二：在 Claude Code 中審查
+### Step 2: Review in Claude Code
 
 ```bash
-# 先切換到 PR 的分支
+# First, check out the PR branch
 gh pr checkout 42
 ```
 
-然後在 Claude Code 中：
+Then in Claude Code:
 
 ```
-> 請幫我審查這個 Pull Request 的所有變更。
-  檢查以下幾點：
-  1. 程式碼品質和風格是否符合 CLAUDE.md 的規範
-  2. 是否有潛在的 Bug 或安全問題
-  3. 測試覆蓋率是否足夠
-  4. 變數命名是否清楚
-  請列出所有發現的問題和改善建議。
+> Please review all the changes in this Pull Request.
+  Check the following:
+  1. Whether the code quality and style follow the CLAUDE.md conventions
+  2. Whether there are potential bugs or security issues
+  3. Whether test coverage is sufficient
+  4. Whether variable names are clear
+  Please list all issues found and improvement suggestions.
 ```
 
-Claude Code 會自動：
-1. 讀取 CLAUDE.md 中的團隊規範
-2. 查看 PR 中所有修改的檔案
-3. 對照規範逐一檢查
-4. 產生結構化的審查報告
+Claude Code will automatically:
+1. Read the team conventions from CLAUDE.md
+2. Review all modified files in the PR
+3. Check each one against the conventions
+4. Produce a structured review report
 
-### 步驟三：透過 CLI 提交審查意見
+### Step 3: Submit Review Comments via CLI
 
 ```bash
-# 直接在 PR 上留下審查意見
-gh pr review 42 --comment --body "程式碼審查完成。
+# Leave review comments directly on the PR
+gh pr review 42 --comment --body "Code review complete.
 
-## 發現的問題
-1. user-service.ts 第 45 行缺少錯誤處理
-2. register.test.ts 需要新增邊界情況測試
+## Issues Found
+1. user-service.ts line 45 is missing error handling
+2. register.test.ts needs additional edge case tests
 
-## 建議
-- 考慮將驗證邏輯抽取到獨立的 validator 模組
+## Suggestions
+- Consider extracting the validation logic into a separate validator module
 
-整體程式碼品質良好！修正上述問題後即可合併。"
+Overall code quality is good! Ready to merge once the above issues are fixed."
 ```
 
-### 預期輸出：
-PR 頁面上會出現你的審查意見，團隊成員可以看到並進行回覆。
+### Expected Output:
+Your review comments will appear on the PR page, and team members can see and respond to them.
 
-## 💻 代碼示例 3：使用 Claude Code 建立 Pull Request
+## Code Example 3: Creating a Pull Request with Claude Code
 
-讓我們完整走一次從建立分支到提交 PR 的流程：
+Let's walk through the complete process from creating a branch to submitting a PR:
 
 ```bash
-# 步驟一：從 main 建立新分支
-git checkout main           # 回到 main 分支
-git pull                    # 確保是最新版本
-git checkout -b feature/add-search   # 建立功能分支
+# Step 1: Create a new branch from main
+git checkout main           # Switch back to the main branch
+git pull                    # Make sure it's up to date
+git checkout -b feature/add-search   # Create a feature branch
 ```
 
-在 Claude Code 中完成你的功能開發後：
+After completing your feature development in Claude Code:
 
 ```bash
-# 步驟二：提交變更
+# Step 2: Commit your changes
 git add src/components/SearchBar.tsx src/hooks/useSearch.ts
 git commit -m "feat(search): add search bar component with debounced input"
 ```
 
 ```bash
-# 步驟三：推送到遠端
+# Step 3: Push to remote
 git push -u origin feature/add-search
 ```
 
 ```bash
-# 步驟四：使用 gh 建立 Pull Request
+# Step 4: Create a Pull Request using gh
 gh pr create \
   --title "feat: add search functionality" \
   --body "## Summary
@@ -205,37 +205,37 @@ gh pr create \
 N/A (text-based component)"
 ```
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌───────────────────────────────────────────────────┐
-│ $ gh pr create ...                                │
-│                                                   │
-│ Creating pull request for feature/add-search      │
-│   into main in your-org/your-repo                 │
-│                                                   │
-│ https://github.com/your-org/your-repo/pull/43     │
-└───────────────────────────────────────────────────┘
-```
-
-### 預期輸出：
-命令會輸出新建的 PR 網址，你可以在瀏覽器中開啟查看。
-
-## 💻 代碼示例 4：分支策略與權限控制
-
-### 推薦的團隊分支策略
-
-```
-main（主分支）
-  ├── develop（開發分支）
-  │     ├── feature/user-auth（功能分支 A）
-  │     ├── feature/search（功能分支 B）
-  │     └── fix/login-bug（修復分支）
-  └── release/v1.0（發佈分支）
++---------------------------------------------------+
+| $ gh pr create ...                                |
+|                                                   |
+| Creating pull request for feature/add-search      |
+|   into main in your-org/your-repo                 |
+|                                                   |
+| https://github.com/your-org/your-repo/pull/43     |
++---------------------------------------------------+
 ```
 
-### Claude Code 權限設定
+### Expected Output:
+The command will output the URL of the newly created PR, which you can open in a browser to view.
 
-為了團隊安全，建議在專案的 `.claude/settings.json` 中設定權限：
+## Code Example 4: Branching Strategy and Permission Control
+
+### Recommended Team Branching Strategy
+
+```
+main (main branch)
+  +-- develop (development branch)
+  |     +-- feature/user-auth (feature branch A)
+  |     +-- feature/search (feature branch B)
+  |     +-- fix/login-bug (fix branch)
+  +-- release/v1.0 (release branch)
+```
+
+### Claude Code Permission Settings
+
+For team security, it's recommended to set permissions in the project's `.claude/settings.json`:
 
 ```json
 {
@@ -264,54 +264,54 @@ main（主分支）
 }
 ```
 
-這個設定的意思是：
-- **允許**：讀寫檔案、執行測試、基本 Git 操作、建立 PR
-- **禁止**：強制推送、硬重置、危險刪除、直接推送到 main
+This configuration means:
+- **Allow**: Read/write files, run tests, basic Git operations, create PRs
+- **Deny**: Force push, hard reset, dangerous deletions, pushing directly to main
 
-把這個設定提交到 Git，團隊所有人都會套用相同的安全規則。
+Commit this configuration to Git and all team members will have the same safety rules applied.
 
-## ✍️ 動手練習
+## Hands-On Exercises
 
-### 練習 1：建立團隊 CLAUDE.md
-1. 選擇你的一個專案（或建立一個新的練習專案）
-2. 在專案根目錄建立 `CLAUDE.md`
-3. 寫下至少 5 條團隊規範（程式碼風格、Git 規則、禁止事項等）
-4. 提交到 Git
+### Exercise 1: Create a Team CLAUDE.md
+1. Choose one of your projects (or create a new practice project)
+2. Create a `CLAUDE.md` in the project root
+3. Write at least 5 team conventions (code style, Git rules, prohibited actions, etc.)
+4. Commit it to Git
 
-> 💡 提示：想像你要讓一位新同事立刻了解專案規範，CLAUDE.md 就是最好的入門文件。
+> Tip: Imagine you need a new colleague to immediately understand the project's conventions. CLAUDE.md is the perfect onboarding document.
 
-### 練習 2：模擬 PR 審查流程
-1. 在專案中建立一個新分支
-2. 做一些簡單的修改（例如新增一個函數）
-3. 提交並推送到遠端
-4. 使用 `gh pr create` 建立 Pull Request
-5. 在 Claude Code 中請它審查這個 PR
+### Exercise 2: Simulate a PR Review Workflow
+1. Create a new branch in your project
+2. Make some simple changes (e.g., add a new function)
+3. Commit and push to the remote
+4. Create a Pull Request using `gh pr create`
+5. Ask Claude Code to review the PR
 
-> 💡 提示：即使是你自己的程式碼，Claude Code 也能發現你忽略的問題。養成「先審查再合併」的好習慣！
+> Tip: Even for your own code, Claude Code can spot issues you've overlooked. Build the habit of "review before merge"!
 
-## ❓ 小測驗（3 條題目）
+## Quiz (3 Questions)
 
-1. 團隊共享的 CLAUDE.md 應該放在哪裡？
-   A. 每個人的 `~/.claude/CLAUDE.md`
-   B. 專案根目錄的 `CLAUDE.md`（提交到 Git）
-   C. 專案的 `node_modules/` 裡面
-   D. GitHub 的 Wiki 頁面
-   答案：B — 專案根目錄的 CLAUDE.md 會被提交到 Git，團隊每個成員拉取後，他們的 Claude Code 都會讀取相同的規範。全域 CLAUDE.md（~/.claude/CLAUDE.md）是個人用的。
+1. Where should a team's shared CLAUDE.md be placed?
+   A. In each person's `~/.claude/CLAUDE.md`
+   B. In the project root's `CLAUDE.md` (committed to Git)
+   C. Inside the project's `node_modules/`
+   D. On the GitHub Wiki page
+   Answer: B -- A CLAUDE.md in the project root gets committed to Git. After every team member pulls, their Claude Code will read the same conventions. The global CLAUDE.md (~/.claude/CLAUDE.md) is for personal use.
 
-2. 以下哪個做法最符合團隊安全最佳實踐？
-   A. 允許 Claude Code 使用 `git push --force`
-   B. 在 settings.json 的 deny 列表中禁止危險操作
-   C. 不設定任何權限限制
-   D. 讓每個人自己決定權限設定
-   答案：B — 在專案的 `.claude/settings.json` 中明確禁止危險操作（如 force push、hard reset），可以防止意外的破壞性操作。這個設定提交到 Git 後，所有團隊成員都會套用。
+2. Which approach best follows team security best practices?
+   A. Allow Claude Code to use `git push --force`
+   B. Forbid dangerous operations in the settings.json deny list
+   C. Set no permission restrictions at all
+   D. Let each person decide their own permissions
+   Answer: B -- Explicitly forbidding dangerous operations (like force push, hard reset) in the project's `.claude/settings.json` prevents accidental destructive actions. Once committed to Git, all team members will have these rules applied.
 
-3. 使用 Claude Code 審查 PR 時，它會參考什麼來判斷程式碼規範？
-   A. 只看程式碼本身的語法
-   B. 只參考網路上的最佳實踐
-   C. 參考專案的 CLAUDE.md 和已有的程式碼風格
-   D. 隨機判斷
-   答案：C — Claude Code 會讀取專案的 CLAUDE.md 作為規範基準，同時也會參考專案中已有的程式碼風格來進行一致性檢查。
+3. When using Claude Code to review a PR, what does it reference to evaluate code conventions?
+   A. Only the code's syntax itself
+   B. Only online best practices
+   C. The project's CLAUDE.md and existing code style
+   D. Random judgement
+   Answer: C -- Claude Code reads the project's CLAUDE.md as the convention baseline and also references the project's existing code style for consistency checks.
 
-## 🔗 下一步
+## Next Steps
 
-你已經掌握了團隊協作的關鍵技能！在最後一個模塊 **5.4：綜合實戰項目** 中，我們將運用整個課程所學的所有技能，從零開始建立一個完整的專案——這將是你的畢業作品！
+You've now mastered the key skills for team collaboration! In the final module, **5.4: Capstone Project**, we'll apply everything you've learned throughout the entire course to build a complete project from scratch -- this will be your graduation project!

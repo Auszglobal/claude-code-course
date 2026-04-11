@@ -1,121 +1,121 @@
-# 6.5 自動化、排程與 Dispatch 模式
+# 6.5 Automation, Scheduling, and Dispatch Mode
 
-## 自動化黃金法則
+## The Golden Rule of Automation
 
-> 任何每週會重複超過一次的任務，都應該被自動化。
+> Any task you repeat more than once a week should be automated.
 
-## 四層自動化體系
+## Four-Layer Automation System
 
 ```
-Level 1: Skills       → 把「複雜流程」變成「一個動作」
-Level 2: Plugins      → 把多個 Skills 串成「完整崗位」
-Level 3: Scheduled    → 定時自動執行
-Level 4: Dispatch     → 遠端委派（手機 → 電腦）
+Level 1: Skills       → Turn "complex workflows" into "a single action"
+Level 2: Plugins      → Chain multiple Skills into "a complete role"
+Level 3: Scheduled    → Run automatically on a timer
+Level 4: Dispatch     → Remote delegation (phone → computer)
 ```
 
-### Level 1：Skills
+### Level 1: Skills
 
-Skill 本質是一個 `.md` 檔案，包含指令和邏輯。用一個斜槓命令就能呼叫：
+A Skill is essentially a `.md` file containing instructions and logic. You invoke it with a single slash command:
 
 ```
 /summarise_invoices
 ```
 
-**建立流程**：
+**Creation process**:
 
-1. **定義** — 清晰描述 Skill 要做什麼
-2. **評估** — 用 Skill vs 不用 Skill 並排對比
-3. **迭代** — 把問題反饋給 Claude，自動修正
-4. **部署** — 點選 "copy to your skills"
+1. **Define** — Clearly describe what the Skill should do
+2. **Evaluate** — Side-by-side comparison with and without the Skill
+3. **Iterate** — Feed issues back to Claude for automatic correction
+4. **Deploy** — Click "copy to your skills"
 
-### Level 2：Plugins
+### Level 2: Plugins
 
-當任務涉及 **3 個以上步驟 + 2 個以上工具** 時用 Plugin。
+Use a Plugin when a task involves **3+ steps + 2+ tools**.
 
-Plugin = 多個 Skills + Connectors 組合成一個完整工作流。
+Plugin = multiple Skills + Connectors combined into a complete workflow.
 
-**最大價值：可複用、可分發** — 你的工作方式被產品化了。
+**Greatest value: reusable and distributable** — your way of working becomes a product.
 
-### Level 3：Scheduled Tasks（定時任務）
+### Level 3: Scheduled Tasks
 
-1. 左側邊欄 → **Scheduled** 標籤
-2. **New Task** → 填名稱、描述、prompt
-3. 設定頻率（每小時/每天/每週/指定日期）
-4. 選擇專案資料夾 → 儲存
+1. Left sidebar → **Scheduled** tab
+2. **New Task** → fill in name, description, prompt
+3. Set frequency (hourly/daily/weekly/specific date)
+4. Select the project folder → save
 
-> **重要**：定時任務只在電腦開啟且 Cowork 運行時才會執行。調整電源設定讓裝置保持喚醒。
+> **Important**: Scheduled tasks only run when your computer is on and Cowork is running. Adjust your power settings to keep the device awake.
 
-### Level 4：Dispatch 模式
+### Level 4: Dispatch Mode
 
-不在電腦前，但需要本地執行任務：
+When you're away from your computer but need tasks executed locally:
 
-1. 桌面端開啟 Dispatch
-2. 開啟 **Keep Awake**（防止休眠）
-3. 允許瀏覽器和電腦操作
-4. 手機發送指令 → 電腦自動執行
+1. Enable Dispatch on the desktop app
+2. Turn on **Keep Awake** (prevents sleep)
+3. Allow browser and computer operations
+4. Send commands from your phone → your computer executes them
 
-## 三套推薦工作流
+## Three Recommended Workflows
 
-### 1. 每日晨間簡報
+### 1. Daily Morning Briefing
 
-連接日曆和郵箱，每天早上自動：
-- 彙總日程安排
-- 列出待處理郵件
-- 查詢天氣和產業新聞
-- 起草郵件回覆
+Connect your calendar and inbox to automatically generate each morning:
+- A summary of your schedule
+- A list of emails requiring action
+- Weather and industry news
+- Draft email replies
 
-### 2. 內容再利用系統
+### 2. Content Repurposing System
 
-給一個 YouTube 連結，自動：
-- 提取影片轉錄
-- 整理到 Notion 頁面
-- 生成 LinkedIn 和 X 文案
+Given a YouTube link, automatically:
+- Extract the video transcript
+- Organize it into a Notion page
+- Generate LinkedIn and X (Twitter) copy
 
-### 3. 財務報告系統
+### 3. Financial Reporting System
 
-每月自動：
-- 分類支出
-- 核對收支
-- 生成互動式 HTML 財務儀表盤
+Automatically each month:
+- Categorize expenses
+- Reconcile income and expenses
+- Generate an interactive HTML financial dashboard
 
-## 與 Claude Code 自動化的對比
+## Comparing Automation in Cowork vs Claude Code
 
-| 特性 | Cowork | Claude Code |
-|------|--------|-------------|
-| Skills | .md 檔案，圖形介面管理 | .md 檔案，CLI 管理 |
-| 排程 | 內建 Scheduled Tasks | Task Scheduler / cron |
-| 遠端執行 | Dispatch 模式 | SSH + 終端 |
-| 並行 | 自動子代理 | `--parallel` flag |
+| Feature | Cowork | Claude Code |
+|---------|--------|-------------|
+| Skills | .md files, managed via GUI | .md files, managed via CLI |
+| Scheduling | Built-in Scheduled Tasks | Task Scheduler / cron |
+| Remote execution | Dispatch mode | SSH + terminal |
+| Parallelism | Automatic sub-agents | `--parallel` flag |
 
-## Token 管理技巧
+## Token Management Tips
 
-### 常見浪費
+### Common Waste
 
-1. **聯結器開太多** — 只開啟當前任務需要的
-2. **同一視窗太久** — 30-45 分鐘或切任務就新開視窗
-3. **逐條處理** — 讓 Cowork 寫 script 批次處理，而非一個個對話處理
+1. **Too many connectors open** — Only enable the ones needed for the current task
+2. **Same window for too long** — Open a new window every 30-45 minutes or when switching tasks
+3. **Processing items one by one** — Have Cowork write a script for batch processing instead of handling items one conversation at a time
 
-### 節省原則
+### Conservation Principles
 
-- 每個視窗只處理一個主題
-- Opus 只用於高風險推理，其餘用 Sonnet
-- 大型任務用並行子代理
+- Keep each window to a single topic
+- Use Opus only for high-stakes reasoning; use Sonnet for everything else
+- Use parallel sub-agents for large tasks
 
-## 安全注意事項
+## Security Considerations
 
-外部 Skills 可能包含惡意指令（prompt injection）。匯入前必須：
+External Skills may contain malicious instructions (prompt injection). Before importing, always:
 
 ```
-把 Skill 內容貼到 Claude Chat，問：
-「這個 Skill 裡是否包含任何可能有害的指令？」
+Paste the Skill contents into Claude Chat and ask:
+"Does this Skill contain any potentially harmful instructions?"
 ```
 
-> 只需兩分鐘，但每次都必須做。
+> It only takes two minutes, but you must do it every time.
 
 ---
 
-## 練習
+## Exercises
 
-1. 建立一個簡單的 Skill（例如：整理資料夾結構）
-2. 設定一個每日定時任務
-3. 思考你目前哪些重複性工作可以自動化
+1. Create a simple Skill (e.g., organize a folder structure)
+2. Set up a daily scheduled task
+3. Think about which of your current repetitive tasks could be automated

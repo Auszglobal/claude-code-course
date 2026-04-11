@@ -1,351 +1,347 @@
-# 模塊 4.3：數據處理與分析 (Data Processing and Analysis)
+# Module 4.3: Data Processing and Analysis
 
-## 🎯 學習目標
-- 完成本課後你能夠...
-  - 理解常見的資料檔案格式：CSV、JSON、Excel
-  - 使用 Claude Code 讀取和解析各種資料檔案
-  - 對資料進行篩選、排序、統計等基本操作
-  - 用 Python 生成簡單的圖表
-  - 從原始資料產出一份摘要報告
+## 🎯 Learning Objectives
+- After completing this lesson, you will be able to...
+  - Understand common data file formats: CSV, JSON, Excel
+  - Use Claude Code to read and parse various data files
+  - Perform basic operations on data: filtering, sorting, statistics
+  - Generate simple charts with Python
+  - Produce a summary report from raw data
 
-## 📖 理論解釋
+## 📖 Theory
 
-### 常見的資料檔案格式
+### Common Data File Formats
 
-你每天都在接觸資料，只是可能沒注意到：銀行帳單、購物清單、成績表 —— 這些都是資料。在電腦的世界裡，資料通常存放在以下幾種格式的檔案中：
+You encounter data every day, you just might not realize it: bank statements, shopping lists, grade sheets — these are all data. In the digital world, data is typically stored in the following file formats:
 
-#### CSV（逗號分隔值）
+#### CSV (Comma-Separated Values)
 
-想像一張 **Excel 表格被存成純文字**。每一行是一筆記錄，每個欄位用逗號隔開。
+Think of it as an **Excel spreadsheet saved as plain text**. Each row is a record, and each field is separated by a comma.
 
 ```
-姓名,年齡,城市
-小明,25,台北
-小華,30,高雄
-小美,28,台中
+Name,Age,City
+Alex,25,Sydney
+Sarah,30,Melbourne
+Tom,28,Brisbane
 ```
 
-就像用逗號取代了表格的格線。CSV 是最常見、最通用的資料格式，幾乎所有軟體都能讀取。
+It's like using commas instead of grid lines. CSV is the most common and universal data format — almost any software can read it.
 
-#### JSON（JavaScript 物件表示法）
+#### JSON (JavaScript Object Notation)
 
-在模塊 4.2 我們已經見過 JSON 了。它像一份**有層次的表單**：
+We already saw JSON in Module 4.2. It's like a **form with a hierarchical structure**:
 
 ```json
 [
-  {"姓名": "小明", "年齡": 25, "城市": "台北"},
-  {"姓名": "小華", "年齡": 30, "城市": "高雄"}
+  {"Name": "Alex", "Age": 25, "City": "Sydney"},
+  {"Name": "Sarah", "Age": 30, "City": "Melbourne"}
 ]
 ```
 
-JSON 特別適合有巢狀結構的資料（例如一個人有多個地址）。
+JSON is especially good for data with nested structures (e.g., a person with multiple addresses).
 
-#### Excel（.xlsx）
+#### Excel (.xlsx)
 
-就是你熟悉的 **Microsoft Excel 試算表**。它可以有多個工作表（Sheet）、格式設定、公式等。功能最豐富，但檔案比較大，也比較複雜。
+This is the familiar **Microsoft Excel spreadsheet**. It can have multiple worksheets (Sheets), formatting, formulas, and more. It's the most feature-rich format, but files are larger and more complex.
 
-> **小比喻**：如果資料是水，那 CSV 就是塑膠杯（簡單輕便）、JSON 就是保溫瓶（有結構有保護）、Excel 就是水壺（功能齊全但較重）。
+> **A simple analogy**: If data is water, then CSV is a plastic cup (simple and lightweight), JSON is a thermos (structured with protection), and Excel is a kettle (full-featured but heavier).
 
 ---
 
-## 💻 代碼示例 1：分析銷售數據 CSV
+## 💻 Code Example 1: Analyzing Sales Data from a CSV
 
-讓我們用一個實際例子來學習。首先建立項目：
+Let's learn through a practical example. First, create the project:
 
 ```bash
 mkdir data-analysis
 cd data-analysis
 ```
 
-啟動 Claude Code，先請它幫我們建立一份範例資料：
+Start Claude Code and ask it to create some sample data:
 
 ```
-幫我建立一個 sales_data.csv 檔案，包含以下欄位：
-- date（日期，2024年1月到6月）
-- product（產品名稱：筆電、手機、平板、耳機、充電器）
-- quantity（數量，1-50之間的隨機整數）
-- price（單價，跟產品對應的合理價格）
-- region（地區：北部、中部、南部、東部）
-生成 100 筆模擬資料。
+Help me create a sales_data.csv file with the following columns:
+- date (dates from January to June 2024)
+- product (product names: Laptop, Phone, Tablet, Headphones, Charger)
+- quantity (random integers between 1-50)
+- price (reasonable prices matching each product)
+- region (regions: North, Central, South, East)
+Generate 100 rows of simulated data.
 ```
 
-接下來，請 Claude Code 分析這份資料：
+Next, ask Claude Code to analyze the data:
 
 ```
-幫我用 Python 分析 sales_data.csv，我想知道：
-1. 總銷售額是多少
-2. 哪個產品賣得最好（按數量）
-3. 哪個地區銷售額最高
-4. 每個月的銷售趨勢
-用 pandas 處理資料，加上詳細中文註釋。
+Help me analyze sales_data.csv with Python. I want to know:
+1. What is the total revenue
+2. Which product sold the most (by quantity)
+3. Which region has the highest revenue
+4. The monthly sales trend
+Use pandas for processing, and add detailed comments.
 ```
 
-Claude Code 會生成類似這樣的分析腳本：
+Claude Code will generate an analysis script similar to this:
 
 ```python
-# analyze_sales.py — 銷售數據分析工具
-import pandas as pd  # pandas 是 Python 最強大的資料分析工具庫
+# analyze_sales.py — Sales data analysis tool
+import pandas as pd  # pandas is Python's most powerful data analysis library
 
-# ===== 第一步：讀取資料 =====
-# 就像打開一個 Excel 檔案一樣簡單
+# ===== Step 1: Read the data =====
+# As simple as opening an Excel file
 df = pd.read_csv("sales_data.csv")
 
-# 計算每筆交易的銷售額
-df["total"] = df["quantity"] * df["price"]  # 數量 x 單價 = 銷售額
+# Calculate the revenue for each transaction
+df["total"] = df["quantity"] * df["price"]  # quantity x unit price = revenue
 
-# 看看資料長什麼樣（顯示前 5 筆）
-print("=== 資料預覽（前 5 筆）===")
+# Preview the data (show first 5 rows)
+print("=== Data Preview (first 5 rows) ===")
 print(df.head())
-print(f"\n共有 {len(df)} 筆資料\n")
+print(f"\nTotal of {len(df)} records\n")
 
-# ===== 第二步：基本統計 =====
-total_revenue = df["total"].sum()  # 加總所有銷售額
-print(f"=== 總銷售額 ===")
+# ===== Step 2: Basic statistics =====
+total_revenue = df["total"].sum()  # Sum all revenue
+print(f"=== Total Revenue ===")
 print(f"${total_revenue:,.0f}\n")
 
-# ===== 第三步：各產品銷售量排名 =====
-product_qty = df.groupby("product")["quantity"].sum()  # 按產品分組，加總數量
-product_qty = product_qty.sort_values(ascending=False)  # 由大到小排序
+# ===== Step 3: Product sales ranking by quantity =====
+product_qty = df.groupby("product")["quantity"].sum()  # Group by product, sum quantities
+product_qty = product_qty.sort_values(ascending=False)  # Sort descending
 
-print("=== 產品銷售量排名 ===")
+print("=== Product Sales Ranking ===")
 for product, qty in product_qty.items():
-    print(f"  {product}: {qty} 件")
+    print(f"  {product}: {qty} units")
 
-# ===== 第四步：各地區銷售額 =====
-region_sales = df.groupby("region")["total"].sum()  # 按地區分組，加總銷售額
+# ===== Step 4: Revenue by region =====
+region_sales = df.groupby("region")["total"].sum()  # Group by region, sum revenue
 region_sales = region_sales.sort_values(ascending=False)
 
-print("\n=== 地區銷售額排名 ===")
+print("\n=== Revenue by Region ===")
 for region, sales in region_sales.items():
     print(f"  {region}: ${sales:,.0f}")
 
-# ===== 第五步：月度趨勢 =====
-df["month"] = pd.to_datetime(df["date"]).dt.month  # 從日期中提取月份
-monthly = df.groupby("month")["total"].sum()       # 按月份加總
+# ===== Step 5: Monthly trend =====
+df["month"] = pd.to_datetime(df["date"]).dt.month  # Extract month from date
+monthly = df.groupby("month")["total"].sum()        # Sum by month
 
-print("\n=== 月度銷售趨勢 ===")
+print("\n=== Monthly Sales Trend ===")
 for month, sales in monthly.items():
-    # 用簡單的長條圖表示
-    bar = "#" * int(sales / monthly.max() * 30)  # 等比例縮放
-    print(f"  {month}月: ${sales:>10,.0f} {bar}")
+    # Simple bar chart representation
+    bar = "#" * int(sales / monthly.max() * 30)  # Proportionally scaled
+    print(f"  Month {month}: ${sales:>10,.0f} {bar}")
 ```
 
-### 預期輸出：
+### Expected Output:
 
 ```bash
-# 先安裝 pandas（如果還沒有的話）
+# Install pandas first (if you haven't already)
 pip install pandas
 
-# 執行分析腳本
+# Run the analysis script
 python analyze_sales.py
 ```
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌──────────────────────────────────────────────┐
-│ === 資料預覽（前 5 筆）===                      │
+│ === Data Preview (first 5 rows) ===           │
 │   date     product  quantity  price  total    │
-│ 2024-01-05  筆電      3      25000  75000    │
-│ 2024-01-08  手機      12      8000  96000    │
+│ 2024-01-05  Laptop    3      25000  75000    │
+│ 2024-01-08  Phone     12      8000  96000    │
 │ ...                                           │
 │                                               │
-│ 共有 100 筆資料                                │
+│ Total of 100 records                          │
 │                                               │
-│ === 總銷售額 ===                               │
+│ === Total Revenue ===                         │
 │ $5,234,000                                    │
 │                                               │
-│ === 產品銷售量排名 ===                          │
-│   耳機: 245 件                                 │
-│   充電器: 198 件                               │
-│   手機: 167 件                                 │
-│   平板: 142 件                                 │
-│   筆電: 98 件                                  │
+│ === Product Sales Ranking ===                 │
+│   Headphones: 245 units                       │
+│   Charger: 198 units                          │
+│   Phone: 167 units                            │
+│   Tablet: 142 units                           │
+│   Laptop: 98 units                            │
 │                                               │
-│ === 月度銷售趨勢 ===                            │
-│   1月: $  820,000 ####################         │
-│   2月: $  750,000 ##################           │
-│   3月: $  910,000 #######################      │
+│ === Monthly Sales Trend ===                   │
+│   Month 1: $  820,000 ####################    │
+│   Month 2: $  750,000 ##################      │
+│   Month 3: $  910,000 #######################  │
 │   ...                                          │
 └──────────────────────────────────────────────┘
 ```
 
 ---
 
-## 💻 代碼示例 2：生成圖表視覺化
+## 💻 Code Example 2: Generating Charts for Visualization
 
-數字很好，但圖表更直觀！讓我們請 Claude Code 加入圖表功能：
+Numbers are great, but charts are more intuitive! Let's ask Claude Code to add charting capabilities:
 
 ```
-幫我在 analyze_sales.py 的基礎上，用 matplotlib 生成以下圖表，
-全部保存為 PNG 圖片：
-1. 各產品銷售量的長條圖 (bar chart)
-2. 各地區銷售額的圓餅圖 (pie chart)
-3. 月度銷售趨勢的折線圖 (line chart)
-圖表標題和標籤用中文，要有適當的配色。
-保存到 charts/ 資料夾中。
+Building on analyze_sales.py, use matplotlib to generate the following charts,
+all saved as PNG images:
+1. A bar chart of product sales by quantity
+2. A pie chart of revenue by region
+3. A line chart of monthly sales trend
+Chart titles and labels should be in English, with a good color scheme.
+Save them to a charts/ folder.
 ```
 
-Claude Code 會生成圖表腳本：
+Claude Code will generate a charting script:
 
 ```python
-# create_charts.py — 銷售數據圖表生成器
+# create_charts.py — Sales data chart generator
 import pandas as pd
-import matplotlib.pyplot as plt       # 繪圖工具庫
-import matplotlib                       # 用來設定中文字體
+import matplotlib.pyplot as plt       # Charting library
 import os
 
-# 設定中文字體（避免亂碼）
-matplotlib.rcParams["font.sans-serif"] = ["Microsoft JhengHei", "SimHei", "Arial"]
-matplotlib.rcParams["axes.unicode_minus"] = False  # 正確顯示負號
-
-# 建立 charts 資料夾（如果不存在）
+# Create charts folder (if it doesn't exist)
 os.makedirs("charts", exist_ok=True)
 
-# 讀取資料
+# Read the data
 df = pd.read_csv("sales_data.csv")
 df["total"] = df["quantity"] * df["price"]
 
-# ===== 圖表 1：產品銷售量長條圖 =====
+# ===== Chart 1: Product Sales Bar Chart =====
 product_qty = df.groupby("product")["quantity"].sum().sort_values(ascending=True)
 
-plt.figure(figsize=(10, 6))                    # 設定圖表大小
+plt.figure(figsize=(10, 6))                    # Set chart size
 colors = ["#00b4a6", "#1a1a2e", "#e76f51", "#2a9d8f", "#264653"]
-product_qty.plot(kind="barh", color=colors)    # 水平長條圖
-plt.title("各產品銷售量", fontsize=16)
-plt.xlabel("銷售數量（件）")
-plt.tight_layout()                              # 自動調整邊距
-plt.savefig("charts/product_sales.png", dpi=150)  # 保存為圖片
+product_qty.plot(kind="barh", color=colors)    # Horizontal bar chart
+plt.title("Sales by Product", fontsize=16)
+plt.xlabel("Quantity Sold (units)")
+plt.tight_layout()                              # Auto-adjust margins
+plt.savefig("charts/product_sales.png", dpi=150)  # Save as image
 plt.close()
-print("已生成：charts/product_sales.png")
+print("Generated: charts/product_sales.png")
 
-# ===== 圖表 2：地區銷售額圓餅圖 =====
+# ===== Chart 2: Regional Revenue Pie Chart =====
 region_sales = df.groupby("region")["total"].sum()
 
 plt.figure(figsize=(8, 8))
 region_sales.plot(kind="pie", autopct="%1.1f%%", colors=colors)
-plt.title("各地區銷售額佔比", fontsize=16)
-plt.ylabel("")                                  # 隱藏預設的 y 軸標籤
+plt.title("Revenue Share by Region", fontsize=16)
+plt.ylabel("")                                  # Hide default y-axis label
 plt.tight_layout()
 plt.savefig("charts/region_pie.png", dpi=150)
 plt.close()
-print("已生成：charts/region_pie.png")
+print("Generated: charts/region_pie.png")
 
-# ===== 圖表 3：月度趨勢折線圖 =====
+# ===== Chart 3: Monthly Trend Line Chart =====
 df["month"] = pd.to_datetime(df["date"]).dt.month
 monthly = df.groupby("month")["total"].sum()
 
 plt.figure(figsize=(10, 6))
 monthly.plot(kind="line", marker="o", color="#00b4a6", linewidth=2)
-plt.title("月度銷售趨勢", fontsize=16)
-plt.xlabel("月份")
-plt.ylabel("銷售額（$）")
-plt.grid(True, alpha=0.3)                       # 加入淡色格線
-plt.xticks(range(1, 7), ["1月", "2月", "3月", "4月", "5月", "6月"])
+plt.title("Monthly Sales Trend", fontsize=16)
+plt.xlabel("Month")
+plt.ylabel("Revenue ($)")
+plt.grid(True, alpha=0.3)                       # Add light grid lines
+plt.xticks(range(1, 7), ["Jan", "Feb", "Mar", "Apr", "May", "Jun"])
 plt.tight_layout()
 plt.savefig("charts/monthly_trend.png", dpi=150)
 plt.close()
-print("已生成：charts/monthly_trend.png")
+print("Generated: charts/monthly_trend.png")
 
-print("\n所有圖表已保存到 charts/ 資料夾！")
+print("\nAll charts have been saved to the charts/ folder!")
 ```
 
-### 預期輸出：
+### Expected Output:
 
 ```bash
-# 安裝 matplotlib（如果還沒有的話）
+# Install matplotlib (if you haven't already)
 pip install matplotlib
 
-# 執行圖表腳本
+# Run the chart script
 python create_charts.py
 ```
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌──────────────────────────────────────────┐
-│ 已生成：charts/product_sales.png          │
-│ 已生成：charts/region_pie.png             │
-│ 已生成：charts/monthly_trend.png          │
+│ Generated: charts/product_sales.png       │
+│ Generated: charts/region_pie.png          │
+│ Generated: charts/monthly_trend.png       │
 │                                           │
-│ 所有圖表已保存到 charts/ 資料夾！           │
+│ All charts have been saved to the         │
+│ charts/ folder!                           │
 └──────────────────────────────────────────┘
 ```
 
-生成後的檔案結構：
+The resulting file structure:
 
 ```
 data-analysis/
-├── sales_data.csv          # 原始資料
-├── analyze_sales.py        # 分析腳本
-├── create_charts.py        # 圖表腳本
+├── sales_data.csv          # Raw data
+├── analyze_sales.py        # Analysis script
+├── create_charts.py        # Charting script
 └── charts/
-    ├── product_sales.png   # 產品銷售量長條圖
-    ├── region_pie.png      # 地區圓餅圖
-    └── monthly_trend.png   # 月度趨勢折線圖
+    ├── product_sales.png   # Product sales bar chart
+    ├── region_pie.png      # Regional pie chart
+    └── monthly_trend.png   # Monthly trend line chart
 ```
 
-你可以在檔案總管中雙擊打開那些 PNG 圖片來查看圖表。
+You can double-click those PNG images in your file explorer to view the charts.
 
 ---
 
-## ✍️ 動手練習
+## ✍️ Hands-on Exercises
 
-### 練習 1：分析你自己的資料
+### Exercise 1: Analyze Your Own Data
 
-1. 請 Claude Code 建立一份你感興趣的模擬資料（例如：讀書記錄、運動數據、每日開支）
-2. 至少包含 50 筆資料和 4 個欄位
-3. 用 pandas 進行分析，找出至少 3 個有趣的發現
-4. 生成至少一張圖表
+1. Ask Claude Code to create some simulated data on a topic that interests you (e.g., reading logs, exercise data, daily expenses)
+2. Include at least 50 rows and 4 columns
+3. Use pandas to analyze it and find at least 3 interesting insights
+4. Generate at least one chart
 
-> **提示**：例如你可以說「幫我建立一份 2024 年每日運動記錄的 CSV，包含日期、運動類型、持續時間、消耗卡路里，然後分析哪種運動最常做、每月平均運動時間」
+> **Tip**: For example, you could say "Create a CSV of daily exercise records for 2024, including date, exercise type, duration, and calories burned, then analyze which exercise is done most often and the average monthly exercise time"
 
-### 練習 2：從 JSON 檔案生成摘要報告
+### Exercise 2: Generate a Summary Report from a JSON File
 
-1. 請 Claude Code 建立一份 JSON 格式的學生成績資料（10 個學生，5 個科目）
-2. 撰寫一個 Python 腳本，讀取 JSON 並產出：
-   - 每個學生的平均分數
-   - 每科的最高分和最低分
-   - 全班的排名
-3. 把結果輸出成一份整齊的文字報告
+1. Ask Claude Code to create a JSON file of student grades (10 students, 5 subjects)
+2. Write a Python script to read the JSON and produce:
+   - Each student's average score
+   - The highest and lowest scores for each subject
+   - Class rankings
+3. Output the results as a neatly formatted text report
 
-> **提示**：告訴 Claude Code「讀取 students.json，計算各種統計，然後用 print 輸出一份格式整齊的報告」
-
----
-
-## ❓ 小測驗（3 條題目）
-
-**1. CSV 檔案的特點是什麼？**
-
-A. 只能用 Microsoft Excel 打開
-B. 用逗號分隔每個欄位的純文字檔案
-C. 一種圖片格式
-D. 需要特殊軟體才能建立
-
-答案：B — CSV（Comma-Separated Values，逗號分隔值）是純文字檔案，用逗號分隔欄位。它可以被任何文字編輯器、Excel、Google Sheets 或程式語言讀取，是最通用的資料格式。
+> **Tip**: Tell Claude Code "Read students.json, calculate various statistics, then use print to output a neatly formatted report"
 
 ---
 
-**2. 在 pandas 中，`df.groupby("product")["quantity"].sum()` 這行代碼做了什麼？**
+## ❓ Quiz (3 Questions)
 
-A. 刪除了所有產品資料
-B. 按產品名稱分組，然後計算每組的數量總和
-C. 把所有產品的名稱加在一起
-D. 隨機打亂資料的順序
+**1. What characterizes a CSV file?**
 
-答案：B — `groupby("product")` 把資料按產品名稱分成不同的組（就像把撲克牌按花色分堆），然後 `["quantity"].sum()` 計算每組中數量欄位的加總。
+A. It can only be opened with Microsoft Excel
+B. It's a plain text file that uses commas to separate fields
+C. It's an image format
+D. It requires special software to create
 
----
-
-**3. 為什麼在用 matplotlib 生成圖表時需要設定中文字體？**
-
-A. 中文字體能讓圖表更漂亮
-B. 沒有設定中文字體，圖表上的中文字會變成亂碼或方框
-C. 英文字體不能顯示數字
-D. matplotlib 只支持中文字體
-
-答案：B — matplotlib 預設使用的字體不包含中文字元，所以中文標題和標籤會顯示為方框或亂碼。透過設定 `rcParams["font.sans-serif"]` 指定包含中文的字體，就能正確顯示中文。
+Answer: B — CSV (Comma-Separated Values) is a plain text file that uses commas to separate fields. It can be read by any text editor, Excel, Google Sheets, or programming language — making it the most universal data format.
 
 ---
 
-## 🔗 下一步
+**2. In pandas, what does `df.groupby("product")["quantity"].sum()` do?**
 
-你現在已經會讀取資料、分析資料、甚至生成漂亮的圖表了！在最後一個模塊 **4.4：部署與發布** 中，我們將學習如何把你建立的網站或項目發布到網路上，讓全世界的人都能看到你的作品。這是把學習成果變成真實成就的最後一步！
+A. Deletes all product data
+B. Groups the data by product name, then calculates the total quantity for each group
+C. Concatenates all product names together
+D. Randomly shuffles the data
+
+Answer: B — `groupby("product")` splits the data into groups by product name (like sorting a deck of cards by suit), then `["quantity"].sum()` calculates the total of the quantity field for each group.
+
+---
+
+**3. Why do you need to configure fonts when generating charts with matplotlib?**
+
+A. Custom fonts make charts look prettier
+B. Without configuring the right font, non-ASCII characters on charts may show as garbled text or boxes
+C. The default font can't display numbers
+D. matplotlib only supports one specific font
+
+Answer: B — matplotlib's default font may not include all characters needed for your locale. If chart titles or labels appear as boxes or garbled text, you can fix this by setting `rcParams["font.sans-serif"]` to specify a font that includes the characters you need.
+
+---
+
+## 🔗 Next Steps
+
+You can now read data, analyze it, and even generate beautiful charts! In the final module, **4.4: Deployment and Publishing**, we'll learn how to publish your website or project to the internet so anyone in the world can see your work. This is the last step in turning your learning into real accomplishments!

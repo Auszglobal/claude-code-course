@@ -1,275 +1,275 @@
-# 模塊 2.2：文件讀取與編輯 — 讓 AI 幫你管理文件
+# Module 2.2: Reading and Editing Files -- Let AI Manage Your Files
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 讓 Claude Code 讀取任何文件的內容
-  - 讓 Claude Code 建立全新的文件
-  - 讓 Claude Code 修改現有文件的特定部分
-  - 理解什麼是「diff」（差異對比）
-  - 在接受修改前先檢查 Claude Code 做了什麼改動
+## Learning Objectives
+- After completing this lesson, you will be able to:
+  - Have Claude Code read the contents of any file
+  - Have Claude Code create brand new files
+  - Have Claude Code modify specific parts of existing files
+  - Understand what a "diff" (difference comparison) is
+  - Review what changes Claude Code made before accepting them
 
-## 📖 理論解釋
+## Theory
 
-### 為什麼文件操作這麼重要？
+### Why Are File Operations So Important?
 
-使用 Claude Code 最常做的事情就是處理文件。無論你是在寫網站、編輯文章、還是整理資料，最終都是在跟文件打交道。
+The most common thing you'll do with Claude Code is work with files. Whether you're building a website, editing an article, or organising data, it all comes down to working with files.
 
-Claude Code 有三個核心的文件操作工具：
+Claude Code has three core file operation tools:
 
-| 工具 | 功能 | 生活比喻 |
-|------|------|----------|
-| **Read**（讀取） | 查看文件的內容 | 打開一本書來閱讀 |
-| **Write**（寫入） | 建立一個全新的文件 | 拿一張白紙，從頭寫一份文件 |
-| **Edit**（編輯） | 修改文件的某一部分 | 用橡皮擦和鉛筆修改書中的某一段 |
+| Tool | Function | Real-Life Analogy |
+|------|----------|-------------------|
+| **Read** | View the contents of a file | Opening a book to read it |
+| **Write** | Create a brand new file | Taking a blank sheet of paper and writing a document from scratch |
+| **Edit** | Modify a specific part of a file | Using an eraser and pencil to revise a paragraph in a book |
 
-### Read — 讀取文件
+### Read -- Reading Files
 
-當你請 Claude Code「看一下某個文件」，它就會使用 Read 工具。這就像你對助理說：「幫我把那份報告拿過來看看。」
+When you ask Claude Code to "take a look at a file," it uses the Read tool. It's like telling your assistant: "Bring me that report so I can review it."
 
-Claude Code 會讀取文件的全部（或部分）內容，然後跟你討論。
+Claude Code will read all (or part) of the file's contents and then discuss it with you.
 
-### Write — 建立新文件
+### Write -- Creating New Files
 
-當你請 Claude Code「建立一個新文件」，它使用 Write 工具。這就像你對助理說：「幫我起草一份新的文件。」
+When you ask Claude Code to "create a new file," it uses the Write tool. It's like telling your assistant: "Draft a new document for me."
 
-Write 會從零開始建立文件。如果那個位置已經有同名文件，**它會覆蓋舊文件**，所以要小心！
+Write creates a file from scratch. If a file with the same name already exists at that location, **it will overwrite the old file**, so be careful!
 
-### Edit — 修改文件
+### Edit -- Modifying Files
 
-Edit 是最精細的工具。它不會重寫整個文件，而是只修改你要改的部分。
+Edit is the most precise tool. It doesn't rewrite the entire file -- it only changes the specific part you want modified.
 
-想像一份 100 頁的合約，你只需要改第 37 頁的一個日期。你不會重新列印整份合約，而是只改那一頁。Edit 做的就是這件事。
+Imagine a 100-page contract where you only need to change a date on page 37. You wouldn't reprint the entire contract -- you'd just change that one page. That's exactly what Edit does.
 
-### 什麼是 Diff（差異對比）？
+### What Is a Diff (Difference Comparison)?
 
-當 Claude Code 修改文件後，它會顯示一個「diff」— 也就是「修改前 vs 修改後」的對比。
+When Claude Code modifies a file, it shows you a "diff" -- a "before vs after" comparison.
 
 ```diff
-- 這是舊的內容（紅色，代表被刪除）
-+ 這是新的內容（綠色，代表被新增）
+- This is the old content (red, meaning deleted)
++ This is the new content (green, meaning added)
 ```
 
-Diff 就像合約修訂時用的紅線標記（redline）。你可以清楚看到什麼被刪了、什麼被加了、什麼沒動。
+A diff is like the redline markup used when revising contracts. You can clearly see what was removed, what was added, and what stayed the same.
 
-**重要：永遠在接受修改前先看 diff！** 就像簽合約前要先看修改了哪些條款一樣。
+**Important: Always review the diff before accepting changes!** Just like you'd read the revised terms before signing a contract.
 
-## 💻 代碼示例 1：讀取和建立文件
+## Code Example 1: Reading and Creating Files
 
-### 準備工作
+### Preparation
 
-先確保你在練習項目的資料夾中（延續模塊 2.1 的練習）：
+Make sure you're in the practice project folder (continuing from Module 2.1):
 
 ```bash
-# 進入你的練習項目
+# Navigate to your practice project
 cd ~/Desktop/my-first-project
 
-# 啟動 Claude Code
+# Launch Claude Code
 claude
 ```
 
-### 步驟一：建立一個文件
+### Step 1: Create a File
 
-在 Claude Code 中輸入：
-
-```
-請幫我建立一個文件叫 hello.txt，內容寫「你好，世界！這是我的第一個文件。」
-```
-
-### 預期輸出：
-
-📸 [你應該看到的畫面]
-```
-┌──────────────────────────────────────────────┐
-│ Claude Code                                  │
-│                                              │
-│ 我來建立 hello.txt 文件。                      │
-│                                              │
-│ ✓ 已建立：hello.txt                           │
-│                                              │
-│ 文件內容：                                    │
-│ 你好，世界！這是我的第一個文件。                  │
-└──────────────────────────────────────────────┘
-```
-
-### 步驟二：讀取剛才建立的文件
-
-現在輸入：
+Type the following in Claude Code:
 
 ```
-請讀取 hello.txt 的內容給我看
+Please create a file called hello.txt with the content "Hello, world! This is my first file."
 ```
 
-### 預期輸出：
+### Expected Output:
 
-Claude Code 會顯示文件的完整內容，並附上行號：
-
+[What you should see]
 ```
-1  你好，世界！這是我的第一個文件。
-```
-
-### 步驟三：建立一個多行文件
-
-試試建立一個更複雜的文件：
-
-```
-請建立一個 shopping-list.txt 文件，內容是一個購物清單，包含以下項目：
-1. 牛奶
-2. 雞蛋
-3. 麵包
-4. 蘋果
-5. 咖啡
++----------------------------------------------+
+| Claude Code                                  |
+|                                              |
+| I'll create the hello.txt file.              |
+|                                              |
+| Created: hello.txt                           |
+|                                              |
+| File contents:                               |
+| Hello, world! This is my first file.         |
++----------------------------------------------+
 ```
 
-### 預期輸出：
+### Step 2: Read the File You Just Created
 
-Claude Code 會建立一個格式整齊的購物清單文件。你的項目資料夾現在有：
+Now type:
+
+```
+Please read the contents of hello.txt and show me
+```
+
+### Expected Output:
+
+Claude Code will display the complete file contents with line numbers:
+
+```
+1  Hello, world! This is my first file.
+```
+
+### Step 3: Create a Multi-Line File
+
+Try creating a more complex file:
+
+```
+Please create a shopping-list.txt file with a shopping list containing the following items:
+1. Milk
+2. Eggs
+3. Bread
+4. Apples
+5. Coffee
+```
+
+### Expected Output:
+
+Claude Code will create a neatly formatted shopping list file. Your project folder now has:
 
 ```
 my-first-project/
-├── CLAUDE.md          （模塊 2.1 建立的）
-├── hello.txt          （剛剛建立的）
-└── shopping-list.txt  （剛剛建立的）
+├── CLAUDE.md          (created in Module 2.1)
+├── hello.txt          (just created)
+└── shopping-list.txt  (just created)
 ```
 
-## 💻 代碼示例 2：編輯現有文件
+## Code Example 2: Editing Existing Files
 
-### 步驟一：修改文件的特定內容
+### Step 1: Modify Specific Content in a File
 
-現在讓我們來修改 shopping-list.txt。在 Claude Code 中輸入：
-
-```
-請把 shopping-list.txt 中的「牛奶」改成「脫脂牛奶」，然後在清單最後加上「6. 巧克力」
-```
-
-### 預期輸出：
-
-Claude Code 會顯示修改的 diff（差異對比）：
-
-📸 [你應該看到的 diff 畫面]
-```
-┌──────────────────────────────────────────────┐
-│ Edit: shopping-list.txt                      │
-│                                              │
-│ - 1. 牛奶                                    │
-│ + 1. 脫脂牛奶                                 │
-│                                              │
-│   2. 雞蛋                                    │
-│   3. 麵包                                    │
-│   4. 蘋果                                    │
-│   5. 咖啡                                    │
-│ + 6. 巧克力                                   │
-│                                              │
-│ [接受 / 拒絕]                                 │
-└──────────────────────────────────────────────┘
-```
-
-這裡你可以看到：
-- **紅色（-）**：「1. 牛奶」被移除
-- **綠色（+）**：「1. 脫脂牛奶」被新增（替換）
-- **綠色（+）**：「6. 巧克力」被新增在最後
-- **沒有符號的行**：沒有被修改
-
-### 步驟二：接受或拒絕修改
-
-Claude Code 會等你確認。你有幾個選擇：
-
-| 操作 | 說明 |
-|------|------|
-| **接受**（按 Y 或 Enter） | 確認修改，文件會被更新 |
-| **拒絕**（按 N） | 取消修改，文件保持原樣 |
-
-> 💡 **重要提醒**：養成習慣 — 永遠先看 diff，再決定是否接受。這是你作為「老闆」的最後把關！Claude Code 是助理，但最終決定權在你手上。
-
-### 步驟三：驗證修改結果
-
-接受修改後，輸入：
+Now let's modify shopping-list.txt. Type the following in Claude Code:
 
 ```
-請讀取 shopping-list.txt 的最新內容
+Please change "Milk" to "Skim milk" in shopping-list.txt, then add "6. Chocolate" at the end of the list
 ```
 
-你應該看到更新後的完整清單：
+### Expected Output:
 
+Claude Code will show the diff (difference comparison) of the changes:
+
+[The diff you should see]
 ```
-1. 脫脂牛奶
-2. 雞蛋
-3. 麵包
-4. 蘋果
-5. 咖啡
-6. 巧克力
-```
-
-### 建立和編輯一個 README 文件
-
-讓我們做一個更貼近真實場景的練習。輸入：
-
-```
-請幫我建立一個 README.md 文件，介紹這個項目。標題是「我的練習項目」，說明這是一個用來學習 Claude Code 的練習空間。列出目前資料夾裡的所有文件。
-```
-
-Claude Code 會讀取目前的文件結構，然後建立一個 README.md。接著你可以說：
-
-```
-請在 README.md 中加入一個「學習進度」的章節，寫上：
-- [x] 模塊 2.1：學會了 CLAUDE.md
-- [x] 模塊 2.2：學會了文件操作
-- [ ] 模塊 2.3：搜尋與導航（進行中）
++----------------------------------------------+
+| Edit: shopping-list.txt                      |
+|                                              |
+| - 1. Milk                                   |
+| + 1. Skim milk                               |
+|                                              |
+|   2. Eggs                                    |
+|   3. Bread                                   |
+|   4. Apples                                  |
+|   5. Coffee                                  |
+| + 6. Chocolate                               |
+|                                              |
+| [Accept / Reject]                            |
++----------------------------------------------+
 ```
 
-Claude Code 會使用 Edit 工具，只在 README.md 中新增這個章節，不會動到其他已有的內容。
+Here you can see:
+- **Red (-)**: "1. Milk" was removed
+- **Green (+)**: "1. Skim milk" was added (as a replacement)
+- **Green (+)**: "6. Chocolate" was added at the end
+- **Lines without symbols**: Were not modified
 
-## ✍️ 動手練習
+### Step 2: Accept or Reject the Changes
 
-### 練習 1：文件操作三步曲
+Claude Code will wait for your confirmation. You have a few options:
 
-在你的練習項目中完成以下三步：
+| Action | Description |
+|--------|-------------|
+| **Accept** (press Y or Enter) | Confirm the changes; the file will be updated |
+| **Reject** (press N) | Cancel the changes; the file stays as is |
 
-1. **建立**：請 Claude Code 建立一個 `notes.txt`，寫上今天學到的三件事
-2. **讀取**：請 Claude Code 讀取 `notes.txt` 確認內容正確
-3. **編輯**：請 Claude Code 在 `notes.txt` 最後加上一行：「明天要繼續學習模塊 2.3！」
+> **Important reminder**: Build the habit -- always review the diff before deciding whether to accept. This is your final check as the "boss"! Claude Code is the assistant, but the final decision is yours.
 
-> 💡 **提示**：你可以用自然語言描述你要做的事，不需要記任何指令。例如：「幫我在 notes.txt 後面加一行...」
+### Step 3: Verify the Changes
 
-### 練習 2：建立一個簡單的個人頁面
+After accepting the changes, type:
 
-請 Claude Code 幫你做以下事情：
+```
+Please read the latest contents of shopping-list.txt
+```
 
-1. 建立一個 `index.html` 文件，內容是一個簡單的 HTML 頁面，標題是你的名字
-2. 讀取這個文件，檢查內容是否正確
-3. 修改頁面，加上你的個人簡介（一兩句話就好）
+You should see the updated full list:
 
-觀察每一步 Claude Code 使用的是 Write 還是 Edit。
+```
+1. Skim milk
+2. Eggs
+3. Bread
+4. Apples
+5. Coffee
+6. Chocolate
+```
 
-> 💡 **提示**：第 1 步建立新文件會用 Write，第 3 步修改現有文件會用 Edit。注意看 diff 的顯示！
+### Creating and Editing a README File
 
-## ❓ 小測驗（3 條題目）
+Let's do an exercise that's closer to a real-world scenario. Type:
 
-1. Claude Code 的 Write 工具和 Edit 工具有什麼區別？
-   A. 沒有區別，功能完全一樣
-   B. Write 建立全新文件或完整覆蓋，Edit 只修改文件的特定部分
-   C. Write 只能寫文字文件，Edit 可以寫任何文件
-   D. Write 比 Edit 更快
+```
+Please create a README.md file introducing this project. The title is "My Practice Project," and it explains this is a practice space for learning Claude Code. List all the files currently in the folder.
+```
 
-   答案：B — Write 用於從零建立新文件（或完整覆蓋現有文件），而 Edit 用於精確修改文件的特定部分，不影響其他內容。Edit 就像修改合約的某一條款，而 Write 像重新起草整份合約。
+Claude Code will read the current file structure and then create a README.md. Next, you can say:
 
-2. 什麼是 diff？
-   A. 一種程式語言
-   B. 文件修改前後的差異對比，顯示什麼被新增和刪除
-   C. Claude Code 的一個設定選項
-   D. 一種文件格式
+```
+Please add a "Learning Progress" section to README.md with the following:
+- [x] Module 2.1: Learned about CLAUDE.md
+- [x] Module 2.2: Learned about file operations
+- [ ] Module 2.3: Search and navigation (in progress)
+```
 
-   答案：B — Diff 是修改前後的差異對比。紅色（-）代表被刪除的內容，綠色（+）代表被新增的內容。它讓你在接受修改前清楚看到 Claude Code 做了什麼改動。
+Claude Code will use the Edit tool to add only this section to README.md, without touching any existing content.
 
-3. 在 Claude Code 顯示 diff 後，你應該怎麼做？
-   A. 直接接受，因為 AI 不會出錯
-   B. 直接拒絕，然後自己手動修改
-   C. 先檢查 diff 的內容，確認修改正確後再接受
-   D. 關閉 Claude Code 重新開始
+## Hands-On Practice
 
-   答案：C — 養成好習慣，永遠先檢查 diff 再做決定。Claude Code 非常聰明，但偶爾也可能誤解你的意思。你作為項目的負責人，最終決定權在你手上。先看再確認，這是最安全的做法。
+### Exercise 1: The Three-Step File Operation
 
-## 🔗 下一步
+Complete the following three steps in your practice project:
 
-你已經掌握了 Claude Code 最核心的文件操作技能！現在你可以讓 AI 幫你讀取、建立和修改任何文件。
+1. **Create**: Ask Claude Code to create a `notes.txt` file with three things you learned today
+2. **Read**: Ask Claude Code to read `notes.txt` to confirm the content is correct
+3. **Edit**: Ask Claude Code to add a line at the end of `notes.txt`: "Tomorrow I'll continue with Module 2.3!"
 
-在下一個模塊 **2.3：搜尋與導航代碼庫** 中，我們將學習如何在一大堆文件中快速找到你需要的內容。當你的項目有幾十甚至幾百個文件時，搜尋功能就變得至關重要了。
+> Tip: You can describe what you want to do in natural language -- no need to memorise any commands. For example: "Add a line at the end of notes.txt..."
+
+### Exercise 2: Create a Simple Personal Page
+
+Ask Claude Code to help you with the following:
+
+1. Create an `index.html` file with a simple HTML page -- the title should be your name
+2. Read the file and check if the content is correct
+3. Modify the page to add a brief personal introduction (a sentence or two is fine)
+
+Observe whether Claude Code uses Write or Edit at each step.
+
+> Tip: Step 1 creates a new file and will use Write. Step 3 modifies an existing file and will use Edit. Pay attention to the diff display!
+
+## Quiz (3 Questions)
+
+1. What is the difference between Claude Code's Write tool and Edit tool?
+   A. No difference; they're functionally identical
+   B. Write creates a brand new file or overwrites completely; Edit only modifies specific parts of a file
+   C. Write can only create text files; Edit can create any file type
+   D. Write is faster than Edit
+
+   Answer: B -- Write is used to create new files from scratch (or completely overwrite existing files), while Edit is used to precisely modify specific parts of a file without affecting the rest. Edit is like changing one clause in a contract, while Write is like drafting the entire contract from scratch.
+
+2. What is a diff?
+   A. A programming language
+   B. A before-and-after comparison showing what was added and deleted in a file
+   C. A Claude Code configuration option
+   D. A file format
+
+   Answer: B -- A diff is a before-and-after comparison of changes. Red (-) represents deleted content, and green (+) represents added content. It lets you clearly see what Claude Code changed before you accept the modifications.
+
+3. After Claude Code shows you a diff, what should you do?
+   A. Accept it immediately, because the AI never makes mistakes
+   B. Reject it immediately and make the changes manually
+   C. Review the diff contents first, then accept only after confirming the changes are correct
+   D. Close Claude Code and start over
+
+   Answer: C -- Build good habits: always review the diff before making a decision. Claude Code is very smart, but it can occasionally misunderstand your intent. As the project owner, the final decision is yours. Look first, then confirm -- that's the safest approach.
+
+## Next Steps
+
+You've now mastered Claude Code's core file operation skills! You can have the AI read, create, and modify any file.
+
+In the next module, **2.3: Searching and Navigating the Codebase**, we'll learn how to quickly find what you need among a large number of files. When your project has dozens or even hundreds of files, search capabilities become essential.

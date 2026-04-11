@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Code 完全指南</title>
+<title>Claude Code Complete Guide</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
@@ -669,11 +669,11 @@ body {
 <!-- Password Gate -->
 <div id="auth-gate">
   <div class="auth-box">
-    <h1>Claude Code 完全指南</h1>
-    <p>請輸入帳號和密碼以繼續</p>
-    <input type="text" id="auth-user" placeholder="帳號 (Username)" autocomplete="username">
-    <input type="password" id="auth-pass" placeholder="密碼 (Password)" autocomplete="current-password">
-    <button onclick="tryLogin()">登入</button>
+    <h1>Claude Code Complete Guide</h1>
+    <p>Please enter your username and password to continue</p>
+    <input type="text" id="auth-user" placeholder="Username" autocomplete="username">
+    <input type="password" id="auth-pass" placeholder="Password" autocomplete="current-password">
+    <button onclick="tryLogin()">Login</button>
     <div class="auth-error" id="auth-error"></div>
   </div>
 </div>
@@ -718,14 +718,14 @@ function updateProfileUI() {
       avatarEl.textContent = currentUser.name.charAt(0).toUpperCase();
     }
     avatarEl.onclick = () => document.getElementById('avatar-upload').click();
-    avatarEl.title = '點擊更換頭像';
+    avatarEl.title = 'Click to change avatar';
     avatarEl.style.cursor = 'pointer';
     document.getElementById('profile-name-display').textContent = currentUser.name;
     document.getElementById('profile-role-display').textContent = currentUser.role;
     el.style.display = 'flex';
-    // Show admin button for 管理員
+    // Show admin button for Admin
     const adminBtn = document.getElementById('admin-add-user-btn');
-    if (adminBtn) adminBtn.style.display = currentUser.role === '管理員' ? 'block' : 'none';
+    if (adminBtn) adminBtn.style.display = currentUser.role === 'Admin' ? 'block' : 'none';
   }
   loadProgress();
   updateProgressUI();
@@ -754,23 +754,23 @@ function handleAvatarUpload(e) {
 }
 
 async function addNewUser() {
-  const name = prompt('新用戶名稱 (Display Name):');
+  const name = prompt('Display Name:');
   if (!name) return;
-  const username = prompt('登入帳號 (Username):');
+  const username = prompt('Username:');
   if (!username) return;
-  const password = prompt('登入密碼 (Password):');
+  const password = prompt('Password:');
   if (!password) return;
-  const role = prompt('角色 (例如: 學員, 管理員):', '學員');
+  const role = prompt('Role (e.g. Student, Admin):', 'Student');
   if (!role) return;
   const hash = await sha256(username.trim().toLowerCase() + ':' + password);
   if (USERS.find(u => u.hash === hash)) {
-    alert('此帳號已存在！');
+    alert('This account already exists!');
     return;
   }
   const entry = JSON.stringify({ hash, name: name.trim(), role: role.trim() });
   // Copy to clipboard for easy pasting
   try { await navigator.clipboard.writeText(entry); } catch {}
-  alert('新用戶資料已複製到剪貼板！\n\n' + entry + '\n\n請將此行交俾管理員加入 users.json 並 push 到 GitHub。');
+  alert('New user data copied to clipboard!\n\n' + entry + '\n\nPlease add this entry to users.json and push to GitHub.');
 }
 
 function logout() {
@@ -793,7 +793,7 @@ async function tryLogin() {
   if (found) {
     setCurrentUser({ name: found.name, role: found.role, uid: u });
   } else {
-    document.getElementById('auth-error').textContent = '帳號或密碼錯誤，請重試';
+    document.getElementById('auth-error').textContent = 'Incorrect username or password. Please try again.';
     document.getElementById('auth-pass').value = '';
   }
 }
@@ -812,13 +812,13 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <h1>Claude Code 完全指南</h1>
-    <p>從零開始的 AI 編程之旅</p>
+    <h1>Claude Code Complete Guide</h1>
+    <p>Your AI-Powered Programming Journey from Zero to Hero</p>
   </div>
 
   <div class="progress-container">
     <div class="progress-label">
-      <span>學習進度</span>
+      <span>Progress</span>
       <span id="progress-text">0 / 35</span>
     </div>
     <div class="progress-bar-track">
@@ -835,10 +835,10 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
       <span class="profile-role" id="profile-role-display"></span>
       <span class="profile-progress" id="profile-progress-display"></span>
     </div>
-    <button class="logout-btn" onclick="logout()">登出</button>
+    <button class="logout-btn" onclick="logout()">Logout</button>
     <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
   </div>
-  <button id="admin-add-user-btn" style="display:none;" onclick="addNewUser()">+ 新增用戶</button>
+  <button id="admin-add-user-btn" style="display:none;" onclick="addNewUser()">+ Add User</button>
 </aside>
 
 <!-- Overlay -->
@@ -849,10 +849,10 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
   <header class="topbar">
     <div style="display:flex;align-items:center;gap:12px">
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">&#9776;</button>
-      <div class="breadcrumb" id="breadcrumb">首頁</div>
+      <div class="breadcrumb" id="breadcrumb">Home</div>
     </div>
     <div class="topbar-right">
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="切換深色/淺色模式">&#9790;</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">&#9790;</button>
     </div>
   </header>
 
@@ -860,11 +860,11 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
     <div id="content"></div>
     <div class="page-nav" id="page-nav" style="display:none">
       <div class="page-nav-btn" id="prev-btn">
-        <span class="nav-label">&#8592; 上一課</span>
+        <span class="nav-label">&#8592; Previous</span>
         <span class="nav-title" id="prev-title"></span>
       </div>
       <div class="page-nav-btn next" id="next-btn">
-        <span class="nav-label">下一課 &#8594;</span>
+        <span class="nav-label">Next &#8594;</span>
         <span class="nav-title" id="next-title"></span>
       </div>
     </div>
@@ -877,108 +877,108 @@ const PHASES = [
   {
     id: 'phase-1',
     label: 'Phase 1',
-    title: '入門篇',
+    title: 'Getting Started',
     icon: '&#x1F680;',
-    desc: '認識 Claude Code 並完成安裝',
+    desc: 'Introduction to Claude Code and installation',
     modules: [
-      { id: '1.1', file: 'output/phase-1/module-1.1-what-is-claude-code.md', title: '什麼是 Claude Code？' },
-      { id: '1.2', file: 'output/phase-1/module-1.2-installation.md', title: '安裝 Claude Code' },
-      { id: '1.3', file: 'output/phase-1/module-1.3-first-command.md', title: '第一個指令' },
-      { id: '1.4', file: 'output/phase-1/module-1.4-basic-navigation.md', title: '基本導航' },
+      { id: '1.1', file: 'output/phase-1/module-1.1-what-is-claude-code.md', title: 'What Is Claude Code?' },
+      { id: '1.2', file: 'output/phase-1/module-1.2-installation.md', title: 'Installing Claude Code' },
+      { id: '1.3', file: 'output/phase-1/module-1.3-first-command.md', title: 'Your First Command' },
+      { id: '1.4', file: 'output/phase-1/module-1.4-basic-navigation.md', title: 'Basic Navigation' },
     ]
   },
   {
     id: 'phase-2',
     label: 'Phase 2',
-    title: '基礎篇',
+    title: 'Fundamentals',
     icon: '&#x1F4DA;',
-    desc: '掌握核心操作與文件管理',
+    desc: 'Core operations and file management',
     modules: [
       { id: '2.1', file: 'output/phase-2/module-2.1-claude-md.md', title: 'CLAUDE.md' },
-      { id: '2.2', file: 'output/phase-2/module-2.2-file-operations.md', title: '文件讀取與編輯' },
-      { id: '2.3', file: 'output/phase-2/module-2.3-search-navigation.md', title: '搜尋與導航' },
-      { id: '2.4', file: 'output/phase-2/module-2.4-git-basics.md', title: 'Git 基礎' },
+      { id: '2.2', file: 'output/phase-2/module-2.2-file-operations.md', title: 'Reading & Editing Files' },
+      { id: '2.3', file: 'output/phase-2/module-2.3-search-navigation.md', title: 'Search & Navigation' },
+      { id: '2.4', file: 'output/phase-2/module-2.4-git-basics.md', title: 'Git Basics' },
     ]
   },
   {
     id: 'phase-3',
     label: 'Phase 3',
-    title: '進階篇',
+    title: 'Intermediate',
     icon: '&#x2699;',
-    desc: '多文件操作與自動化',
+    desc: 'Multi-file operations and automation',
     modules: [
-      { id: '3.1', file: 'output/phase-3/module-3.1-multi-file-refactoring.md', title: '多文件操作' },
-      { id: '3.2', file: 'output/phase-3/module-3.2-automation-scripts.md', title: '自動化腳本' },
-      { id: '3.3', file: 'output/phase-3/module-3.3-debugging.md', title: '調試與修復' },
-      { id: '3.4', file: 'output/phase-3/module-3.4-testing.md', title: '測試與品質' },
+      { id: '3.1', file: 'output/phase-3/module-3.1-multi-file-refactoring.md', title: 'Multi-File Operations' },
+      { id: '3.2', file: 'output/phase-3/module-3.2-automation-scripts.md', title: 'Automation Scripts' },
+      { id: '3.3', file: 'output/phase-3/module-3.3-debugging.md', title: 'Debugging & Fixing' },
+      { id: '3.4', file: 'output/phase-3/module-3.4-testing.md', title: 'Testing & Quality' },
     ]
   },
   {
     id: 'phase-4',
     label: 'Phase 4',
-    title: '實戰篇',
+    title: 'Real Projects',
     icon: '&#x1F3AF;',
-    desc: '真實項目開發與部署',
+    desc: 'Real-world project development and deployment',
     modules: [
-      { id: '4.1', file: 'output/phase-4/module-4.1-web-project.md', title: '網頁項目' },
-      { id: '4.2', file: 'output/phase-4/module-4.2-api-integration.md', title: 'API 整合' },
-      { id: '4.3', file: 'output/phase-4/module-4.3-data-processing.md', title: '數據處理' },
-      { id: '4.4', file: 'output/phase-4/module-4.4-deployment.md', title: '部署與發布' },
+      { id: '4.1', file: 'output/phase-4/module-4.1-web-project.md', title: 'Web Projects' },
+      { id: '4.2', file: 'output/phase-4/module-4.2-api-integration.md', title: 'API Integration' },
+      { id: '4.3', file: 'output/phase-4/module-4.3-data-processing.md', title: 'Data Processing' },
+      { id: '4.4', file: 'output/phase-4/module-4.4-deployment.md', title: 'Deployment & Release' },
     ]
   },
   {
     id: 'phase-5',
     label: 'Phase 5',
-    title: '高級篇',
+    title: 'Advanced',
     icon: '&#x1F451;',
-    desc: 'MCP、工作流與團隊協作',
+    desc: 'MCP, workflows, and team collaboration',
     modules: [
-      { id: '5.1', file: 'output/phase-5/module-5.1-mcp-servers.md', title: 'MCP 伺服器' },
-      { id: '5.2', file: 'output/phase-5/module-5.2-custom-workflows.md', title: '自定義工作流' },
-      { id: '5.3', file: 'output/phase-5/module-5.3-team-collaboration.md', title: '團隊協作' },
-      { id: '5.4', file: 'output/phase-5/module-5.4-capstone-project.md', title: '綜合實戰' },
+      { id: '5.1', file: 'output/phase-5/module-5.1-mcp-servers.md', title: 'MCP Servers' },
+      { id: '5.2', file: 'output/phase-5/module-5.2-custom-workflows.md', title: 'Custom Workflows' },
+      { id: '5.3', file: 'output/phase-5/module-5.3-team-collaboration.md', title: 'Team Collaboration' },
+      { id: '5.4', file: 'output/phase-5/module-5.4-capstone-project.md', title: 'Capstone Project' },
     ]
   },
   {
     id: 'phase-6',
     label: 'Phase 6',
-    title: 'Cowork 攻略',
+    title: 'Cowork Guide',
     icon: '&#x1F916;',
-    desc: 'Claude Cowork 完全攻略 — 從聊天助手到數位員工',
+    desc: 'The complete Claude Cowork guide — from chat assistant to digital employee',
     modules: [
-      { id: '6.1', file: 'output/phase-6/module-6.1-cowork-overview.md', title: 'Cowork 是什麼？' },
-      { id: '6.2', file: 'output/phase-6/module-6.2-cowork-setup.md', title: '環境設定與沙盒' },
-      { id: '6.3', file: 'output/phase-6/module-6.3-project-ecosystem.md', title: '專案生態與 Business Brain' },
-      { id: '6.4', file: 'output/phase-6/module-6.4-connectors-mcp.md', title: 'Connectors 與 MCP' },
-      { id: '6.5', file: 'output/phase-6/module-6.5-automation-scheduling.md', title: '自動化與排程' },
+      { id: '6.1', file: 'output/phase-6/module-6.1-cowork-overview.md', title: 'What Is Cowork?' },
+      { id: '6.2', file: 'output/phase-6/module-6.2-cowork-setup.md', title: 'Setup & Sandbox' },
+      { id: '6.3', file: 'output/phase-6/module-6.3-project-ecosystem.md', title: 'Project Ecosystem & Business Brain' },
+      { id: '6.4', file: 'output/phase-6/module-6.4-connectors-mcp.md', title: 'Connectors & MCP' },
+      { id: '6.5', file: 'output/phase-6/module-6.5-automation-scheduling.md', title: 'Automation & Scheduling' },
     ]
   },
   {
     id: 'phase-7',
     label: 'Phase 7',
-    title: '第三方整合',
+    title: 'Integrations',
     icon: '&#x1F517;',
-    desc: 'GitHub、Google、Slack、AWS 等第三方工具整合',
+    desc: 'Third-party integrations — GitHub, Google, Slack, AWS, and more',
     modules: [
-      { id: '7.1', file: 'output/phase-7/module-7.1-github-integration.md', title: 'GitHub 整合' },
-      { id: '7.2', file: 'output/phase-7/module-7.2-google-ecosystem.md', title: 'Google 生態系統' },
-      { id: '7.3', file: 'output/phase-7/module-7.3-slack-notion.md', title: 'Slack 與 Notion' },
-      { id: '7.4', file: 'output/phase-7/module-7.4-aws-deployment.md', title: 'AWS 與雲端部署' },
-      { id: '7.5', file: 'output/phase-7/module-7.5-integration-map.md', title: '整合全景圖' },
+      { id: '7.1', file: 'output/phase-7/module-7.1-github-integration.md', title: 'GitHub Integration' },
+      { id: '7.2', file: 'output/phase-7/module-7.2-google-ecosystem.md', title: 'Google Ecosystem' },
+      { id: '7.3', file: 'output/phase-7/module-7.3-slack-notion.md', title: 'Slack & Notion' },
+      { id: '7.4', file: 'output/phase-7/module-7.4-aws-deployment.md', title: 'AWS & Cloud Deployment' },
+      { id: '7.5', file: 'output/phase-7/module-7.5-integration-map.md', title: 'Integration Map' },
     ]
   },
   {
     id: 'phase-bonus',
     label: 'Bonus',
-    title: 'Skills 專題',
+    title: 'Skills Deep Dive',
     icon: '&#x2B50;',
-    desc: '擴展 Claude Code 能力',
+    desc: 'Extending Claude Code capabilities',
     modules: [
-      { id: 'B1', file: 'output/phase-bonus/module-B1-what-are-skills.md', title: 'Skills 是什麼' },
-      { id: 'B2', file: 'output/phase-bonus/module-B2-installing-skills.md', title: '安裝 Skills' },
-      { id: 'B3', file: 'output/phase-bonus/module-B3-top-10-skills.md', title: '十大 Skills' },
-      { id: 'B4', file: 'output/phase-bonus/module-B4-build-your-own-skill.md', title: '打造你的 Skill' },
-      { id: 'B5', file: 'output/phase-bonus/module-B5-skills-for-ausz.md', title: 'AUSZ 專屬 Skills' },
+      { id: 'B1', file: 'output/phase-bonus/module-B1-what-are-skills.md', title: 'What Are Skills?' },
+      { id: 'B2', file: 'output/phase-bonus/module-B2-installing-skills.md', title: 'Installing Skills' },
+      { id: 'B3', file: 'output/phase-bonus/module-B3-top-10-skills.md', title: 'Top 10 Skills' },
+      { id: 'B4', file: 'output/phase-bonus/module-B4-build-your-own-skill.md', title: 'Build Your Own Skill' },
+      { id: 'B5', file: 'output/phase-bonus/module-B5-skills-for-ausz.md', title: 'AUSZ Custom Skills' },
     ]
   },
 ];
@@ -1015,7 +1015,7 @@ function updateProgressUI() {
   document.getElementById('progress-bar').style.width = pct + '%';
   document.getElementById('progress-text').textContent = count + ' / ' + ALL_MODULES.length;
   const profileProg = document.getElementById('profile-progress-display');
-  if (profileProg) profileProg.textContent = `已完成 ${count}/${ALL_MODULES.length} (${pct}%)`;
+  if (profileProg) profileProg.textContent = `Completed ${count}/${ALL_MODULES.length} (${pct}%)`;
   // Update checkmarks
   document.querySelectorAll('.module-link .check').forEach(el => {
     const mid = el.dataset.moduleId;
@@ -1107,7 +1107,7 @@ async function loadModule(moduleId, filePath) {
 
   // Show loading
   const contentEl = document.getElementById('content');
-  contentEl.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在載入課程內容...</p></div>';
+  contentEl.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Loading course content...</p></div>';
   document.getElementById('page-nav').style.display = 'none';
 
   try {
@@ -1134,14 +1134,14 @@ async function loadModule(moduleId, filePath) {
 
   } catch (err) {
     contentEl.innerHTML = `<div class="error-msg">
-      <strong>無法載入模塊文件</strong><br><br>
-      文件路徑: <code>${filePath}</code><br>
-      錯誤: ${err.message}<br><br>
-      <strong>提示：</strong>如果你是用 <code>file://</code> 協議打開此頁面，<br>
-      某些瀏覽器會阻擋本地文件讀取。請嘗試以下方法：<br><br>
+      <strong>Unable to load module file</strong><br><br>
+      File path: <code>${filePath}</code><br>
+      Error: ${err.message}<br><br>
+      <strong>Tip:</strong> If you opened this page using the <code>file://</code> protocol,<br>
+      some browsers block local file access. Try the following:<br><br>
       <code>cd ${filePath.split('/output/')[0] || '.'}</code><br>
       <code>python -m http.server 8080</code><br><br>
-      然後在瀏覽器打開 <code>http://localhost:8080/index.html</code>
+      Then open <code>http://localhost:8080/index.html</code> in your browser.
     </div>`;
     document.getElementById('page-nav').style.display = 'none';
   }
@@ -1182,7 +1182,7 @@ function showPageNav(moduleId) {
 function showWelcome() {
   currentModuleId = null;
   document.querySelectorAll('.module-link').forEach(el => el.classList.remove('active'));
-  document.getElementById('breadcrumb').innerHTML = '首頁';
+  document.getElementById('breadcrumb').innerHTML = 'Home';
   document.getElementById('page-nav').style.display = 'none';
   history.replaceState(null, '', window.location.pathname);
 
@@ -1192,14 +1192,14 @@ function showWelcome() {
     cards += `<div class="phase-card" onclick="loadModule('${first.id}','${first.file}')">
       <div class="card-icon">${phase.icon}</div>
       <h3>${phase.label} &mdash; ${phase.title}</h3>
-      <p>${phase.modules.length} 個模塊 &middot; ${phase.desc}</p>
+      <p>${phase.modules.length} modules &middot; ${phase.desc}</p>
     </div>`;
   });
 
   document.getElementById('content').innerHTML = `<div class="welcome">
     <span class="welcome-icon">&#x1F4BB;</span>
-    <h2>Claude Code 完全指南</h2>
-    <p>從零基礎開始，一步步學會使用 Claude Code 進行 AI 輔助編程。<br>共 ${ALL_MODULES.length} 個模塊，涵蓋從安裝到實戰的完整學習路徑。</p>
+    <h2>Claude Code Complete Guide</h2>
+    <p>Learn AI-powered programming with Claude Code, step by step from zero.<br>${ALL_MODULES.length} modules covering the complete learning path from installation to real-world projects.</p>
     <div class="phase-cards">${cards}</div>
   </div>`;
 }

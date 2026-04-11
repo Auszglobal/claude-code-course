@@ -1,47 +1,47 @@
-# 6.1 Claude Cowork 是什麼？
+# 6.1 What Is Claude Cowork?
 
-> 本課內容參考自 BlockTempo 文章《Claude Cowork 完全攻略》
+> This lesson references the BlockTempo article "The Complete Guide to Claude Cowork"
 
 ## Chat vs Code vs Cowork
 
-Claude 產品線有三個核心形態，各有不同定位：
+Claude's product line has three core forms, each with a different purpose:
 
-| 產品 | 角色 | 適合誰 |
-|------|------|--------|
-| **Claude Chat** | 聊天助手 | 所有人 — 你輸入 prompt，它給出回答。你始終在對話中參與 |
-| **Claude Code** | 開發者工具 | 工程師 — 在終端執行，直接寫程式碼、執行指令、管理 Git |
-| **Claude Cowork** | 數位員工 | 所有人 — 你交代任務，它自動拆解、執行、交付成果 |
+| Product | Role | Who It's For |
+|---------|------|--------------|
+| **Claude Chat** | Chat assistant | Everyone — you type a prompt, it gives a response. You stay involved in the conversation |
+| **Claude Code** | Developer tool | Engineers — runs in the terminal, directly writes code, executes commands, manages Git |
+| **Claude Cowork** | Digital employee | Everyone — you assign a task, it breaks it down, executes it, and delivers results |
 
-### 關鍵區別
+### Key Differences
 
-- **Chat 是對話** — 你問它答，你始終在「環路中」
-- **Code 是工具** — 給「原始智慧」套上的鋼鐵俠戰甲，在終端和 IDE 中運作
-- **Cowork 是員工** — 你委派任務，它自主完成，結果直接放進你的資料夾
+- **Chat is a conversation** — you ask, it answers, and you stay "in the loop"
+- **Code is a tool** — Iron Man armor fitted over "raw intelligence," operating in the terminal and IDE
+- **Cowork is an employee** — you delegate tasks, it completes them autonomously, and results go straight into your folder
 
-> 一旦你理解這個區別，你看待 Cowork 的方式就會徹底改變。
+> Once you understand this distinction, the way you think about Cowork changes completely.
 
-## Cowork 的執行模式
+## How Cowork Executes
 
-Cowork 底層使用和 Claude Code 一樣的自動執行引擎，但提供了面向非技術使用者的介面：
+Under the hood, Cowork uses the same auto-execution engine as Claude Code, but provides a non-technical user-facing interface:
 
-1. 你交代一個任務
-2. Cowork 自動拆解成子任務
-3. 在本地拉起虛擬機器環境
-4. 可能同時排程多個並行子代理
-5. 把最終成果直接放進你的資料夾
+1. You assign a task
+2. Cowork automatically breaks it into subtasks
+3. It spins up a local virtual machine environment
+4. It may schedule multiple parallel sub-agents simultaneously
+5. It places the final output directly in your folder
 
-## 我們課程的定位
+## Where This Course Fits In
 
-本課程（Claude Code 完全指南）專注於 **Claude Code** — 開發者工具。但理解 Cowork 有助你：
+This course (The Complete Guide to Claude Code) focuses on **Claude Code** — the developer tool. But understanding Cowork helps you:
 
-- 知道何時用 Code、何時用 Cowork
-- 理解兩者共享的底層架構（MCP、Skills 等）
-- 為非技術團隊成員推薦合適的工具
+- Know when to use Code vs Cowork
+- Understand the shared underlying architecture (MCP, Skills, etc.)
+- Recommend the right tool for non-technical team members
 
 ---
 
-## 小測驗
+## Quiz
 
-1. Claude Chat、Code、Cowork 三者最核心的區別是什麼？
-2. 什麼類型的任務更適合用 Cowork 而非 Code？
-3. Cowork 的「並行子代理」概念，在 Claude Code 中有什麼對應？
+1. What is the core difference between Claude Chat, Code, and Cowork?
+2. What types of tasks are better suited for Cowork rather than Code?
+3. How does Cowork's "parallel sub-agents" concept map to something in Claude Code?

@@ -1,17 +1,17 @@
-# 7.3 Slack 與 Notion — 團隊協作整合
+# 7.3 Slack and Notion — Team Collaboration Integration
 
-## Slack — 即時通訊與通知
+## Slack — Real-Time Messaging and Notifications
 
-### 為什麼整合 Slack？
+### Why Integrate Slack?
 
-Slack 是很多團隊的通訊中心。Claude 可以：
-- 自動發送任務完成通知
-- 讀取和回覆頻道訊息
-- 從 Slack 訊息觸發工作流
+Slack is the communication hub for many teams. Claude can:
+- Automatically send task completion notifications
+- Read and reply to channel messages
+- Trigger workflows from Slack messages
 
-### Claude Code 方式：Webhook
+### Claude Code Approach: Webhook
 
-最簡單的整合 — 使用 Slack Incoming Webhook：
+The simplest integration — using a Slack Incoming Webhook:
 
 ```python
 import requests
@@ -25,40 +25,40 @@ def notify_slack(message):
         "icon_emoji": ":robot_face:"
     })
 
-# 使用範例
-notify_slack("發票處理完成 - 共 15 張，總金額 $4,520")
+# Usage example
+notify_slack("Invoice processing complete - 15 invoices, total $4,520")
 ```
 
-### Claude Code 方式：Slack API
+### Claude Code Approach: Slack API
 
-更進階的操作 — 讀取訊息、回覆、管理頻道：
+For more advanced operations — reading messages, replying, managing channels:
 
 ```python
 from slack_sdk import WebClient
 
 client = WebClient(token="xoxb-your-token")
 
-# 發送訊息
+# Send a message
 client.chat_postMessage(
     channel="#operations",
-    text="今日預約總數：23 單"
+    text="Today's booking total: 23"
 )
 
-# 讀取頻道訊息
+# Read channel messages
 response = client.conversations_history(channel="C01234567")
 messages = response['messages']
 ```
 
-### Cowork 方式
+### Cowork Approach
 
-直接連接 Slack connector：
+Connect the Slack connector directly:
 ```
-"讀取 #general 頻道的最近 10 條訊息，整理成摘要"
+"Read the last 10 messages in #general and summarize them"
 ```
 
-### MCP 整合
+### MCP Integration
 
-Claude Code 可以透過 Slack MCP server 實現更深度的整合：
+Claude Code can achieve deeper integration through a Slack MCP server:
 
 ```json
 {
@@ -76,16 +76,16 @@ Claude Code 可以透過 Slack MCP server 實現更深度的整合：
 
 ---
 
-## Notion — 知識庫與專案管理
+## Notion — Knowledge Base and Project Management
 
-### 為什麼整合 Notion？
+### Why Integrate Notion?
 
-Notion 是很多團隊的知識庫和專案管理工具。Claude 可以：
-- 自動建立和更新頁面
-- 讀取資料庫內容
-- 將處理結果寫入 Notion
+Notion is the knowledge base and project management tool for many teams. Claude can:
+- Automatically create and update pages
+- Read database content
+- Write processed results into Notion
 
-### Claude Code 方式：Notion API
+### Claude Code Approach: Notion API
 
 ```python
 import requests
@@ -99,59 +99,59 @@ headers = {
     "Notion-Version": "2022-06-28"
 }
 
-# 查詢資料庫
+# Query database
 response = requests.post(
     f"https://api.notion.com/v1/databases/{NOTION_DB_ID}/query",
     headers=headers
 )
 results = response.json()['results']
 
-# 建立新頁面
+# Create a new page
 new_page = {
     "parent": {"database_id": NOTION_DB_ID},
     "properties": {
-        "Name": {"title": [{"text": {"content": "每日報告 - 2026-04-11"}}]},
-        "Status": {"select": {"name": "完成"}}
+        "Name": {"title": [{"text": {"content": "Daily Report - 2026-04-11"}}]},
+        "Status": {"select": {"name": "Complete"}}
     }
 }
 requests.post("https://api.notion.com/v1/pages", 
               headers=headers, json=new_page)
 ```
 
-### Cowork 方式
+### Cowork Approach
 
-直接連接 Notion connector：
+Connect the Notion connector directly:
 ```
-"把這份分析報告整理成一個新的 Notion 頁面，
- 放在 Operations 資料庫裡"
+"Organize this analysis report into a new Notion page
+ and place it in the Operations database"
 ```
 
-### 實用場景
+### Practical Scenarios
 
-| 場景 | 工具選擇 |
-|------|----------|
-| 每日自動更新 Notion 報表 | Claude Code + cron |
-| 臨時整理一份筆記到 Notion | Cowork + connector |
-| 從 Notion 讀取配置跑自動化 | Claude Code + API |
-| 團隊知識庫搜尋 | Cowork + connector |
+| Scenario | Tool Choice |
+|----------|-------------|
+| Auto-update Notion reports daily | Claude Code + cron |
+| Quickly organize notes into Notion | Cowork + connector |
+| Read config from Notion to run automation | Claude Code + API |
+| Search the team knowledge base | Cowork + connector |
 
 ---
 
-## Slack + Notion 組合工作流
+## Slack + Notion Combined Workflow
 
-一個常見的自動化流程：
+A common automation flow:
 
 ```
-1. Claude Code 執行每日數據分析
-2. 結果寫入 Notion 資料庫
-3. 完成通知發送到 Slack #reports 頻道
-4. 團隊成員在 Slack 中收到提醒，點擊連結查看 Notion 報表
+1. Claude Code runs daily data analysis
+2. Results are written to a Notion database
+3. Completion notification is sent to the Slack #reports channel
+4. Team members receive the alert in Slack and click the link to view the Notion report
 ```
 
 ---
 
-## 練習
+## Exercises
 
-1. 建立一個 Slack Webhook，用 Claude Code 發送測試訊息
-2. 用 Notion API 建立一個新頁面
-3. 設計一個 Slack → Claude Code → Notion 的自動化流程
+1. Create a Slack Webhook and use Claude Code to send a test message
+2. Use the Notion API to create a new page
+3. Design a Slack → Claude Code → Notion automation flow

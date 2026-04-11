@@ -1,5 +1,5 @@
 [
-  { "hash": "3ced387db877d5d56993f6d59fabbcb9e6c4a7505b264b873115f40812b0c21a", "name": "Kin", "role": "管理員" },
-  { "hash": "a47234d601dc8d41b1719939ebdfe033d7307389c30e645ad3877cbea49873a8", "name": "Sandy", "role": "管理員" },
-  { "hash": "83f2c30abc8c942d6221703c9f3a4f17e4696ab2f5a052e67fecbc6eef6535a4", "name": "Matthew", "role": "管理員" }
+  { "hash": "3ced387db877d5d56993f6d59fabbcb9e6c4a7505b264b873115f40812b0c21a", "name": "Kin", "role": "Admin" },
+  { "hash": "a47234d601dc8d41b1719939ebdfe033d7307389c30e645ad3877cbea49873a8", "name": "Sandy", "role": "Admin" },
+  { "hash": "83f2c30abc8c942d6221703c9f3a4f17e4696ab2f5a052e67fecbc6eef6535a4", "name": "Matthew", "role": "Admin" }
 ]

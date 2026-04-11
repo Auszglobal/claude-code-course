@@ -1,323 +1,323 @@
-# 模塊 3.3：調試與修復錯誤 (Debugging and Fixing Errors)
+# Module 3.3: Debugging and Fixing Errors
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 理解程式錯誤的三大類型：語法錯誤、邏輯錯誤、運行時錯誤
-  - 有效地向 Claude Code 描述錯誤，讓它快速幫你修復
-  - 讀懂基本的錯誤訊息（Error Message）
-  - 掌握調試循環：識別 → 理解 → 修復 → 驗證
-  - 學會常見錯誤的溝通模式
+## 🎯 Learning Objectives
+- After completing this lesson, you will be able to:
+  - Understand the three major types of programming errors: syntax errors, logic errors, and runtime errors
+  - Effectively describe errors to Claude Code so it can fix them quickly
+  - Read and understand basic error messages
+  - Master the debugging cycle: Identify → Understand → Fix → Verify
+  - Learn common error communication patterns
 
-## 📖 理論解釋
+## 📖 Theory
 
-### 程式出錯是正常的！
+### Errors Are Normal!
 
-首先，最重要的一點：**程式出錯是完全正常的**，即使是有 20 年經驗的工程師也天天遇到錯誤。
+First, the most important point: **errors are completely normal in programming**, even engineers with 20 years of experience encounter them every day.
 
-把程式開發想像成**學做菜**：
-- 第一次做菜時，鹽放太多、火開太大，都是正常的
-- 重要的不是永遠不犯錯，而是知道**怎麼發現問題和修正**
-- 有了 Claude Code 的幫助，修復錯誤變得超級簡單
+Think of programming like **learning to cook**:
+- The first time you cook, putting in too much salt or setting the heat too high is normal
+- What matters isn't never making mistakes, but knowing **how to spot problems and fix them**
+- With Claude Code's help, fixing errors becomes super easy
 
-### 三種錯誤類型
+### Three Types of Errors
 
-#### 1. 語法錯誤 (Syntax Error) — 「寫錯字」
+#### 1. Syntax Error — "Typos"
 
-就像中文裡寫錯字一樣，程式碼有固定的文法規則。打錯一個字母、漏掉一個括號，電腦就看不懂了。
+Just like making typos in English, code has fixed grammar rules. Misspell a letter or forget a bracket, and the computer can't understand it.
 
-**日常比喻**：你寫了一封信，但把「你好」寫成「你女子」——收件人看不懂。
+**Everyday analogy**: You wrote a letter, but spelled "receive" as "recieve" — the spell checker flags it.
 
-常見的語法錯誤：
+Common syntax errors:
 ```python
-# 漏掉了結尾的引號
+# Missing closing quote
 print("Hello World)
 
-# 少了冒號
+# Missing colon
 if x > 5
     print("big")
 
-# 縮排（空格）不對
+# Incorrect indentation (spacing)
 def hello():
-print("hi")    # 這行應該要往右縮排
+print("hi")    # This line should be indented
 ```
 
-#### 2. 邏輯錯誤 (Logic Error) — 「走錯路」
+#### 2. Logic Error — "Wrong Turn"
 
-程式可以執行，但結果不對。這是最難發現的錯誤，因為電腦不會報錯。
+The program runs successfully, but the result is wrong. This is the hardest type of error to catch because the computer doesn't report anything.
 
-**日常比喻**：你要去台北車站，GPS 沒有出錯訊息，但它把你帶到了台北 101——路線是通的，但目的地錯了。
+**Everyday analogy**: You want to go to Central Station, and the GPS doesn't show any error, but it takes you to the airport instead — the route is valid, but the destination is wrong.
 
 ```python
-# 想計算平均分數，但邏輯有錯
+# Trying to calculate an average score, but the logic is wrong
 scores = [80, 90, 70]
-average = scores[0] + scores[1] + scores[2] / 3   # 錯！只有 70 被除以 3
-# 正確寫法：(scores[0] + scores[1] + scores[2]) / 3
+average = scores[0] + scores[1] + scores[2] / 3   # Wrong! Only 70 is divided by 3
+# Correct: (scores[0] + scores[1] + scores[2]) / 3
 ```
 
-#### 3. 運行時錯誤 (Runtime Error) — 「路上出意外」
+#### 3. Runtime Error — "Unexpected Roadblock"
 
-程式語法正確、邏輯也對，但執行過程中遇到了意外情況。
+The syntax is correct and the logic is sound, but something unexpected happens during execution.
 
-**日常比喻**：你的導航路線是對的，但開到一半發現前面在施工、道路封閉了。
+**Everyday analogy**: Your navigation route is correct, but halfway there you discover the road ahead is closed for construction.
 
 ```python
-# 嘗試打開一個不存在的文件
-file = open("不存在的文件.txt")
+# Trying to open a file that doesn't exist
+file = open("nonexistent_file.txt")
 
-# 除以零
+# Division by zero
 result = 100 / 0
 
-# 列表索引超出範圍
+# List index out of range
 names = ["Alice", "Bob"]
-print(names[5])    # 只有 2 個元素，卻要取第 6 個
+print(names[5])    # Only 2 elements, but trying to access the 6th
 ```
 
-### 調試循環：四個步驟
+### The Debugging Cycle: Four Steps
 
 ```
-   識別 (Identify)
+   Identify
       ↓
-   理解 (Understand)
+   Understand
       ↓
-   修復 (Fix)
+   Fix
       ↓
-   驗證 (Verify)
+   Verify
       ↓
-   （如果還有問題，回到「識別」）
+   (If there's still a problem, go back to "Identify")
 ```
 
-1. **識別**：發現有錯誤（看到錯誤訊息，或結果不對）
-2. **理解**：搞清楚錯在哪裡、為什麼錯
-3. **修復**：修改程式碼
-4. **驗證**：重新執行，確認問題已解決
+1. **Identify**: Discover there's an error (see an error message, or the result is wrong)
+2. **Understand**: Figure out where the error is and why it happened
+3. **Fix**: Modify the code
+4. **Verify**: Run the program again to confirm the problem is resolved
 
-有了 Claude Code，第 2 和第 3 步變得非常簡單——你只需要把錯誤訊息複製給它。
+With Claude Code, steps 2 and 3 become very easy — you just need to copy the error message to it.
 
-## 💻 代碼示例 1：修復語法錯誤
+## 💻 Code Example 1: Fixing Syntax Errors
 
-讓我們練習用 Claude Code 修復故意寫錯的程式碼。
+Let's practice using Claude Code to fix intentionally broken code.
 
-先建立練習環境：
+First, set up the practice environment:
 
 ```bash
 mkdir -p ~/claude-practice/debugging
 cd ~/claude-practice/debugging
 ```
 
-建立一個故意有錯的文件 `broken_calculator.py`：
+Create a deliberately broken file, `broken_calculator.py`:
 
 ```python
-# broken_calculator.py — 一個充滿錯誤的計算器（故意寫錯的！）
+# broken_calculator.py — A calculator full of errors (intentionally broken!)
 
-def add(a, b)     # 錯誤 1：少了冒號
+def add(a, b)     # Error 1: Missing colon
     return a + b
 
 def subtract(a, b):
-    return a - c   # 錯誤 2：c 沒有定義，應該是 b
+    return a - c   # Error 2: c is not defined, should be b
 
 def multiply(a, b):
     return a * b
 
 def divide(a, b):
-    return a / b   # 錯誤 3：沒有處理除以零的情況
+    return a / b   # Error 3: No handling for division by zero
 
-# 主程式
-print("=== 簡易計算器 ===")
+# Main program
+print("=== Simple Calculator ===")
 print("10 + 5 =", add(10, 5))
 print("10 - 5 =", subtract(10, 5)
-print("10 * 5 =", multiply(10, 5))   # 錯誤 4：上一行少了右括號
-print("10 / 0 =", divide(10, 0))     # 這會觸發除以零錯誤
+print("10 * 5 =", multiply(10, 5))   # Error 4: Previous line is missing closing parenthesis
+print("10 / 0 =", divide(10, 0))     # This will trigger a division by zero error
 ```
 
-啟動 Claude Code：
+Start Claude Code:
 
 ```bash
 cd ~/claude-practice/debugging
 claude
 ```
 
-對 Claude Code 說：
+Tell Claude Code:
 
 ```
-請看看 broken_calculator.py，這個文件有好幾個錯誤。
-請幫我找出所有錯誤，解釋每個錯誤是什麼，然後修復它們。
+Please look at broken_calculator.py — this file has several errors.
+Find all the errors, explain what each one is, and fix them.
 ```
 
-### 預期輸出：
+### Expected Output:
 
-Claude Code 會分析文件並列出所有問題：
+Claude Code will analyze the file and list all the issues:
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌────────────────────────────────────────────────────────┐
-│ 我在 broken_calculator.py 中找到了 4 個錯誤：            │
+│ I found 4 errors in broken_calculator.py:               │
 │                                                         │
-│ 1. 第 3 行：def add(a, b) 少了冒號                       │
-│    修復：def add(a, b):                                  │
+│ 1. Line 3: def add(a, b) is missing a colon             │
+│    Fix: def add(a, b):                                  │
 │                                                         │
-│ 2. 第 7 行：return a - c 中的 c 應該是 b                 │
-│    修復：return a - b                                    │
+│ 2. Line 7: return a - c — c should be b                 │
+│    Fix: return a - b                                    │
 │                                                         │
-│ 3. 第 18 行：print 語句少了右括號                         │
-│    修復：print("10 - 5 =", subtract(10, 5))             │
+│ 3. Line 18: print statement is missing closing paren    │
+│    Fix: print("10 - 5 =", subtract(10, 5))             │
 │                                                         │
-│ 4. 第 20 行：divide(10, 0) 會導致除以零錯誤              │
-│    修復：在 divide 函數中加入零值檢查                      │
+│ 4. Line 20: divide(10, 0) will cause division by zero   │
+│    Fix: Add a zero check in the divide function          │
 │                                                         │
-│ 需要我修復這些錯誤嗎？                                    │
+│ Shall I fix these errors?                                │
 └────────────────────────────────────────────────────────┘
 ```
 
-確認後，Claude Code 會修復文件。修復後的版本大致如下：
+After you confirm, Claude Code will fix the file. The corrected version will look roughly like this:
 
 ```python
-# broken_calculator.py — 修復後的計算器
+# broken_calculator.py — Fixed calculator
 
-def add(a, b):          # 已修復：加上冒號
+def add(a, b):          # Fixed: added colon
     return a + b
 
 def subtract(a, b):
-    return a - b        # 已修復：c 改為 b
+    return a - b        # Fixed: changed c to b
 
 def multiply(a, b):
     return a * b
 
 def divide(a, b):
-    if b == 0:          # 已修復：檢查除以零
-        return "錯誤：不能除以零"
+    if b == 0:          # Fixed: check for division by zero
+        return "Error: cannot divide by zero"
     return a / b
 
-# 主程式
-print("=== 簡易計算器 ===")
+# Main program
+print("=== Simple Calculator ===")
 print("10 + 5 =", add(10, 5))
-print("10 - 5 =", subtract(10, 5))   # 已修復：補上右括號
+print("10 - 5 =", subtract(10, 5))   # Fixed: added closing parenthesis
 print("10 * 5 =", multiply(10, 5))
 print("10 / 0 =", divide(10, 0))
 ```
 
-## 💻 代碼示例 2：處理運行時錯誤
+## 💻 Code Example 2: Handling Runtime Errors
 
-建立一個會在執行時出錯的腳本 `file_reader.py`：
+Create a script that will fail at runtime, `file_reader.py`:
 
 ```python
-# file_reader.py — 一個有運行時錯誤的文件讀取器
+# file_reader.py — A file reader with runtime errors
 
 def read_and_process(filename):
-    """讀取文件並計算每行的字數"""
-    # 打開文件（如果文件不存在會出錯）
+    """Read a file and count words per line"""
+    # Open the file (will error if the file doesn't exist)
     with open(filename, 'r') as f:
         lines = f.readlines()
 
-    # 計算每行字數（如果文件是空的會出錯）
+    # Count words per line (will error if the file is empty)
     total_words = 0
-    for i in range(len(lines) + 1):    # 故意多讀一行，會超出範圍
+    for i in range(len(lines) + 1):    # Deliberately reads one extra line — will go out of bounds
         words = lines[i].split()
         total_words += len(words)
 
-    average = total_words / len(lines)  # 如果文件為空，除以零
-    print(f"總字數: {total_words}")
-    print(f"平均每行: {average:.1f} 個字")
+    average = total_words / len(lines)  # Division by zero if file is empty
+    print(f"Total words: {total_words}")
+    print(f"Average per line: {average:.1f} words")
 
-# 試著讀取一個不存在的文件
+# Try to read a file that doesn't exist
 read_and_process("nonexistent.txt")
 ```
 
-對 Claude Code 說：
+Tell Claude Code:
 
 ```
-請執行 file_reader.py，然後幫我修復遇到的所有錯誤。
-我希望它能：
-1. 優雅地處理文件不存在的情況
-2. 處理空文件的情況
-3. 修復索引超出範圍的 bug
+Please run file_reader.py, then help me fix all the errors.
+I want it to:
+1. Handle the case where the file doesn't exist gracefully
+2. Handle empty files
+3. Fix the index out of range bug
 ```
 
-### 預期輸出：
+### Expected Output:
 
-Claude Code 會先嘗試執行，看到錯誤後自動分析和修復：
+Claude Code will attempt to run it, see the error, then analyze and fix it:
 
-📸 [你應該看到的畫面]
+📸 [What you should see]
 ```
 ┌──────────────────────────────────────────────────────┐
-│ 執行 file_reader.py 時出現錯誤：                       │
+│ Error running file_reader.py:                         │
 │                                                       │
 │ FileNotFoundError: [Errno 2] No such file or          │
 │ directory: 'nonexistent.txt'                          │
 │                                                       │
-│ 我發現了 3 個問題，正在修復：                            │
+│ I found 3 issues and am fixing them:                  │
 │                                                       │
-│ 1. 沒有處理文件不存在的錯誤                              │
-│    → 加入 try/except FileNotFoundError                 │
+│ 1. No handling for file not found                     │
+│    → Adding try/except FileNotFoundError              │
 │                                                       │
-│ 2. range(len(lines) + 1) 會超出列表範圍                 │
-│    → 改為 range(len(lines))                            │
+│ 2. range(len(lines) + 1) will exceed list bounds      │
+│    → Changing to range(len(lines))                    │
 │                                                       │
-│ 3. 空文件會導致除以零                                    │
-│    → 加入 len(lines) == 0 的檢查                       │
+│ 3. Empty file will cause division by zero             │
+│    → Adding a len(lines) == 0 check                   │
 └──────────────────────────────────────────────────────┘
 ```
 
-## 📖 如何有效地向 Claude Code 描述錯誤
+## 📖 How to Effectively Describe Errors to Claude Code
 
-跟 Claude Code 溝通錯誤時，提供越多資訊越好。以下是一些有效的描述方式：
+When communicating errors to Claude Code, the more information you provide the better. Here are some effective ways to describe errors:
 
-### 好的描述方式
+### Good Descriptions
 
 ```
-執行 organize.py 時出現這個錯誤：
+When running organize.py I got this error:
 FileNotFoundError: [Errno 2] No such file or directory: 'downloads'
-我在 ~/claude-practice/auto-organizer/ 目錄下執行的。
+I was running it from the ~/claude-practice/auto-organizer/ directory.
 ```
 
 ```
-程式可以執行，但結果不對。
-我輸入 [80, 90, 70]，期望平均分是 80，但程式顯示 93.3。
+The program runs, but the result is wrong.
+I input [80, 90, 70], expected an average of 80, but the program shows 93.3.
 ```
 
 ```
-這個腳本昨天還正常，今天突然出錯了。
-錯誤訊息是 ConnectionRefusedError。
-我沒有改過任何程式碼。
+This script was working fine yesterday, but suddenly throws an error today.
+The error message is ConnectionRefusedError.
+I haven't changed any code.
 ```
 
-### 不太好的描述方式
+### Not-so-good Descriptions
 
 ```
-程式壞了，幫我修。           ← 太模糊，Claude Code 不知道哪裡壞了
+The program is broken, fix it.         ← Too vague — Claude Code doesn't know what's broken
 ```
 
 ```
-有個 error。                ← 沒有提供錯誤訊息
+There's an error.                      ← No error message provided
 ```
 
-**記住這個公式**：
-> **[什麼時候] + [做了什麼操作] + [期望看到什麼] + [實際看到什麼/錯誤訊息]**
+**Remember this formula**:
+> **[When] + [What you did] + [What you expected] + [What actually happened / error message]**
 
-## 📖 常見錯誤速查表
+## 📖 Common Error Quick Reference
 
-| 錯誤訊息 | 意思 | 常見原因 |
+| Error Message | Meaning | Common Cause |
 |----------|------|---------|
-| `SyntaxError` | 語法錯誤 | 漏了冒號、括號不配對、拼寫錯誤 |
-| `NameError` | 找不到變數 | 變數名拼錯、忘了定義 |
-| `TypeError` | 類型不對 | 把文字當數字用、參數數量錯誤 |
-| `IndexError` | 索引超出範圍 | 列表只有 3 個元素卻要取第 4 個 |
-| `FileNotFoundError` | 文件不存在 | 路徑寫錯、文件名拼錯 |
-| `ZeroDivisionError` | 除以零 | 分母為零 |
-| `IndentationError` | 縮排錯誤 | 空格數量不一致 |
-| `ModuleNotFoundError` | 找不到模組 | 套件沒有安裝 |
-| `KeyError` | 找不到鍵值 | 字典中沒有這個 key |
-| `PermissionError` | 沒有權限 | 文件被鎖定或權限不足 |
+| `SyntaxError` | Syntax error | Missing colon, mismatched brackets, typos |
+| `NameError` | Variable not found | Misspelled variable name, forgot to define it |
+| `TypeError` | Wrong type | Using text as a number, wrong number of arguments |
+| `IndexError` | Index out of range | List has only 3 items but you tried to access the 4th |
+| `FileNotFoundError` | File doesn't exist | Wrong path, misspelled filename |
+| `ZeroDivisionError` | Division by zero | Denominator is zero |
+| `IndentationError` | Indentation error | Inconsistent number of spaces |
+| `ModuleNotFoundError` | Module not found | Package not installed |
+| `KeyError` | Key not found | Dictionary doesn't contain that key |
+| `PermissionError` | No permission | File is locked or insufficient permissions |
 
-遇到這些錯誤時，直接把完整的錯誤訊息複製貼上給 Claude Code 就好！
+When you encounter any of these errors, just copy and paste the full error message to Claude Code!
 
-## ✍️ 動手練習
+## ✍️ Hands-on Exercises
 
-### 練習 1：修復購物車程式
+### Exercise 1: Fix a Shopping Cart Program
 
-建立這個故意有錯的文件 `shopping_cart.py`：
+Create this intentionally buggy file, `shopping_cart.py`:
 
 ```python
-# shopping_cart.py — 一個有很多 bug 的購物車
+# shopping_cart.py — A shopping cart full of bugs
 
 cart = []
 
@@ -333,88 +333,89 @@ def calculate_total():
     return total
 
 def apply_discount(total, discount_percent):
-    discount = total * discount_percent  # Bug 4: 百分比沒有除以 100
+    discount = total * discount_percent  # Bug 4: Percentage not divided by 100
     return total - discount
 
-# 測試程式
+# Test the program
 add_item("Apple", 3.5, 2)
 add_item("Bread", 4.0, 1)
 add_item("Milk", 5.5, 3)
 
 total = calculate_total()
-print(f"小計: ${total}")
+print(f"Subtotal: ${total}")
 
-final = apply_discount(total, 10)      # 打 9 折
-print(f"折扣後: ${final}")             # Bug 5: 10% 折扣結果不對
+final = apply_discount(total, 10)      # 10% discount
+print(f"After discount: ${final}")     # Bug 5: 10% discount result is wrong
 ```
 
-啟動 Claude Code，然後說：
+Start Claude Code and say:
 
 ```
-請幫我執行 shopping_cart.py，修復所有的 bug，
-並在修復後解釋每個 bug 是什麼以及怎麼修的。
+Please run shopping_cart.py, fix all the bugs,
+and after fixing them, explain what each bug was and how you fixed it.
 ```
 
-**提示**：這個文件有 5 個 bug（語法錯誤、拼寫錯誤和邏輯錯誤都有）。看看 Claude Code 能不能全部找到！
+**Tip**: This file has 5 bugs (syntax errors, typos, and logic errors). See if Claude Code can find them all!
 
-### 練習 2：調試一個猜數字遊戲
+### Exercise 2: Debug a Number Guessing Game
 
-建立 `guess_game.py`：
+Create `guess_game.py`:
 
 ```python
-# guess_game.py — 猜數字遊戲（有 bug）
+# guess_game.py — Number guessing game (buggy)
 import random
 
 secret = random.randint(1, 10)
-print("我想了一個 1 到 10 之間的數字，猜猜看！")
+print("I'm thinking of a number between 1 and 10. Guess!")
 
 for attempt in range(3):
-    guess = input(f"第 {attempt} 次猜測：")   # Bug: 應該從 1 開始
+    guess = input(f"Guess #{attempt}: ")     # Bug: Should start from 1
     
-    if guess == secret:                        # Bug: 類型比較問題
-        print("猜對了！")
+    if guess == secret:                        # Bug: Type comparison issue
+        print("Correct!")
         break
-    elif guess < secret:                       # Bug: 字串不能跟數字比
-        print("太小了！")
+    elif guess < secret:                       # Bug: Can't compare string with number
+        print("Too low!")
     else:
-        print("太大了！")
+        print("Too high!")
 else:
-    print(f"三次都沒猜對，答案是 {secret}")
+    print(f"Three wrong guesses. The answer was {secret}")
 ```
 
-對 Claude Code 說：
+Tell Claude Code:
 
 ```
-這個猜數字遊戲有幾個 bug，請幫我找出來並修復。
-我知道的問題是：次數顯示不對，而且永遠猜不對。
+This number guessing game has several bugs. Please find and fix them.
+The problems I've noticed: the attempt number displays incorrectly,
+and you can never guess correctly.
 ```
 
-## ❓ 小測驗（3 條題目）
+## ❓ Quiz (3 Questions)
 
-1. 程式可以成功執行但結果不正確，這最可能是哪種錯誤？
-   A. 語法錯誤 (Syntax Error)
-   B. 邏輯錯誤 (Logic Error)
-   C. 運行時錯誤 (Runtime Error)
-   D. 安裝錯誤
+1. A program runs successfully but produces the wrong result. What type of error is this most likely?
+   A. Syntax Error
+   B. Logic Error
+   C. Runtime Error
+   D. Installation Error
 
-   答案：B — 語法錯誤會讓程式根本無法執行，運行時錯誤會中途當掉。只有邏輯錯誤會讓程式「順利」執行但結果不對，就像 GPS 順利帶你到了錯誤的地方。
+   Answer: B — Syntax errors prevent the program from running at all. Runtime errors cause it to crash midway. Only logic errors allow a program to run "successfully" but produce the wrong result — like a GPS that smoothly takes you to the wrong destination.
 
-2. 向 Claude Code 描述錯誤時，最有幫助的資訊是什麼？
-   A. 說「程式壞了」就好
-   B. 完整的錯誤訊息、你執行的指令、和你期望的結果
-   C. 電腦的品牌和型號
-   D. 你買電腦的日期
+2. When describing an error to Claude Code, what information is most helpful?
+   A. Just saying "the program is broken"
+   B. The complete error message, the command you ran, and the result you expected
+   C. Your computer's brand and model
+   D. The date you bought your computer
 
-   答案：B — 就像看醫生要描述症狀一樣，提供完整的錯誤訊息、你做了什麼操作、以及你期望的結果，能讓 Claude Code 最快速地找到問題和解決方案。
+   Answer: B — Just like describing symptoms to a doctor, providing the full error message, what you did, and what you expected lets Claude Code find the problem and solution as quickly as possible.
 
-3. 調試循環的正確順序是什麼？
-   A. 修復 → 識別 → 驗證 → 理解
-   B. 理解 → 修復 → 識別 → 驗證
-   C. 識別 → 理解 → 修復 → 驗證
-   D. 驗證 → 修復 → 理解 → 識別
+3. What is the correct order of the debugging cycle?
+   A. Fix → Identify → Verify → Understand
+   B. Understand → Fix → Identify → Verify
+   C. Identify → Understand → Fix → Verify
+   D. Verify → Fix → Understand → Identify
 
-   答案：C — 正確的順序是先發現問題（識別），然後搞清楚為什麼出錯（理解），接著修改程式碼（修復），最後重新測試確認問題解決了（驗證）。如果還有問題就再重複這個循環。
+   Answer: C — The correct order is: discover the problem (Identify), figure out why it went wrong (Understand), modify the code (Fix), then test again to confirm the problem is resolved (Verify). If there are still issues, repeat the cycle.
 
-## 🔗 下一步
+## 🔗 Next Steps
 
-在下一個模塊 **3.4：測試與品質保證**，你將學習如何在錯誤發生**之前**就預防它們——通過編寫測試來自動檢查你的程式碼是否正確。這就像做菜前先試一小口調味料，比做完整道菜才發現鹽放太多要好得多！
+In the next module, **3.4: Testing and Quality Assurance**, you'll learn how to prevent errors **before** they happen — by writing tests that automatically check whether your code is correct. It's like tasting your seasoning while cooking, rather than waiting until the entire dish is done to discover you added too much salt!

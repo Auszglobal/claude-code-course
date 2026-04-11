@@ -1,155 +1,155 @@
-# 模塊 5.4：綜合實戰項目
+# Module 5.4: Capstone Project
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 獨立使用 Claude Code 從零建立一個完整的專案
-  - 整合前端（HTML/CSS/JS）與後端（Python）
-  - 撰寫自動化測試確保程式品質
-  - 使用 Git 進行版本控制並部署到 GitHub Pages
-  - 自信地運用 Claude Code 解決各種開發任務
+## Learning Objectives
+- After completing this lesson you will be able to:
+  - Independently use Claude Code to build a complete project from scratch
+  - Integrate a frontend (HTML/CSS/JS) with a backend (Python)
+  - Write automated tests to ensure code quality
+  - Use Git for version control and deploy to GitHub Pages
+  - Confidently apply Claude Code to a variety of development tasks
 
-## 📖 理論解釋
+## Theory
 
-### 你的畢業作品：個人任務管理系統
+### Your Graduation Project: A Personal Task Manager
 
-恭喜你走到了這裡！在過去的 4 個 Phase 中，你從完全零基礎一步步學會了：
+Congratulations on making it this far! Over the past 4 Phases, you've gone from complete beginner to learning step by step:
 
-- Phase 1：安裝 Claude Code、下達指令、瀏覽檔案
-- Phase 2：設定 CLAUDE.md、編輯檔案、使用 Git
-- Phase 3：腳本編寫、除錯、測試
-- Phase 4：建立網頁、串接 API、資料處理、部署
+- Phase 1: Installing Claude Code, giving instructions, navigating files
+- Phase 2: Configuring CLAUDE.md, editing files, using Git
+- Phase 3: Writing scripts, debugging, testing
+- Phase 4: Web development, API integration, data processing, deployment
 
-現在，是時候把所有技能融合在一起了。
+Now it's time to bring all those skills together.
 
-我們要建立一個 **個人任務管理系統（Task Manager）**，它包含：
+We're going to build a **Personal Task Manager**, which includes:
 
-| 組件 | 技術 | 對應 Phase |
-|------|------|-----------|
-| 前端介面 | HTML + CSS + JavaScript | Phase 4 |
-| 後端腳本 | Python（讀寫 JSON 檔案） | Phase 3 |
-| 自動化測試 | Python unittest | Phase 3 |
-| 專案設定 | CLAUDE.md | Phase 2 |
-| 版本控制 | Git + GitHub | Phase 2 |
-| 部署 | GitHub Pages（前端） | Phase 4 |
+| Component | Technology | Corresponding Phase |
+|-----------|-----------|-------------------|
+| Frontend interface | HTML + CSS + JavaScript | Phase 4 |
+| Backend script | Python (reading/writing JSON files) | Phase 3 |
+| Automated tests | Python unittest | Phase 3 |
+| Project configuration | CLAUDE.md | Phase 2 |
+| Version control | Git + GitHub | Phase 2 |
+| Deployment | GitHub Pages (frontend) | Phase 4 |
 
-把它想像成蓋一棟房子：你已經學會了砌磚、裝水電、刷油漆，現在要把這些技能組合起來，蓋出一棟真正的房子。
+Think of it like building a house: you've already learned how to lay bricks, do the plumbing and wiring, and paint the walls. Now it's time to combine those skills to build a real house.
 
-## 💻 步驟 1：建立專案結構
+## Step 1: Create the Project Structure
 
-讓我們開始吧！在 Claude Code 中輸入：
+Let's get started! In Claude Code, type:
 
 ```
-> 幫我建立一個名為 task-manager 的新專案，包含以下結構：
+> Help me create a new project called task-manager with the following structure:
 
 task-manager/
-├── CLAUDE.md            （專案說明）
-├── .gitignore           （Git 忽略規則）
-├── frontend/            （前端檔案）
+├── CLAUDE.md            (project documentation)
+├── .gitignore           (Git ignore rules)
+├── frontend/            (frontend files)
 │   ├── index.html
 │   ├── style.css
 │   └── app.js
-├── backend/             （後端腳本）
+├── backend/             (backend scripts)
 │   ├── task_manager.py
 │   └── tasks.json
-└── tests/               （測試檔案）
+└── tests/               (test files)
     └── test_task_manager.py
 ```
 
-或者你可以手動建立：
+Or you can create it manually:
 
 ```bash
-# 建立專案目錄
+# Create the project directories
 mkdir -p ~/task-manager/frontend
 mkdir -p ~/task-manager/backend
 mkdir -p ~/task-manager/tests
 
-# 進入專案目錄
+# Enter the project directory
 cd ~/task-manager
 ```
 
-### 預期輸出：
-你會看到一個乾淨的專案目錄結構，所有資料夾都已建立好。
+### Expected Output:
+You'll see a clean project directory structure with all folders created.
 
-## 💻 步驟 2：設定 CLAUDE.md
+## Step 2: Configure CLAUDE.md
 
-首先，為專案建立 CLAUDE.md：
+First, create a CLAUDE.md for the project:
 
 ```markdown
-# Task Manager — 個人任務管理系統
+# Task Manager -- Personal Task Management System
 
-## 專案概述
-簡單的任務管理應用，前端使用純 HTML/CSS/JS，後端使用 Python 讀寫 JSON 檔案。
+## Project Overview
+A simple task management app with a pure HTML/CSS/JS frontend and a Python backend that reads and writes JSON files.
 
-## 技術棧
-- 前端：HTML5, CSS3, vanilla JavaScript（不使用框架）
-- 後端：Python 3.x（標準庫，不需額外安裝）
-- 資料儲存：JSON 檔案
-- 測試：Python unittest
+## Tech Stack
+- Frontend: HTML5, CSS3, vanilla JavaScript (no frameworks)
+- Backend: Python 3.x (standard library, no extra packages needed)
+- Data storage: JSON file
+- Testing: Python unittest
 
-## 程式碼風格
-- HTML/CSS/JS：使用 2 空格縮排
-- Python：遵循 PEP 8，使用 4 空格縮排
-- 所有函數必須有 docstring 說明
+## Code Style
+- HTML/CSS/JS: Use 2-space indentation
+- Python: Follow PEP 8, use 4-space indentation
+- All functions must have a docstring
 
-## 禁止事項
-- 不要安裝外部依賴套件（使用標準庫即可）
-- 不要修改 tasks.json 的結構
-- 不要在前端程式碼中硬編碼後端路徑
+## Prohibited Actions
+- Do not install external dependencies (the standard library is sufficient)
+- Do not modify the tasks.json structure
+- Do not hardcode backend paths in frontend code
 ```
 
-## 💻 步驟 3：建立後端（Python）
+## Step 3: Build the Backend (Python)
 
-在 Claude Code 中：
+In Claude Code:
 
 ```
-> 幫我建立 backend/task_manager.py，功能如下：
-  - 讀取和寫入 tasks.json 檔案
-  - 支持新增、刪除、標記完成、列出所有任務
-  - 每個任務有：id, title, completed, created_at 欄位
+> Help me create backend/task_manager.py with the following features:
+  - Read from and write to a tasks.json file
+  - Support adding, deleting, toggling completion, and listing all tasks
+  - Each task has: id, title, completed, created_at fields
 ```
 
-以下是完整的後端程式碼：
+Here's the complete backend code:
 
 ```python
 """
-task_manager.py — 任務管理後端
-負責讀寫 tasks.json，提供任務的增刪改查功能
+task_manager.py -- Task management backend
+Handles reading and writing tasks.json, providing CRUD operations for tasks
 """
 
-import json          # 用來讀寫 JSON 檔案
-import os            # 用來檢查檔案是否存在
-from datetime import datetime  # 用來記錄建立時間
+import json          # For reading and writing JSON files
+import os            # For checking if files exist
+from datetime import datetime  # For recording creation timestamps
 
-# 資料檔案的路徑（和這個 Python 檔案放在同一個目錄）
+# Path to the data file (in the same directory as this Python file)
 DATA_FILE = os.path.join(os.path.dirname(__file__), "tasks.json")
 
 
 def load_tasks():
-    """從 JSON 檔案讀取所有任務"""
-    # 如果檔案不存在，回傳空列表
+    """Load all tasks from the JSON file"""
+    # If the file doesn't exist, return an empty list
     if not os.path.exists(DATA_FILE):
         return []
-    # 讀取檔案內容並轉換成 Python 列表
+    # Read the file contents and convert to a Python list
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
 def save_tasks(tasks):
-    """將任務列表儲存到 JSON 檔案"""
+    """Save the task list to the JSON file"""
     with open(DATA_FILE, "w", encoding="utf-8") as f:
-        # ensure_ascii=False 讓中文正常顯示
-        # indent=2 讓 JSON 格式更好看
+        # ensure_ascii=False allows non-ASCII characters to display properly
+        # indent=2 makes the JSON more readable
         json.dump(tasks, f, ensure_ascii=False, indent=2)
 
 
 def add_task(title):
-    """新增一個任務"""
+    """Add a new task"""
     tasks = load_tasks()
 
-    # 計算新的 ID（找到目前最大 ID + 1）
+    # Calculate the new ID (find the current max ID + 1)
     new_id = max([t["id"] for t in tasks], default=0) + 1
 
-    # 建立新任務
+    # Create the new task
     new_task = {
         "id": new_id,
         "title": title,
@@ -157,69 +157,69 @@ def add_task(title):
         "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
-    # 加到列表並儲存
+    # Add to the list and save
     tasks.append(new_task)
     save_tasks(tasks)
     return new_task
 
 
 def delete_task(task_id):
-    """刪除指定 ID 的任務"""
+    """Delete a task by its ID"""
     tasks = load_tasks()
-    # 過濾掉要刪除的任務
+    # Filter out the task to be deleted
     updated = [t for t in tasks if t["id"] != task_id]
 
-    # 檢查是否真的有刪除
+    # Check if anything was actually deleted
     if len(updated) == len(tasks):
-        return False  # 找不到該 ID
+        return False  # ID not found
     save_tasks(updated)
     return True
 
 
 def toggle_task(task_id):
-    """切換任務的完成狀態"""
+    """Toggle a task's completion status"""
     tasks = load_tasks()
     for task in tasks:
         if task["id"] == task_id:
-            # 切換：True 變 False，False 變 True
+            # Toggle: True becomes False, False becomes True
             task["completed"] = not task["completed"]
             save_tasks(tasks)
             return task
-    return None  # 找不到該 ID
+    return None  # ID not found
 
 
 def list_tasks(show_all=True):
-    """列出任務"""
+    """List tasks"""
     tasks = load_tasks()
     if show_all:
         return tasks
-    # 只回傳未完成的任務
+    # Return only incomplete tasks
     return [t for t in tasks if not t["completed"]]
 
 
-# 如果直接執行這個檔案（而不是被其他程式引用）
+# If this file is run directly (not imported by another program)
 if __name__ == "__main__":
     import sys
 
-    # 簡單的命令列介面
+    # Simple command-line interface
     if len(sys.argv) < 2:
-        print("用法：")
-        print("  python task_manager.py add '任務名稱'")
+        print("Usage:")
+        print("  python task_manager.py add 'task name'")
         print("  python task_manager.py list")
         print("  python task_manager.py done 1")
         print("  python task_manager.py delete 1")
         sys.exit(0)
 
-    command = sys.argv[1]  # 取得指令
+    command = sys.argv[1]  # Get the command
 
     if command == "add" and len(sys.argv) > 2:
         task = add_task(sys.argv[2])
-        print(f"已新增任務 #{task['id']}：{task['title']}")
+        print(f"Added task #{task['id']}: {task['title']}")
 
     elif command == "list":
         tasks = list_tasks()
         if not tasks:
-            print("目前沒有任何任務！")
+            print("No tasks yet!")
         for t in tasks:
             status = "[x]" if t["completed"] else "[ ]"
             print(f"  {status} #{t['id']} {t['title']}  ({t['created_at']})")
@@ -227,282 +227,287 @@ if __name__ == "__main__":
     elif command == "done" and len(sys.argv) > 2:
         task = toggle_task(int(sys.argv[2]))
         if task:
-            status = "完成" if task["completed"] else "未完成"
-            print(f"任務 #{task['id']} 已標記為{status}")
+            status = "completed" if task["completed"] else "incomplete"
+            print(f"Task #{task['id']} marked as {status}")
         else:
-            print(f"找不到任務 #{sys.argv[2]}")
+            print(f"Task #{sys.argv[2]} not found")
 
     elif command == "delete" and len(sys.argv) > 2:
         if delete_task(int(sys.argv[2])):
-            print(f"已刪除任務 #{sys.argv[2]}")
+            print(f"Deleted task #{sys.argv[2]}")
         else:
-            print(f"找不到任務 #{sys.argv[2]}")
+            print(f"Task #{sys.argv[2]} not found")
 
     else:
-        print(f"未知指令：{command}")
+        print(f"Unknown command: {command}")
 ```
 
-初始化空的資料檔案：
+Initialise the empty data file:
 
 ```bash
-# 建立空的 tasks.json
+# Create an empty tasks.json
 echo "[]" > backend/tasks.json
 ```
 
-### 測試後端
+### Test the Backend
 
 ```bash
-# 新增幾個任務
-python backend/task_manager.py add "學習 Claude Code"
-python backend/task_manager.py add "完成畢業專案"
-python backend/task_manager.py add "慶祝課程完成"
+# Add a few tasks
+python backend/task_manager.py add "Learn Claude Code"
+python backend/task_manager.py add "Complete the capstone project"
+python backend/task_manager.py add "Celebrate finishing the course"
 
-# 列出所有任務
+# List all tasks
 python backend/task_manager.py list
 
-# 標記第一個任務完成
+# Mark the first task as completed
 python backend/task_manager.py done 1
 
-# 再次列出
+# List again
 python backend/task_manager.py list
 ```
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌───────────────────────────────────────────────────────┐
-│ $ python backend/task_manager.py add "學習 Claude Code"│
-│ 已新增任務 #1：學習 Claude Code                        │
-│                                                       │
-│ $ python backend/task_manager.py list                 │
-│   [ ] #1 學習 Claude Code  (2026-04-11 10:30:00)     │
-│   [ ] #2 完成畢業專案  (2026-04-11 10:30:01)          │
-│   [ ] #3 慶祝課程完成  (2026-04-11 10:30:02)          │
-│                                                       │
-│ $ python backend/task_manager.py done 1               │
-│ 任務 #1 已標記為完成                                   │
-│                                                       │
-│ $ python backend/task_manager.py list                 │
-│   [x] #1 學習 Claude Code  (2026-04-11 10:30:00)     │
-│   [ ] #2 完成畢業專案  (2026-04-11 10:30:01)          │
-│   [ ] #3 慶祝課程完成  (2026-04-11 10:30:02)          │
-└───────────────────────────────────────────────────────┘
-```
-
-### 預期輸出：
-你會看到任務被新增、列出、標記完成的過程。`[x]` 表示已完成，`[ ]` 表示未完成。
-
-## 💻 步驟 4：建立自動化測試
-
-```
-> 幫我建立 tests/test_task_manager.py，測試所有後端功能
++-------------------------------------------------------+
+| $ python backend/task_manager.py add "Learn Claude    |
+|   Code"                                               |
+| Added task #1: Learn Claude Code                      |
+|                                                       |
+| $ python backend/task_manager.py list                 |
+|   [ ] #1 Learn Claude Code  (2026-04-11 10:30:00)    |
+|   [ ] #2 Complete the capstone project                |
+|          (2026-04-11 10:30:01)                        |
+|   [ ] #3 Celebrate finishing the course               |
+|          (2026-04-11 10:30:02)                        |
+|                                                       |
+| $ python backend/task_manager.py done 1               |
+| Task #1 marked as completed                           |
+|                                                       |
+| $ python backend/task_manager.py list                 |
+|   [x] #1 Learn Claude Code  (2026-04-11 10:30:00)    |
+|   [ ] #2 Complete the capstone project                |
+|          (2026-04-11 10:30:01)                        |
+|   [ ] #3 Celebrate finishing the course               |
+|          (2026-04-11 10:30:02)                        |
++-------------------------------------------------------+
 ```
 
-完整的測試程式碼：
+### Expected Output:
+You'll see the process of tasks being added, listed, and marked as completed. `[x]` means completed, `[ ]` means incomplete.
+
+## Step 4: Create Automated Tests
+
+```
+> Help me create tests/test_task_manager.py that tests all backend functionality
+```
+
+Complete test code:
 
 ```python
 """
-test_task_manager.py — 任務管理系統的自動化測試
-確保所有功能正常運作
+test_task_manager.py -- Automated tests for the task management system
+Ensures all functionality works correctly
 """
 
-import unittest    # Python 內建的測試框架
-import os          # 檔案操作
-import json        # JSON 處理
+import unittest    # Python's built-in testing framework
+import os          # File operations
+import json        # JSON processing
 import sys
 
-# 將 backend 目錄加入搜尋路徑，才能引用 task_manager
+# Add the backend directory to the search path so we can import task_manager
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "backend"))
 import task_manager
 
 
 class TestTaskManager(unittest.TestCase):
-    """測試任務管理系統的所有功能"""
+    """Test all features of the task management system"""
 
     def setUp(self):
-        """每個測試執行前：建立一個乾淨的測試環境"""
-        # 使用測試用的資料檔案，避免影響真實資料
+        """Before each test: create a clean test environment"""
+        # Use a test data file to avoid affecting real data
         self.test_file = os.path.join(
             os.path.dirname(__file__), "..", "backend", "test_tasks.json"
         )
         task_manager.DATA_FILE = self.test_file
-        # 確保測試開始時資料檔案是空的
+        # Ensure the data file is empty at the start of each test
         with open(self.test_file, "w") as f:
             json.dump([], f)
 
     def tearDown(self):
-        """每個測試執行後：清理測試檔案"""
+        """After each test: clean up the test file"""
         if os.path.exists(self.test_file):
             os.remove(self.test_file)
 
     def test_add_task(self):
-        """測試新增任務"""
-        # 新增一個任務
-        task = task_manager.add_task("測試任務")
+        """Test adding a task"""
+        # Add a task
+        task = task_manager.add_task("Test task")
 
-        # 驗證回傳的任務資料正確
-        self.assertEqual(task["title"], "測試任務")
+        # Verify the returned task data is correct
+        self.assertEqual(task["title"], "Test task")
         self.assertEqual(task["id"], 1)
         self.assertFalse(task["completed"])
         self.assertIn("created_at", task)
 
     def test_add_multiple_tasks(self):
-        """測試新增多個任務，ID 應該遞增"""
-        task1 = task_manager.add_task("任務一")
-        task2 = task_manager.add_task("任務二")
-        task3 = task_manager.add_task("任務三")
+        """Test adding multiple tasks -- IDs should increment"""
+        task1 = task_manager.add_task("Task one")
+        task2 = task_manager.add_task("Task two")
+        task3 = task_manager.add_task("Task three")
 
         self.assertEqual(task1["id"], 1)
         self.assertEqual(task2["id"], 2)
         self.assertEqual(task3["id"], 3)
 
     def test_list_tasks(self):
-        """測試列出所有任務"""
-        # 先新增兩個任務
-        task_manager.add_task("任務 A")
-        task_manager.add_task("任務 B")
+        """Test listing all tasks"""
+        # First add two tasks
+        task_manager.add_task("Task A")
+        task_manager.add_task("Task B")
 
-        # 列出所有任務
+        # List all tasks
         tasks = task_manager.list_tasks()
         self.assertEqual(len(tasks), 2)
 
     def test_toggle_task(self):
-        """測試切換任務完成狀態"""
-        task_manager.add_task("待完成任務")
+        """Test toggling task completion status"""
+        task_manager.add_task("Pending task")
 
-        # 第一次切換：未完成 → 完成
+        # First toggle: incomplete -> completed
         result = task_manager.toggle_task(1)
         self.assertTrue(result["completed"])
 
-        # 第二次切換：完成 → 未完成
+        # Second toggle: completed -> incomplete
         result = task_manager.toggle_task(1)
         self.assertFalse(result["completed"])
 
     def test_delete_task(self):
-        """測試刪除任務"""
-        task_manager.add_task("要刪除的任務")
-        task_manager.add_task("要保留的任務")
+        """Test deleting a task"""
+        task_manager.add_task("Task to delete")
+        task_manager.add_task("Task to keep")
 
-        # 刪除第一個任務
+        # Delete the first task
         result = task_manager.delete_task(1)
         self.assertTrue(result)
 
-        # 確認只剩一個任務
+        # Confirm only one task remains
         tasks = task_manager.list_tasks()
         self.assertEqual(len(tasks), 1)
-        self.assertEqual(tasks[0]["title"], "要保留的任務")
+        self.assertEqual(tasks[0]["title"], "Task to keep")
 
     def test_delete_nonexistent_task(self):
-        """測試刪除不存在的任務"""
+        """Test deleting a task that doesn't exist"""
         result = task_manager.delete_task(999)
         self.assertFalse(result)
 
     def test_toggle_nonexistent_task(self):
-        """測試切換不存在的任務"""
+        """Test toggling a task that doesn't exist"""
         result = task_manager.toggle_task(999)
         self.assertIsNone(result)
 
     def test_empty_task_list(self):
-        """測試空的任務列表"""
+        """Test an empty task list"""
         tasks = task_manager.list_tasks()
         self.assertEqual(len(tasks), 0)
 
 
-# 執行所有測試
+# Run all tests
 if __name__ == "__main__":
     unittest.main()
 ```
 
-執行測試：
+Run the tests:
 
 ```bash
-# 執行所有測試
+# Run all tests
 python -m unittest tests/test_task_manager.py -v
 ```
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌───────────────────────────────────────────────────────┐
-│ $ python -m unittest tests/test_task_manager.py -v    │
-│                                                       │
-│ test_add_multiple_tasks ... ok                        │
-│ test_add_task ... ok                                  │
-│ test_delete_nonexistent_task ... ok                   │
-│ test_delete_task ... ok                               │
-│ test_empty_task_list ... ok                           │
-│ test_list_tasks ... ok                                │
-│ test_toggle_nonexistent_task ... ok                   │
-│ test_toggle_task ... ok                               │
-│                                                       │
-│ -----------------------------------------------      │
-│ Ran 8 tests in 0.023s                                 │
-│                                                       │
-│ OK                                                    │
-└───────────────────────────────────────────────────────┘
++-------------------------------------------------------+
+| $ python -m unittest tests/test_task_manager.py -v    |
+|                                                       |
+| test_add_multiple_tasks ... ok                        |
+| test_add_task ... ok                                  |
+| test_delete_nonexistent_task ... ok                   |
+| test_delete_task ... ok                               |
+| test_empty_task_list ... ok                           |
+| test_list_tasks ... ok                                |
+| test_toggle_nonexistent_task ... ok                   |
+| test_toggle_task ... ok                               |
+|                                                       |
+| -----------------------------------------------      |
+| Ran 8 tests in 0.023s                                 |
+|                                                       |
+| OK                                                    |
++-------------------------------------------------------+
 ```
 
-### 預期輸出：
-所有 8 個測試都應該顯示 `ok`，最後出現 `OK` 表示全部通過。
+### Expected Output:
+All 8 tests should show `ok`, with a final `OK` indicating everything passed.
 
-## 💻 步驟 5：建立前端介面
+## Step 5: Build the Frontend Interface
 
-在 Claude Code 中：
+In Claude Code:
 
 ```
-> 幫我建立一個簡潔美觀的任務管理前端介面
-  使用純 HTML + CSS + JavaScript，不需要任何框架
+> Help me create a clean, attractive task management frontend interface
+  using pure HTML + CSS + JavaScript, no frameworks needed
 ```
 
 ### frontend/index.html
 
 ```html
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Task Manager — 我的任務管理</title>
-  <!-- 引入 CSS 樣式 -->
+  <title>Task Manager</title>
+  <!-- Import CSS styles -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <!-- 標題區 -->
+    <!-- Header section -->
     <header>
       <h1>Task Manager</h1>
-      <p>用 Claude Code 打造的任務管理系統</p>
+      <p>A task management system built with Claude Code</p>
     </header>
 
-    <!-- 新增任務區 -->
+    <!-- Add task section -->
     <div class="add-task">
       <input
         type="text"
         id="taskInput"
-        placeholder="輸入新任務..."
+        placeholder="Enter a new task..."
         autofocus
       >
-      <button id="addBtn" onclick="addTask()">新增</button>
+      <button id="addBtn" onclick="addTask()">Add</button>
     </div>
 
-    <!-- 篩選按鈕 -->
+    <!-- Filter buttons -->
     <div class="filters">
-      <button class="filter-btn active" onclick="filterTasks('all')">全部</button>
-      <button class="filter-btn" onclick="filterTasks('active')">進行中</button>
-      <button class="filter-btn" onclick="filterTasks('completed')">已完成</button>
+      <button class="filter-btn active" onclick="filterTasks('all')">All</button>
+      <button class="filter-btn" onclick="filterTasks('active')">Active</button>
+      <button class="filter-btn" onclick="filterTasks('completed')">Completed</button>
     </div>
 
-    <!-- 任務列表 -->
+    <!-- Task list -->
     <ul id="taskList" class="task-list">
-      <!-- 任務項目會由 JavaScript 動態生成 -->
+      <!-- Task items are dynamically generated by JavaScript -->
     </ul>
 
-    <!-- 統計資訊 -->
+    <!-- Statistics -->
     <div class="stats">
-      <span id="taskCount">0 個任務</span>
-      <button id="clearCompleted" onclick="clearCompleted()">清除已完成</button>
+      <span id="taskCount">0 tasks</span>
+      <button id="clearCompleted" onclick="clearCompleted()">Clear completed</button>
     </div>
   </div>
 
-  <!-- 引入 JavaScript -->
+  <!-- Import JavaScript -->
   <script src="app.js"></script>
 </body>
 </html>
@@ -511,7 +516,7 @@ python -m unittest tests/test_task_manager.py -v
 ### frontend/style.css
 
 ```css
-/* 全域樣式重置 */
+/* Global style reset */
 * {
   margin: 0;
   padding: 0;
@@ -528,7 +533,7 @@ body {
   padding: 40px 20px;
 }
 
-/* 主容器 */
+/* Main container */
 .container {
   background: white;
   border-radius: 16px;
@@ -538,7 +543,7 @@ body {
   max-width: 520px;
 }
 
-/* 標題 */
+/* Header */
 header {
   text-align: center;
   margin-bottom: 24px;
@@ -555,7 +560,7 @@ header p {
   margin-top: 4px;
 }
 
-/* 新增任務區域 */
+/* Add task area */
 .add-task {
   display: flex;
   gap: 8px;
@@ -591,7 +596,7 @@ header p {
   background: #006d6d;
 }
 
-/* 篩選按鈕 */
+/* Filter buttons */
 .filters {
   display: flex;
   gap: 8px;
@@ -614,7 +619,7 @@ header p {
   color: white;
 }
 
-/* 任務列表 */
+/* Task list */
 .task-list {
   list-style: none;
 }
@@ -665,7 +670,7 @@ header p {
   background: #ffeaea;
 }
 
-/* 統計區域 */
+/* Statistics area */
 .stats {
   display: flex;
   justify-content: space-between;
@@ -687,7 +692,7 @@ header p {
   color: #e74c3c;
 }
 
-/* 空狀態提示 */
+/* Empty state message */
 .empty-state {
   text-align: center;
   padding: 40px;
@@ -700,79 +705,79 @@ header p {
 
 ```javascript
 /**
- * app.js — 任務管理前端邏輯
- * 使用 localStorage 來儲存任務資料（前端版本）
+ * app.js -- Task management frontend logic
+ * Uses localStorage to store task data (frontend version)
  */
 
-// 從 localStorage 讀取任務，如果沒有就用空陣列
+// Load tasks from localStorage, or use an empty array if none exist
 let tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
 
-// 目前的篩選狀態
+// Current filter state
 let currentFilter = "all";
 
 /**
- * 新增任務
+ * Add a task
  */
 function addTask() {
-  // 取得輸入框的內容
+  // Get the input field content
   const input = document.getElementById("taskInput");
-  const title = input.value.trim();  // trim() 去掉前後空白
+  const title = input.value.trim();  // trim() removes leading/trailing whitespace
 
-  // 如果是空白就不新增
+  // Don't add if it's empty
   if (!title) return;
 
-  // 建立新任務物件
+  // Create a new task object
   const task = {
-    id: Date.now(),  // 用時間戳當作唯一 ID
+    id: Date.now(),  // Use timestamp as unique ID
     title: title,
     completed: false,
-    created_at: new Date().toLocaleString("zh-TW")
+    created_at: new Date().toLocaleString("en-AU")
   };
 
-  // 加到陣列
+  // Add to the array
   tasks.push(task);
 
-  // 儲存到 localStorage
+  // Save to localStorage
   saveTasks();
 
-  // 清空輸入框並重新聚焦
+  // Clear the input and refocus
   input.value = "";
   input.focus();
 
-  // 重新渲染畫面
+  // Re-render the display
   renderTasks();
 }
 
 /**
- * 切換任務完成狀態
+ * Toggle a task's completion status
  */
 function toggleTask(id) {
-  // 找到對應的任務
+  // Find the matching task
   const task = tasks.find(t => t.id === id);
   if (task) {
-    task.completed = !task.completed;  // 切換狀態
+    task.completed = !task.completed;  // Toggle the status
     saveTasks();
     renderTasks();
   }
 }
 
 /**
- * 刪除任務
+ * Delete a task
  */
 function deleteTask(id) {
-  // 過濾掉要刪除的任務
+  // Filter out the task to delete
   tasks = tasks.filter(t => t.id !== id);
   saveTasks();
   renderTasks();
 }
 
 /**
- * 篩選任務
+ * Filter tasks
  */
 function filterTasks(filter) {
   currentFilter = filter;
 
-  // 更新篩選按鈕的樣式
+  // Update filter button styles
   document.querySelectorAll(".filter-btn").forEach(btn => {
     btn.classList.remove("active");
   });
@@ -782,7 +787,7 @@ function filterTasks(filter) {
 }
 
 /**
- * 清除所有已完成的任務
+ * Clear all completed tasks
  */
 function clearCompleted() {
   tasks = tasks.filter(t => !t.completed);
@@ -791,20 +796,20 @@ function clearCompleted() {
 }
 
 /**
- * 儲存任務到 localStorage
+ * Save tasks to localStorage
  */
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 /**
- * 渲染任務列表到畫面
+ * Render the task list to the screen
  */
 function renderTasks() {
   const list = document.getElementById("taskList");
   const count = document.getElementById("taskCount");
 
-  // 根據篩選條件過濾任務
+  // Filter tasks based on the current filter
   let filtered = tasks;
   if (currentFilter === "active") {
     filtered = tasks.filter(t => !t.completed);
@@ -812,11 +817,11 @@ function renderTasks() {
     filtered = tasks.filter(t => t.completed);
   }
 
-  // 如果沒有任務，顯示空狀態
+  // If there are no tasks, show the empty state
   if (filtered.length === 0) {
-    list.innerHTML = '<li class="empty-state">目前沒有任務，新增一個吧！</li>';
+    list.innerHTML = '<li class="empty-state">No tasks yet. Add one!</li>';
   } else {
-    // 產生每個任務的 HTML
+    // Generate the HTML for each task
     list.innerHTML = filtered.map(task => `
       <li class="task-item ${task.completed ? 'completed' : ''}">
         <input
@@ -831,13 +836,13 @@ function renderTasks() {
     `).join("");
   }
 
-  // 更新統計
+  // Update statistics
   const activeCount = tasks.filter(t => !t.completed).length;
-  count.textContent = `${activeCount} 個待完成 / 共 ${tasks.length} 個任務`;
+  count.textContent = `${activeCount} remaining / ${tasks.length} total tasks`;
 }
 
 /**
- * 防止 XSS 攻擊：轉義 HTML 特殊字元
+ * Prevent XSS attacks: escape HTML special characters
  */
 function escapeHtml(text) {
   const div = document.createElement("div");
@@ -845,185 +850,186 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-// 監聽 Enter 鍵，按下時新增任務
+// Listen for the Enter key to add a task
 document.getElementById("taskInput").addEventListener("keypress", function(e) {
   if (e.key === "Enter") {
     addTask();
   }
 });
 
-// 頁面載入時渲染任務列表
+// Render the task list when the page loads
 renderTasks();
 ```
 
-### 預期輸出：
-在瀏覽器中打開 `frontend/index.html`，你會看到一個美觀的任務管理介面，可以新增、完成、刪除任務。
+### Expected Output:
+Open `frontend/index.html` in a browser and you'll see an attractive task management interface where you can add, complete, and delete tasks.
 
-## 💻 步驟 6：Git 版本控制
+## Step 6: Git Version Control
 
 ```bash
-# 初始化 Git 倉庫
+# Initialise a Git repository
 cd ~/task-manager
 git init
 
-# 建立 .gitignore
+# Create .gitignore
 cat > .gitignore << 'EOF'
-# 測試產生的臨時檔案
+# Temporary files generated by tests
 backend/test_tasks.json
 
-# 系統檔案
+# System files
 .DS_Store
 Thumbs.db
 
-# IDE 設定
+# IDE settings
 .vscode/
 .idea/
 EOF
 
-# 加入所有檔案
+# Add all files
 git add CLAUDE.md .gitignore
 git add frontend/ backend/task_manager.py backend/tasks.json tests/
 
-# 第一次提交
+# First commit
 git commit -m "feat: initial task manager project with frontend, backend, and tests"
 ```
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌───────────────────────────────────────────────────────┐
-│ $ git commit -m "feat: initial task manager..."       │
-│                                                       │
-│ [main (root-commit) abc1234] feat: initial task       │
-│  manager project with frontend, backend, and tests    │
-│  8 files changed, 350 insertions(+)                   │
-│  create mode 100644 .gitignore                        │
-│  create mode 100644 CLAUDE.md                         │
-│  create mode 100644 backend/task_manager.py           │
-│  create mode 100644 backend/tasks.json                │
-│  create mode 100644 frontend/app.js                   │
-│  create mode 100644 frontend/index.html               │
-│  create mode 100644 frontend/style.css                │
-│  create mode 100644 tests/test_task_manager.py        │
-└───────────────────────────────────────────────────────┘
++-------------------------------------------------------+
+| $ git commit -m "feat: initial task manager..."       |
+|                                                       |
+| [main (root-commit) abc1234] feat: initial task       |
+|  manager project with frontend, backend, and tests    |
+|  8 files changed, 350 insertions(+)                   |
+|  create mode 100644 .gitignore                        |
+|  create mode 100644 CLAUDE.md                         |
+|  create mode 100644 backend/task_manager.py           |
+|  create mode 100644 backend/tasks.json                |
+|  create mode 100644 frontend/app.js                   |
+|  create mode 100644 frontend/index.html               |
+|  create mode 100644 frontend/style.css                |
+|  create mode 100644 tests/test_task_manager.py        |
++-------------------------------------------------------+
 ```
 
-## 💻 步驟 7：部署到 GitHub Pages
+## Step 7: Deploy to GitHub Pages
 
 ```bash
-# 在 GitHub 建立新倉庫（用 gh CLI）
+# Create a new repository on GitHub (using gh CLI)
 gh repo create task-manager --public --source=. --push
 
-# GitHub Pages 只需要前端檔案
-# 我們可以把 frontend/ 的內容部署到 gh-pages 分支
+# GitHub Pages only needs the frontend files
+# We can deploy the contents of frontend/ to a gh-pages branch
 
-# 安裝 gh-pages 工具（如果你有 Node.js）
-# 或者手動操作：
+# Install the gh-pages tool (if you have Node.js)
+# Or do it manually:
 
-# 建立 gh-pages 分支
+# Create the gh-pages branch
 git checkout --orphan gh-pages
 
-# 只保留前端檔案
+# Keep only the frontend files
 git rm -rf .
 cp -r frontend/* .
 git add index.html style.css app.js
 
-# 提交並推送
+# Commit and push
 git commit -m "deploy: frontend to GitHub Pages"
 git push origin gh-pages
 
-# 回到 main 分支
+# Switch back to the main branch
 git checkout main
 ```
 
-然後在 GitHub 倉庫設定中：
-1. 前往 Settings > Pages
-2. Source 選擇 `gh-pages` 分支
-3. 等待幾分鐘，你的網站就上線了！
+Then in the GitHub repository settings:
+1. Go to Settings > Pages
+2. Set Source to the `gh-pages` branch
+3. Wait a few minutes and your site will be live!
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌───────────────────────────────────────────────────────┐
-│ 你的網站已上線！                                       │
-│                                                       │
-│ https://你的用戶名.github.io/task-manager/             │
-│                                                       │
-│ 打開瀏覽器，你會看到你親手建立的任務管理系統！           │
-└───────────────────────────────────────────────────────┘
++-------------------------------------------------------+
+| Your site is live!                                    |
+|                                                       |
+| https://your-username.github.io/task-manager/         |
+|                                                       |
+| Open a browser to see the task management system      |
+| you built with your own hands!                        |
++-------------------------------------------------------+
 ```
 
-### 預期輸出：
-你會得到一個公開的網址，任何人都可以造訪你的任務管理系統。
+### Expected Output:
+You'll get a public URL that anyone can visit to use your task management system.
 
-## ✍️ 動手練習
+## Hands-On Exercises
 
-### 練習 1：新增功能
-用 Claude Code 為你的任務管理系統新增一個功能。以下是一些點子：
-- 任務優先級（高/中/低）
-- 任務分類標籤
-- 搜尋任務功能
-- 深色模式切換
+### Exercise 1: Add a New Feature
+Use Claude Code to add a new feature to your task management system. Here are some ideas:
+- Task priority levels (High / Medium / Low)
+- Task category labels
+- Search functionality
+- Dark mode toggle
 
-> 💡 提示：在 Claude Code 中描述你想要的功能，讓它幫你修改對應的檔案。別忘了也要更新測試！
+> Tip: Describe the feature you want in Claude Code and let it modify the appropriate files. Don't forget to update the tests too!
 
-### 練習 2：完善 CLAUDE.md
-根據你新增的功能，更新 CLAUDE.md 的內容，讓它反映專案的最新狀態。
+### Exercise 2: Improve CLAUDE.md
+Based on the features you've added, update the CLAUDE.md to reflect the project's current state.
 
-> 💡 提示：好的 CLAUDE.md 會隨著專案一起成長。每當你新增功能或改變架構，都應該更新它。
+> Tip: A good CLAUDE.md grows with the project. Whenever you add features or change the architecture, you should update it.
 
-## ❓ 小測驗（3 條題目）
+## Quiz (3 Questions)
 
-1. 為什麼我們要把前端和後端分開放在不同的目錄？
-   A. 這樣檔案看起來比較多
-   B. 方便分別維護、測試和部署各個組件
-   C. Python 不能和 HTML 放在一起
-   D. GitHub 的要求
-   答案：B — 分離前後端是軟體工程的最佳實踐。這樣你可以獨立地開發、測試和部署每個組件，也更容易讓團隊分工合作。
+1. Why do we put the frontend and backend in separate directories?
+   A. To make it look like there are more files
+   B. To make it easier to maintain, test, and deploy each component independently
+   C. Python can't be placed alongside HTML
+   D. It's a GitHub requirement
+   Answer: B -- Separating frontend and backend is a software engineering best practice. This lets you independently develop, test, and deploy each component, and makes it easier for teams to divide work.
 
-2. 為什麼測試中要使用 setUp() 和 tearDown() 方法？
-   A. 這是 Python 的語法要求
-   B. 確保每個測試都在乾淨的環境中執行，互不影響
-   C. 讓測試跑得更快
-   D. 裝飾性的，沒有實際作用
-   答案：B — setUp() 在每個測試前建立乾淨的環境，tearDown() 在測試後清理。這確保測試之間互不干擾，每個測試都是獨立可靠的。
+2. Why do we use setUp() and tearDown() methods in tests?
+   A. It's a Python syntax requirement
+   B. To ensure each test runs in a clean environment without affecting others
+   C. To make the tests run faster
+   D. They're decorative and have no practical function
+   Answer: B -- setUp() creates a clean environment before each test, and tearDown() cleans up afterwards. This ensures tests don't interfere with each other, making each test independent and reliable.
 
-3. GitHub Pages 主要用來部署什麼類型的內容？
-   A. Python 後端程式
-   B. 資料庫
-   C. 靜態網頁（HTML/CSS/JS）
-   D. Docker 容器
-   答案：C — GitHub Pages 是一個靜態網頁託管服務，適合部署 HTML、CSS、JavaScript 等前端檔案。後端程式需要其他服務（如 AWS、Heroku）來部署。
+3. What type of content is GitHub Pages primarily used to deploy?
+   A. Python backend programs
+   B. Databases
+   C. Static web pages (HTML/CSS/JS)
+   D. Docker containers
+   Answer: C -- GitHub Pages is a static web hosting service, suitable for deploying HTML, CSS, JavaScript, and other frontend files. Backend programs need other services (like AWS or Heroku) for deployment.
 
-## 🔗 下一步
+## Next Steps
 
-### 恭喜你完成了整個課程！
+### Congratulations on Completing the Entire Course!
 
-你從一個完全不懂程式的初學者，一路走到了這裡，建立了一個包含前端、後端、測試、版本控制和部署的完整專案。這不是一件小事——你應該為自己感到驕傲！
+You started as a complete beginner with no programming experience and made it all the way here, building a complete project with a frontend, backend, tests, version control, and deployment. That's no small feat -- you should be proud of yourself!
 
-### 回顧你學到的所有技能
+### A Review of Everything You've Learned
 
-| Phase | 主題 | 你學會了什麼 |
-|-------|------|-------------|
-| **Phase 1** | 入門基礎 | 安裝 Claude Code、下達指令、瀏覽檔案系統 |
-| **Phase 2** | 檔案與設定 | CLAUDE.md 設定、編輯檔案、Git 版本控制 |
-| **Phase 3** | 腳本與品質 | 撰寫腳本、除錯技巧、自動化測試 |
-| **Phase 4** | 實戰應用 | 網頁開發、API 整合、資料處理、部署 |
-| **Phase 5** | 進階技巧 | MCP 伺服器、Hooks 自動化、團隊協作、完整專案 |
+| Phase | Topic | What You Learned |
+|-------|-------|-----------------|
+| **Phase 1** | Getting Started | Installing Claude Code, giving instructions, navigating the file system |
+| **Phase 2** | Files and Configuration | CLAUDE.md setup, editing files, Git version control |
+| **Phase 3** | Scripts and Quality | Writing scripts, debugging techniques, automated testing |
+| **Phase 4** | Real-World Applications | Web development, API integration, data processing, deployment |
+| **Phase 5** | Advanced Techniques | MCP servers, Hooks automation, team collaboration, complete projects |
 
-### 繼續學習的方向
+### Directions for Further Learning
 
-你已經有了堅實的基礎，以下是一些值得探索的方向：
+You now have a solid foundation. Here are some directions worth exploring:
 
-1. **深入前端開發** — 學習 React、Vue 或 Svelte 框架
-2. **後端開發** — 學習 Flask、Django 或 Express.js 建立 API 伺服器
-3. **資料庫** — 從 JSON 檔案進階到 SQLite、PostgreSQL
-4. **雲端部署** — 學習 AWS、Google Cloud 或 Vercel
-5. **AI 整合** — 使用 Claude API 為你的應用加入 AI 功能
-6. **開源貢獻** — 在 GitHub 上尋找有趣的開源專案參與貢獻
+1. **Deep dive into frontend development** -- Learn React, Vue, or Svelte frameworks
+2. **Backend development** -- Learn Flask, Django, or Express.js to build API servers
+3. **Databases** -- Graduate from JSON files to SQLite and PostgreSQL
+4. **Cloud deployment** -- Learn AWS, Google Cloud, or Vercel
+5. **AI integration** -- Use the Claude API to add AI capabilities to your apps
+6. **Open source contributions** -- Find interesting open source projects on GitHub to contribute to
 
-### 最重要的一件事
+### The Most Important Takeaway
 
-工具會更新，技術會變化，但你學到的**思考方式**和**解決問題的能力**是永遠的。
+Tools will be updated and technologies will change, but the **way of thinking** and **problem-solving ability** you've developed will last forever.
 
-Claude Code 是你的助手，但真正的創造者是你。繼續保持好奇心，繼續動手實踐，繼續用技術解決真實的問題。
+Claude Code is your assistant, but the true creator is you. Keep being curious, keep building things, and keep using technology to solve real problems.
 
-**你已經是一位有能力的開發者了。去創造屬於你的東西吧！**
+**You are now a capable developer. Go create something of your own!**

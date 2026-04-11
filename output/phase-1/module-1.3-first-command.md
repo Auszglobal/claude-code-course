@@ -1,275 +1,278 @@
-# 模塊 1.3：第一個指令
+# Module 1.3: Your First Command
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 成功啟動 Claude Code
-  - 理解 Claude Code 介面的各個部分
-  - 用自然語言給 Claude Code 下達第一個指令
-  - 理解並操作權限系統（允許 / 拒絕）
-  - 正確退出 Claude Code
-
----
-
-## 📖 理論解釋
-
-### Claude Code 的運作方式
-
-Claude Code 就像你僱了一位超級助理坐在你旁邊。你只需要**用日常語言告訴它你想做什麼**，它就會幫你完成。
-
-比如你說：「幫我建立一個叫做 hello.txt 的檔案，裡面寫上 Hello World」——Claude Code 就會幫你做到。你不需要記住任何程式碼或指令。
-
-### 權限系統：為什麼 Claude Code 會問你「可以嗎？」
-
-想像一下：你的助理在幫你整理辦公室時，每次要動你的文件，都會先問：「我可以打開這個抽屜嗎？」這就是 Claude Code 的**權限系統**。
-
-Claude Code 在執行任何會**改變你電腦上檔案**的操作之前，都會先問你是否允許。這是一個安全機制，確保它不會意外修改或刪除你的重要檔案。
-
-你有三種選擇：
-- **Allow（允許）**：「好的，執行這個操作」
-- **Allow always（永遠允許）**：「這類操作以後都不用問我了」
-- **Deny（拒絕）**：「不要執行這個操作」
+## Learning Objectives
+- After completing this lesson, you will be able to:
+  - Successfully launch Claude Code
+  - Understand the different parts of the Claude Code interface
+  - Give Claude Code your first command using natural language
+  - Understand and operate the permission system (allow / deny)
+  - Properly exit Claude Code
 
 ---
 
-## 💻 代碼示例 1：啟動 Claude Code 並認識介面
+## Theory
 
-### 第一步：建立練習資料夾
+### How Claude Code Works
 
-在開始之前，我們先建立一個專門用來練習的資料夾：
+Claude Code is like having a super assistant sitting right next to you. You just need to **tell it what you want to do in everyday language**, and it will take care of it.
 
-**Windows**（命令提示字元）：
+For example, if you say: "Create a file called hello.txt with the content Hello World" -- Claude Code will do exactly that. You don't need to memorise any code or commands.
+
+### The Permission System: Why Claude Code Asks "Can I?"
+
+Imagine this: your assistant is helping you organise your office, and every time they need to touch your documents, they ask first: "Can I open this drawer?" That's Claude Code's **permission system**.
+
+Before performing any operation that **modifies files on your computer**, Claude Code will ask whether you allow it. This is a safety mechanism that ensures it won't accidentally modify or delete your important files.
+
+You have three choices:
+- **Allow**: "Go ahead, perform this action"
+- **Allow always**: "Don't ask me about this type of action in the future"
+- **Deny**: "Don't perform this action"
+
+---
+
+## Code Example 1: Launching Claude Code and Getting to Know the Interface
+
+### Step 1: Create a Practice Folder
+
+Before we begin, let's create a folder specifically for practice:
+
+**Windows** (Command Prompt):
 ```bash
-# 建立練習資料夾
+# Create a practice folder
 mkdir C:\claude-practice
 
-# 進入這個資料夾
+# Navigate to this folder
 cd C:\claude-practice
 ```
 
-**Mac**（Terminal）：
+**Mac** (Terminal):
 ```bash
-# 建立練習資料夾
+# Create a practice folder
 mkdir ~/claude-practice
 
-# 進入這個資料夾
+# Navigate to this folder
 cd ~/claude-practice
 ```
 
-### 第二步：啟動 Claude Code
+### Step 2: Launch Claude Code
 
-在終端機中輸入：
+Type the following in the terminal:
 ```bash
-# 啟動 Claude Code
+# Launch Claude Code
 claude
 ```
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌──────────────────────────────────────────────────┐
-│                                                  │
-│  ╔═══════════════════════════════════════╗        │
-│  ║  Claude Code                         ║        │
-│  ║  v1.0.x                              ║        │
-│  ╚═══════════════════════════════════════╝        │
-│                                                  │
-│  Tips:                                           │
-│  - Use Claude to edit files, run commands,       │
-│    and answer questions about your codebase      │
-│  - Be specific about what you want               │
-│  - Type /help for available commands              │
-│                                                  │
-│  cwd: C:\claude-practice                         │
-│                                                  │
-│  >                                               │
-│  ↑ 這就是你的輸入區，在這裡打字                      │
-└──────────────────────────────────────────────────┘
++--------------------------------------------------+
+|                                                  |
+|  +=======================================+       |
+|  |  Claude Code                         |        |
+|  |  v1.0.x                              |        |
+|  +=======================================+       |
+|                                                  |
+|  Tips:                                           |
+|  - Use Claude to edit files, run commands,       |
+|    and answer questions about your codebase      |
+|  - Be specific about what you want               |
+|  - Type /help for available commands              |
+|                                                  |
+|  cwd: C:\claude-practice                         |
+|                                                  |
+|  >                                               |
+|  ^ This is where you type, your input area       |
++--------------------------------------------------+
 ```
 
-### 認識介面的各個部分
+### Understanding the Interface
 
-| 區域 | 說明 |
-|------|------|
-| 標題區 | 顯示 Claude Code 的版本號碼 |
-| Tips 區 | 一些有用的使用提示 |
-| `cwd` | 目前的工作目錄（Claude Code 正在「看」的資料夾） |
-| `>` 提示符號 | 你在這裡輸入指令 |
+| Area | Description |
+|------|-------------|
+| Title area | Shows the Claude Code version number |
+| Tips area | Helpful usage tips |
+| `cwd` | The current working directory (the folder Claude Code is "looking at") |
+| `>` prompt | Where you type your commands |
 
-### 預期輸出：
-啟動成功後，你會看到版本資訊、使用提示，以及一個等待你輸入的 `>` 符號。
+### Expected Output:
+After a successful launch, you'll see version information, usage tips, and a `>` prompt waiting for your input.
 
 ---
 
-## 💻 代碼示例 2：下達你的第一個指令
+## Code Example 2: Giving Your First Command
 
-### 讓 Claude Code 建立一個文字檔
+### Have Claude Code Create a Text File
 
-現在，在 `>` 提示符號後面，輸入以下內容（就像跟人說話一樣）：
-
-```
-建立一個叫做 hello.txt 的檔案，裡面寫上「你好，我是用 Claude Code 建立的第一個檔案！」
-```
-
-按下 **Enter** 送出。
-
-📸 [你應該看到的畫面]
-```
-┌──────────────────────────────────────────────────┐
-│  > 建立一個叫做 hello.txt 的檔案，裡面寫上         │
-│    「你好，我是用 Claude Code 建立的第一個檔案！」    │
-│                                                  │
-│  Claude Code 正在思考...                          │
-│                                                  │
-│  我來幫你建立這個檔案。                              │
-│                                                  │
-│  ┌─ Write file: hello.txt ────────────────────┐  │
-│  │ 你好，我是用 Claude Code 建立的第一個檔案！  │  │
-│  └────────────────────────────────────────────┘  │
-│                                                  │
-│  ⚡ Allow this action?                           │
-│  [Y] Allow  [A] Allow always  [N] Deny           │
-│                                                  │
-└──────────────────────────────────────────────────┘
-```
-
-### 第二步：回應權限請求
-
-Claude Code 正在問你：「我可以建立這個檔案嗎？」
-
-按下 **Y**（或直接按 Enter，因為 Allow 通常是預設選項）。
-
-📸 [操作完成後你會看到]
-```
-┌──────────────────────────────────────────────────┐
-│  ✓ File created: hello.txt                       │
-│                                                  │
-│  我已經建立了 hello.txt 檔案，內容是：               │
-│  「你好，我是用 Claude Code 建立的第一個檔案！」      │
-│                                                  │
-│  >                                               │
-│  ↑ 準備好接受你的下一個指令了                        │
-└──────────────────────────────────────────────────┘
-```
-
-### 第三步：驗證檔案真的被建立了
-
-在 Claude Code 的提示符號中繼續輸入：
+Now, after the `>` prompt, type the following (just like talking to a person):
 
 ```
-讀取 hello.txt 的內容給我看
+Create a file called hello.txt with the content "Hello, this is my first file created with Claude Code!"
 ```
 
-### 預期輸出：
-Claude Code 會顯示檔案的內容：「你好，我是用 Claude Code 建立的第一個檔案！」
+Press **Enter** to send.
 
-你也可以離開 Claude Code 後，在檔案總管（Windows）或 Finder（Mac）中找到這個檔案，用記事本或文字編輯器打開它來驗證。
+[What you should see]
+```
++--------------------------------------------------+
+|  > Create a file called hello.txt with the       |
+|    content "Hello, this is my first file created  |
+|    with Claude Code!"                            |
+|                                                  |
+|  Claude Code is thinking...                      |
+|                                                  |
+|  I'll create that file for you.                  |
+|                                                  |
+|  +-- Write file: hello.txt -------------------+  |
+|  | Hello, this is my first file created with   |  |
+|  | Claude Code!                                |  |
+|  +---------------------------------------------+ |
+|                                                  |
+|  Allow this action?                              |
+|  [Y] Allow  [A] Allow always  [N] Deny           |
+|                                                  |
++--------------------------------------------------+
+```
+
+### Step 2: Respond to the Permission Request
+
+Claude Code is asking you: "Can I create this file?"
+
+Press **Y** (or just press Enter, since Allow is usually the default option).
+
+[After the action completes, you'll see]
+```
++--------------------------------------------------+
+|  File created: hello.txt                         |
+|                                                  |
+|  I've created hello.txt with the content:        |
+|  "Hello, this is my first file created with      |
+|  Claude Code!"                                   |
+|                                                  |
+|  >                                               |
+|  ^ Ready for your next command                   |
++--------------------------------------------------+
+```
+
+### Step 3: Verify the File Was Actually Created
+
+Continue typing at the Claude Code prompt:
+
+```
+Read the contents of hello.txt and show me
+```
+
+### Expected Output:
+Claude Code will display the file's contents: "Hello, this is my first file created with Claude Code!"
+
+You can also exit Claude Code and find the file in File Explorer (Windows) or Finder (Mac), then open it with Notepad or a text editor to verify.
 
 ---
 
-### 更多你可以嘗試的指令
+### More Commands You Can Try
 
-以下是一些適合初學者的簡單指令：
-
-```
-幫我建立一個叫 notes.txt 的檔案，寫上今天的日期和「開始學習 Claude Code」
-```
+Here are some simple commands suitable for beginners:
 
 ```
-告訴我目前這個資料夾裡有哪些檔案
+Create a file called notes.txt, write today's date and "Started learning Claude Code"
 ```
 
 ```
-幫我把 hello.txt 的內容改成「Hello World! 我已經學會用 Claude Code 了！」
+Tell me what files are currently in this folder
 ```
 
-每一個指令都會遵循同樣的流程：
-1. 你用自然語言描述需求
-2. Claude Code 理解並準備執行
-3. 如果涉及檔案操作，它會問你是否允許
-4. 你確認後，操作完成
+```
+Change the content of hello.txt to "Hello World! I've learned how to use Claude Code!"
+```
+
+Every command follows the same flow:
+1. You describe your request in natural language
+2. Claude Code understands and prepares to execute
+3. If it involves file operations, it asks for your permission
+4. You confirm, and the action is completed
 
 ---
 
-### 如何退出 Claude Code
+### How to Exit Claude Code
 
-當你想結束使用 Claude Code，有幾種方式：
+When you want to stop using Claude Code, there are a few ways:
 
 ```
-# 方法一：輸入退出指令
+# Method 1: Type the exit command
 /exit
 ```
 
 ```
-# 方法二：使用鍵盤快捷鍵
-Ctrl + C（按住 Ctrl 鍵，然後按 C）
+# Method 2: Use a keyboard shortcut
+Ctrl + C (hold Ctrl, then press C)
 ```
 
-📸 [退出後你會看到]
+[After exiting, you'll see]
 ```
-┌──────────────────────────────────────────┐
-│  Goodbye! Session ended.                 │
-│                                          │
-│  C:\claude-practice>                     │
-│  ↑ 回到了正常的命令提示字元                 │
-└──────────────────────────────────────────┘
++------------------------------------------+
+|  Goodbye! Session ended.                 |
+|                                          |
+|  C:\claude-practice>                     |
+|  ^ Back to the normal command prompt     |
++------------------------------------------+
 ```
 
 ---
 
-## ✍️ 動手練習
+## Hands-On Practice
 
-### 練習 1：建立你的自我介紹檔案
-1. 在 `claude-practice` 資料夾中啟動 Claude Code
-2. 請 Claude Code 建立一個叫做 `about-me.txt` 的檔案
-3. 檔案內容請包含你的名字和「我正在學習 Claude Code」
-4. 確認檔案建立成功後，請 Claude Code 讀取檔案內容
+### Exercise 1: Create Your Self-Introduction File
+1. Launch Claude Code in the `claude-practice` folder
+2. Ask Claude Code to create a file called `about-me.txt`
+3. The file should contain your name and "I am learning Claude Code"
+4. After confirming the file was created, ask Claude Code to read the file contents
 
-> 💡 **提示**：你可以用中文或英文下達指令，Claude Code 都能理解。
+> Tip: You can give commands in any language you're comfortable with -- Claude Code understands multiple languages.
 
-### 練習 2：修改檔案內容
-1. 請 Claude Code 在 `about-me.txt` 中加上一行：「今天是我學習的第一天」
-2. 請 Claude Code 讀取修改後的檔案，確認修改成功
+### Exercise 2: Modify File Contents
+1. Ask Claude Code to add a new line to `about-me.txt`: "Today is my first day of learning"
+2. Ask Claude Code to read the modified file to confirm the changes were successful
 
-> 💡 **提示**：你可以直接說「在 about-me.txt 的最後加上一行...」，Claude Code 會理解你的意思。
-
----
-
-## ❓ 小測驗（3 條題目）
-
-**1. 在 Claude Code 中，你需要用什麼方式下達指令？**
-
-A. 必須用英文的程式碼語法
-B. 用自然語言描述你想做什麼（中文或英文皆可）
-C. 必須記住特定的命令列指令
-D. 只能從選單中選擇操作
-
-答案：B — Claude Code 最大的優勢就是你可以用日常語言（中文或英文）告訴它你想做什麼，不需要學習任何程式碼或指令語法。
+> Tip: You can simply say "Add a line at the end of about-me.txt..." and Claude Code will understand what you mean.
 
 ---
 
-**2. 當 Claude Code 詢問「Allow this action?」時，你按下 [N] 會發生什麼？**
+## Quiz (3 Questions)
 
-A. Claude Code 會強制執行操作
-B. Claude Code 會取消這個操作，不做任何改變
-C. 你的電腦會關機
-D. Claude Code 會刪除所有檔案
+**1. In Claude Code, how do you give commands?**
 
-答案：B — 按下 N（Deny）代表拒絕這個操作。Claude Code 會聽從你的決定，不執行任何改變。你隨時可以拒絕任何你不確定的操作，這是一個重要的安全機制。
+A. You must use English programming syntax
+B. Describe what you want to do in natural language (any language works)
+C. You must memorise specific command-line commands
+D. You can only select operations from a menu
 
----
-
-**3. 以下哪種方式可以退出 Claude Code？**
-
-A. 關閉電腦
-B. 輸入 `/exit` 或按 `Ctrl + C`
-C. 拔掉網路線
-D. 只能等它自己關閉
-
-答案：B — 最常用的退出方式是輸入 `/exit` 或按鍵盤快捷鍵 `Ctrl + C`。這兩種方式都能安全地結束 Claude Code 的工作階段。
+Answer: B -- Claude Code's greatest advantage is that you can use everyday language to tell it what you want to do. You don't need to learn any code or command syntax.
 
 ---
 
-## 🔗 下一步
+**2. When Claude Code asks "Allow this action?" and you press [N], what happens?**
 
-太棒了！你已經成功地與 Claude Code 完成了第一次互動，建立了你的第一個檔案。
+A. Claude Code will force the action anyway
+B. Claude Code will cancel the action and make no changes
+C. Your computer will shut down
+D. Claude Code will delete all files
 
-在下一個模塊 **1.4：基本導航**中，我們會學習如何在不同的資料夾之間移動，讓 Claude Code 幫你瀏覽和管理電腦上的檔案。這就像學會在房子的不同房間之間走動——是使用 Claude Code 的重要基本功！
+Answer: B -- Pressing N (Deny) means rejecting the action. Claude Code will respect your decision and make no changes. You can always reject any action you're unsure about -- this is an important safety mechanism.
+
+---
+
+**3. Which of the following can be used to exit Claude Code?**
+
+A. Shut down the computer
+B. Type `/exit` or press `Ctrl + C`
+C. Unplug the network cable
+D. Wait for it to close on its own
+
+Answer: B -- The most common ways to exit are typing `/exit` or pressing the keyboard shortcut `Ctrl + C`. Both safely end the Claude Code session.
+
+---
+
+## Next Steps
+
+Excellent! You've successfully completed your first interaction with Claude Code and created your first file.
+
+In the next module, **1.4: Basic Navigation**, we'll learn how to move between different folders and have Claude Code help you browse and manage files on your computer. It's like learning to walk between different rooms in a house -- an essential foundational skill for using Claude Code!

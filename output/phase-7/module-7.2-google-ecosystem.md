@@ -1,113 +1,113 @@
-# 7.2 Google 生態系統整合
+# 7.2 Google Ecosystem Integration
 
-## 概覽
+## Overview
 
-Google 的工具套件是很多團隊的日常核心。Claude Code 和 Cowork 都可以與 Google 深度整合：
+Google's suite of tools is a daily essential for many teams. Both Claude Code and Cowork can deeply integrate with Google:
 
-| Google 服務 | Claude Code 方式 | Cowork 方式 |
-|-------------|------------------|-------------|
-| Google Sheets | `gspread` + 服務帳號 | Google Drive connector |
+| Google Service | Claude Code Approach | Cowork Approach |
+|----------------|---------------------|-----------------|
+| Google Sheets | `gspread` + service account | Google Drive connector |
 | Gmail | Gmail API + OAuth2 | Gmail connector |
-| Google Drive | API 或 CLI | Drive connector |
+| Google Drive | API or CLI | Drive connector |
 | Google Calendar | API | Calendar connector |
 
-## Google Sheets — 數據同步
+## Google Sheets — Data Sync
 
-### Claude Code 方式
+### Claude Code Approach
 
-使用 `gspread` Python 庫 + 服務帳號：
+Using the `gspread` Python library + service account:
 
 ```python
 import gspread
 from google.oauth2.service_account import Credentials
 
-# 認證
+# Authentication
 creds = Credentials.from_service_account_file(
     'google_credentials.json',
     scopes=['https://www.googleapis.com/auth/spreadsheets']
 )
 gc = gspread.authorize(creds)
 
-# 開啟試算表
+# Open spreadsheet
 sh = gc.open('AUSZ Bookings')
 worksheet = sh.sheet1
 
-# 讀取所有資料
+# Read all data
 data = worksheet.get_all_records()
 
-# 寫入資料
+# Write data
 worksheet.append_row(['2026-04-11', 'Sydney Airport', '$180'])
 ```
 
-### 應用場景
+### Use Cases
 
-- 自動同步訂單/預約到 Sheet
-- 從 Sheet 讀取配置和參數
-- 每月報表自動填入
+- Automatically sync orders/bookings to Sheets
+- Read configuration and parameters from Sheets
+- Auto-populate monthly reports
 
-## Gmail — 自動化郵件
+## Gmail — Email Automation
 
-### Claude Code 方式
+### Claude Code Approach
 
-使用 Gmail API + OAuth2：
+Using the Gmail API + OAuth2:
 
 ```python
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
-# 認證（需要 token.json）
+# Authentication (requires token.json)
 creds = Credentials.from_authorized_user_file('token.json')
 service = build('gmail', 'v1', credentials=creds)
 
-# 發送郵件
+# Send email
 message = create_message(
     sender='me',
     to='client@example.com',
-    subject='預約確認',
-    body='您的預約已確認...'
+    subject='Booking Confirmation',
+    body='Your booking has been confirmed...'
 )
 service.users().messages().send(userId='me', body=message).execute()
 ```
 
-### Cowork 方式
+### Cowork Approach
 
-直接在 Cowork 中：
+Directly in Cowork:
 ```
-連接 Gmail connector → "幫我回覆這封郵件，語氣保持專業"
+Connect Gmail connector → "Reply to this email, keep the tone professional"
 ```
 
-### 應用場景
+### Use Cases
 
-- 自動發送預約確認信
-- 批量發送報表和發票
-- 讀取郵件內容並分類處理
+- Automatically send booking confirmation emails
+- Batch send reports and invoices
+- Read email content and sort/process it
 
 ## Google Calendar
 
-### Cowork 方式（最簡單）
+### Cowork Approach (Simplest)
 
-1. 連接 Google Calendar connector
-2. 讓 Cowork 讀取今天的行程
-3. 結合每日晨間簡報工作流
+1. Connect the Google Calendar connector
+2. Have Cowork read today's schedule
+3. Combine it with the daily morning briefing workflow
 
-### Claude Code 方式
+### Claude Code Approach
 
-透過 Google Calendar API 或 MCP server：
+Via the Google Calendar API or MCP server:
 
 ```bash
-# 如果有 Google Calendar MCP server
-# Claude Code 可以直接查詢和建立事件
+# If you have a Google Calendar MCP server
+# Claude Code can directly query and create events
 ```
 
-## 安全注意事項
+## Security Considerations
 
-| 檔案 | 注意事項 |
-|------|----------|
-| `credentials.json` | OAuth2 客戶端密鑰 — **永不提交到 Git** |
-| `token.json` | 用戶授權 token — **永不提交到 Git** |
-| `google_credentials.json` | 服務帳號密鑰 — **永不提交到 Git** |
+| File | Notes |
+|------|-------|
+| `credentials.json` | OAuth2 client secret — **never commit to Git** |
+| `token.json` | User authorization token — **never commit to Git** |
+| `google_credentials.json` | Service account key — **never commit to Git** |
 
-在 `.gitignore` 中加入：
+Add to your `.gitignore`:
 ```
 credentials.json
 token.json
@@ -116,8 +116,8 @@ google_credentials.json
 
 ---
 
-## 練習
+## Exercises
 
-1. 設定 Google Sheets 整合，讓 Claude Code 讀取一個試算表
-2. 用 Gmail API 發送一封測試郵件
-3. 在 Cowork 中連接 Google Drive，比較兩種方式的便利性
+1. Set up Google Sheets integration and have Claude Code read a spreadsheet
+2. Send a test email using the Gmail API
+3. Connect Google Drive in Cowork and compare the convenience of both approaches

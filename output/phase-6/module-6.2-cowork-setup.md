@@ -1,57 +1,57 @@
-# 6.2 Cowork 環境設定與沙盒
+# 6.2 Cowork Environment Setup and Sandbox
 
-## 為什麼需要沙盒？
+## Why Do You Need a Sandbox?
 
-Cowork 會直接讀取和寫入你硬碟裡的檔案。把整個系統的存取權限都交給它，往往就是災難的開始。
+Cowork directly reads and writes files on your hard drive. Giving it access to your entire system is a recipe for disaster.
 
-> 所以，先把它限制在一個可控範圍內。
+> So, start by restricting it to a controlled space.
 
-## 四步設定流程
+## Four-Step Setup Process
 
-### 第一步：選擇模型
+### Step 1: Choose a Model
 
-在 Cowork 介面右側選擇執行任務的 AI 模型：
+Select the AI model for task execution on the right side of the Cowork interface:
 
-| 模型 | 用途 | 成本 |
-|------|------|------|
-| **Sonnet 4.6** | 主力模型，覆蓋 99% 日常需求 | 較低 |
-| **Opus 4.6** | 重型任務，複雜推理 | 很高 |
-| **Haiku** | 輕量小任務，追求速度 | 最低 |
+| Model | Use Case | Cost |
+|-------|----------|------|
+| **Sonnet 4.6** | Workhorse model, covers 99% of daily needs | Lower |
+| **Opus 4.6** | Heavy-duty tasks, complex reasoning | Very high |
+| **Haiku** | Lightweight tasks, optimized for speed | Lowest |
 
-**愛因斯坦原則**：別讓愛因斯坦去廚房打雜。99% 的時候你不需要 Opus。
+**The Einstein Principle**: Don't send Einstein to do kitchen chores. 99% of the time you don't need Opus.
 
-> 記得開啟 **Extended Thinking** — 讓 Claude 真正處理複雜邏輯，而不是靠模式匹配。
+> Remember to enable **Extended Thinking** — let Claude actually work through complex logic instead of relying on pattern matching.
 
-### 第二步：建立沙盒
+### Step 2: Create a Sandbox
 
-在桌面建立一個資料夾，命名為 `Claude Workspace` 或 `Sandbox`。這就是 Cowork 的工作區，資料夾之外的內容它碰不到。
+Create a folder on your desktop named `Claude Workspace` or `Sandbox`. This becomes Cowork's workspace — it can't touch anything outside this folder.
 
-### 第三步：授予資料夾權限
+### Step 3: Grant Folder Permissions
 
-進入 Cowork → 點選 **Work in a folder** → 選擇沙盒資料夾 → 點選 **Allow once** 或 **Always allow**。
+Go to Cowork → click **Work in a folder** → select the sandbox folder → click **Allow once** or **Always allow**.
 
-### 第四步：執行第一個任務
+### Step 4: Run Your First Task
 
-把十幾份不同類型的發票拖進沙盒，然後輸入：
+Drag a dozen invoices of different types into the sandbox, then type:
 
 ```
-請將這些發票按類別整理到不同的子資料夾中，並生成一份 Excel 彙總表。
+Please organize these invoices into subfolders by category and generate an Excel summary sheet.
 ```
 
-Cowork 會列出執行計劃，然後自主開始處理。
+Cowork will lay out its execution plan, then start processing autonomously.
 
-## 與 Claude Code 的對比
+## Comparison with Claude Code
 
-| 設定項 | Claude Code | Claude Cowork |
-|--------|-------------|---------------|
-| 工作目錄 | 終端 `cd` 到專案目錄 | 選擇沙盒資料夾 |
-| 權限控制 | `CLAUDE.md` + hooks | 資料夾權限 + blocklist |
-| 模型選擇 | CLI flag `--model` | 介面右側選擇 |
+| Setting | Claude Code | Claude Cowork |
+|---------|-------------|---------------|
+| Working directory | `cd` to project directory in terminal | Select sandbox folder |
+| Permission control | `CLAUDE.md` + hooks | Folder permissions + blocklist |
+| Model selection | CLI flag `--model` | Interface sidebar selection |
 
 ---
 
-## 練習
+## Exercises
 
-1. 在桌面建立一個 `Claude Workspace` 資料夾
-2. 在 Cowork 中連接這個資料夾
-3. 嘗試讓 Cowork 整理一個包含混合檔案的資料夾
+1. Create a `Claude Workspace` folder on your desktop
+2. Connect this folder in Cowork
+3. Try having Cowork organize a folder containing mixed file types

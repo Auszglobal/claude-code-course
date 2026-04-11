@@ -1,111 +1,111 @@
-# 模塊 2.3：搜尋與導航代碼庫 — 在文件海洋中找到你要的東西
+# Module 2.3: Searching and Navigating the Codebase -- Finding What You Need in a Sea of Files
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 使用檔名搜尋（Glob）找到特定類型的文件
-  - 使用內容搜尋（Grep）在文件內部找到特定文字
-  - 理解為什麼搜尋技能在真實項目中如此重要
-  - 組合「搜尋 + 讀取」的工作流程
-  - 讓 Claude Code 幫你在大型項目中快速定位資訊
+## Learning Objectives
+- After completing this lesson, you will be able to:
+  - Use filename search (Glob) to find specific types of files
+  - Use content search (Grep) to find specific text within files
+  - Understand why search skills are so important in real projects
+  - Combine "search + read" workflows
+  - Have Claude Code quickly locate information in large projects
 
-## 📖 理論解釋
+## Theory
 
-### 為什麼需要搜尋？
+### Why Do You Need Search?
 
-想像你搬進了一棟有 200 個房間的大房子。你知道你的護照「在某個房間的某個抽屜裡」，但你不記得確切在哪裡。
+Imagine you've moved into a huge house with 200 rooms. You know your passport is "in a drawer in some room," but you can't remember exactly where.
 
-你有兩個選擇：
-1. **一間一間房間找** — 可能要花好幾個小時
-2. **用對講機問管家** — 管家知道每樣東西在哪裡，幾秒就能告訴你
+You have two options:
+1. **Search room by room** -- could take hours
+2. **Ask the butler on the intercom** -- the butler knows where everything is and can tell you in seconds
 
-Claude Code 就是你的「管家」。真實的項目可能有幾百甚至幾千個文件，手動翻找幾乎不可能。但 Claude Code 可以在瞬間幫你找到任何東西。
+Claude Code is your "butler." Real projects can have hundreds or even thousands of files, making manual searching nearly impossible. But Claude Code can find anything for you in an instant.
 
-### 兩種搜尋方式
+### Two Types of Search
 
-| 搜尋方式 | 工具名稱 | 搜尋目標 | 比喻 |
-|----------|----------|----------|------|
-| 按檔名搜尋 | **Glob** | 文件的名字和位置 | 在圖書館的目錄中找一本書 |
-| 按內容搜尋 | **Grep** | 文件裡面的文字 | 在所有書的內容中搜尋一個關鍵詞 |
+| Search Method | Tool Name | Search Target | Analogy |
+|---------------|-----------|---------------|---------|
+| Search by filename | **Glob** | File names and locations | Looking up a book in the library catalogue |
+| Search by content | **Grep** | Text inside files | Searching for a keyword across all the books' contents |
 
-### Glob — 按檔名搜尋
+### Glob -- Search by Filename
 
-Glob 使用「通配符模式」（patterns）來匹配文件名。這聽起來很技術化，但其實很簡單：
+Glob uses "wildcard patterns" to match filenames. This sounds technical, but it's actually very simple:
 
-| 模式 | 意思 | 例子 |
-|------|------|------|
-| `*` | 任意字符（任意內容） | `*.txt` = 所有 .txt 文件 |
-| `**` | 任意層級的子資料夾 | `**/*.txt` = 所有資料夾中的 .txt 文件 |
-| `?` | 任意單個字符 | `file?.txt` = file1.txt, fileA.txt |
+| Pattern | Meaning | Example |
+|---------|---------|---------|
+| `*` | Any characters (anything) | `*.txt` = all .txt files |
+| `**` | Any level of subfolders | `**/*.txt` = .txt files in all folders |
+| `?` | Any single character | `file?.txt` = file1.txt, fileA.txt |
 
-想像 `*` 就像一張「萬用牌」。`*.txt` 的意思就是「名字是什麼都行，只要結尾是 .txt 就行」。
+Think of `*` as a "wildcard." `*.txt` means "the name can be anything, as long as it ends with .txt."
 
-### Grep — 按內容搜尋
+### Grep -- Search by Content
 
-Grep 在所有文件的內容中搜尋你指定的文字。
+Grep searches for specific text inside all files.
 
-比喻：你在一整架書中搜尋「Claude」這個詞。Grep 會告訴你：
+Analogy: you're searching an entire bookshelf for the word "Claude." Grep will tell you:
 
-- 「在 chapter1.txt 的第 15 行找到了」
-- 「在 notes.txt 的第 3 行找到了」
-- 「在 readme.md 的第 42 行找到了」
+- "Found it on line 15 of chapter1.txt"
+- "Found it on line 3 of notes.txt"
+- "Found it on line 42 of readme.md"
 
-你不需要一頁一頁翻，Grep 幫你瞬間完成。
+You don't need to flip through page by page -- Grep does it instantly.
 
-## 💻 代碼示例 1：建立練習用的文件結構
+## Code Example 1: Building Practice Files
 
-為了練習搜尋功能，我們先建立一個有多個文件的項目。啟動 Claude Code 後輸入：
+To practise the search feature, let's first create a project with multiple files. After launching Claude Code, type:
 
 ```
-請幫我在目前的資料夾中建立以下文件結構（一個模擬的食譜網站項目）：
+Please create the following file structure in the current folder (a simulated recipe website project):
 
 recipes/
 ├── breakfast/
-│   ├── pancakes.txt        （內容：鬆餅食譜，材料包含雞蛋、麵粉、牛奶）
-│   ├── omelette.txt        （內容：歐姆蛋食譜，材料包含雞蛋、起司、蘑菇）
-│   └── smoothie.txt        （內容：水果冰沙食譜，材料包含香蕉、牛奶、蜂蜜）
+│   ├── pancakes.txt        (content: Pancake recipe, ingredients include eggs, flour, milk)
+│   ├── omelette.txt        (content: Omelette recipe, ingredients include eggs, cheese, mushrooms)
+│   └── smoothie.txt        (content: Fruit smoothie recipe, ingredients include banana, milk, honey)
 ├── lunch/
-│   ├── sandwich.txt        （內容：三明治食譜，材料包含麵包、火腿、起司）
-│   └── salad.txt           （內容：沙拉食譜，材料包含生菜、番茄、橄欖油）
+│   ├── sandwich.txt        (content: Sandwich recipe, ingredients include bread, ham, cheese)
+│   └── salad.txt           (content: Salad recipe, ingredients include lettuce, tomato, olive oil)
 ├── dinner/
-│   ├── pasta.txt           （內容：義大利麵食譜，材料包含麵條、番茄醬、大蒜）
-│   └── stir-fry.txt        （內容：炒飯食譜，材料包含白飯、雞蛋、醬油）
-└── README.md               （內容：食譜收藏說明）
+│   ├── pasta.txt           (content: Pasta recipe, ingredients include noodles, tomato sauce, garlic)
+│   └── stir-fry.txt        (content: Fried rice recipe, ingredients include rice, eggs, soy sauce)
+└── README.md               (content: Recipe collection description)
 ```
 
-### 預期輸出：
+### Expected Output:
 
-Claude Code 會逐一建立這些資料夾和文件。完成後你的項目會有一個完整的食譜文件結構。
+Claude Code will create these folders and files one by one. When finished, your project will have a complete recipe file structure.
 
-📸 [你應該看到的畫面]
+[What you should see]
 ```
-┌──────────────────────────────────────────────┐
-│ Claude Code                                  │
-│                                              │
-│ ✓ 已建立目錄：recipes/breakfast/              │
-│ ✓ 已建立目錄：recipes/lunch/                  │
-│ ✓ 已建立目錄：recipes/dinner/                 │
-│ ✓ 已建立文件：recipes/breakfast/pancakes.txt  │
-│ ✓ 已建立文件：recipes/breakfast/omelette.txt  │
-│ ... （其他文件）                               │
-│                                              │
-│ 共建立了 3 個目錄和 8 個文件。                  │
-└──────────────────────────────────────────────┘
-```
-
-### 按檔名搜尋（Glob）
-
-現在讓我們來搜尋！輸入：
-
-```
-請找出 recipes 資料夾中所有的 .txt 文件
++----------------------------------------------+
+| Claude Code                                  |
+|                                              |
+| Created directory: recipes/breakfast/        |
+| Created directory: recipes/lunch/            |
+| Created directory: recipes/dinner/           |
+| Created file: recipes/breakfast/pancakes.txt |
+| Created file: recipes/breakfast/omelette.txt |
+| ... (other files)                            |
+|                                              |
+| Created 3 directories and 8 files in total.  |
++----------------------------------------------+
 ```
 
-### 預期輸出：
+### Searching by Filename (Glob)
 
-Claude Code 會列出所有匹配的文件：
+Now let's do some searching! Type:
 
 ```
-找到 7 個 .txt 文件：
+Please find all .txt files in the recipes folder
+```
+
+### Expected Output:
+
+Claude Code will list all matching files:
+
+```
+Found 7 .txt files:
 - recipes/breakfast/pancakes.txt
 - recipes/breakfast/omelette.txt
 - recipes/breakfast/smoothie.txt
@@ -115,128 +115,130 @@ Claude Code 會列出所有匹配的文件：
 - recipes/dinner/stir-fry.txt
 ```
 
-你還可以更精確地搜尋：
+You can also search more precisely:
 
 ```
-請找出 breakfast 資料夾裡的所有文件
+Please find all files in the breakfast folder
 ```
 
-這次只會顯示早餐資料夾中的 3 個文件。
+This time it will only show the 3 files in the breakfast folder.
 
-## 💻 代碼示例 2：按內容搜尋 + 組合工作流程
+## Code Example 2: Content Search + Combined Workflows
 
-### 按內容搜尋（Grep）
+### Searching by Content (Grep)
 
-現在讓我們搜尋文件裡面的內容。輸入：
-
-```
-請在 recipes 資料夾中搜尋所有包含「雞蛋」的食譜
-```
-
-### 預期輸出：
+Now let's search inside the files. Type:
 
 ```
-在以下文件中找到「雞蛋」：
-- recipes/breakfast/pancakes.txt （第 X 行）
-- recipes/breakfast/omelette.txt （第 X 行）
-- recipes/dinner/stir-fry.txt   （第 X 行）
+Please search the recipes folder for all recipes that contain "eggs"
 ```
 
-Claude Code 不只告訴你哪些文件包含「雞蛋」，還會告訴你在第幾行。
-
-### 組合搜尋 + 讀取的工作流程
-
-搜尋只是第一步。找到文件後，你通常會想看看裡面的具體內容。試試：
+### Expected Output:
 
 ```
-請找出所有包含「牛奶」的食譜，然後把它們的完整內容都給我看
+Found "eggs" in the following files:
+- recipes/breakfast/pancakes.txt (line X)
+- recipes/breakfast/omelette.txt (line X)
+- recipes/dinner/stir-fry.txt   (line X)
 ```
 
-### 預期輸出：
+Claude Code not only tells you which files contain "eggs," but also which line it appears on.
 
-Claude Code 會先搜尋，找到匹配的文件，然後自動讀取並顯示每個文件的內容。這就是「搜尋 + 讀取」的組合技 — 非常實用！
+### Combining Search + Read Workflows
 
-📸 [你應該看到的畫面]
-```
-┌──────────────────────────────────────────────┐
-│ 搜尋結果：找到 2 個包含「牛奶」的文件          │
-│                                              │
-│ === recipes/breakfast/pancakes.txt ===        │
-│ 鬆餅食譜                                     │
-│ 材料：雞蛋、麵粉、牛奶、糖、奶油              │
-│ ...                                          │
-│                                              │
-│ === recipes/breakfast/smoothie.txt ===        │
-│ 水果冰沙食譜                                  │
-│ 材料：香蕉、牛奶、蜂蜜、冰塊                  │
-│ ...                                          │
-└──────────────────────────────────────────────┘
-```
-
-### 更進階的搜尋
-
-你甚至可以用自然語言描述更複雜的搜尋需求：
+Searching is just the first step. After finding the files, you'll usually want to see their actual contents. Try:
 
 ```
-請幫我找出所有不需要開火就能做的食譜（冷食類的）
+Please find all recipes that contain "milk," then show me their full contents
 ```
 
-Claude Code 會搜尋所有食譜文件，分析內容，然後告訴你哪些是冷食（例如沙拉和冰沙）。
+### Expected Output:
 
-這就是 Claude Code 的強大之處 — 它不只是機械式搜尋，它能**理解**你的問題。
+Claude Code will first search, find the matching files, then automatically read and display each file's contents. This is the "search + read" combo -- very practical!
 
-## ✍️ 動手練習
+[What you should see]
+```
++----------------------------------------------+
+| Search results: found 2 files containing     |
+| "milk"                                       |
+|                                              |
+| === recipes/breakfast/pancakes.txt ===       |
+| Pancake Recipe                               |
+| Ingredients: eggs, flour, milk, sugar,       |
+| butter                                       |
+| ...                                          |
+|                                              |
+| === recipes/breakfast/smoothie.txt ===       |
+| Fruit Smoothie Recipe                        |
+| Ingredients: banana, milk, honey, ice        |
+| ...                                          |
++----------------------------------------------+
+```
 
-### 練習 1：搜尋挑戰
+### More Advanced Searches
 
-使用上面建立的食譜項目，請 Claude Code 幫你完成以下搜尋：
+You can even describe more complex search needs in natural language:
 
-1. 找出所有包含「起司」的食譜
-2. 找出 dinner 資料夾裡的所有文件名稱
-3. 找出哪個食譜提到了「番茄」
+```
+Please find all recipes that don't require cooking (cold dishes)
+```
 
-> 💡 **提示**：你可以用自然語言描述你要找的東西。例如：「哪些食譜用到了起司？」Claude Code 會自動選擇合適的搜尋方式。
+Claude Code will search through all recipe files, analyse the contents, and tell you which ones are cold dishes (such as salad and smoothie).
 
-### 練習 2：搜尋 + 編輯工作流程
+This is the power of Claude Code -- it doesn't just perform mechanical searches, it can **understand** your question.
 
-完成以下步驟：
+## Hands-On Practice
 
-1. 搜尋所有包含「雞蛋」的食譜
-2. 選擇其中一個，請 Claude Code 讀取完整內容
-3. 請 Claude Code 修改這個食譜，加上烹飪時間和步驟說明
+### Exercise 1: Search Challenge
 
-這個練習模擬了真實的工作流程：先找到文件，再閱讀，最後修改。
+Using the recipe project created above, ask Claude Code to help you with the following searches:
 
-> 💡 **提示**：你可以一步步做，也可以一次把三步的要求都告訴 Claude Code。例如：「找到用到雞蛋的食譜，讀取 pancakes.txt 的內容，然後幫我加上烹飪步驟。」
+1. Find all recipes that contain "cheese"
+2. Find all filenames in the dinner folder
+3. Find which recipe mentions "tomato"
 
-## ❓ 小測驗（3 條題目）
+> Tip: You can describe what you're looking for in natural language. For example: "Which recipes use cheese?" Claude Code will automatically choose the appropriate search method.
 
-1. 如果你想找出項目中所有的 `.txt` 文件，應該用哪種搜尋方式？
-   A. Grep — 因為要搜尋文件內容
-   B. Glob — 因為要按檔名模式搜尋
-   C. Read — 因為要讀取文件
-   D. Edit — 因為要編輯文件
+### Exercise 2: Search + Edit Workflow
 
-   答案：B — Glob 用於按檔名模式搜尋。`*.txt` 就是一個 Glob 模式，意思是「所有以 .txt 結尾的文件」。Grep 用於搜尋文件裡面的內容，不是搜尋檔名。
+Complete the following steps:
 
-2. Glob 模式中的 `**` 代表什麼意思？
-   A. 搜尋兩次
-   B. 只搜尋當前目錄
-   C. 匹配任意層級的子資料夾
-   D. 搜尋隱藏文件
+1. Search for all recipes that contain "eggs"
+2. Pick one and ask Claude Code to read the full contents
+3. Ask Claude Code to modify that recipe by adding cooking time and step-by-step instructions
 
-   答案：C — `**` 是一個特殊的通配符，代表「任意層級的子資料夾」。例如 `**/*.txt` 會搜尋當前資料夾及所有子資料夾、子子資料夾中的 .txt 文件，不管它們藏得有多深。
+This exercise simulates a real workflow: find a file first, read it, then modify it.
 
-3. 當你對 Claude Code 說「找出所有包含『密碼』這個詞的文件」，它會使用什麼工具？
-   A. Glob — 因為要搜尋文件
-   B. Read — 因為要讀取內容
-   C. Grep — 因為要在文件內容中搜尋特定文字
-   D. Write — 因為要寫出搜尋結果
+> Tip: You can do it step by step, or tell Claude Code all three steps at once. For example: "Find the recipes that use eggs, read the contents of pancakes.txt, then add cooking steps for me."
 
-   答案：C — 當你要在文件的**內容**中搜尋特定文字時，Claude Code 會使用 Grep。Glob 只能按檔名搜尋（例如所有 .txt 文件），但無法搜尋文件裡面寫了什麼。Grep 可以翻遍所有文件的每一行，找到包含你指定文字的位置。
+## Quiz (3 Questions)
 
-## 🔗 下一步
+1. If you want to find all `.txt` files in a project, which search method should you use?
+   A. Grep -- because you need to search file contents
+   B. Glob -- because you need to search by filename pattern
+   C. Read -- because you need to read the files
+   D. Edit -- because you need to edit the files
 
-你現在已經掌握了在項目中快速找到任何東西的技能！搜尋 + 讀取 + 編輯 — 這三個技能組合在一起，就是 Claude Code 日常工作的核心。
+   Answer: B -- Glob is used for searching by filename pattern. `*.txt` is a Glob pattern meaning "all files ending in .txt." Grep is for searching inside file contents, not filenames.
 
-在下一個模塊 **2.4：Git 基礎與版本控制** 中，我們將學習如何用 Git 來保存你的工作進度。想像 Git 就像遊戲中的「存檔」功能 — 你可以隨時回到之前的任何一個版本。再也不怕改壞東西了！
+2. What does `**` mean in a Glob pattern?
+   A. Search twice
+   B. Only search the current directory
+   C. Match any level of subfolders
+   D. Search hidden files
+
+   Answer: C -- `**` is a special wildcard that represents "any level of subfolders." For example, `**/*.txt` will search for .txt files in the current folder and all subfolders, sub-subfolders, no matter how deeply nested they are.
+
+3. When you tell Claude Code "Find all files that contain the word 'password'," what tool will it use?
+   A. Glob -- because it's searching files
+   B. Read -- because it needs to read the contents
+   C. Grep -- because it's searching for specific text within file contents
+   D. Write -- because it needs to write the search results
+
+   Answer: C -- When you want to search for specific text within file **contents**, Claude Code uses Grep. Glob can only search by filename (e.g., all .txt files) but can't search what's written inside files. Grep goes through every line of every file and finds where your specified text appears.
+
+## Next Steps
+
+You've now mastered the skill of quickly finding anything in a project! Search + read + edit -- these three skills combined form the core of Claude Code's everyday workflow.
+
+In the next module, **2.4: Git Basics and Version Control**, we'll learn how to use Git to save your work progress. Think of Git as the "save game" feature -- you can go back to any previous version at any time. Never worry about breaking things again!

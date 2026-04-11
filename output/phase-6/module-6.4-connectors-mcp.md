@@ -1,20 +1,20 @@
-# 6.4 Connectors、MCP 與瀏覽器能力
+# 6.4 Connectors, MCP, and Browser Capabilities
 
-## 三層能力架構
+## Three-Layer Capability Architecture
 
-Cowork 與外部世界互動的能力分為三層，按優先順序使用：
+Cowork's ability to interact with the outside world is divided into three layers, used in order of priority:
 
 ```
-1. Connectors（MCP）  → 首選：直接 API 整合
-2. 瀏覽器擴充套件       → 次選：讀取和操作網頁
-3. Computer Use       → 兜底：直接控制螢幕和滑鼠
+1. Connectors (MCP)    → First choice: direct API integration
+2. Browser extension    → Second choice: read and interact with web pages
+3. Computer Use         → Last resort: directly control the screen and mouse
 ```
 
-## 第一層：Connectors（MCP）
+## Layer 1: Connectors (MCP)
 
-MCP（Model Context Protocol）讓 Claude 直接在應用中操作 — 不是複製貼上，而是已授權的直接存取。
+MCP (Model Context Protocol) lets Claude operate directly within applications — not copy-paste, but authorized direct access.
 
-### 內建支援的應用
+### Natively Supported Apps
 
 - Google Drive
 - Notion
@@ -23,82 +23,82 @@ MCP（Model Context Protocol）讓 Claude 直接在應用中操作 — 不是複
 - GitHub
 - Figma
 
-### 連接方式
+### How to Connect
 
-1. 點選聊天介面的 **+** 號
-2. 進入 **Connectors** 標籤
-3. 搜尋需要的工具
-4. 在瀏覽器完成授權
+1. Click the **+** icon in the chat interface
+2. Go to the **Connectors** tab
+3. Search for the tool you need
+4. Complete authorization in the browser
 
-### 權限控制
+### Permission Controls
 
-每個已連接的應用可分別設定：
-- **Always allow** — 始終允許
-- **Ask first** — 需要確認
-- **Never allow** — 禁止存取
+Each connected app can be configured individually:
+- **Always allow** — Permit without asking
+- **Ask first** — Requires confirmation
+- **Never allow** — Block access
 
-### 進階 Hack：Apify MCP
+### Advanced Hack: Apify MCP
 
-想從 YouTube、TikTok、Instagram 抓取資料？
+Want to scrape data from YouTube, TikTok, or Instagram?
 
-1. 在 Apify 建立免費 API Token
-2. Cowork connectors 搜尋 "Apify"
-3. 貼上 API Key
+1. Create a free API Token on Apify
+2. Search "Apify" in Cowork connectors
+3. Paste your API Key
 
-Claude 會自動從 1300+ 個爬蟲工具中選擇最合適的執行。
+Claude will automatically choose the most suitable scraper from 1,300+ crawling tools.
 
-### 進階 Hack：Zapier MCP
+### Advanced Hack: Zapier MCP
 
-連接 8000+ 應用（HubSpot、Airtable 等）：
+Connect 8,000+ apps (HubSpot, Airtable, etc.):
 
-1. 在 Zapier 建立 MCP server
-2. 選擇 "Claude Cowork"
-3. 配置允許的工具和操作
-4. 複製生成的 URL → 貼到 Claude connectors
+1. Create an MCP server in Zapier
+2. Select "Claude Cowork"
+3. Configure allowed tools and actions
+4. Copy the generated URL → paste it into Claude connectors
 
-## 第二層：瀏覽器擴充套件
+## Layer 2: Browser Extension
 
-當沒有 connector 時使用。
+Used when no connector is available.
 
-### 安裝
+### Installation
 
-1. Chrome Web Store 搜尋 "Claude"
-2. 安裝並固定到工具欄
-3. Settings → 開啟 "Claude in Chrome"
+1. Search "Claude" in the Chrome Web Store
+2. Install and pin it to the toolbar
+3. Settings → Enable "Claude in Chrome"
 
-### 能力
+### Capabilities
 
-- 自動開啟瀏覽器標籤頁
-- 訪問和閱讀網頁內容
-- 理解頁面結構（標題、CTA、布局）
-- 多步操作（開啟 YouTube → 分析影片數據）
+- Automatically opens browser tabs
+- Visits and reads web page content
+- Understands page structure (headings, CTAs, layout)
+- Multi-step operations (open YouTube → analyze video metrics)
 
-> **重要風險提示**：Claude 使用的是你的真實瀏覽器，登入在你的帳號裡。它有能力直接完成支付。務必設定 blocklist。
+> **Important risk warning**: Claude uses your real browser, logged into your accounts. It has the ability to complete payments. Make sure to set up a blocklist.
 
-## 第三層：Computer Use
+## Layer 3: Computer Use
 
-最後的兜底手段。Claude 可以：
-- 看到你的螢幕
-- 控制滑鼠
-- 在鍵盤上輸入
+The ultimate fallback. Claude can:
+- See your screen
+- Control the mouse
+- Type on the keyboard
 
-**開啟方式**：Settings → General → Computer Use
+**How to enable**: Settings → General → Computer Use
 
-> **必做**：開啟前先把敏感應用加入 blocklist。
+> **Must-do**: Add sensitive applications to the blocklist before enabling this.
 
-## 與 Claude Code 的 MCP 對比
+## Comparing MCP in Cowork vs Claude Code
 
-| 特性 | Cowork MCP | Claude Code MCP |
-|------|------------|-----------------|
-| 設定方式 | 圖形介面點選 | `~/.claude/settings.json` 配置 |
-| 伺服器類型 | 雲端託管 | 本地 stdio 或 SSE |
-| 自訂 MCP | 透過 Zapier/Apify | 直接寫 MCP server |
-| 瀏覽器能力 | 內建 Chrome 擴充 | 需要 Playwright 等工具 |
+| Feature | Cowork MCP | Claude Code MCP |
+|---------|------------|-----------------|
+| Configuration | GUI point-and-click | `~/.claude/settings.json` configuration |
+| Server type | Cloud-hosted | Local stdio or SSE |
+| Custom MCP | Via Zapier/Apify | Write your own MCP server |
+| Browser capability | Built-in Chrome extension | Requires tools like Playwright |
 
 ---
 
-## 練習
+## Exercises
 
-1. 連接一個 Connector（如 Google Drive）
-2. 嘗試讓 Cowork 透過 connector 讀取和整理文件
-3. 比較 Cowork MCP 和 Claude Code MCP 的配置方式
+1. Connect a Connector (e.g., Google Drive)
+2. Try having Cowork read and organize documents through the connector
+3. Compare the configuration approaches of Cowork MCP vs Claude Code MCP

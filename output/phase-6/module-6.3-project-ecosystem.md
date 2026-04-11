@@ -1,87 +1,87 @@
-# 6.3 專案生態系統與 Business Brain
+# 6.3 Project Ecosystem and Business Brain
 
-## 沒有專案的痛點
+## The Pain of Working Without Projects
 
-如果你一直「無結構」地使用 Cowork：
+If you keep using Cowork without any structure:
 
-- 不同會話之間不會記住任何東西
-- 每次開啟新視窗，要重新解釋你的業務
-- 不同任務互相干擾、混在一起
+- Nothing is remembered between sessions
+- Every time you open a new window, you have to re-explain your business
+- Different tasks interfere with and bleed into each other
 
-**解決方法：建立專案化的工作體系（Project Ecosystem）。**
+**The solution: build a project-based workflow (Project Ecosystem).**
 
-## 什麼是 Project？
+## What Is a Project?
 
-Project 不是一個簡單的資料夾。它是一個容器，整合了：
+A Project is not just a simple folder. It's a container that brings together:
 
-- 你的檔案
-- 自定義指令（instructions）
-- 技能（skills）
-- 可以不斷積累的上下文記憶
+- Your files
+- Custom instructions
+- Skills
+- Context memory that accumulates over time
 
-### 有 vs 沒有 Project
+### With vs Without a Project
 
-| 情況 | 效果 |
-|------|------|
-| 沒有 Project | 每次對話從零開始解釋自己 |
-| 有 Project | 上下文「複利式積累」— 第 6 周只需說「照常做」 |
+| Scenario | Result |
+|----------|--------|
+| Without a Project | You start from scratch explaining yourself every conversation |
+| With a Project | Context compounds like interest — by week 6, you just say "do the usual" |
 
-## 專案隔離原則
+## The Project Isolation Principle
 
-> 不同領域，必須拆成不同專案。沒有商量餘地。
+> Different domains must be split into separate projects. No exceptions.
 
-例如：
-- YouTube 內容專案
-- 財務 / Finance 專案
-- 客戶管理專案
+For example:
+- YouTube content project
+- Finance project
+- Customer management project
 
-**為什麼？** YouTube 的語氣規則會「汙染」財務任務，Claude 會開始混淆風格。
+**Why?** YouTube tone rules will "contaminate" finance tasks, and Claude will start mixing up styles.
 
-## Business Brain — 你的 .md 檔案
+## Business Brain — Your .md Files
 
-這些純文字檔案放在上下文資料夾裡，Claude 每次執行任務前都會讀取：
+These plain text files live in the context folder, and Claude reads them before every task:
 
 ### `about_me.md`
 ```markdown
-你是誰、業務做什麼、客戶是誰、如何賺錢、當前優先事項。
-Claude 每次都會讀取這個檔案。
+Who you are, what your business does, who your customers are, how you make money, current priorities.
+Claude reads this file every time.
 ```
 
 ### `brand_voice.md`
 ```markdown
-你的語氣、討厭的表達、常用句式。
-貼上真實寫作樣本，讓內容不再像「千篇一律的 Claude」。
+Your tone, expressions you hate, phrases you commonly use.
+Paste real writing samples so the output stops sounding like "generic Claude."
 ```
 
 ### `working_preferences.md`
 ```markdown
-任務管理方式、檔案儲存位置、輸出格式要求。
+How you manage tasks, where files are stored, output format requirements.
 ```
 
-> **提示**：不要自己從零寫。直接告訴 Claude：「請逐步向我提問，並根據我的回答生成一套 business brain 檔案。」只需 15 分鐘。
+> **Tip**: Don't write these from scratch. Just tell Claude: "Ask me questions step by step, then generate a set of business brain files based on my answers." It only takes 15 minutes.
 
-## 與 Claude Code 的對比
+## Comparison with Claude Code
 
-| 概念 | Cowork | Claude Code |
-|------|--------|-------------|
-| 專案配置 | .md 檔案 + Project 設定 | `CLAUDE.md` |
-| 品牌語氣 | `brand_voice.md` | 寫在 `CLAUDE.md` 的指令中 |
-| 記憶系統 | Project 上下文 | Memory 系統（auto memory） |
+| Concept | Cowork | Claude Code |
+|---------|--------|-------------|
+| Project configuration | .md files + Project settings | `CLAUDE.md` |
+| Brand voice | `brand_voice.md` | Written as instructions in `CLAUDE.md` |
+| Memory system | Project context | Memory system (auto memory) |
 
-## 三層指令體系
+## Three-Layer Instruction System
 
-| 層級 | 位置 | 作用範圍 |
-|------|------|----------|
-| **Layer 1** — Personalisation | 帳號設定 | Chat + Code + Cowork 全域 |
-| **Layer 2** — Cowork 全域 | Settings → Cowork → Global | 所有 Cowork 任務 |
-| **Layer 3** — 專案級 | Project Instructions | 單個專案內部 |
+| Layer | Location | Scope |
+|-------|----------|-------|
+| **Layer 1** — Personalisation | Account settings | Global across Chat + Code + Cowork |
+| **Layer 2** — Cowork global | Settings → Cowork → Global | All Cowork tasks |
+| **Layer 3** — Project-level | Project Instructions | Within a single project |
 
-**原則：全域定習慣，Cowork 定執行，專案定專業。**
+**Principle: Global defines habits, Cowork defines execution, Project defines expertise.**
 
 ---
 
-## 練習
+## Exercises
 
-1. 建立一個 Cowork Project，寫入 `about_me.md`
-2. 比較有沒有 Project 的輸出差異
-3. 思考你的 Claude Code `CLAUDE.md` 和 Cowork Business Brain 的異同
+1. Create a Cowork Project and write an `about_me.md`
+2. Compare the output difference with and without a Project
+3. Think about the similarities and differences between your Claude Code `CLAUDE.md` and Cowork Business Brain

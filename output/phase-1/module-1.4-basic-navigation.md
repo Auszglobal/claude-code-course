@@ -1,287 +1,289 @@
-# 模塊 1.4：基本導航
+# Module 1.4: Basic Navigation
 
-## 🎯 學習目標
-- 完成本課後你能夠：
-  - 理解「工作目錄」的概念
-  - 請 Claude Code 列出資料夾中的檔案
-  - 請 Claude Code 讀取檔案內容
-  - 理解 Windows 和 Mac 的檔案路徑差異
-  - 在不同資料夾之間導航
+## Learning Objectives
+- After completing this lesson, you will be able to:
+  - Understand the concept of "working directory"
+  - Ask Claude Code to list files in a folder
+  - Ask Claude Code to read file contents
+  - Understand the differences between Windows and Mac file paths
+  - Navigate between different folders
 
 ---
 
-## 📖 理論解釋
+## Theory
 
-### 什麼是「工作目錄」？
+### What Is a "Working Directory"?
 
-想像你的電腦是一棟房子，每個**資料夾**就是房子裡的一個**房間**。
+Imagine your computer is a house, and each **folder** is a **room** in that house.
 
-當你啟動 Claude Code 時，它會在某個房間裡「站著」——這就是**工作目錄**（Working Directory，簡稱 cwd）。Claude Code 預設只能看到這個房間裡的東西。
+When you launch Claude Code, it "stands" in a particular room -- that's the **working directory** (abbreviated as cwd). By default, Claude Code can only see what's in that room.
 
-比如：
-- 如果你在「廚房」（`C:\claude-practice`），你能看到桌上的食材（檔案）
-- 如果你想看「臥室」（`C:\Users\kin\Documents`）裡的東西，你需要先「走到」那個房間
+For example:
+- If you're in the "kitchen" (`C:\claude-practice`), you can see the ingredients on the table (files)
+- If you want to see what's in the "bedroom" (`C:\Users\kin\Documents`), you need to "walk" to that room first
 
-### 檔案路徑：房子的地址系統
+### File Paths: The Address System of Your Computer
 
-**檔案路徑**就是檔案在電腦中的「地址」。就像郵寄信件需要寫地址一樣，你需要告訴 Claude Code 檔案在哪裡。
+A **file path** is the "address" of a file on your computer. Just like mailing a letter requires an address, you need to tell Claude Code where a file is located.
 
-**Windows 的路徑長這樣：**
+**Windows paths look like this:**
 ```
 C:\Users\kin\Documents\report.txt
 ```
-- `C:\` 是你的硬碟（就像城市名稱）
-- `Users\kin\` 是你的使用者資料夾（就像街道名稱）
-- `Documents\` 是文件資料夾（就像門牌號碼）
-- `report.txt` 是具體的檔案（就像收件人名字）
-- 注意：Windows 用**反斜線** `\` 分隔
+- `C:\` is your hard drive (like a city name)
+- `Users\kin\` is your user folder (like a street name)
+- `Documents\` is the Documents folder (like a house number)
+- `report.txt` is the specific file (like the recipient's name)
+- Note: Windows uses **backslashes** `\` as separators
 
-**Mac 的路徑長這樣：**
+**Mac paths look like this:**
 ```
 /Users/kin/Documents/report.txt
 ```
-- `/` 是根目錄（最上層，就像城市名稱）
-- `Users/kin/` 是你的使用者資料夾
-- `Documents/` 是文件資料夾
-- `report.txt` 是具體的檔案
-- 注意：Mac 用**正斜線** `/` 分隔
+- `/` is the root directory (the top level, like a city name)
+- `Users/kin/` is your user folder
+- `Documents/` is the Documents folder
+- `report.txt` is the specific file
+- Note: Mac uses **forward slashes** `/` as separators
 
-> 💡 **記憶技巧**：Windows 用 `\`（反斜線），Mac 用 `/`（正斜線）。不過在 Claude Code 中，你通常不需要自己輸入路徑——直接用自然語言描述就好了。
+> Tip: Windows uses `\` (backslash), Mac uses `/` (forward slash). However, in Claude Code, you usually don't need to type paths yourself -- just describe things in natural language.
 
 ---
 
-## 💻 代碼示例 1：探索檔案與資料夾
+## Code Example 1: Exploring Files and Folders
 
-### 準備工作
+### Preparation
 
-首先，我們來建立一些練習用的檔案和資料夾。
+First, let's create some practice files and folders.
 
-**Windows**：
+**Windows:**
 ```bash
-# 進入練習資料夾
+# Navigate to the practice folder
 cd C:\claude-practice
 
-# 啟動 Claude Code
+# Launch Claude Code
 claude
 ```
 
-**Mac**：
+**Mac:**
 ```bash
-# 進入練習資料夾
+# Navigate to the practice folder
 cd ~/claude-practice
 
-# 啟動 Claude Code
+# Launch Claude Code
 claude
 ```
 
-### 指令 1：查看目前在哪裡
+### Command 1: Check Where You Are
 
-在 Claude Code 中輸入：
+In Claude Code, type:
 ```
-我目前在哪個資料夾？
-```
-
-📸 [你應該看到的畫面]
-```
-┌──────────────────────────────────────────────────┐
-│  > 我目前在哪個資料夾？                             │
-│                                                  │
-│  你目前在以下工作目錄中：                            │
-│                                                  │
-│  Windows: C:\claude-practice                     │
-│  Mac:     /Users/kin/claude-practice             │
-│                                                  │
-│  >                                               │
-└──────────────────────────────────────────────────┘
+What folder am I currently in?
 ```
 
-### 指令 2：列出資料夾中的檔案
+[What you should see]
+```
++--------------------------------------------------+
+|  > What folder am I currently in?                |
+|                                                  |
+|  You are currently in the following working      |
+|  directory:                                      |
+|                                                  |
+|  Windows: C:\claude-practice                     |
+|  Mac:     /Users/kin/claude-practice             |
+|                                                  |
+|  >                                               |
++--------------------------------------------------+
+```
+
+### Command 2: List Files in the Folder
 
 ```
-列出這個資料夾裡所有的檔案
+List all the files in this folder
 ```
 
-### 預期輸出：
-如果你在模塊 1.3 建立了檔案，你會看到類似這樣的列表：
+### Expected Output:
+If you created files in Module 1.3, you'll see a list like this:
 ```
 hello.txt
 about-me.txt
 ```
 
-### 指令 3：建立子資料夾和更多檔案
+### Command 3: Create Subfolders and More Files
 
-讓我們建立一個更豐富的練習結構：
-
-```
-請幫我做以下事情：
-1. 建立一個叫做 projects 的子資料夾
-2. 在 projects 裡面建立一個叫做 my-first-project.txt 的檔案，內容寫「這是我的第一個專案」
-3. 建立一個叫做 notes 的子資料夾
-4. 在 notes 裡面建立一個叫做 learning-log.txt 的檔案，內容寫「Day 1: 開始學習 Claude Code」
-```
-
-Claude Code 會依次執行這些操作（每個步驟都會問你是否允許）。
-
-完成後，你的資料夾結構會像這樣：
+Let's create a richer practice structure:
 
 ```
-claude-practice/           ← 你的主要練習資料夾
-├── hello.txt              ← 模塊 1.3 建立的
-├── about-me.txt           ← 模塊 1.3 建立的
-├── projects/              ← 剛剛建立的子資料夾
+Please do the following:
+1. Create a subfolder called projects
+2. Inside projects, create a file called my-first-project.txt with the content "This is my first project"
+3. Create a subfolder called notes
+4. Inside notes, create a file called learning-log.txt with the content "Day 1: Started learning Claude Code"
+```
+
+Claude Code will perform these operations one by one (asking for your permission at each step).
+
+After completion, your folder structure will look like this:
+
+```
+claude-practice/           <- Your main practice folder
+├── hello.txt              <- Created in Module 1.3
+├── about-me.txt           <- Created in Module 1.3
+├── projects/              <- Subfolder just created
 │   └── my-first-project.txt
-└── notes/                 ← 剛剛建立的子資料夾
+└── notes/                 <- Subfolder just created
     └── learning-log.txt
 ```
 
 ---
 
-## 💻 代碼示例 2：導航與讀取檔案
+## Code Example 2: Navigation and Reading Files
 
-### 讀取不同位置的檔案
+### Reading Files in Different Locations
 
-你不需要「走到」某個資料夾才能讀取裡面的檔案。只要告訴 Claude Code 檔案在哪裡就行：
-
-```
-讀取 projects 資料夾裡的 my-first-project.txt
-```
-
-📸 [你應該看到的畫面]
-```
-┌──────────────────────────────────────────────────┐
-│  > 讀取 projects 資料夾裡的 my-first-project.txt   │
-│                                                  │
-│  這個檔案的內容是：                                 │
-│                                                  │
-│  這是我的第一個專案                                 │
-│                                                  │
-│  >                                               │
-└──────────────────────────────────────────────────┘
-```
-
-### 查看資料夾結構
-
-想看整個資料夾的結構，你可以這樣說：
+You don't need to "walk to" a folder to read a file inside it. Just tell Claude Code where the file is:
 
 ```
-顯示目前資料夾的完整結構，包括所有子資料夾和檔案
+Read my-first-project.txt in the projects folder
 ```
 
-### 預期輸出：
-Claude Code 會列出完整的樹狀結構，讓你一目了然哪些檔案在哪個位置。
+[What you should see]
+```
++--------------------------------------------------+
+|  > Read my-first-project.txt in the projects     |
+|    folder                                        |
+|                                                  |
+|  The contents of this file are:                  |
+|                                                  |
+|  This is my first project                        |
+|                                                  |
+|  >                                               |
++--------------------------------------------------+
+```
 
-### 搜尋檔案
+### Viewing the Folder Structure
 
-如果你忘記某個檔案放在哪裡：
+To see the entire folder structure, you can say:
 
 ```
-幫我找出所有 .txt 檔案在哪裡
+Show the complete structure of the current folder, including all subfolders and files
 ```
 
-Claude Code 會搜尋目前資料夾（和所有子資料夾），列出所有符合條件的檔案。
+### Expected Output:
+Claude Code will display the full tree structure, giving you a clear view of which files are in which locations.
+
+### Searching for Files
+
+If you've forgotten where a file is:
+
+```
+Help me find where all the .txt files are
+```
+
+Claude Code will search the current folder (and all subfolders) and list all matching files.
 
 ---
 
-### Windows vs Mac 路徑對照表
+### Windows vs Mac Path Comparison Table
 
-在 Claude Code 中與檔案互動時，了解路徑的差異很有幫助：
+When working with files in Claude Code, understanding path differences is helpful:
 
-| 概念 | Windows | Mac |
-|------|---------|-----|
-| 使用者主目錄 | `C:\Users\你的名字\` | `/Users/你的名字/` 或 `~/` |
-| 桌面 | `C:\Users\你的名字\Desktop\` | `~/Desktop/` |
-| 文件 | `C:\Users\你的名字\Documents\` | `~/Documents/` |
-| 下載 | `C:\Users\你的名字\Downloads\` | `~/Downloads/` |
-| 路徑分隔符號 | `\`（反斜線） | `/`（正斜線） |
+| Concept | Windows | Mac |
+|---------|---------|-----|
+| User home directory | `C:\Users\YourName\` | `/Users/YourName/` or `~/` |
+| Desktop | `C:\Users\YourName\Desktop\` | `~/Desktop/` |
+| Documents | `C:\Users\YourName\Documents\` | `~/Documents/` |
+| Downloads | `C:\Users\YourName\Downloads\` | `~/Downloads/` |
+| Path separator | `\` (backslash) | `/` (forward slash) |
 
-> 💡 **好消息**：在 Claude Code 中，你大部分時候不需要直接輸入路徑。你可以用自然語言描述，例如「打開桌面上的 report.txt」，Claude Code 會自動找到正確的路徑。
-
----
-
-### 實用導航指令速查
-
-以下是一些常用的自然語言導航指令：
-
-| 你想做什麼 | 可以這樣說 |
-|-----------|-----------|
-| 查看目前位置 | 「我在哪個資料夾？」 |
-| 列出檔案 | 「列出這裡的所有檔案」 |
-| 讀取檔案 | 「讀取 XXX.txt 的內容」 |
-| 查看結構 | 「顯示這個資料夾的結構」 |
-| 尋找檔案 | 「幫我找名字包含 report 的檔案」 |
-| 建立資料夾 | 「建立一個叫做 XXX 的資料夾」 |
-| 查看檔案大小 | 「這個資料夾裡每個檔案有多大？」 |
+> Good news: In Claude Code, you usually don't need to type paths directly. You can describe things in natural language, such as "open report.txt on the desktop," and Claude Code will automatically find the correct path.
 
 ---
 
-## ✍️ 動手練習
+### Quick Reference for Common Navigation Commands
 
-### 練習 1：建立你的學習筆記系統
-1. 啟動 Claude Code（在 `claude-practice` 資料夾中）
-2. 請 Claude Code 建立以下結構：
+Here are some commonly used natural language navigation commands:
+
+| What you want to do | How you can say it |
+|---------------------|-------------------|
+| Check current location | "What folder am I in?" |
+| List files | "List all the files here" |
+| Read a file | "Read the contents of XXX.txt" |
+| View structure | "Show this folder's structure" |
+| Find a file | "Find files with 'report' in the name" |
+| Create a folder | "Create a folder called XXX" |
+| Check file sizes | "How big is each file in this folder?" |
+
+---
+
+## Hands-On Practice
+
+### Exercise 1: Build Your Study Notes System
+1. Launch Claude Code (in the `claude-practice` folder)
+2. Ask Claude Code to create the following structure:
    ```
    study/
    ├── week-1/
-   │   └── day-1-notes.txt（內容：今天學了 Claude Code 的安裝）
+   │   └── day-1-notes.txt (content: Today I learned how to install Claude Code)
    └── week-2/
-       └── placeholder.txt（內容：即將開始第二週的學習）
+       └── placeholder.txt (content: About to start week 2 of learning)
    ```
-3. 建立完成後，請 Claude Code 顯示 `study` 資料夾的完整結構
-4. 請 Claude Code 讀取 `day-1-notes.txt` 的內容
+3. After creation, ask Claude Code to display the complete structure of the `study` folder
+4. Ask Claude Code to read the contents of `day-1-notes.txt`
 
-> 💡 **提示**：你可以一次告訴 Claude Code 所有你想建立的東西，它會依序完成。
+> Tip: You can tell Claude Code everything you want to create at once, and it will complete the tasks in order.
 
-### 練習 2：探索你的電腦
-1. 請 Claude Code 告訴你桌面上有哪些檔案
-2. 請 Claude Code 讀取桌面上任何一個 `.txt` 檔案的內容（如果有的話）
+### Exercise 2: Explore Your Computer
+1. Ask Claude Code to tell you what files are on your desktop
+2. Ask Claude Code to read the contents of any `.txt` file on the desktop (if there are any)
 
-> 💡 **提示**：你可以說「列出我桌面上的檔案」，Claude Code 知道桌面在哪裡。如果桌面上沒有 `.txt` 檔案也沒關係，這只是練習導航的能力。
-
----
-
-## ❓ 小測驗（3 條題目）
-
-**1. 「工作目錄」（Working Directory）是什麼意思？**
-
-A. Claude Code 的安裝位置
-B. Claude Code 目前正在操作的資料夾位置
-C. 你的桌面資料夾
-D. Windows 的系統資料夾
-
-答案：B — 工作目錄就是 Claude Code 目前「所在」的資料夾。就像你站在房子的某個房間裡，你主要能看到和操作這個房間裡的東西。
+> Tip: You can say "List the files on my desktop" and Claude Code will know where to look. If there are no `.txt` files on the desktop, that's fine -- this is just practice for navigation skills.
 
 ---
 
-**2. 在 Windows 系統中，檔案路徑使用什麼符號分隔資料夾？**
+## Quiz (3 Questions)
 
-A. 正斜線 `/`
-B. 反斜線 `\`
-C. 冒號 `:`
-D. 句號 `.`
+**1. What does "working directory" mean?**
 
-答案：B — Windows 使用反斜線 `\` 分隔路徑中的資料夾，例如 `C:\Users\kin\Documents\`。Mac 則使用正斜線 `/`。這是兩個系統最常見的差異之一。
+A. Where Claude Code is installed
+B. The folder Claude Code is currently operating in
+C. Your desktop folder
+D. A Windows system folder
 
----
-
-**3. 如果你想讀取子資料夾中的檔案，你需要怎麼做？**
-
-A. 必須先退出 Claude Code，手動進入那個子資料夾，再重新啟動
-B. 直接告訴 Claude Code 你想讀取哪個資料夾的哪個檔案就好
-C. 必須先刪除那個檔案再重新建立
-D. 子資料夾中的檔案無法被讀取
-
-答案：B — 你只需要用自然語言描述檔案的位置即可，例如「讀取 projects 資料夾裡的 report.txt」。Claude Code 會自動找到正確的路徑並讀取內容。
+Answer: B -- The working directory is the folder where Claude Code is currently "located." Just like standing in a particular room of a house -- you can mainly see and work with what's in that room.
 
 ---
 
-## 🔗 下一步
+**2. On Windows, what symbol is used to separate folders in a file path?**
 
-太好了！你現在已經掌握了 Claude Code 的基本導航技能——知道自己在哪裡、能瀏覽檔案、能讀取內容、能在不同資料夾之間操作。
+A. Forward slash `/`
+B. Backslash `\`
+C. Colon `:`
+D. Period `.`
 
-Phase 1（入門篇）到此完成！你已經學會了：
-- ✅ 什麼是 Claude Code（模塊 1.1）
-- ✅ 安裝與設定（模塊 1.2）
-- ✅ 下達第一個指令（模塊 1.3）
-- ✅ 基本導航（模塊 1.4）
+Answer: B -- Windows uses backslashes `\` to separate folders in paths, for example `C:\Users\kin\Documents\`. Mac uses forward slashes `/`. This is one of the most common differences between the two systems.
 
-在 **Phase 2：核心功能篇**的第一個模塊 **2.1：CLAUDE.md 設定檔**中，我們將學習如何用一個特殊的設定檔來「訓練」Claude Code，讓它更了解你的需求和偏好。這就像給你的 AI 助理一本專屬的工作手冊！
+---
+
+**3. If you want to read a file in a subfolder, what do you need to do?**
+
+A. Exit Claude Code, manually navigate to that subfolder, and restart
+B. Simply tell Claude Code which folder and file you want to read
+C. Delete the file and recreate it
+D. Files in subfolders cannot be read
+
+Answer: B -- You just need to describe the file's location in natural language, for example "Read report.txt in the projects folder." Claude Code will automatically find the correct path and read the contents.
+
+---
+
+## Next Steps
+
+Great work! You've now mastered the basic navigation skills in Claude Code -- knowing where you are, browsing files, reading contents, and working across different folders.
+
+Phase 1 (Getting Started) is now complete! Here's what you've learned:
+- What Claude Code is (Module 1.1)
+- Installation and setup (Module 1.2)
+- Giving your first command (Module 1.3)
+- Basic navigation (Module 1.4)
+
+In **Phase 2: Core Features**, the first module **2.1: The CLAUDE.md Configuration File** will teach you how to use a special configuration file to "train" Claude Code so it better understands your needs and preferences. It's like giving your AI assistant a personalised instruction manual!
