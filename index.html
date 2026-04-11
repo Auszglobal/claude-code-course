@@ -199,6 +199,58 @@
 .badge-card .badge-label { font-size: 12px; font-weight: 600; color: var(--text); }
 .badge-card .badge-status { font-size: 10px; color: var(--text-secondary); }
 
+/* Admin panel */
+.admin-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+}
+.admin-overlay.hidden { display: none; }
+.admin-panel {
+  background: var(--bg-card); border-radius: 16px; padding: 32px;
+  width: 520px; max-width: 95vw; max-height: 85vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3); color: var(--text);
+}
+.admin-panel h2 { color: var(--accent); margin-bottom: 20px; font-size: 20px; }
+.admin-user-row {
+  display: flex; align-items: center; gap: 10px; padding: 12px;
+  border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px;
+  background: var(--bg);
+}
+.admin-user-row .admin-name { flex: 1; font-weight: 600; font-size: 14px; }
+.admin-user-row .admin-role { font-size: 12px; color: var(--accent); min-width: 60px; }
+.admin-btn {
+  padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px;
+  background: none; color: var(--text-secondary); font-size: 11px;
+  cursor: pointer; transition: all 0.2s;
+}
+.admin-btn:hover { border-color: var(--accent); color: var(--accent); }
+.admin-btn.danger:hover { border-color: #f56565; color: #f56565; }
+.admin-add-section {
+  margin-top: 16px; padding: 16px; border: 1px dashed var(--border);
+  border-radius: 8px; background: var(--bg);
+}
+.admin-add-section h4 { margin-bottom: 12px; font-size: 14px; color: var(--accent); }
+.admin-input {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+  border-radius: 6px; background: var(--bg-card); color: var(--text);
+  font-size: 14px; margin-bottom: 8px; outline: none;
+}
+.admin-input:focus { border-color: var(--accent); }
+.admin-input-row { display: flex; gap: 8px; }
+.admin-input-row .admin-input { flex: 1; }
+.admin-save-btn {
+  width: 100%; padding: 10px; background: var(--teal); color: #fff;
+  border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
+  cursor: pointer; margin-top: 8px; transition: background 0.2s;
+}
+.admin-save-btn:hover { background: var(--accent); }
+.admin-close {
+  float: right; background: none; border: none; color: var(--text-secondary);
+  font-size: 24px; cursor: pointer; line-height: 1;
+}
+.admin-close:hover { color: var(--text); }
+
 /* Mermaid diagrams */
 .mermaid { margin: 20px 0; text-align: center; }
 
@@ -834,13 +886,16 @@ async function pushProgressToCloud() {
 let USERS = [];
 let currentUser = null;
 
-async function fetchUsers() {
+async function fetchUsersFromFile() {
   try {
     const res = await fetch('users.json?t=' + Date.now());
-    USERS = await res.json();
-  } catch {
-    USERS = [];
-  }
+    return await res.json();
+  } catch { return []; }
+}
+
+async function fetchUsers() {
+  const [fileUsers] = await Promise.all([fetchUsersFromFile(), fetchDynamicUsers()]);
+  USERS = [...fileUsers, ...dynamicUsers];
 }
 
 async function sha256(str) {
@@ -905,24 +960,117 @@ function handleAvatarUpload(e) {
   reader.readAsDataURL(file);
 }
 
-async function addNewUser() {
-  const name = prompt('Display Name:');
-  if (!name) return;
-  const username = prompt('Username:');
-  if (!username) return;
-  const password = prompt('Password:');
-  if (!password) return;
-  const role = prompt('Role (e.g. Student, Admin):', 'Student');
-  if (!role) return;
-  const hash = await sha256(username.trim().toLowerCase() + ':' + password);
-  if (USERS.find(u => u.hash === hash)) {
-    alert('This account already exists!');
-    return;
+// ── Admin panel (user management) ──
+const USERS_BLOB_ID = '019d7b3c-9e05-7dfc-adc1-ed680c138b6e';
+const USERS_BLOB_URL = 'https://jsonblob.com/api/jsonBlob/' + USERS_BLOB_ID;
+let dynamicUsers = [];
+
+async function fetchDynamicUsers() {
+  try {
+    const res = await fetch(USERS_BLOB_URL, { headers: { 'Accept': 'application/json' } });
+    if (res.ok) dynamicUsers = await res.json();
+  } catch { dynamicUsers = []; }
+}
+
+async function saveDynamicUsers() {
+  try {
+    await fetch(USERS_BLOB_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(dynamicUsers)
+    });
+  } catch { alert('Failed to save. Please try again.'); }
+}
+
+function openAdmin() {
+  renderAdminUserList();
+  document.getElementById('admin-overlay').classList.remove('hidden');
+}
+
+function closeAdmin() {
+  document.getElementById('admin-overlay').classList.add('hidden');
+}
+
+function renderAdminUserList() {
+  const list = document.getElementById('admin-user-list');
+  // Show all dynamic (editable) users
+  let html = '<p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">Students (editable)</p>';
+  if (dynamicUsers.length === 0) {
+    html += '<p style="font-size:13px;color:var(--text-secondary);font-style:italic;">No students added yet.</p>';
   }
-  const entry = JSON.stringify({ hash, name: name.trim(), role: role.trim() });
-  // Copy to clipboard for easy pasting
-  try { await navigator.clipboard.writeText(entry); } catch {}
-  alert('New user data copied to clipboard!\n\n' + entry + '\n\nPlease add this entry to users.json and push to GitHub.');
+  dynamicUsers.forEach((u, i) => {
+    html += `<div class="admin-user-row">
+      <div class="admin-name">${u.name}</div>
+      <div class="admin-role">${u.role}</div>
+      <button class="admin-btn" onclick="adminEditUser(${i})">Edit</button>
+      <button class="admin-btn" onclick="adminResetPw(${i})">Reset PW</button>
+      <button class="admin-btn danger" onclick="adminDeleteUser(${i})">Delete</button>
+    </div>`;
+  });
+  list.innerHTML = html;
+}
+
+async function adminAddUser() {
+  const name = document.getElementById('admin-new-name').value.trim();
+  const role = document.getElementById('admin-new-role').value.trim() || 'Student';
+  const username = document.getElementById('admin-new-username').value.trim().toLowerCase();
+  const password = document.getElementById('admin-new-password').value;
+
+  if (!name || !username || !password) { alert('Please fill in all fields.'); return; }
+
+  const hash = await sha256(username + ':' + password);
+  if ([...USERS, ...dynamicUsers].find(u => u.hash === hash)) {
+    alert('This account already exists!'); return;
+  }
+
+  const uid = username.replace(/[^a-z0-9]/g, '');
+  dynamicUsers.push({ hash, name, role, uid });
+  await saveDynamicUsers();
+  // Reload users list
+  USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
+  renderAdminUserList();
+
+  // Clear inputs
+  document.getElementById('admin-new-name').value = '';
+  document.getElementById('admin-new-username').value = '';
+  document.getElementById('admin-new-password').value = '';
+  alert('User "' + name + '" added successfully!');
+}
+
+async function adminEditUser(idx) {
+  const u = dynamicUsers[idx];
+  const newName = prompt('Display Name:', u.name);
+  if (newName === null) return;
+  const newRole = prompt('Role:', u.role);
+  if (newRole === null) return;
+  dynamicUsers[idx].name = newName.trim();
+  dynamicUsers[idx].role = newRole.trim();
+  await saveDynamicUsers();
+  USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
+  renderAdminUserList();
+  alert('User updated!');
+}
+
+async function adminResetPw(idx) {
+  const u = dynamicUsers[idx];
+  const username = prompt('Confirm username for ' + u.name + ':');
+  if (!username) return;
+  const newPw = prompt('New password:');
+  if (!newPw) return;
+  dynamicUsers[idx].hash = await sha256(username.trim().toLowerCase() + ':' + newPw);
+  await saveDynamicUsers();
+  USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
+  alert('Password reset for ' + u.name + '!');
+}
+
+async function adminDeleteUser(idx) {
+  const u = dynamicUsers[idx];
+  if (!confirm('Delete user "' + u.name + '"? This cannot be undone.')) return;
+  dynamicUsers.splice(idx, 1);
+  await saveDynamicUsers();
+  USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
+  renderAdminUserList();
+  alert('User deleted.');
 }
 
 function logout() {
@@ -968,6 +1116,27 @@ document.getElementById('auth-pass')?.addEventListener('keypress', e => { if (e.
 document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('auth-pass').focus(); });
 </script>
 
+<!-- Admin Panel Modal -->
+<div class="admin-overlay hidden" id="admin-overlay" onclick="if(event.target===this)closeAdmin()">
+  <div class="admin-panel">
+    <button class="admin-close" onclick="closeAdmin()">&times;</button>
+    <h2>User Management</h2>
+    <div id="admin-user-list"></div>
+    <div class="admin-add-section">
+      <h4>Add New User</h4>
+      <div class="admin-input-row">
+        <input class="admin-input" id="admin-new-name" placeholder="Display Name">
+        <input class="admin-input" id="admin-new-role" placeholder="Role" value="Student" style="max-width:120px;">
+      </div>
+      <div class="admin-input-row">
+        <input class="admin-input" id="admin-new-username" placeholder="Username (login)">
+        <input class="admin-input" id="admin-new-password" placeholder="Password" type="text">
+      </div>
+      <button class="admin-save-btn" onclick="adminAddUser()">Add User</button>
+    </div>
+  </div>
+</div>
+
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
@@ -997,7 +1166,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
     <button class="logout-btn" onclick="logout()">Logout</button>
     <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
   </div>
-  <button id="admin-add-user-btn" style="display:none;" onclick="addNewUser()">+ Add User</button>
+  <button id="admin-add-user-btn" style="display:none;" onclick="openAdmin()">Manage Users</button>
 </aside>
 
 <!-- Overlay -->
