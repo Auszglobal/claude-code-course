@@ -222,31 +222,39 @@ In the project from Exercise 1, try the following:
 
 > Tip: If Claude Code doesn't follow your rules, your instructions might not be specific enough. Try using more direct, concrete language. For example, instead of writing "pay attention to code quality," write "every function must have a comment explaining its purpose."
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. Where should the CLAUDE.md file be placed in a project?
-   A. Inside the src/ folder
-   B. In the project root directory (the top-level folder)
-   C. On the computer desktop
-   D. In any subfolder
+<div class="quiz-q" data-answer="1">
+<p>1. Where should the CLAUDE.md file be placed in a project?</p>
+<label><input type="radio" name="q1" value="0"> Inside the src/ folder</label>
+<label><input type="radio" name="q1" value="1"> In the project root directory (the top-level folder)</label>
+<label><input type="radio" name="q1" value="2"> On the computer desktop</label>
+<label><input type="radio" name="q1" value="3"> In any subfolder</label>
+<div class="quiz-explain">CLAUDE.md must be placed in the project root directory so that Claude Code can find and read it the moment it enters the project. It's like putting a company handbook at the front desk where new employees can pick it up immediately.</div>
+</div>
 
-   Answer: B -- CLAUDE.md must be placed in the project root directory so that Claude Code can find and read it the moment it enters the project. It's like putting a company handbook at the front desk where new employees can pick it up immediately.
+<div class="quiz-q" data-answer="2">
+<p>2. Which of the following is a best practice for CLAUDE.md?</p>
+<label><input type="radio" name="q2" value="0"> The vaguer the instructions, the better, to give the AI more creative freedom</label>
+<label><input type="radio" name="q2" value="1"> The longer the better, the more detailed the better</label>
+<label><input type="radio" name="q2" value="2"> Use clear, specific instructions and avoid vague language</label>
+<label><input type="radio" name="q2" value="3"> Only write prohibited actions, nothing else is needed</label>
+<div class="quiz-explain">Clear, specific instructions help Claude Code understand your needs more accurately. Vague instructions can lead to unexpected results. But it doesn't need to be excessively long either -- the focus should be on precision, not length.</div>
+</div>
 
-2. Which of the following is a best practice for CLAUDE.md?
-   A. The vaguer the instructions, the better, to give the AI more creative freedom
-   B. The longer the better, the more detailed the better
-   C. Use clear, specific instructions and avoid vague language
-   D. Only write prohibited actions, nothing else is needed
+<div class="quiz-q" data-answer="2">
+<p>3. If you modify CLAUDE.md, when will Claude Code read the new content?</p>
+<label><input type="radio" name="q3" value="0"> Never, because it only reads it the first time</label>
+<label><input type="radio" name="q3" value="1"> You need to reinstall Claude Code</label>
+<label><input type="radio" name="q3" value="2"> The next time you start a new conversation, it will read the latest content</label>
+<label><input type="radio" name="q3" value="3"> You need to run a special command manually</label>
+<div class="quiz-explain">Claude Code re-reads CLAUDE.md every time a new conversation starts, so your changes will take effect in the next session. You can also ask Claude Code to re-read CLAUDE.md during a conversation.</div>
+</div>
 
-   Answer: C -- Clear, specific instructions help Claude Code understand your needs more accurately. Vague instructions can lead to unexpected results. But it doesn't need to be excessively long either -- the focus should be on precision, not length.
-
-3. If you modify CLAUDE.md, when will Claude Code read the new content?
-   A. Never, because it only reads it the first time
-   B. You need to reinstall Claude Code
-   C. The next time you start a new conversation, it will read the latest content
-   D. You need to run a special command manually
-
-   Answer: C -- Claude Code re-reads CLAUDE.md every time a new conversation starts, so your changes will take effect in the next session. You can also ask Claude Code to re-read CLAUDE.md during a conversation.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

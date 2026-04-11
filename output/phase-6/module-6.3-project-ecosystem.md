@@ -80,6 +80,40 @@ How you manage tasks, where files are stored, output format requirements.
 
 ---
 
+<div class="module-quiz">
+<h3>Module Quiz</h3>
+
+<div class="quiz-q" data-answer="1">
+<p>1. Why must different business domains be split into separate Cowork Projects?</p>
+<label><input type="radio" name="q1" value="0"> Because Cowork can only open one project at a time</label>
+<label><input type="radio" name="q1" value="1"> Because mixing domains causes style and context contamination between tasks</label>
+<label><input type="radio" name="q1" value="2"> Because each project requires a separate paid subscription</label>
+<label><input type="radio" name="q1" value="3"> Because projects have a strict file size limit</label>
+<div class="quiz-explain">The Project Isolation Principle states that different domains must be split into separate projects. Without isolation, YouTube tone rules will "contaminate" finance tasks, and Claude will start mixing up styles and context.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>2. What is the Cowork equivalent of Claude Code's CLAUDE.md?</p>
+<label><input type="radio" name="q2" value="0"> A single settings.json file</label>
+<label><input type="radio" name="q2" value="1"> Environment variables</label>
+<label><input type="radio" name="q2" value="2"> Business Brain .md files (about_me.md, brand_voice.md, working_preferences.md)</label>
+<label><input type="radio" name="q2" value="3"> The Cowork sidebar menu</label>
+<div class="quiz-explain">In Cowork, Business Brain .md files serve the same purpose as CLAUDE.md in Claude Code -- they provide persistent context and instructions that Claude reads before every task.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>3. In the Three-Layer Instruction System, what does the Personalisation layer (Layer 1) control?</p>
+<label><input type="radio" name="q3" value="0"> Global settings across Chat, Code, and Cowork</label>
+<label><input type="radio" name="q3" value="1"> Settings for all Cowork tasks only</label>
+<label><input type="radio" name="q3" value="2"> Settings within a single project only</label>
+<label><input type="radio" name="q3" value="3"> Settings for a single conversation only</label>
+<div class="quiz-explain">Layer 1 (Personalisation) is set in Account settings and applies globally across Chat, Code, and Cowork. Layer 2 covers all Cowork tasks, and Layer 3 is project-specific.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
+
 ## Exercises
 
 1. Create a Cowork Project and write an `about_me.md`

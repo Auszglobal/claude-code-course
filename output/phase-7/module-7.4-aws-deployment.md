@@ -96,6 +96,40 @@ The same pattern applies to:
 
 ---
 
+<div class="module-quiz">
+<h3>Module Quiz</h3>
+
+<div class="quiz-q" data-answer="1">
+<p>1. What is the correct sequence for deploying a static website to S3 with CloudFront?</p>
+<label><input type="radio" name="q1" value="0"> Upload files to S3, then run <code>npm run build</code></label>
+<label><input type="radio" name="q1" value="1"> Run <code>npm run build</code>, sync to S3, then invalidate the CloudFront cache</label>
+<label><input type="radio" name="q1" value="2"> Invalidate CloudFront cache first, then upload to S3</label>
+<label><input type="radio" name="q1" value="3"> Push to GitHub and S3 deploys automatically</label>
+<div class="quiz-explain">The correct deployment sequence is: build the frontend (<code>npm run build</code>), sync the built files to S3 (<code>aws s3 sync</code>), and then invalidate the CloudFront CDN cache so users see the latest version.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>2. Which security principle should you follow when setting up AWS IAM permissions for Claude Code?</p>
+<label><input type="radio" name="q2" value="0"> Give full administrator access for convenience</label>
+<label><input type="radio" name="q2" value="1"> Share AWS credentials with all team members</label>
+<label><input type="radio" name="q2" value="2"> Follow the principle of least privilege -- only grant necessary access</label>
+<label><input type="radio" name="q2" value="3"> Use the root account for all operations</label>
+<div class="quiz-explain">The IAM least-privilege principle means only granting the minimum permissions needed. Never commit AWS credentials to Git, verify bucket policies, and have Claude Code confirm before dangerous operations.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>3. How does Claude Code interact with AWS services?</p>
+<label><input type="radio" name="q3" value="0"> Through the AWS CLI, as long as <code>aws configure</code> is set up on your system</label>
+<label><input type="radio" name="q3" value="1"> Through a special AWS MCP server that must be installed separately</label>
+<label><input type="radio" name="q3" value="2"> Only through Python boto3 scripts</label>
+<label><input type="radio" name="q3" value="3"> Through the AWS web console using Computer Use</label>
+<div class="quiz-explain">Claude Code natively supports the AWS CLI. As long as your system has <code>aws configure</code> set up with valid credentials, Claude Code can directly run AWS commands for S3, Lightsail, DynamoDB, Lambda, and more.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
+
 ## Exercises
 
 1. Use Claude Code to deploy a static webpage to S3

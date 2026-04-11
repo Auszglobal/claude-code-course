@@ -976,28 +976,39 @@ Based on the features you've added, update the CLAUDE.md to reflect the project'
 
 > Tip: A good CLAUDE.md grows with the project. Whenever you add features or change the architecture, you should update it.
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. Why do we put the frontend and backend in separate directories?
-   A. To make it look like there are more files
-   B. To make it easier to maintain, test, and deploy each component independently
-   C. Python can't be placed alongside HTML
-   D. It's a GitHub requirement
-   Answer: B -- Separating frontend and backend is a software engineering best practice. This lets you independently develop, test, and deploy each component, and makes it easier for teams to divide work.
+<div class="quiz-q" data-answer="1">
+<p>1. Why do we put the frontend and backend in separate directories?</p>
+<label><input type="radio" name="q1" value="0"> To make it look like there are more files</label>
+<label><input type="radio" name="q1" value="1"> To make it easier to maintain, test, and deploy each component independently</label>
+<label><input type="radio" name="q1" value="2"> Python can't be placed alongside HTML</label>
+<label><input type="radio" name="q1" value="3"> It's a GitHub requirement</label>
+<div class="quiz-explain">Separating frontend and backend is a software engineering best practice. This lets you independently develop, test, and deploy each component, and makes it easier for teams to divide work.</div>
+</div>
 
-2. Why do we use setUp() and tearDown() methods in tests?
-   A. It's a Python syntax requirement
-   B. To ensure each test runs in a clean environment without affecting others
-   C. To make the tests run faster
-   D. They're decorative and have no practical function
-   Answer: B -- setUp() creates a clean environment before each test, and tearDown() cleans up afterwards. This ensures tests don't interfere with each other, making each test independent and reliable.
+<div class="quiz-q" data-answer="1">
+<p>2. Why do we use setUp() and tearDown() methods in tests?</p>
+<label><input type="radio" name="q2" value="0"> It's a Python syntax requirement</label>
+<label><input type="radio" name="q2" value="1"> To ensure each test runs in a clean environment without affecting others</label>
+<label><input type="radio" name="q2" value="2"> To make the tests run faster</label>
+<label><input type="radio" name="q2" value="3"> They're decorative and have no practical function</label>
+<div class="quiz-explain">setUp() creates a clean environment before each test, and tearDown() cleans up afterwards. This ensures tests don't interfere with each other, making each test independent and reliable.</div>
+</div>
 
-3. What type of content is GitHub Pages primarily used to deploy?
-   A. Python backend programs
-   B. Databases
-   C. Static web pages (HTML/CSS/JS)
-   D. Docker containers
-   Answer: C -- GitHub Pages is a static web hosting service, suitable for deploying HTML, CSS, JavaScript, and other frontend files. Backend programs need other services (like AWS or Heroku) for deployment.
+<div class="quiz-q" data-answer="2">
+<p>3. What type of content is GitHub Pages primarily used to deploy?</p>
+<label><input type="radio" name="q3" value="0"> Python backend programs</label>
+<label><input type="radio" name="q3" value="1"> Databases</label>
+<label><input type="radio" name="q3" value="2"> Static web pages (HTML/CSS/JS)</label>
+<label><input type="radio" name="q3" value="3"> Docker containers</label>
+<div class="quiz-explain">GitHub Pages is a static web hosting service, suitable for deploying HTML, CSS, JavaScript, and other frontend files. Backend programs need other services (like AWS or Heroku) for deployment.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

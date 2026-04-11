@@ -126,6 +126,40 @@ Claude Code will:
 
 ---
 
+<div class="module-quiz">
+<h3>Module Quiz</h3>
+
+<div class="quiz-q" data-answer="1">
+<p>1. Which tool does Claude Code use to interact with the GitHub API for creating PRs, viewing issues, etc.?</p>
+<label><input type="radio" name="q1" value="0"> The GitHub MCP server exclusively</label>
+<label><input type="radio" name="q1" value="1"> The GitHub CLI (<code>gh</code>) commands</label>
+<label><input type="radio" name="q1" value="2"> Direct HTTP requests to api.github.com</label>
+<label><input type="radio" name="q1" value="3"> A built-in GitHub plugin</label>
+<div class="quiz-explain">Claude Code makes heavy use of the GitHub CLI (<code>gh</code>) commands to interact with the GitHub API -- creating PRs, viewing issues, checking PR status, and more.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>2. According to Claude Code's Git safety protocols, what does it do by default instead of amending commits?</p>
+<label><input type="radio" name="q2" value="0"> Force pushes the changes</label>
+<label><input type="radio" name="q2" value="1"> Skips the commit entirely</label>
+<label><input type="radio" name="q2" value="2"> Creates new commits to avoid overwriting history</label>
+<label><input type="radio" name="q2" value="3"> Stashes the changes for later</label>
+<div class="quiz-explain">Claude Code follows strict safety protocols: it creates new commits instead of amending existing ones, to avoid accidentally overwriting commit history. It also never force pushes or skips hooks unless explicitly asked.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>3. What is the relationship between GitHub and Claude Code?</p>
+<label><input type="radio" name="q3" value="0"> GitHub is the most deeply integrated third-party tool, used in almost every development workflow</label>
+<label><input type="radio" name="q3" value="1"> GitHub is an optional plugin that most users don't need</label>
+<label><input type="radio" name="q3" value="2"> Claude Code can only read from GitHub but cannot write to it</label>
+<label><input type="radio" name="q3" value="3"> GitHub integration requires a paid add-on</label>
+<div class="quiz-explain">GitHub is Claude Code's most important third-party integration. Git and GitHub are used in almost every development workflow -- from version control to PRs to code reviews to CI/CD.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
+
 ## Exercises
 
 1. Use Claude Code to create a new GitHub repo

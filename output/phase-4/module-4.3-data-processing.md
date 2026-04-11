@@ -307,40 +307,39 @@ You can double-click those PNG images in your file explorer to view the charts.
 
 ---
 
-## ❓ Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. What characterizes a CSV file?**
+<div class="quiz-q" data-answer="1">
+<p>1. What characterizes a CSV file?</p>
+<label><input type="radio" name="q1" value="0"> It can only be opened with Microsoft Excel</label>
+<label><input type="radio" name="q1" value="1"> It's a plain text file that uses commas to separate fields</label>
+<label><input type="radio" name="q1" value="2"> It's an image format</label>
+<label><input type="radio" name="q1" value="3"> It requires special software to create</label>
+<div class="quiz-explain">CSV (Comma-Separated Values) is a plain text file that uses commas to separate fields. It can be read by any text editor, Excel, Google Sheets, or programming language — making it the most universal data format.</div>
+</div>
 
-A. It can only be opened with Microsoft Excel
-B. It's a plain text file that uses commas to separate fields
-C. It's an image format
-D. It requires special software to create
+<div class="quiz-q" data-answer="1">
+<p>2. In pandas, what does <code>df.groupby("product")["quantity"].sum()</code> do?</p>
+<label><input type="radio" name="q2" value="0"> Deletes all product data</label>
+<label><input type="radio" name="q2" value="1"> Groups the data by product name, then calculates the total quantity for each group</label>
+<label><input type="radio" name="q2" value="2"> Concatenates all product names together</label>
+<label><input type="radio" name="q2" value="3"> Randomly shuffles the data</label>
+<div class="quiz-explain"><code>groupby("product")</code> splits the data into groups by product name (like sorting a deck of cards by suit), then <code>["quantity"].sum()</code> calculates the total of the quantity field for each group.</div>
+</div>
 
-Answer: B — CSV (Comma-Separated Values) is a plain text file that uses commas to separate fields. It can be read by any text editor, Excel, Google Sheets, or programming language — making it the most universal data format.
+<div class="quiz-q" data-answer="1">
+<p>3. Why do you need to configure fonts when generating charts with matplotlib?</p>
+<label><input type="radio" name="q3" value="0"> Custom fonts make charts look prettier</label>
+<label><input type="radio" name="q3" value="1"> Without configuring the right font, non-ASCII characters on charts may show as garbled text or boxes</label>
+<label><input type="radio" name="q3" value="2"> The default font can't display numbers</label>
+<label><input type="radio" name="q3" value="3"> matplotlib only supports one specific font</label>
+<div class="quiz-explain">matplotlib's default font may not include all characters needed for your locale. If chart titles or labels appear as boxes or garbled text, you can fix this by setting <code>rcParams["font.sans-serif"]</code> to specify a font that includes the characters you need.</div>
+</div>
 
----
-
-**2. In pandas, what does `df.groupby("product")["quantity"].sum()` do?**
-
-A. Deletes all product data
-B. Groups the data by product name, then calculates the total quantity for each group
-C. Concatenates all product names together
-D. Randomly shuffles the data
-
-Answer: B — `groupby("product")` splits the data into groups by product name (like sorting a deck of cards by suit), then `["quantity"].sum()` calculates the total of the quantity field for each group.
-
----
-
-**3. Why do you need to configure fonts when generating charts with matplotlib?**
-
-A. Custom fonts make charts look prettier
-B. Without configuring the right font, non-ASCII characters on charts may show as garbled text or boxes
-C. The default font can't display numbers
-D. matplotlib only supports one specific font
-
-Answer: B — matplotlib's default font may not include all characters needed for your locale. If chart titles or labels appear as boxes or garbled text, you can fix this by setting `rcParams["font.sans-serif"]` to specify a font that includes the characters you need.
-
----
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## 🔗 Next Steps
 

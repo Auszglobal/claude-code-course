@@ -241,40 +241,39 @@ Here are some commonly used natural language navigation commands:
 
 ---
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. What does "working directory" mean?**
+<div class="quiz-q" data-answer="1">
+<p>1. What does "working directory" mean?</p>
+<label><input type="radio" name="q1" value="0"> Where Claude Code is installed</label>
+<label><input type="radio" name="q1" value="1"> The folder Claude Code is currently operating in</label>
+<label><input type="radio" name="q1" value="2"> Your desktop folder</label>
+<label><input type="radio" name="q1" value="3"> A Windows system folder</label>
+<div class="quiz-explain">The working directory is the folder where Claude Code is currently "located." Just like standing in a particular room of a house -- you can mainly see and work with what's in that room.</div>
+</div>
 
-A. Where Claude Code is installed
-B. The folder Claude Code is currently operating in
-C. Your desktop folder
-D. A Windows system folder
+<div class="quiz-q" data-answer="1">
+<p>2. On Windows, what symbol is used to separate folders in a file path?</p>
+<label><input type="radio" name="q2" value="0"> Forward slash <code>/</code></label>
+<label><input type="radio" name="q2" value="1"> Backslash <code>\</code></label>
+<label><input type="radio" name="q2" value="2"> Colon <code>:</code></label>
+<label><input type="radio" name="q2" value="3"> Period <code>.</code></label>
+<div class="quiz-explain">Windows uses backslashes <code>\</code> to separate folders in paths, for example <code>C:\Users\kin\Documents\</code>. Mac uses forward slashes <code>/</code>. This is one of the most common differences between the two systems.</div>
+</div>
 
-Answer: B -- The working directory is the folder where Claude Code is currently "located." Just like standing in a particular room of a house -- you can mainly see and work with what's in that room.
+<div class="quiz-q" data-answer="1">
+<p>3. If you want to read a file in a subfolder, what do you need to do?</p>
+<label><input type="radio" name="q3" value="0"> Exit Claude Code, manually navigate to that subfolder, and restart</label>
+<label><input type="radio" name="q3" value="1"> Simply tell Claude Code which folder and file you want to read</label>
+<label><input type="radio" name="q3" value="2"> Delete the file and recreate it</label>
+<label><input type="radio" name="q3" value="3"> Files in subfolders cannot be read</label>
+<div class="quiz-explain">You just need to describe the file's location in natural language, for example "Read report.txt in the projects folder." Claude Code will automatically find the correct path and read the contents.</div>
+</div>
 
----
-
-**2. On Windows, what symbol is used to separate folders in a file path?**
-
-A. Forward slash `/`
-B. Backslash `\`
-C. Colon `:`
-D. Period `.`
-
-Answer: B -- Windows uses backslashes `\` to separate folders in paths, for example `C:\Users\kin\Documents\`. Mac uses forward slashes `/`. This is one of the most common differences between the two systems.
-
----
-
-**3. If you want to read a file in a subfolder, what do you need to do?**
-
-A. Exit Claude Code, manually navigate to that subfolder, and restart
-B. Simply tell Claude Code which folder and file you want to read
-C. Delete the file and recreate it
-D. Files in subfolders cannot be read
-
-Answer: B -- You just need to describe the file's location in natural language, for example "Read report.txt in the projects folder." Claude Code will automatically find the correct path and read the contents.
-
----
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

@@ -402,31 +402,39 @@ folders for January through December 2026 in the current directory,
 using the format YYYY-MM-MonthName.
 ```
 
-## ❓ Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. What is the best analogy for a script?
-   A. A novel
-   B. A recipe — a set of instructions executed step by step
-   C. A photograph
-   D. A folder
+<div class="quiz-q" data-answer="1">
+<p>1. What is the best analogy for a script?</p>
+<label><input type="radio" name="q1" value="0"> A novel</label>
+<label><input type="radio" name="q1" value="1"> A recipe — a set of instructions executed step by step</label>
+<label><input type="radio" name="q1" value="2"> A photograph</label>
+<label><input type="radio" name="q1" value="3"> A folder</label>
+<div class="quiz-explain">A script is like a recipe — a series of ordered instructions. You write it once, and the computer can execute it repeatedly.</div>
+</div>
 
-   Answer: B — A script is like a recipe — a series of ordered instructions. You write it once, and the computer can execute it repeatedly.
+<div class="quiz-q" data-answer="1">
+<p>2. When using Claude Code to write automation scripts, do you need to learn Python first?</p>
+<label><input type="radio" name="q2" value="0"> Yes, you must master Python before starting</label>
+<label><input type="radio" name="q2" value="1"> No, you just need to describe what you want in natural language</label>
+<label><input type="radio" name="q2" value="2"> You need at least three years of programming experience</label>
+<label><input type="radio" name="q2" value="3"> Only Mac users can use Python</label>
+<div class="quiz-explain">This is the power of Claude Code. You just need to describe the task you want to automate in plain English, and Claude Code will generate the script. You can learn gradually as you go.</div>
+</div>
 
-2. When using Claude Code to write automation scripts, do you need to learn Python first?
-   A. Yes, you must master Python before starting
-   B. No, you just need to describe what you want in natural language
-   C. You need at least three years of programming experience
-   D. Only Mac users can use Python
+<div class="quiz-q" data-answer="1">
+<p>3. Why should the photo renaming script have a "preview mode"?</p>
+<label><input type="radio" name="q3" value="0"> Because computers run too fast</label>
+<label><input type="radio" name="q3" value="1"> Because preview mode lets you verify the results are correct before executing, avoiding mistakes</label>
+<label><input type="radio" name="q3" value="2"> Because Python requires a preview</label>
+<label><input type="radio" name="q3" value="3"> Because image files are large</label>
+<div class="quiz-explain">Preview mode is an important safety measure. Reviewing the results before executing a batch operation helps you avoid unexpected errors. This is a great programming habit.</div>
+</div>
 
-   Answer: B — This is the power of Claude Code. You just need to describe the task you want to automate in plain English, and Claude Code will generate the script. You can learn gradually as you go.
-
-3. Why should the photo renaming script have a "preview mode"?
-   A. Because computers run too fast
-   B. Because preview mode lets you verify the results are correct before executing, avoiding mistakes
-   C. Because Python requires a preview
-   D. Because image files are large
-
-   Answer: B — Preview mode is an important safety measure. Reviewing the results before executing a batch operation helps you avoid unexpected errors. This is a great programming habit.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## 🔗 Next Steps
 

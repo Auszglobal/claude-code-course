@@ -238,40 +238,39 @@ Write down these three version numbers in a notebook -- they may come in handy f
 
 ---
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. What role does Node.js play in the Claude Code installation process?**
+<div class="quiz-q" data-answer="1">
+<p>1. What role does Node.js play in the Claude Code installation process?</p>
+<label><input type="radio" name="q1" value="0"> It's a browser plugin</label>
+<label><input type="radio" name="q1" value="1"> It's the runtime environment that allows Claude Code to run on your computer</label>
+<label><input type="radio" name="q1" value="2"> It's a programming language</label>
+<label><input type="radio" name="q1" value="3"> It's Anthropic's server software</label>
+<div class="quiz-explain">Node.js is the JavaScript runtime environment. Claude Code is written in JavaScript, so it needs Node.js to run. Just like a game console needs a power source.</div>
+</div>
 
-A. It's a browser plugin
-B. It's the runtime environment that allows Claude Code to run on your computer
-C. It's a programming language
-D. It's Anthropic's server software
+<div class="quiz-q" data-answer="1">
+<p>2. What is the purpose of an API Key?</p>
+<label><input type="radio" name="q2" value="0"> To speed up your internet connection</label>
+<label><input type="radio" name="q2" value="1"> To identify the user and authorise access to Anthropic's AI services</label>
+<label><input type="radio" name="q2" value="2"> To install Node.js</label>
+<label><input type="radio" name="q2" value="3"> To log in to your computer</label>
+<div class="quiz-explain">An API Key is like a membership card. It lets Anthropic know who is using the service and bills accordingly.</div>
+</div>
 
-Answer: B -- Node.js is the JavaScript runtime environment. Claude Code is written in JavaScript, so it needs Node.js to run. Just like a game console needs a power source.
+<div class="quiz-q" data-answer="1">
+<p>3. When installing Claude Code, what does the <code>-g</code> in <code>npm install -g</code> mean?</p>
+<label><input type="radio" name="q3" value="0"> Stands for "good" (a good installation mode)</label>
+<label><input type="radio" name="q3" value="1"> Stands for "global" (installs globally so it can be used from any folder)</label>
+<label><input type="radio" name="q3" value="2"> Stands for "generate" (auto-generates config files)</label>
+<label><input type="radio" name="q3" value="3"> Stands for "git" (links to a Git repository)</label>
+<div class="quiz-explain"><code>-g</code> stands for global, meaning it installs to a shared location on your entire computer, so you can use the <code>claude</code> command from any folder. Without <code>-g</code>, it would only work in the folder where it was installed.</div>
+</div>
 
----
-
-**2. What is the purpose of an API Key?**
-
-A. To speed up your internet connection
-B. To identify the user and authorise access to Anthropic's AI services
-C. To install Node.js
-D. To log in to your computer
-
-Answer: B -- An API Key is like a membership card. It lets Anthropic know who is using the service and bills accordingly.
-
----
-
-**3. When installing Claude Code, what does the `-g` in `npm install -g` mean?**
-
-A. Stands for "good" (a good installation mode)
-B. Stands for "global" (installs globally so it can be used from any folder)
-C. Stands for "generate" (auto-generates config files)
-D. Stands for "git" (links to a Git repository)
-
-Answer: B -- `-g` stands for global, meaning it installs to a shared location on your entire computer, so you can use the `claude` command from any folder. Without `-g`, it would only work in the folder where it was installed.
-
----
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

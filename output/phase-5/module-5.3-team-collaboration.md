@@ -289,28 +289,39 @@ Commit this configuration to Git and all team members will have the same safety 
 
 > Tip: Even for your own code, Claude Code can spot issues you've overlooked. Build the habit of "review before merge"!
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. Where should a team's shared CLAUDE.md be placed?
-   A. In each person's `~/.claude/CLAUDE.md`
-   B. In the project root's `CLAUDE.md` (committed to Git)
-   C. Inside the project's `node_modules/`
-   D. On the GitHub Wiki page
-   Answer: B -- A CLAUDE.md in the project root gets committed to Git. After every team member pulls, their Claude Code will read the same conventions. The global CLAUDE.md (~/.claude/CLAUDE.md) is for personal use.
+<div class="quiz-q" data-answer="1">
+<p>1. Where should a team's shared CLAUDE.md be placed?</p>
+<label><input type="radio" name="q1" value="0"> In each person's <code>~/.claude/CLAUDE.md</code></label>
+<label><input type="radio" name="q1" value="1"> In the project root's <code>CLAUDE.md</code> (committed to Git)</label>
+<label><input type="radio" name="q1" value="2"> Inside the project's <code>node_modules/</code></label>
+<label><input type="radio" name="q1" value="3"> On the GitHub Wiki page</label>
+<div class="quiz-explain">A CLAUDE.md in the project root gets committed to Git. After every team member pulls, their Claude Code will read the same conventions. The global CLAUDE.md (~/.claude/CLAUDE.md) is for personal use.</div>
+</div>
 
-2. Which approach best follows team security best practices?
-   A. Allow Claude Code to use `git push --force`
-   B. Forbid dangerous operations in the settings.json deny list
-   C. Set no permission restrictions at all
-   D. Let each person decide their own permissions
-   Answer: B -- Explicitly forbidding dangerous operations (like force push, hard reset) in the project's `.claude/settings.json` prevents accidental destructive actions. Once committed to Git, all team members will have these rules applied.
+<div class="quiz-q" data-answer="1">
+<p>2. Which approach best follows team security best practices?</p>
+<label><input type="radio" name="q2" value="0"> Allow Claude Code to use <code>git push --force</code></label>
+<label><input type="radio" name="q2" value="1"> Forbid dangerous operations in the settings.json deny list</label>
+<label><input type="radio" name="q2" value="2"> Set no permission restrictions at all</label>
+<label><input type="radio" name="q2" value="3"> Let each person decide their own permissions</label>
+<div class="quiz-explain">Explicitly forbidding dangerous operations (like force push, hard reset) in the project's <code>.claude/settings.json</code> prevents accidental destructive actions. Once committed to Git, all team members will have these rules applied.</div>
+</div>
 
-3. When using Claude Code to review a PR, what does it reference to evaluate code conventions?
-   A. Only the code's syntax itself
-   B. Only online best practices
-   C. The project's CLAUDE.md and existing code style
-   D. Random judgement
-   Answer: C -- Claude Code reads the project's CLAUDE.md as the convention baseline and also references the project's existing code style for consistency checks.
+<div class="quiz-q" data-answer="2">
+<p>3. When using Claude Code to review a PR, what does it reference to evaluate code conventions?</p>
+<label><input type="radio" name="q3" value="0"> Only the code's syntax itself</label>
+<label><input type="radio" name="q3" value="1"> Only online best practices</label>
+<label><input type="radio" name="q3" value="2"> The project's CLAUDE.md and existing code style</label>
+<label><input type="radio" name="q3" value="3"> Random judgement</label>
+<div class="quiz-explain">Claude Code reads the project's CLAUDE.md as the convention baseline and also references the project's existing code style for consistency checks.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

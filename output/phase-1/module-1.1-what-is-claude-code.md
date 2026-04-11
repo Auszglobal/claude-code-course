@@ -211,40 +211,39 @@ Try to find and open the terminal on your computer:
 
 ---
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. What is the biggest difference between Claude Code and a regular AI chatbot (like the web version of ChatGPT)?**
+<div class="quiz-q" data-answer="1">
+<p>1. What is the biggest difference between Claude Code and a regular AI chatbot (like the web version of ChatGPT)?</p>
+<label><input type="radio" name="q1" value="0"> Claude Code is smarter</label>
+<label><input type="radio" name="q1" value="1"> Claude Code can directly read and modify files on your computer</label>
+<label><input type="radio" name="q1" value="2"> Claude Code is free</label>
+<label><input type="radio" name="q1" value="3"> Claude Code can only be used in English</label>
+<div class="quiz-explain">Claude Code's most distinctive feature is its ability to interact directly with your computer. It doesn't just answer questions -- it actually helps you operate files and run commands.</div>
+</div>
 
-A. Claude Code is smarter  
-B. Claude Code can directly read and modify files on your computer  
-C. Claude Code is free  
-D. Claude Code can only be used in English  
+<div class="quiz-q" data-answer="1">
+<p>2. What is a "terminal"?</p>
+<label><input type="radio" name="q2" value="0"> A special type of browser</label>
+<label><input type="radio" name="q2" value="1"> A text-based interface for operating your computer</label>
+<label><input type="radio" name="q2" value="2"> A shopping website</label>
+<label><input type="radio" name="q2" value="3"> Claude Code's official website</label>
+<div class="quiz-explain">A terminal is an interface where you operate your computer using text commands. You type a command, and the computer carries out the corresponding action. Claude Code runs inside the terminal.</div>
+</div>
 
-Answer: B -- Claude Code's most distinctive feature is its ability to interact directly with your computer. It doesn't just answer questions -- it actually helps you operate files and run commands.
+<div class="quiz-q" data-answer="1">
+<p>3. When Claude Code needs to modify your files, what does it do?</p>
+<label><input type="radio" name="q3" value="0"> Modifies them directly without notifying you</label>
+<label><input type="radio" name="q3" value="1"> First tells you what it plans to do, then waits for your confirmation before executing</label>
+<label><input type="radio" name="q3" value="2"> Sends you an email notification</label>
+<label><input type="radio" name="q3" value="3"> Automatically backs up and then modifies directly</label>
+<div class="quiz-explain">Claude Code has a safety mechanism. Before performing any action that could affect your files, it explains its plan and asks for your confirmation. You always have ultimate control.</div>
+</div>
 
----
-
-**2. What is a "terminal"?**
-
-A. A special type of browser  
-B. A text-based interface for operating your computer  
-C. A shopping website  
-D. Claude Code's official website  
-
-Answer: B -- A terminal is an interface where you operate your computer using text commands. You type a command, and the computer carries out the corresponding action. Claude Code runs inside the terminal.
-
----
-
-**3. When Claude Code needs to modify your files, what does it do?**
-
-A. Modifies them directly without notifying you  
-B. First tells you what it plans to do, then waits for your confirmation before executing  
-C. Sends you an email notification  
-D. Automatically backs up and then modifies directly  
-
-Answer: B -- Claude Code has a safety mechanism. Before performing any action that could affect your files, it explains its plan and asks for your confirmation. You always have ultimate control.
-
----
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

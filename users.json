@@ -1,7 +1,5 @@
 [
   { "hash": "3ced387db877d5d56993f6d59fabbcb9e6c4a7505b264b873115f40812b0c21a", "name": "Kin", "role": "Admin", "uid": "kin" },
-  { "hash": "a47234d601dc8d41b1719939ebdfe033d7307389c30e645ad3877cbea49873a8", "name": "Sandy", "role": "Admin", "uid": "sandy" },
-  { "hash": "83f2c30abc8c942d6221703c9f3a4f17e4696ab2f5a052e67fecbc6eef6535a4", "name": "Matthew", "role": "Admin", "uid": "matt" },
   { "hash": "3234937fcbf98706f80c759795b65ce76b12dd58b8a80eed4630db15d4379b8d", "name": "Sandra Yip", "role": "Student", "uid": "sandra" },
   { "hash": "97af77ee40086e613ea593ec305825d92081d93ee567c6799e9e35b05776319c", "name": "Serena Yip", "role": "Student", "uid": "serena" },
   { "hash": "6a4d3a070bed945bdb3544a1726435ea447190f037d711e8a15eabf4e2a3ffaa", "name": "Cynthia Yip", "role": "Student", "uid": "cynthia" }

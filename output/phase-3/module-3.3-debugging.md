@@ -390,31 +390,39 @@ The problems I've noticed: the attempt number displays incorrectly,
 and you can never guess correctly.
 ```
 
-## ❓ Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. A program runs successfully but produces the wrong result. What type of error is this most likely?
-   A. Syntax Error
-   B. Logic Error
-   C. Runtime Error
-   D. Installation Error
+<div class="quiz-q" data-answer="1">
+<p>1. A program runs successfully but produces the wrong result. What type of error is this most likely?</p>
+<label><input type="radio" name="q1" value="0"> Syntax Error</label>
+<label><input type="radio" name="q1" value="1"> Logic Error</label>
+<label><input type="radio" name="q1" value="2"> Runtime Error</label>
+<label><input type="radio" name="q1" value="3"> Installation Error</label>
+<div class="quiz-explain">Syntax errors prevent the program from running at all. Runtime errors cause it to crash midway. Only logic errors allow a program to run "successfully" but produce the wrong result — like a GPS that smoothly takes you to the wrong destination.</div>
+</div>
 
-   Answer: B — Syntax errors prevent the program from running at all. Runtime errors cause it to crash midway. Only logic errors allow a program to run "successfully" but produce the wrong result — like a GPS that smoothly takes you to the wrong destination.
+<div class="quiz-q" data-answer="1">
+<p>2. When describing an error to Claude Code, what information is most helpful?</p>
+<label><input type="radio" name="q2" value="0"> Just saying "the program is broken"</label>
+<label><input type="radio" name="q2" value="1"> The complete error message, the command you ran, and the result you expected</label>
+<label><input type="radio" name="q2" value="2"> Your computer's brand and model</label>
+<label><input type="radio" name="q2" value="3"> The date you bought your computer</label>
+<div class="quiz-explain">Just like describing symptoms to a doctor, providing the full error message, what you did, and what you expected lets Claude Code find the problem and solution as quickly as possible.</div>
+</div>
 
-2. When describing an error to Claude Code, what information is most helpful?
-   A. Just saying "the program is broken"
-   B. The complete error message, the command you ran, and the result you expected
-   C. Your computer's brand and model
-   D. The date you bought your computer
+<div class="quiz-q" data-answer="2">
+<p>3. What is the correct order of the debugging cycle?</p>
+<label><input type="radio" name="q3" value="0"> Fix, Identify, Verify, Understand</label>
+<label><input type="radio" name="q3" value="1"> Understand, Fix, Identify, Verify</label>
+<label><input type="radio" name="q3" value="2"> Identify, Understand, Fix, Verify</label>
+<label><input type="radio" name="q3" value="3"> Verify, Fix, Understand, Identify</label>
+<div class="quiz-explain">The correct order is: discover the problem (Identify), figure out why it went wrong (Understand), modify the code (Fix), then test again to confirm the problem is resolved (Verify). If there are still issues, repeat the cycle.</div>
+</div>
 
-   Answer: B — Just like describing symptoms to a doctor, providing the full error message, what you did, and what you expected lets Claude Code find the problem and solution as quickly as possible.
-
-3. What is the correct order of the debugging cycle?
-   A. Fix → Identify → Verify → Understand
-   B. Understand → Fix → Identify → Verify
-   C. Identify → Understand → Fix → Verify
-   D. Verify → Fix → Understand → Identify
-
-   Answer: C — The correct order is: discover the problem (Identify), figure out why it went wrong (Understand), modify the code (Fix), then test again to confirm the problem is resolved (Verify). If there are still issues, repeat the cycle.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## 🔗 Next Steps
 

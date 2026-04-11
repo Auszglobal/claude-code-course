@@ -460,31 +460,39 @@ triggers:
 - Does the `description` clearly describe when to use it?
 - Do the `triggers` include keywords you're using in your instructions?
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. What is the main benefit of Progressive Disclosure?
-   A. It makes Skills execute faster
-   B. It only loads full content when needed, saving token consumption
-   C. It makes Skill code shorter
-   D. It automatically updates Skill content
+<div class="quiz-q" data-answer="1">
+<p>1. What is the main benefit of Progressive Disclosure?</p>
+<label><input type="radio" name="q1" value="0"> It makes Skills execute faster</label>
+<label><input type="radio" name="q1" value="1"> It only loads full content when needed, saving token consumption</label>
+<label><input type="radio" name="q1" value="2"> It makes Skill code shorter</label>
+<label><input type="radio" name="q1" value="3"> It automatically updates Skill content</label>
+<div class="quiz-explain">Claude Code only reads the metadata at startup (~100 tokens). The full instructions (up to ~5,000 tokens) are only loaded when triggered. This means even with many Skills installed, day-to-day usage won't waste large amounts of tokens.</div>
+</div>
 
-   Answer: B -- Claude Code only reads the metadata at startup (~100 tokens). The full instructions (up to ~5,000 tokens) are only loaded when triggered. This means even with many Skills installed, day-to-day usage won't waste large amounts of tokens.
+<div class="quiz-q" data-answer="2">
+<p>2. In a SKILL.md, which field is most important for Claude's decision on whether to activate a Skill?</p>
+<label><input type="radio" name="q2" value="0"> <code>name</code></label>
+<label><input type="radio" name="q2" value="1"> <code>triggers</code></label>
+<label><input type="radio" name="q2" value="2"> <code>description</code></label>
+<label><input type="radio" name="q2" value="3"> <code>Common Mistakes</code></label>
+<div class="quiz-explain">The <code>description</code> is the primary basis for Claude's decision on whether to activate a Skill. It needs to clearly state "what it does" and "when to use it." <code>triggers</code> provide supplementary keyword matching, but <code>description</code>'s semantic understanding is more critical.</div>
+</div>
 
-2. In a SKILL.md, which field is most important for Claude's decision on whether to activate a Skill?
-   A. `name`
-   B. `triggers`
-   C. `description`
-   D. `Common Mistakes`
+<div class="quiz-q" data-answer="1">
+<p>3. You've created a new SKILL.md file, but Claude Code hasn't detected it. What's the most likely reason?</p>
+<label><input type="radio" name="q3" value="0"> The file is too large</label>
+<label><input type="radio" name="q3" value="1"> You haven't restarted Claude Code</label>
+<label><input type="radio" name="q3" value="2"> The computer needs to be rebooted</label>
+<label><input type="radio" name="q3" value="3"> A Skill licence needs to be purchased</label>
+<div class="quiz-explain">Skill metadata is loaded when Claude Code starts up. After adding or modifying a SKILL.md, you need to restart Claude Code for it to detect the changes.</div>
+</div>
 
-   Answer: C -- The `description` is the primary basis for Claude's decision on whether to activate a Skill. It needs to clearly state "what it does" and "when to use it." `triggers` provide supplementary keyword matching, but `description`'s semantic understanding is more critical.
-
-3. You've created a new SKILL.md file, but Claude Code hasn't detected it. What's the most likely reason?
-   A. The file is too large
-   B. You haven't restarted Claude Code
-   C. The computer needs to be rebooted
-   D. A Skill licence needs to be purchased
-
-   Answer: B -- Skill metadata is loaded when Claude Code starts up. After adding or modifying a SKILL.md, you need to restart Claude Code for it to detect the changes.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

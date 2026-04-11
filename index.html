@@ -8,6 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked-highlight@2.2.1/lib/index.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -96,6 +97,110 @@
   transition: all 0.2s;
 }
 #admin-add-user-btn:hover { background: rgba(0,180,166,0.15); border-color: var(--accent); }
+
+/* Quiz system */
+.module-quiz {
+  margin-top: 40px; padding: 24px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0,139,139,0.05), rgba(0,180,166,0.05));
+  border: 2px solid var(--accent);
+}
+.module-quiz h3 { color: var(--accent); margin-bottom: 20px; font-size: 18px; }
+.quiz-q {
+  margin-bottom: 24px; padding: 16px; background: var(--bg-card);
+  border-radius: 8px; border: 1px solid var(--border);
+}
+.quiz-q p:first-child { font-weight: 600; margin-bottom: 12px; color: var(--text); }
+.quiz-q label {
+  display: block; padding: 10px 14px; margin: 6px 0; border-radius: 8px;
+  border: 1px solid var(--border); cursor: pointer; transition: all 0.2s;
+  color: var(--text); font-size: 14px;
+}
+.quiz-q label:hover { background: var(--hover); border-color: var(--accent); }
+.quiz-q label.selected { background: rgba(0,180,166,0.1); border-color: var(--accent); }
+.quiz-q label.correct { background: rgba(72,187,120,0.15); border-color: #48bb78; color: #276749; }
+.quiz-q label.incorrect { background: rgba(245,101,101,0.15); border-color: #f56565; color: #9b2c2c; }
+.quiz-q label input[type="radio"] { display: none; }
+.quiz-explain {
+  display: none; margin-top: 10px; padding: 10px 14px; border-radius: 6px;
+  background: rgba(0,180,166,0.08); font-size: 13px; color: var(--text-secondary);
+  border-left: 3px solid var(--accent);
+}
+.quiz-explain.show { display: block; }
+.quiz-submit {
+  width: 100%; padding: 14px; background: var(--teal); color: #fff;
+  border: none; border-radius: 10px; font-size: 16px; font-weight: 600;
+  cursor: pointer; transition: background 0.2s; margin-top: 8px;
+}
+.quiz-submit:hover { background: var(--accent); }
+.quiz-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.quiz-result {
+  margin-top: 16px; padding: 16px; border-radius: 8px; text-align: center;
+  font-weight: 600; font-size: 16px; display: none;
+}
+.quiz-result.pass { display: block; background: rgba(72,187,120,0.15); color: #276749; }
+.quiz-result.fail { display: block; background: rgba(245,101,101,0.15); color: #9b2c2c; }
+.quiz-retry {
+  margin-top: 10px; padding: 10px 20px; background: none;
+  border: 2px solid var(--accent); color: var(--accent); border-radius: 8px;
+  cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s;
+}
+.quiz-retry:hover { background: var(--accent); color: #fff; }
+
+/* Tip/warning callout boxes in markdown */
+.markdown-body blockquote {
+  border-left: 4px solid var(--accent); padding: 12px 16px;
+  background: rgba(0,180,166,0.05); border-radius: 0 8px 8px 0;
+  margin: 16px 0; color: var(--text);
+}
+
+/* Phase locking */
+.phase-group.locked .phase-header { opacity: 0.4; cursor: not-allowed; }
+.phase-group.locked .module-link { opacity: 0.3; pointer-events: none; }
+.phase-group.locked .phase-header::after {
+  content: ' \1F512'; font-size: 12px; margin-left: 6px;
+}
+.phase-unlock-msg {
+  font-size: 11px; color: #718096; padding: 4px 20px 8px 40px;
+  font-style: italic; display: none;
+}
+.phase-group.locked .phase-unlock-msg { display: block; }
+
+/* Achievement badges */
+.badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.badge {
+  width: 36px; height: 36px; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; font-size: 16px;
+  border: 2px solid var(--border); background: var(--bg-card);
+  transition: all 0.3s; position: relative;
+}
+.badge.earned { border-color: var(--accent); background: rgba(0,180,166,0.15); }
+.badge.locked { opacity: 0.3; filter: grayscale(1); }
+.badge-tooltip {
+  position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%);
+  background: var(--dark); color: #fff; padding: 4px 8px; border-radius: 4px;
+  font-size: 10px; white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.badge:hover .badge-tooltip { opacity: 1; }
+.badges-section { margin-top: 32px; }
+.badges-section h3 { font-size: 18px; margin-bottom: 16px; color: var(--text); }
+.badges-grid {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+}
+.badge-card {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 16px; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--bg-card); min-width: 100px; text-align: center;
+  box-shadow: var(--shadow); transition: all 0.3s;
+}
+.badge-card.earned { border-color: var(--accent); box-shadow: 0 0 12px rgba(0,180,166,0.2); }
+.badge-card.locked { opacity: 0.4; filter: grayscale(0.8); }
+.badge-card .badge-icon { font-size: 32px; }
+.badge-card .badge-label { font-size: 12px; font-weight: 600; color: var(--text); }
+.badge-card .badge-status { font-size: 10px; color: var(--text-secondary); }
+
+/* Mermaid diagrams */
+.mermaid { margin: 20px 0; text-align: center; }
 
 /* Team leaderboard */
 .team-leaderboard { margin-top: 40px; }
@@ -1044,6 +1149,8 @@ function updateProgressUI() {
   document.getElementById('progress-text').textContent = count + ' / ' + ALL_MODULES.length;
   const profileProg = document.getElementById('profile-progress-display');
   if (profileProg) profileProg.textContent = `Completed ${count}/${ALL_MODULES.length} (${pct}%)`;
+  // Update phase locking
+  updatePhaseLocking();
   // Update checkmarks
   document.querySelectorAll('.module-link .check').forEach(el => {
     const mid = el.dataset.moduleId;
@@ -1061,12 +1168,14 @@ function updateProgressUI() {
 function buildSidebar() {
   const nav = document.getElementById('sidebar-nav');
   let html = '';
-  PHASES.forEach(phase => {
-    html += `<div class="phase-group">
+  PHASES.forEach((phase, i) => {
+    const prevLabel = i > 0 ? PHASES[i-1].label : '';
+    html += `<div class="phase-group" data-phase-index="${i}">
       <div class="phase-header" data-phase="${phase.id}">
         <span class="chevron">&#9662;</span>
         ${phase.label} &mdash; ${phase.title}
       </div>
+      <div class="phase-unlock-msg">Complete ${prevLabel} to unlock</div>
       <div class="phase-modules">`;
     phase.modules.forEach(m => {
       html += `<div class="module-link" data-module-id="${m.id}" data-file="${m.file}">
@@ -1151,6 +1260,22 @@ async function loadModule(moduleId, filePath) {
       }
     });
 
+    // Initialize quizzes
+    initQuizzes(moduleId);
+
+    // Render mermaid diagrams
+    contentEl.querySelectorAll('pre code.language-mermaid').forEach(block => {
+      const pre = block.parentElement;
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = block.textContent;
+      pre.replaceWith(div);
+    });
+    if (contentEl.querySelector('.mermaid')) {
+      mermaid.initialize({ startOnLoad: false, theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'default' });
+      mermaid.run({ nodes: contentEl.querySelectorAll('.mermaid') });
+    }
+
     // Show prev/next
     showPageNav(moduleId);
 
@@ -1206,6 +1331,137 @@ function showPageNav(moduleId) {
   }
 }
 
+// ── Quiz system ──
+function initQuizzes(moduleId) {
+  document.querySelectorAll('.module-quiz').forEach(quiz => {
+    // Add click handlers to labels
+    quiz.querySelectorAll('.quiz-q label').forEach(label => {
+      label.addEventListener('click', () => {
+        const q = label.closest('.quiz-q');
+        q.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
+        label.classList.add('selected');
+        label.querySelector('input').checked = true;
+      });
+    });
+
+    // Add submit handler
+    const submitBtn = quiz.querySelector('.quiz-submit');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', () => handleQuizSubmit(quiz, moduleId));
+    }
+  });
+}
+
+function handleQuizSubmit(quiz, moduleId) {
+  const questions = quiz.querySelectorAll('.quiz-q');
+  let correct = 0;
+  let total = questions.length;
+  let allAnswered = true;
+
+  questions.forEach(q => {
+    const selected = q.querySelector('input:checked');
+    if (!selected) { allAnswered = false; return; }
+
+    const answer = q.dataset.answer;
+    const labels = q.querySelectorAll('label');
+
+    // Disable further selection
+    labels.forEach(l => { l.style.pointerEvents = 'none'; });
+
+    if (selected.value === answer) {
+      selected.closest('label').classList.add('correct');
+      correct++;
+    } else {
+      selected.closest('label').classList.add('incorrect');
+      // Highlight the correct answer
+      labels.forEach(l => {
+        if (l.querySelector('input').value === answer) l.classList.add('correct');
+      });
+    }
+
+    // Show explanation
+    const explain = q.querySelector('.quiz-explain');
+    if (explain) explain.classList.add('show');
+  });
+
+  if (!allAnswered) {
+    alert('Please answer all questions before submitting.');
+    return;
+  }
+
+  const pct = Math.round((correct / total) * 100);
+  const passed = pct >= 70;
+  const resultEl = quiz.querySelector('.quiz-result');
+
+  if (passed) {
+    resultEl.className = 'quiz-result pass';
+    resultEl.innerHTML = `You scored ${correct}/${total} (${pct}%) — Passed! Module complete.`;
+    // Auto-mark module as complete
+    progress[moduleId] = true;
+    saveProgress();
+    updateProgressUI();
+  } else {
+    resultEl.className = 'quiz-result fail';
+    resultEl.innerHTML = `You scored ${correct}/${total} (${pct}%) — Need 70% to pass. <br><button class="quiz-retry" onclick="retryQuiz(this)">Try Again</button>`;
+  }
+
+  quiz.querySelector('.quiz-submit').disabled = true;
+}
+
+function retryQuiz(btn) {
+  const quiz = btn.closest('.module-quiz');
+  quiz.querySelectorAll('.quiz-q label').forEach(l => {
+    l.classList.remove('selected', 'correct', 'incorrect');
+    l.style.pointerEvents = '';
+    l.querySelector('input').checked = false;
+  });
+  quiz.querySelectorAll('.quiz-explain').forEach(e => e.classList.remove('show'));
+  quiz.querySelector('.quiz-result').className = 'quiz-result';
+  quiz.querySelector('.quiz-submit').disabled = false;
+}
+
+// ── Phase locking & badges ──
+const BADGE_ICONS = {
+  'phase-1': '&#x1F680;', 'phase-2': '&#x1F4DA;', 'phase-3': '&#x2699;&#xFE0F;',
+  'phase-4': '&#x1F3AF;', 'phase-5': '&#x1F451;', 'phase-6': '&#x1F916;',
+  'phase-7': '&#x1F517;', 'phase-bonus': '&#x2B50;'
+};
+
+function isPhaseComplete(phase) {
+  return phase.modules.every(m => progress[m.id]);
+}
+
+function isPhaseUnlocked(phaseIndex) {
+  if (phaseIndex === 0) return true; // Phase 1 always unlocked
+  // Bonus is always unlocked
+  if (PHASES[phaseIndex].id === 'phase-bonus') return true;
+  return isPhaseComplete(PHASES[phaseIndex - 1]);
+}
+
+function updatePhaseLocking() {
+  const phaseGroups = document.querySelectorAll('.phase-group');
+  phaseGroups.forEach((group, i) => {
+    if (isPhaseUnlocked(i)) {
+      group.classList.remove('locked');
+    } else {
+      group.classList.add('locked');
+    }
+  });
+}
+
+function getBadgesHTML() {
+  return PHASES.map((phase, i) => {
+    const complete = isPhaseComplete(phase);
+    const cls = complete ? 'earned' : 'locked';
+    const status = complete ? 'Completed!' : `${phase.modules.filter(m => progress[m.id]).length}/${phase.modules.length}`;
+    return `<div class="badge-card ${cls}">
+      <div class="badge-icon">${BADGE_ICONS[phase.id] || '&#x1F3C6;'}</div>
+      <div class="badge-label">${phase.label}</div>
+      <div class="badge-status">${status}</div>
+    </div>`;
+  }).join('');
+}
+
 // ── Welcome page ──
 function showWelcome() {
   currentModuleId = null;
@@ -1215,11 +1471,15 @@ function showWelcome() {
   history.replaceState(null, '', window.location.pathname);
 
   let cards = '';
-  PHASES.forEach(phase => {
+  PHASES.forEach((phase, i) => {
     const first = phase.modules[0];
-    cards += `<div class="phase-card" onclick="loadModule('${first.id}','${first.file}')">
+    const unlocked = isPhaseUnlocked(i);
+    const complete = isPhaseComplete(phase);
+    const lockClass = !unlocked ? ' style="opacity:0.4;pointer-events:none;"' : '';
+    const statusIcon = complete ? ' &#10003;' : (!unlocked ? ' &#x1F512;' : '');
+    cards += `<div class="phase-card"${lockClass} onclick="loadModule('${first.id}','${first.file}')">
       <div class="card-icon">${phase.icon}</div>
-      <h3>${phase.label} &mdash; ${phase.title}</h3>
+      <h3>${phase.label} &mdash; ${phase.title}${statusIcon}</h3>
       <p>${phase.modules.length} modules &middot; ${phase.desc}</p>
     </div>`;
   });
@@ -1251,6 +1511,10 @@ function showWelcome() {
     <div class="team-leaderboard">
       <h3>Team Progress</h3>
       <div class="team-grid">${teamCards}</div>
+    </div>
+    <div class="badges-section">
+      <h3>Achievements</h3>
+      <div class="badges-grid">${getBadgesHTML()}</div>
     </div>
     <div class="phase-cards">${cards}</div>
   </div>`;

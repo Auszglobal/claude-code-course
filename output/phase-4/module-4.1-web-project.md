@@ -217,40 +217,39 @@ my-portfolio/
 
 ---
 
-## ❓ Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. What are HTML, CSS, and JavaScript each responsible for?**
+<div class="quiz-q" data-answer="1">
+<p>1. What are HTML, CSS, and JavaScript each responsible for?</p>
+<label><input type="radio" name="q1" value="0"> HTML handles colors, CSS handles structure, JavaScript handles animation</label>
+<label><input type="radio" name="q1" value="1"> HTML handles structure, CSS handles styling, JavaScript handles interactivity</label>
+<label><input type="radio" name="q1" value="2"> HTML handles interactivity, CSS handles structure, JavaScript handles styling</label>
+<label><input type="radio" name="q1" value="3"> All three do the same thing and are interchangeable</label>
+<div class="quiz-explain">HTML defines the content structure of the page (the skeleton), CSS controls the visual appearance (the interior design), and JavaScript handles user interaction (the electrical system).</div>
+</div>
 
-A. HTML handles colors, CSS handles structure, JavaScript handles animation
-B. HTML handles structure, CSS handles styling, JavaScript handles interactivity
-C. HTML handles interactivity, CSS handles structure, JavaScript handles styling
-D. All three do the same thing and are interchangeable
+<div class="quiz-q" data-answer="1">
+<p>2. After modifying a website, how do you see the latest changes in the browser?</p>
+<label><input type="radio" name="q2" value="0"> You need to reinstall the browser</label>
+<label><input type="radio" name="q2" value="1"> Press Ctrl+R (Windows) or Cmd+R (Mac) to refresh the page</label>
+<label><input type="radio" name="q2" value="2"> You need to restart your computer</label>
+<label><input type="radio" name="q2" value="3"> Changes appear automatically, no action needed</label>
+<div class="quiz-explain">Browsers cache (temporarily store) the old version of the page. Pressing the refresh key tells the browser to reload the latest file content.</div>
+</div>
 
-Answer: B — HTML defines the content structure of the page (the skeleton), CSS controls the visual appearance (the interior design), and JavaScript handles user interaction (the electrical system).
+<div class="quiz-q" data-answer="1">
+<p>3. Which instruction is most effective for getting Claude Code to build a good-looking website?</p>
+<label><input type="radio" name="q3" value="0"> "Build a website"</label>
+<label><input type="radio" name="q3" value="1"> "Build a personal website with a navigation bar, self-introduction, skills showcase, using blue and white colors, modern and clean style"</label>
+<label><input type="radio" name="q3" value="2"> "Write 500 lines of HTML code"</label>
+<label><input type="radio" name="q3" value="3"> "Copy Google's homepage"</label>
+<div class="quiz-explain">The more specific your description (including content, colors, style, etc.), the better Claude Code can generate results that match your expectations. Vague instructions lead to vague results.</div>
+</div>
 
----
-
-**2. After modifying a website, how do you see the latest changes in the browser?**
-
-A. You need to reinstall the browser
-B. Press Ctrl+R (Windows) or Cmd+R (Mac) to refresh the page
-C. You need to restart your computer
-D. Changes appear automatically, no action needed
-
-Answer: B — Browsers cache (temporarily store) the old version of the page. Pressing the refresh key tells the browser to reload the latest file content.
-
----
-
-**3. Which instruction is most effective for getting Claude Code to build a good-looking website?**
-
-A. "Build a website"
-B. "Build a personal website with a navigation bar, self-introduction, skills showcase, using blue and white colors, modern and clean style"
-C. "Write 500 lines of HTML code"
-D. "Copy Google's homepage"
-
-Answer: B — The more specific your description (including content, colors, style, etc.), the better Claude Code can generate results that match your expectations. Vague instructions lead to vague results.
-
----
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## 🔗 Next Steps
 

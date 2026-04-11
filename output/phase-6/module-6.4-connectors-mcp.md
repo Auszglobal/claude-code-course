@@ -97,6 +97,40 @@ The ultimate fallback. Claude can:
 
 ---
 
+<div class="module-quiz">
+<h3>Module Quiz</h3>
+
+<div class="quiz-q" data-answer="0">
+<p>1. In Cowork's three-layer capability architecture, what is the first choice for interacting with external services?</p>
+<label><input type="radio" name="q1" value="0"> Connectors (MCP) -- direct API integration</label>
+<label><input type="radio" name="q1" value="1"> Browser extension -- read and interact with web pages</label>
+<label><input type="radio" name="q1" value="2"> Computer Use -- directly control the screen and mouse</label>
+<label><input type="radio" name="q1" value="3"> Manual copy-paste from applications</label>
+<div class="quiz-explain">The three layers are used in order of priority: Connectors (MCP) first for direct API integration, Browser extension second for web page interaction, and Computer Use as the last resort for screen control.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>2. What is a critical risk to be aware of when using the Browser Extension?</p>
+<label><input type="radio" name="q2" value="0"> It only works on Firefox</label>
+<label><input type="radio" name="q2" value="1"> It requires a separate monthly subscription</label>
+<label><input type="radio" name="q2" value="2"> Claude uses your real browser logged into your accounts and can complete payments</label>
+<label><input type="radio" name="q2" value="3"> It can only read text, not interact with buttons</label>
+<div class="quiz-explain">The Browser Extension uses your real browser with your logged-in accounts. Claude has the ability to complete payments and perform actions on your behalf, so setting up a blocklist for sensitive applications is essential.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>3. How does MCP configuration differ between Cowork and Claude Code?</p>
+<label><input type="radio" name="q3" value="0"> Both use the same settings.json file</label>
+<label><input type="radio" name="q3" value="1"> Cowork uses a GUI point-and-click approach; Claude Code uses settings.json configuration</label>
+<label><input type="radio" name="q3" value="2"> Only Claude Code supports MCP</label>
+<label><input type="radio" name="q3" value="3"> Cowork requires writing custom MCP servers; Claude Code does not</label>
+<div class="quiz-explain">Cowork configures MCP through a graphical point-and-click interface with cloud-hosted servers, while Claude Code uses manual configuration in ~/.claude/settings.json with local stdio or SSE servers.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
+
 ## Exercises
 
 1. Connect a Connector (e.g., Google Drive)

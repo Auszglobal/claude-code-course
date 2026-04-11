@@ -419,31 +419,39 @@ Then run the tests, find which ones fail, and fix the bugs in temperature.py
 so that all tests pass.
 ```
 
-## ❓ Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. Why should you write tests?
-   A. Because the boss requires it
-   B. To make the program run faster
-   C. To automatically check if code is correct, and quickly confirm nothing broke after changes
-   D. To make the codebase look bigger
+<div class="quiz-q" data-answer="2">
+<p>1. Why should you write tests?</p>
+<label><input type="radio" name="q1" value="0"> Because the boss requires it</label>
+<label><input type="radio" name="q1" value="1"> To make the program run faster</label>
+<label><input type="radio" name="q1" value="2"> To automatically check if code is correct, and quickly confirm nothing broke after changes</label>
+<label><input type="radio" name="q1" value="3"> To make the codebase look bigger</label>
+<div class="quiz-explain">The core value of testing is automated verification. When you modify code, you only need to run the tests once to know if you accidentally broke something else. This is much faster and more reliable than manual checking every time.</div>
+</div>
 
-   Answer: C — The core value of testing is automated verification. When you modify code, you only need to run the tests once to know if you accidentally broke something else. This is much faster and more reliable than manual checking every time.
+<div class="quiz-q" data-answer="1">
+<p>2. When pytest shows "3 failed, 12 passed", what does that mean?</p>
+<label><input type="radio" name="q2" value="0"> The entire program is broken and needs to be rewritten</label>
+<label><input type="radio" name="q2" value="1"> Out of 15 tests, 12 passed and 3 found issues that need fixing</label>
+<label><input type="radio" name="q2" value="2"> 3 new packages need to be installed</label>
+<label><input type="radio" name="q2" value="3"> The computer needs to be restarted</label>
+<div class="quiz-explain">pytest clearly tells you which tests passed and which failed. 3 failures mean 3 places where the functionality doesn't match expectations — you only need to fix those 3 issues.</div>
+</div>
 
-2. When pytest shows `3 failed, 12 passed`, what does that mean?
-   A. The entire program is broken and needs to be rewritten
-   B. Out of 15 tests, 12 passed and 3 found issues that need fixing
-   C. 3 new packages need to be installed
-   D. The computer needs to be restarted
+<div class="quiz-q" data-answer="1">
+<p>3. Which of the following is a good test case?</p>
+<label><input type="radio" name="q3" value="0"> <code>def test_1(): pass</code></label>
+<label><input type="radio" name="q3" value="1"> <code>def test_add_two_positive_numbers(): assert add(2, 3) == 5</code></label>
+<label><input type="radio" name="q3" value="2"> <code>def test(): add(2, 3)</code></label>
+<label><input type="radio" name="q3" value="3"> <code>def check_add(): return add(2, 3) == 5</code></label>
+<div class="quiz-explain">A good test needs: a clear name (describes what's being tested), uses assert to verify the result, and the function name starts with test_ (so pytest can find it). Option A tests nothing, C doesn't verify the result, and D isn't in pytest format.</div>
+</div>
 
-   Answer: B — pytest clearly tells you which tests passed and which failed. 3 failures mean 3 places where the functionality doesn't match expectations — you only need to fix those 3 issues.
-
-3. Which of the following is a good test case?
-   A. `def test_1(): pass`
-   B. `def test_add_two_positive_numbers(): assert add(2, 3) == 5`
-   C. `def test(): add(2, 3)`
-   D. `def check_add(): return add(2, 3) == 5`
-
-   Answer: B — A good test needs: a clear name (describes what's being tested), uses `assert` to verify the result, and the function name starts with `test_` (so pytest can find it). Option A tests nothing, C doesn't verify the result, and D isn't in pytest format.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## 🔗 Next Steps
 

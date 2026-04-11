@@ -325,31 +325,39 @@ Please extract the CSS styles from index.html into a separate style.css file,
 and add a link tag in the HTML to reference it.
 ```
 
-## ❓ Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. What is "Refactoring"?
-   A. Deleting all code and rewriting from scratch
-   B. Improving code structure and readability without changing functionality
-   C. Adding new features to a program
-   D. Fixing bugs in a program
+<div class="quiz-q" data-answer="1">
+<p>1. What is "Refactoring"?</p>
+<label><input type="radio" name="q1" value="0"> Deleting all code and rewriting from scratch</label>
+<label><input type="radio" name="q1" value="1"> Improving code structure and readability without changing functionality</label>
+<label><input type="radio" name="q1" value="2"> Adding new features to a program</label>
+<label><input type="radio" name="q1" value="3"> Fixing bugs in a program</label>
+<div class="quiz-explain">The core idea of refactoring is to make code cleaner and easier to maintain without changing what the program does. It's like organizing your closet — the clothes are still the same, just arranged more neatly.</div>
+</div>
 
-   Answer: B — The core idea of refactoring is to make code cleaner and easier to maintain without changing what the program does. It's like organizing your closet — the clothes are still the same, just arranged more neatly.
+<div class="quiz-q" data-answer="2">
+<p>2. When Claude Code proposes changes to 10 files, what is the safest approach?</p>
+<label><input type="radio" name="q2" value="0"> Accept everything immediately — Claude Code never makes mistakes</label>
+<label><input type="radio" name="q2" value="1"> Reject all changes and do everything manually</label>
+<label><input type="radio" name="q2" value="2"> Carefully review the change list and ask for batch processing if needed</label>
+<label><input type="radio" name="q2" value="3"> Close Claude Code and start over</label>
+<div class="quiz-explain">Even though Claude Code is very capable, you should still review every change. You can ask it to work in batches, or modify just one file first to confirm the result.</div>
+</div>
 
-2. When Claude Code proposes changes to 10 files, what is the safest approach?
-   A. Accept everything immediately — Claude Code never makes mistakes
-   B. Reject all changes and do everything manually
-   C. Carefully review the change list and ask for batch processing if needed
-   D. Close Claude Code and start over
+<div class="quiz-q" data-answer="1">
+<p>3. Why does renaming a function require changes to multiple files?</p>
+<label><input type="radio" name="q3" value="0"> Because Claude Code likes to modify many files</label>
+<label><input type="radio" name="q3" value="1"> Because other files may reference that function, and everything must stay consistent</label>
+<label><input type="radio" name="q3" value="2"> Because the computer needs to recompile all files</label>
+<label><input type="radio" name="q3" value="3"> Because old files are automatically deleted</label>
+<div class="quiz-explain">When a function is used (imported) by multiple files, renaming it means you must update all the places that reference it, or the program will throw an error saying the function can't be found. That's why multi-file operations are important.</div>
+</div>
 
-   Answer: C — Even though Claude Code is very capable, you should still review every change. You can ask it to work in batches, or modify just one file first to confirm the result.
-
-3. Why does renaming a function require changes to multiple files?
-   A. Because Claude Code likes to modify many files
-   B. Because other files may reference that function, and everything must stay consistent
-   C. Because the computer needs to recompile all files
-   D. Because old files are automatically deleted
-
-   Answer: B — When a function is used (imported) by multiple files, renaming it means you must update all the places that reference it, or the program will throw an error saying the function can't be found. That's why multi-file operations are important.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## 🔗 Next Steps
 

@@ -494,38 +494,39 @@ Find the SKILL.md file you just installed and open it with any text editor (Note
 
 ---
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. On Windows, where are Claude Code Skills installed by default?**
+<div class="quiz-q" data-answer="1">
+<p>1. On Windows, where are Claude Code Skills installed by default?</p>
+<label><input type="radio" name="q1" value="0"> <code>C:\Program Files\Claude\skills\</code></label>
+<label><input type="radio" name="q1" value="1"> <code>C:\Users\your-username\.claude\skills\</code></label>
+<label><input type="radio" name="q1" value="2"> <code>C:\Claude Code\plugins\skills\</code></label>
+<label><input type="radio" name="q1" value="3"> <code>C:\Users\your-username\AppData\claude\skills\</code></label>
+<div class="quiz-explain">Skills are installed in the <code>.claude/skills/</code> folder under the user's home directory. <code>.claude</code> is a hidden folder (prefixed with <code>.</code>) that contains all of Claude Code's configuration and resources.</div>
+</div>
 
-A. `C:\Program Files\Claude\skills\`  
-B. `C:\Users\your-username\.claude\skills\`  
-C. `C:\Claude Code\plugins\skills\`  
-D. `C:\Users\your-username\AppData\claude\skills\`  
+<div class="quiz-q" data-answer="2">
+<p>2. Which installation method doesn't require leaving the Claude Code environment?</p>
+<label><input type="radio" name="q2" value="0"> <code>npx skills add</code></label>
+<label><input type="radio" name="q2" value="1"> Manual <code>git clone</code> + <code>xcopy</code></label>
+<label><input type="radio" name="q2" value="2"> <code>/plugin marketplace add</code></label>
+<label><input type="radio" name="q2" value="3"> Downloading and extracting a ZIP file</label>
+<div class="quiz-explain">The <code>/plugin</code> command is used directly within Claude Code's conversation interface, without needing to switch to a terminal or other tool. Method 1 (npx) and Method 2 (manual) both require terminal access.</div>
+</div>
 
-Answer: **B** -- Skills are installed in the `.claude/skills/` folder under the user's home directory. `.claude` is a hidden folder (prefixed with `.`) that contains all of Claude Code's configuration and resources.
+<div class="quiz-q" data-answer="1">
+<p>3. Why do you need to restart Claude Code after installing a new Skill?</p>
+<label><input type="radio" name="q3" value="0"> Because the Skill needs to be compiled before it can run</label>
+<label><input type="radio" name="q3" value="1"> Because Claude Code only scans the skills folder at startup</label>
+<label><input type="radio" name="q3" value="2"> Because the Skill's latest version needs to be re-downloaded</label>
+<label><input type="radio" name="q3" value="3"> Because the Skill requires online verification to activate</label>
+<div class="quiz-explain">Claude Code is designed to scan the <code>~/.claude/skills/</code> folder at startup, loading all Skill metadata (names and short descriptions). If you add a new Skill while it's running, you need to restart so Claude Code can scan again.</div>
+</div>
 
----
-
-**2. Which installation method doesn't require leaving the Claude Code environment?**
-
-A. `npx skills add`  
-B. Manual `git clone` + `xcopy`  
-C. `/plugin marketplace add`  
-D. Downloading and extracting a ZIP file  
-
-Answer: **C** -- The `/plugin` command is used directly within Claude Code's conversation interface, without needing to switch to a terminal or other tool. Method 1 (npx) and Method 2 (manual) both require terminal access.
-
----
-
-**3. Why do you need to restart Claude Code after installing a new Skill?**
-
-A. Because the Skill needs to be compiled before it can run  
-B. Because Claude Code only scans the skills folder at startup  
-C. Because the Skill's latest version needs to be re-downloaded  
-D. Because the Skill requires online verification to activate  
-
-Answer: **B** -- Claude Code is designed to scan the `~/.claude/skills/` folder at startup, loading all Skill metadata (names and short descriptions). If you add a new Skill while it's running, you need to restart so Claude Code can scan again.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ---
 

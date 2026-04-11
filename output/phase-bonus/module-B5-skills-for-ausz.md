@@ -312,34 +312,39 @@ Using this simplified template, design a Skill for your own work:
 
 ---
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. Why does the "Partner Client List" section in the SKILL.md emphasise "do not hardcode commission rates"?**
+<div class="quiz-q" data-answer="1">
+<p>1. Why does the "Partner Client List" section in the SKILL.md emphasise "do not hardcode commission rates"?</p>
+<label><input type="radio" name="q1" value="0"> Because Claude can't read numbers</label>
+<label><input type="radio" name="q1" value="1"> Because commission rates may change at any time and should be read dynamically from config.py</label>
+<label><input type="radio" name="q1" value="2"> Because hardcoding would make the file too large</label>
+<label><input type="radio" name="q1" value="3"> Because SKILL.md doesn't support numbers</label>
+<div class="quiz-explain">Commission rates may be updated at any time. Hardcoding them in SKILL.md means you'd have to change two places every time, making errors likely. Claude should read the latest data from config.py instead.</div>
+</div>
 
-A. Because Claude can't read numbers
-B. Because commission rates may change at any time and should be read dynamically from config.py
-C. Because hardcoding would make the file too large
-D. Because SKILL.md doesn't support numbers
+<div class="quiz-q" data-answer="2">
+<p>2. Why does the booking-intake Skill specifically note "headless=False required on Windows"?</p>
+<label><input type="radio" name="q2" value="0"> Because Windows doesn't support browsers</label>
+<label><input type="radio" name="q2" value="1"> Because headless mode doesn't work on Mac</label>
+<label><input type="radio" name="q2" value="2"> Because Windows Task Scheduler requires an interactive session, and headless mode causes the script to fail</label>
+<label><input type="radio" name="q2" value="3"> Because headless=False makes the script run faster</label>
+<div class="quiz-explain">Windows Task Scheduler requires an interactive session. Playwright using headless=True will fail due to the lack of a display environment.</div>
+</div>
 
-Answer: B -- Commission rates may be updated at any time. Hardcoding them in SKILL.md means you'd have to change two places every time, making errors likely. Claude should read the latest data from config.py instead.
+<div class="quiz-q" data-answer="1">
+<p>3. The daily-ops-reporter classifies errors into four categories. If a log shows "OAuth token expired," which category should it fall under?</p>
+<label><input type="radio" name="q3" value="0"> NETWORK</label>
+<label><input type="radio" name="q3" value="1"> AUTH</label>
+<label><input type="radio" name="q3" value="2"> DATA</label>
+<label><input type="radio" name="q3" value="3"> BROWSER</label>
+<div class="quiz-explain">"OAuth token expired" is an authentication issue, belonging to the AUTH category. Clear error classification lets managers quickly identify the nature of the problem.</div>
+</div>
 
-**2. Why does the booking-intake Skill specifically note "headless=False required on Windows"?**
-
-A. Because Windows doesn't support browsers
-B. Because headless mode doesn't work on Mac
-C. Because Windows Task Scheduler requires an interactive session, and headless mode causes the script to fail
-D. Because headless=False makes the script run faster
-
-Answer: C -- Windows Task Scheduler requires an interactive session. Playwright using headless=True will fail due to the lack of a display environment.
-
-**3. The daily-ops-reporter classifies errors into four categories. If a log shows "OAuth token expired," which category should it fall under?**
-
-A. NETWORK
-B. AUTH
-C. DATA
-D. BROWSER
-
-Answer: B -- "OAuth token expired" is an authentication issue, belonging to the AUTH category. Clear error classification lets managers quickly identify the nature of the problem.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ---
 

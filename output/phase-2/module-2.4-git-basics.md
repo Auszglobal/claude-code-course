@@ -278,31 +278,39 @@ Experience the power of version control -- you can review how your project has e
 
 > Tip: You don't need to remember any Git commands. Just ask Claude Code in plain language: "What's the change history for index.html?"
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. Which of the following best describes a Git commit?
-   A. Deleting a file
-   B. A game save -- recording the current state of the project
-   C. Installing new software
-   D. Uploading a file to the internet
+<div class="quiz-q" data-answer="1">
+<p>1. Which of the following best describes a Git commit?</p>
+<label><input type="radio" name="q1" value="0"> Deleting a file</label>
+<label><input type="radio" name="q1" value="1"> A game save -- recording the current state of the project</label>
+<label><input type="radio" name="q1" value="2"> Installing new software</label>
+<label><input type="radio" name="q1" value="3"> Uploading a file to the internet</label>
+<div class="quiz-explain">A commit is like a game save. It records the complete state of the project at a specific point in time, and you can view or return to this state at any time. Each commit has a description (commit message), just like a save description.</div>
+</div>
 
-   Answer: B -- A commit is like a game save. It records the complete state of the project at a specific point in time, and you can view or return to this state at any time. Each commit has a description (commit message), just like a save description.
+<div class="quiz-q" data-answer="1">
+<p>2. When using Claude Code for Git operations, do you need to memorise Git commands?</p>
+<label><input type="radio" name="q2" value="0"> Yes, you need to memorise every command</label>
+<label><input type="radio" name="q2" value="1"> No, just describe what you want in natural language and Claude Code will run the right commands</label>
+<label><input type="radio" name="q2" value="2"> You only need to memorise git commit</label>
+<label><input type="radio" name="q2" value="3"> You need to complete a full Git tutorial before you can use it</label>
+<div class="quiz-explain">One of Claude Code's biggest advantages is that you can describe what you want to do in natural language. Say "save my work" and it runs the correct git add and git commit. Say "show me the history" and it runs git log. You don't need to memorise any commands.</div>
+</div>
 
-2. When using Claude Code for Git operations, do you need to memorise Git commands?
-   A. Yes, you need to memorise every command
-   B. No, just describe what you want in natural language and Claude Code will run the right commands
-   C. You only need to memorise `git commit`
-   D. You need to complete a full Git tutorial before you can use it
+<div class="quiz-q" data-answer="2">
+<p>3. Which of the following is a good commit message?</p>
+<label><input type="radio" name="q3" value="0"> "update"</label>
+<label><input type="radio" name="q3" value="1"> "fix"</label>
+<label><input type="radio" name="q3" value="2"> "Add user login form page"</label>
+<label><input type="radio" name="q3" value="3"> "changed some stuff"</label>
+<div class="quiz-explain">A good commit message should clearly describe why this change was made. "Add user login form page" lets you immediately know what this commit did when reviewing history in the future. The other options are too vague and don't provide useful information.</div>
+</div>
 
-   Answer: B -- One of Claude Code's biggest advantages is that you can describe what you want to do in natural language. Say "save my work" and it runs the correct `git add` and `git commit`. Say "show me the history" and it runs `git log`. You don't need to memorise any commands.
-
-3. Which of the following is a good commit message?
-   A. "update"
-   B. "fix"
-   C. "Add user login form page"
-   D. "changed some stuff"
-
-   Answer: C -- A good commit message should clearly describe **why** this change was made. "Add user login form page" lets you immediately know what this commit did when reviewing history in the future. The other options are too vague and don't provide useful information.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

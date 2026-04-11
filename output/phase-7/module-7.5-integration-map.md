@@ -44,23 +44,23 @@ Different third-party tools vary significantly in how deeply they integrate with
 
 ## Decision Tree for Choosing an Integration Method
 
-```
-Need to integrate a third-party tool?
-│
-├── Does Claude Code have built-in support? (Git, npm, CLI tools)
-│   └── ✅ Use it directly
-│
-├── Is there an official MCP server?
-│   └── ✅ Configure it in settings.json
-│
-├── Does it have a REST API?
-│   └── ✅ Have Claude Code write an API integration script
-│
-├── Is it supported by Zapier?
-│   └── ✅ Use Zapier MCP (Cowork only)
-│
-└── None of the above?
-    └── Use Playwright for browser automation
+```mermaid
+flowchart TD
+    A[Need to integrate a tool?] --> B{Built-in support?}
+    B -->|Yes| C[Use it directly]
+    B -->|No| D{Official MCP server?}
+    D -->|Yes| E[Configure in settings.json]
+    D -->|No| F{Has REST API?}
+    F -->|Yes| G[Write API integration script]
+    F -->|No| H{Zapier support?}
+    H -->|Yes| I[Use Zapier MCP]
+    H -->|No| J[Use Playwright]
+    style A fill:#1A1A2E,color:#fff
+    style C fill:#008B8B,color:#fff
+    style E fill:#008B8B,color:#fff
+    style G fill:#008B8B,color:#fff
+    style I fill:#00B4A6,color:#fff
+    style J fill:#00B4A6,color:#fff
 ```
 
 ## MCP Integration Configuration Example
@@ -125,8 +125,42 @@ Core principles:
 
 ---
 
+<div class="module-quiz">
+<h3>Module Quiz</h3>
+
+<div class="quiz-q" data-answer="1">
+<p>1. According to the integration depth ranking, which tools are Tier 1 (deepest integration, used almost every time)?</p>
+<label><input type="radio" name="q1" value="0"> Slack, Notion, and Firebase</label>
+<label><input type="radio" name="q1" value="1"> Git, GitHub, npm/pip, and the Terminal</label>
+<label><input type="radio" name="q1" value="2"> AWS CLI, Docker, and Google Sheets</label>
+<label><input type="radio" name="q1" value="3"> Figma, Jira, and Zapier</label>
+<div class="quiz-explain">Tier 1 tools are Git, GitHub, npm/pip, and the Terminal -- they have the deepest integration and are used in almost every Claude Code session. They are built-in and form the core development workflow.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>2. When you need to integrate a third-party tool, what is the first question in the decision tree?</p>
+<label><input type="radio" name="q2" value="0"> Is there a Zapier connector available?</label>
+<label><input type="radio" name="q2" value="1"> Can you use Playwright for browser automation?</label>
+<label><input type="radio" name="q2" value="2"> Does Claude Code have built-in support for it?</label>
+<label><input type="radio" name="q2" value="3"> Does it have a REST API?</label>
+<div class="quiz-explain">The decision tree starts with checking if Claude Code has built-in support (like Git, npm, CLI tools). If yes, use it directly. If not, check for an MCP server, then REST API, then Zapier, and finally Playwright as a last resort.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>3. Which is the most important security guideline for third-party integrations?</p>
+<label><input type="radio" name="q3" value="0"> Never commit API keys to Git -- use .env or environment variables</label>
+<label><input type="radio" name="q3" value="1"> Always use the latest version of every integration</label>
+<label><input type="radio" name="q3" value="2"> Only integrate tools from the official Anthropic marketplace</label>
+<label><input type="radio" name="q3" value="3"> Always use Cowork instead of Claude Code for integrations</label>
+<div class="quiz-explain">The top security guideline is to never commit API keys to Git. Use .env files or environment variables instead. Other important practices include following least privilege, rotating tokens regularly, and reviewing external Skills for prompt injection.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
+
 ## Exercises
 
-1. Draw your own "third-party integration map" — list the tools you use daily and label how they integrate
+1. Draw your own "third-party integration map" -- list the tools you use daily and label how they integrate
 2. Pick a Tier 3/4 tool and try integrating it via MCP or API
 3. Design an automation workflow that spans 3 different tools

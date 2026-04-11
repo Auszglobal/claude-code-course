@@ -242,31 +242,39 @@ Observe whether Claude Code uses Write or Edit at each step.
 
 > Tip: Step 1 creates a new file and will use Write. Step 3 modifies an existing file and will use Edit. Pay attention to the diff display!
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. What is the difference between Claude Code's Write tool and Edit tool?
-   A. No difference; they're functionally identical
-   B. Write creates a brand new file or overwrites completely; Edit only modifies specific parts of a file
-   C. Write can only create text files; Edit can create any file type
-   D. Write is faster than Edit
+<div class="quiz-q" data-answer="1">
+<p>1. What is the difference between Claude Code's Write tool and Edit tool?</p>
+<label><input type="radio" name="q1" value="0"> No difference; they're functionally identical</label>
+<label><input type="radio" name="q1" value="1"> Write creates a brand new file or overwrites completely; Edit only modifies specific parts of a file</label>
+<label><input type="radio" name="q1" value="2"> Write can only create text files; Edit can create any file type</label>
+<label><input type="radio" name="q1" value="3"> Write is faster than Edit</label>
+<div class="quiz-explain">Write is used to create new files from scratch (or completely overwrite existing files), while Edit is used to precisely modify specific parts of a file without affecting the rest. Edit is like changing one clause in a contract, while Write is like drafting the entire contract from scratch.</div>
+</div>
 
-   Answer: B -- Write is used to create new files from scratch (or completely overwrite existing files), while Edit is used to precisely modify specific parts of a file without affecting the rest. Edit is like changing one clause in a contract, while Write is like drafting the entire contract from scratch.
+<div class="quiz-q" data-answer="1">
+<p>2. What is a diff?</p>
+<label><input type="radio" name="q2" value="0"> A programming language</label>
+<label><input type="radio" name="q2" value="1"> A before-and-after comparison showing what was added and deleted in a file</label>
+<label><input type="radio" name="q2" value="2"> A Claude Code configuration option</label>
+<label><input type="radio" name="q2" value="3"> A file format</label>
+<div class="quiz-explain">A diff is a before-and-after comparison of changes. Red (-) represents deleted content, and green (+) represents added content. It lets you clearly see what Claude Code changed before you accept the modifications.</div>
+</div>
 
-2. What is a diff?
-   A. A programming language
-   B. A before-and-after comparison showing what was added and deleted in a file
-   C. A Claude Code configuration option
-   D. A file format
+<div class="quiz-q" data-answer="2">
+<p>3. After Claude Code shows you a diff, what should you do?</p>
+<label><input type="radio" name="q3" value="0"> Accept it immediately, because the AI never makes mistakes</label>
+<label><input type="radio" name="q3" value="1"> Reject it immediately and make the changes manually</label>
+<label><input type="radio" name="q3" value="2"> Review the diff contents first, then accept only after confirming the changes are correct</label>
+<label><input type="radio" name="q3" value="3"> Close Claude Code and start over</label>
+<div class="quiz-explain">Build good habits: always review the diff before making a decision. Claude Code is very smart, but it can occasionally misunderstand your intent. As the project owner, the final decision is yours. Look first, then confirm -- that's the safest approach.</div>
+</div>
 
-   Answer: B -- A diff is a before-and-after comparison of changes. Red (-) represents deleted content, and green (+) represents added content. It lets you clearly see what Claude Code changed before you accept the modifications.
-
-3. After Claude Code shows you a diff, what should you do?
-   A. Accept it immediately, because the AI never makes mistakes
-   B. Reject it immediately and make the changes manually
-   C. Review the diff contents first, then accept only after confirming the changes are correct
-   D. Close Claude Code and start over
-
-   Answer: C -- Build good habits: always review the diff before making a decision. Claude Code is very smart, but it can occasionally misunderstand your intent. As the project owner, the final decision is yours. Look first, then confirm -- that's the safest approach.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

@@ -323,32 +323,39 @@ Install frontend-design, ask Claude Code to build a web page on a topic you like
 
 ---
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. What role do Skills play in Claude Code?**
+<div class="quiz-q" data-answer="1">
+<p>1. What role do Skills play in Claude Code?</p>
+<label><input type="radio" name="q1" value="0"> They are a programming language</label>
+<label><input type="radio" name="q1" value="1"> They are specialised knowledge packs that extend Claude Code's capabilities</label>
+<label><input type="radio" name="q1" value="2"> They are a paid upgrade for Claude Code</label>
+<label><input type="radio" name="q1" value="3"> They are a file format</label>
+<div class="quiz-explain">Skills are like "professional handbooks." Once installed, they make Claude Code more professional in specific areas.</div>
+</div>
 
-A. They are a programming language
-B. They are specialised knowledge packs that extend Claude Code's capabilities
-C. They are a paid upgrade for Claude Code
-D. They are a file format
+<div class="quiz-q" data-answer="2">
+<p>2. What is the correct TDD workflow?</p>
+<label><input type="radio" name="q2" value="0"> Write code -> Write tests -> Refactor</label>
+<label><input type="radio" name="q2" value="1"> Write tests -> Write code -> Deploy</label>
+<label><input type="radio" name="q2" value="2"> Write tests -> Write code to pass the tests -> Refactor</label>
+<label><input type="radio" name="q2" value="3"> Refactor -> Write tests -> Write code</label>
+<div class="quiz-explain">First write tests (red), then write the minimum code to pass the tests (green), then refactor. This is the Red-Green-Refactor cycle.</div>
+</div>
 
-Answer: B -- Skills are like "professional handbooks." Once installed, they make Claude Code more professional in specific areas.
+<div class="quiz-q" data-answer="2">
+<p>3. Which one should you install to get the most Skills at once?</p>
+<label><input type="radio" name="q3" value="0"> frontend-design</label>
+<label><input type="radio" name="q3" value="1"> skill-creator</label>
+<label><input type="radio" name="q3" value="2"> obra/superpowers</label>
+<label><input type="radio" name="q3" value="3"> mcp-builder</label>
+<div class="quiz-explain">A single install of obra/superpowers gives you 20+ Skills covering TDD, debugging, Git workflows, and more.</div>
+</div>
 
-**2. What is the correct TDD workflow?**
-A. Write code -> Write tests -> Refactor
-B. Write tests -> Write code -> Deploy
-C. Write tests -> Write code to pass the tests -> Refactor
-D. Refactor -> Write tests -> Write code
-
-Answer: C -- First write tests (red), then write the minimum code to pass the tests (green), then refactor.
-
-**3. Which one should you install to get the most Skills at once?**
-A. frontend-design
-B. skill-creator
-C. obra/superpowers
-D. mcp-builder
-
-Answer: C -- A single install gives you 20+ Skills covering TDD, debugging, Git workflows, and more.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ---
 

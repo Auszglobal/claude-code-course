@@ -297,28 +297,39 @@ Here's a complete `settings.json` example combining multiple Hook types:
 
 > Tip: For example, you could have `/status` check Git status, list recently modified files, run tests, etc.
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. When does a PreToolUse Hook trigger?
-   A. When Claude Code starts up
-   B. Before Claude Code uses a tool
-   C. After Claude Code uses a tool
-   D. When Claude Code shuts down
-   Answer: B -- PreToolUse triggers before Claude Code uses a tool. You can use it to check for and block unsafe operations.
+<div class="quiz-q" data-answer="1">
+<p>1. When does a PreToolUse Hook trigger?</p>
+<label><input type="radio" name="q1" value="0"> When Claude Code starts up</label>
+<label><input type="radio" name="q1" value="1"> Before Claude Code uses a tool</label>
+<label><input type="radio" name="q1" value="2"> After Claude Code uses a tool</label>
+<label><input type="radio" name="q1" value="3"> When Claude Code shuts down</label>
+<div class="quiz-explain">PreToolUse triggers before Claude Code uses a tool. You can use it to check for and block unsafe operations.</div>
+</div>
 
-2. Where should custom Slash Command files be placed?
-   A. In the `commands/` folder at the project root
-   B. Inside `~/.claude/settings.json`
-   C. In the `.claude/commands/` folder at the project root
-   D. Inside `node_modules/`
-   Answer: C -- Custom commands are `.md` files placed in the project's `.claude/commands/` directory. Each filename becomes the command name.
+<div class="quiz-q" data-answer="2">
+<p>2. Where should custom Slash Command files be placed?</p>
+<label><input type="radio" name="q2" value="0"> In the <code>commands/</code> folder at the project root</label>
+<label><input type="radio" name="q2" value="1"> Inside <code>~/.claude/settings.json</code></label>
+<label><input type="radio" name="q2" value="2"> In the <code>.claude/commands/</code> folder at the project root</label>
+<label><input type="radio" name="q2" value="3"> Inside <code>node_modules/</code></label>
+<div class="quiz-explain">Custom commands are <code>.md</code> files placed in the project's <code>.claude/commands/</code> directory. Each filename becomes the command name.</div>
+</div>
 
-3. What happens if a PreToolUse Hook script returns `exit 1`?
-   A. Claude Code will crash
-   B. The tool operation will be blocked and Claude Code won't execute it
-   C. Nothing will happen
-   D. Claude Code will ignore the Hook and continue
-   Answer: B -- When a PreToolUse Hook command returns a non-zero exit code (like exit 1), Claude Code blocks the tool operation. This is the key mechanism for implementing security protections.
+<div class="quiz-q" data-answer="1">
+<p>3. What happens if a PreToolUse Hook script returns <code>exit 1</code>?</p>
+<label><input type="radio" name="q3" value="0"> Claude Code will crash</label>
+<label><input type="radio" name="q3" value="1"> The tool operation will be blocked and Claude Code won't execute it</label>
+<label><input type="radio" name="q3" value="2"> Nothing will happen</label>
+<label><input type="radio" name="q3" value="3"> Claude Code will ignore the Hook and continue</label>
+<div class="quiz-explain">When a PreToolUse Hook command returns a non-zero exit code (like exit 1), Claude Code blocks the tool operation. This is the key mechanism for implementing security protections.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

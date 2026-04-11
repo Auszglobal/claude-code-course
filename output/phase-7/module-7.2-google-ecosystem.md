@@ -116,6 +116,40 @@ google_credentials.json
 
 ---
 
+<div class="module-quiz">
+<h3>Module Quiz</h3>
+
+<div class="quiz-q" data-answer="2">
+<p>1. Which Python library does Claude Code use to integrate with Google Sheets?</p>
+<label><input type="radio" name="q1" value="0"> google-sheets-api</label>
+<label><input type="radio" name="q1" value="1"> pygsheets</label>
+<label><input type="radio" name="q1" value="2"> gspread + service account</label>
+<label><input type="radio" name="q1" value="3"> openpyxl</label>
+<div class="quiz-explain">Claude Code uses the <code>gspread</code> library with a Google service account for Sheets integration. This allows reading, writing, and syncing data with Google Sheets programmatically.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>2. Which of these files should NEVER be committed to Git?</p>
+<label><input type="radio" name="q2" value="0"> requirements.txt</label>
+<label><input type="radio" name="q2" value="1"> credentials.json and token.json</label>
+<label><input type="radio" name="q2" value="2"> CLAUDE.md</label>
+<label><input type="radio" name="q2" value="3"> package.json</label>
+<div class="quiz-explain">credentials.json (OAuth2 client secret), token.json (user authorization token), and google_credentials.json (service account key) must never be committed to Git. They should be added to .gitignore.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>3. What is the simplest way to integrate Google Calendar with Cowork?</p>
+<label><input type="radio" name="q3" value="0"> Write a Python script using the Calendar API</label>
+<label><input type="radio" name="q3" value="1"> Set up an MCP server for Google Calendar</label>
+<label><input type="radio" name="q3" value="2"> Use a Zapier integration</label>
+<label><input type="radio" name="q3" value="3"> Connect the Google Calendar connector directly in Cowork</label>
+<div class="quiz-explain">The simplest approach is to connect the Google Calendar connector directly in Cowork's interface. This allows Cowork to read your schedule and combine it with workflows like the daily morning briefing -- no code required.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
+
 ## Exercises
 
 1. Set up Google Sheets integration and have Claude Code read a spreadsheet

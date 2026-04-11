@@ -211,31 +211,39 @@ This exercise simulates a real workflow: find a file first, read it, then modify
 
 > Tip: You can do it step by step, or tell Claude Code all three steps at once. For example: "Find the recipes that use eggs, read the contents of pancakes.txt, then add cooking steps for me."
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. If you want to find all `.txt` files in a project, which search method should you use?
-   A. Grep -- because you need to search file contents
-   B. Glob -- because you need to search by filename pattern
-   C. Read -- because you need to read the files
-   D. Edit -- because you need to edit the files
+<div class="quiz-q" data-answer="1">
+<p>1. If you want to find all .txt files in a project, which search method should you use?</p>
+<label><input type="radio" name="q1" value="0"> Grep -- because you need to search file contents</label>
+<label><input type="radio" name="q1" value="1"> Glob -- because you need to search by filename pattern</label>
+<label><input type="radio" name="q1" value="2"> Read -- because you need to read the files</label>
+<label><input type="radio" name="q1" value="3"> Edit -- because you need to edit the files</label>
+<div class="quiz-explain">Glob is used for searching by filename pattern. *.txt is a Glob pattern meaning "all files ending in .txt." Grep is for searching inside file contents, not filenames.</div>
+</div>
 
-   Answer: B -- Glob is used for searching by filename pattern. `*.txt` is a Glob pattern meaning "all files ending in .txt." Grep is for searching inside file contents, not filenames.
+<div class="quiz-q" data-answer="2">
+<p>2. What does ** mean in a Glob pattern?</p>
+<label><input type="radio" name="q2" value="0"> Search twice</label>
+<label><input type="radio" name="q2" value="1"> Only search the current directory</label>
+<label><input type="radio" name="q2" value="2"> Match any level of subfolders</label>
+<label><input type="radio" name="q2" value="3"> Search hidden files</label>
+<div class="quiz-explain">** is a special wildcard that represents "any level of subfolders." For example, **/*.txt will search for .txt files in the current folder and all subfolders, sub-subfolders, no matter how deeply nested they are.</div>
+</div>
 
-2. What does `**` mean in a Glob pattern?
-   A. Search twice
-   B. Only search the current directory
-   C. Match any level of subfolders
-   D. Search hidden files
+<div class="quiz-q" data-answer="2">
+<p>3. When you tell Claude Code "Find all files that contain the word 'password'," what tool will it use?</p>
+<label><input type="radio" name="q3" value="0"> Glob -- because it's searching files</label>
+<label><input type="radio" name="q3" value="1"> Read -- because it needs to read the contents</label>
+<label><input type="radio" name="q3" value="2"> Grep -- because it's searching for specific text within file contents</label>
+<label><input type="radio" name="q3" value="3"> Write -- because it needs to write the search results</label>
+<div class="quiz-explain">When you want to search for specific text within file contents, Claude Code uses Grep. Glob can only search by filename (e.g., all .txt files) but can't search what's written inside files. Grep goes through every line of every file and finds where your specified text appears.</div>
+</div>
 
-   Answer: C -- `**` is a special wildcard that represents "any level of subfolders." For example, `**/*.txt` will search for .txt files in the current folder and all subfolders, sub-subfolders, no matter how deeply nested they are.
-
-3. When you tell Claude Code "Find all files that contain the word 'password'," what tool will it use?
-   A. Glob -- because it's searching files
-   B. Read -- because it needs to read the contents
-   C. Grep -- because it's searching for specific text within file contents
-   D. Write -- because it needs to write the search results
-
-   Answer: C -- When you want to search for specific text within file **contents**, Claude Code uses Grep. Glob can only search by filename (e.g., all .txt files) but can't search what's written inside files. Grep goes through every line of every file and finds where your specified text appears.
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

@@ -210,28 +210,39 @@ You can also browse all available MCP servers on this website:
 
 > Tip: For example, after installing the filesystem server, you can ask Claude Code to help you organise the file structure of a directory.
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-1. What does MCP stand for, and what is its main purpose?
-   A. Multi-Code Protocol -- lets multiple code files communicate with each other
-   B. Model Context Protocol -- lets Claude Code connect to external services and tools
-   C. Machine Control Program -- a program that controls computer hardware
-   D. Managed Cloud Platform -- a platform for managing cloud servers
-   Answer: B -- MCP stands for Model Context Protocol. Like an App Store, it lets Claude Code install new capabilities, connecting to databases, APIs, and other external services.
+<div class="quiz-q" data-answer="1">
+<p>1. What does MCP stand for, and what is its main purpose?</p>
+<label><input type="radio" name="q1" value="0"> Multi-Code Protocol -- lets multiple code files communicate with each other</label>
+<label><input type="radio" name="q1" value="1"> Model Context Protocol -- lets Claude Code connect to external services and tools</label>
+<label><input type="radio" name="q1" value="2"> Machine Control Program -- a program that controls computer hardware</label>
+<label><input type="radio" name="q1" value="3"> Managed Cloud Platform -- a platform for managing cloud servers</label>
+<div class="quiz-explain">MCP stands for Model Context Protocol. Like an App Store, it lets Claude Code install new capabilities, connecting to databases, APIs, and other external services.</div>
+</div>
 
-2. Which command lets you view currently configured MCP servers?
-   A. `claude mcp status`
-   B. `claude mcp show`
-   C. `claude mcp list`
-   D. `claude mcp servers`
-   Answer: C -- `claude mcp list` displays all configured MCP servers and their connection status.
+<div class="quiz-q" data-answer="2">
+<p>2. Which command lets you view currently configured MCP servers?</p>
+<label><input type="radio" name="q2" value="0"> <code>claude mcp status</code></label>
+<label><input type="radio" name="q2" value="1"> <code>claude mcp show</code></label>
+<label><input type="radio" name="q2" value="2"> <code>claude mcp list</code></label>
+<label><input type="radio" name="q2" value="3"> <code>claude mcp servers</code></label>
+<div class="quiz-explain"><code>claude mcp list</code> displays all configured MCP servers and their connection status.</div>
+</div>
 
-3. Where can MCP server configurations be placed?
-   A. Only in the global config (~/.claude/settings.json)
-   B. Only in the project config (project-directory/.claude/settings.json)
-   C. Either global or project config
-   D. Only through environment variables
-   Answer: C -- MCP servers can be configured at the global level (shared across all projects) or at the project level (used only by that project), giving you great flexibility.
+<div class="quiz-q" data-answer="2">
+<p>3. Where can MCP server configurations be placed?</p>
+<label><input type="radio" name="q3" value="0"> Only in the global config (~/.claude/settings.json)</label>
+<label><input type="radio" name="q3" value="1"> Only in the project config (project-directory/.claude/settings.json)</label>
+<label><input type="radio" name="q3" value="2"> Either global or project config</label>
+<label><input type="radio" name="q3" value="3"> Only through environment variables</label>
+<div class="quiz-explain">MCP servers can be configured at the global level (shared across all projects) or at the project level (used only by that project), giving you great flexibility.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

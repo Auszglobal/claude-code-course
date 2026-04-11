@@ -331,38 +331,39 @@ Main rules (3-5):
 
 ---
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. What is the core essence of Claude Code Skills?**
+<div class="quiz-q" data-answer="1">
+<p>1. What is the core essence of Claude Code Skills?</p>
+<label><input type="radio" name="q1" value="0"> A software plugin that needs to be installed</label>
+<label><input type="radio" name="q1" value="1"> A Markdown-format guidance document (SKILL.md)</label>
+<label><input type="radio" name="q1" value="2"> A continuously running background service</label>
+<label><input type="radio" name="q1" value="3"> A built-in Claude feature module</label>
+<div class="quiz-explain">A Skill is essentially a SKILL.md file placed in a designated folder. It's pure text -- no software installation or running service required.</div>
+</div>
 
-A. A software plugin that needs to be installed  
-B. A Markdown-format guidance document (SKILL.md)  
-C. A continuously running background service  
-D. A built-in Claude feature module  
+<div class="quiz-q" data-answer="1">
+<p>2. What does Progressive Disclosure load in Stage 1?</p>
+<label><input type="radio" name="q2" value="0"> The full SKILL.md content (~5,000 tokens)</label>
+<label><input type="radio" name="q2" value="1"> The Skill's name and short description (~100 tokens)</label>
+<label><input type="radio" name="q2" value="2"> All the Skill's accompanying resource files</label>
+<label><input type="radio" name="q2" value="3"> The complete contents of all installed Skills</label>
+<div class="quiz-explain">Stage 1 only loads the metadata (name + description), approximately 100 tokens. This means even if you have many Skills installed, startup won't waste resources. The full content is only loaded when a task actually matches a Skill.</div>
+</div>
 
-Answer: **B** -- A Skill is essentially a SKILL.md file placed in a designated folder. It's pure text -- no software installation or running service required.
+<div class="quiz-q" data-answer="2">
+<p>3. Which scenario is best solved with a Skill?</p>
+<label><input type="radio" name="q3" value="0"> Need to connect to the company's Slack channel to send notifications</label>
+<label><input type="radio" name="q3" value="1"> Need to translate 50 documents simultaneously</label>
+<label><input type="radio" name="q3" value="2"> Every time you write code, you need to remind Claude to follow your company's naming conventions</label>
+<label><input type="radio" name="q3" value="3"> Need to read customer data from a database</label>
+<div class="quiz-explain">Skills are best suited for "changing how Claude works," like following specific conventions or processes. A and D require connecting to external services (use MCP Server), B requires parallel processing (use Subagent).</div>
+</div>
 
----
-
-**2. What does Progressive Disclosure load in Stage 1?**
-
-A. The full SKILL.md content (~5,000 tokens)  
-B. The Skill's name and short description (~100 tokens)  
-C. All the Skill's accompanying resource files  
-D. The complete contents of all installed Skills  
-
-Answer: **B** -- Stage 1 only loads the metadata (name + description), approximately 100 tokens. This means even if you have many Skills installed, startup won't waste resources. The full content is only loaded when a task actually matches a Skill.
-
----
-
-**3. Which scenario is best solved with a Skill?**
-
-A. Need to connect to the company's Slack channel to send notifications  
-B. Need to translate 50 documents simultaneously  
-C. Every time you write code, you need to remind Claude to follow your company's naming conventions  
-D. Need to read customer data from a database  
-
-Answer: **C** -- Skills are best suited for "changing how Claude works," like following specific conventions or processes. A and D require connecting to external services (use MCP Server), B requires parallel processing (use Subagent).
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ---
 

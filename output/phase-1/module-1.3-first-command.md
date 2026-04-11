@@ -236,40 +236,39 @@ Ctrl + C (hold Ctrl, then press C)
 
 ---
 
-## Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. In Claude Code, how do you give commands?**
+<div class="quiz-q" data-answer="1">
+<p>1. In Claude Code, how do you give commands?</p>
+<label><input type="radio" name="q1" value="0"> You must use English programming syntax</label>
+<label><input type="radio" name="q1" value="1"> Describe what you want to do in natural language (any language works)</label>
+<label><input type="radio" name="q1" value="2"> You must memorise specific command-line commands</label>
+<label><input type="radio" name="q1" value="3"> You can only select operations from a menu</label>
+<div class="quiz-explain">Claude Code's greatest advantage is that you can use everyday language to tell it what you want to do. You don't need to learn any code or command syntax.</div>
+</div>
 
-A. You must use English programming syntax
-B. Describe what you want to do in natural language (any language works)
-C. You must memorise specific command-line commands
-D. You can only select operations from a menu
+<div class="quiz-q" data-answer="1">
+<p>2. When Claude Code asks "Allow this action?" and you press [N], what happens?</p>
+<label><input type="radio" name="q2" value="0"> Claude Code will force the action anyway</label>
+<label><input type="radio" name="q2" value="1"> Claude Code will cancel the action and make no changes</label>
+<label><input type="radio" name="q2" value="2"> Your computer will shut down</label>
+<label><input type="radio" name="q2" value="3"> Claude Code will delete all files</label>
+<div class="quiz-explain">Pressing N (Deny) means rejecting the action. Claude Code will respect your decision and make no changes. You can always reject any action you're unsure about -- this is an important safety mechanism.</div>
+</div>
 
-Answer: B -- Claude Code's greatest advantage is that you can use everyday language to tell it what you want to do. You don't need to learn any code or command syntax.
+<div class="quiz-q" data-answer="1">
+<p>3. Which of the following can be used to exit Claude Code?</p>
+<label><input type="radio" name="q3" value="0"> Shut down the computer</label>
+<label><input type="radio" name="q3" value="1"> Type <code>/exit</code> or press <code>Ctrl + C</code></label>
+<label><input type="radio" name="q3" value="2"> Unplug the network cable</label>
+<label><input type="radio" name="q3" value="3"> Wait for it to close on its own</label>
+<div class="quiz-explain">The most common ways to exit are typing <code>/exit</code> or pressing the keyboard shortcut <code>Ctrl + C</code>. Both safely end the Claude Code session.</div>
+</div>
 
----
-
-**2. When Claude Code asks "Allow this action?" and you press [N], what happens?**
-
-A. Claude Code will force the action anyway
-B. Claude Code will cancel the action and make no changes
-C. Your computer will shut down
-D. Claude Code will delete all files
-
-Answer: B -- Pressing N (Deny) means rejecting the action. Claude Code will respect your decision and make no changes. You can always reject any action you're unsure about -- this is an important safety mechanism.
-
----
-
-**3. Which of the following can be used to exit Claude Code?**
-
-A. Shut down the computer
-B. Type `/exit` or press `Ctrl + C`
-C. Unplug the network cable
-D. Wait for it to close on its own
-
-Answer: B -- The most common ways to exit are typing `/exit` or pressing the keyboard shortcut `Ctrl + C`. Both safely end the Claude Code session.
-
----
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## Next Steps
 

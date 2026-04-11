@@ -299,47 +299,40 @@ Go back to the personal website you built in Module 4.1 and ask Claude Code to a
 
 ---
 
-## ❓ Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. What is the best analogy for an API?**
+<div class="quiz-q" data-answer="1">
+<p>1. What is the best analogy for an API?</p>
+<label><input type="radio" name="q1" value="0"> A cookbook — teaches you how to cook</label>
+<label><input type="radio" name="q1" value="1"> A waiter — takes your request and brings back results from the kitchen</label>
+<label><input type="radio" name="q1" value="2"> A warehouse — stores all the data</label>
+<label><input type="radio" name="q1" value="3"> A printer — prints out data</label>
+<div class="quiz-explain">An API is like a restaurant waiter. You don't need to know how the kitchen (server) works — you just place your order through the waiter (API) and receive the dish (data) you wanted.</div>
+</div>
 
-A. A cookbook — teaches you how to cook
-B. A waiter — takes your request and brings back results from the kitchen
-C. A warehouse — stores all the data
-D. A printer — prints out data
+<div class="quiz-q" data-answer="1">
+<p>2. In the following JSON, what is the value of "temperature"?</p>
+<pre><code>{ "city": "Sydney", "temperature": 28, "weather": "Sunny" }</code></pre>
+<label><input type="radio" name="q2" value="0"> "Sydney"</label>
+<label><input type="radio" name="q2" value="1"> 28</label>
+<label><input type="radio" name="q2" value="2"> "Sunny"</label>
+<label><input type="radio" name="q2" value="3"> "temperature"</label>
+<div class="quiz-explain">In JSON, the left side of the colon is the field name (key), and the right side is the value. The "temperature" field has a value of 28.</div>
+</div>
 
-Answer: B — An API is like a restaurant waiter. You don't need to know how the kitchen (server) works — you just place your order through the waiter (API) and receive the dish (data) you wanted.
+<div class="quiz-q" data-answer="1">
+<p>3. If an API request fails (e.g., the internet is disconnected), how should the program handle it?</p>
+<label><input type="radio" name="q3" value="0"> Just crash — no handling needed</label>
+<label><input type="radio" name="q3" value="1"> Show a friendly error message so the user knows what went wrong</label>
+<label><input type="radio" name="q3" value="2"> Retry infinitely until it succeeds</label>
+<label><input type="radio" name="q3" value="3"> Delete all files and start over</label>
+<div class="quiz-explain">Good programs should use try/except to handle potential errors and show friendly messages. Infinite retries can cause the program to hang, and crashing outright gives users a terrible experience.</div>
+</div>
 
----
-
-**2. In the following JSON, what is the value of "temperature"?**
-```json
-{
-  "city": "Sydney",
-  "temperature": 28,
-  "weather": "Sunny"
-}
-```
-
-A. "Sydney"
-B. 28
-C. "Sunny"
-D. "temperature"
-
-Answer: B — In JSON, the left side of the colon is the field name (key), and the right side is the value. The "temperature" field has a value of 28.
-
----
-
-**3. If an API request fails (e.g., the internet is disconnected), how should the program handle it?**
-
-A. Just crash — no handling needed
-B. Show a friendly error message so the user knows what went wrong
-C. Retry infinitely until it succeeds
-D. Delete all files and start over
-
-Answer: B — Good programs should use try/except to handle potential errors and show friendly messages. Infinite retries can cause the program to hang, and crashing outright gives users a terrible experience.
-
----
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## 🔗 Next Steps
 

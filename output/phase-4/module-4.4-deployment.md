@@ -251,40 +251,39 @@ Commit and push all changes to GitHub
 
 ---
 
-## ❓ Quiz (3 Questions)
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. Why do you need to "deploy" a website?**
+<div class="quiz-q" data-answer="1">
+<p>1. Why do you need to "deploy" a website?</p>
+<label><input type="radio" name="q1" value="0"> To make the website run faster</label>
+<label><input type="radio" name="q1" value="1"> So others can access it through a URL, rather than it only being visible on your own computer</label>
+<label><input type="radio" name="q1" value="2"> To give the website a better design</label>
+<label><input type="radio" name="q1" value="3"> To protect the website from hackers</label>
+<div class="quiz-explain">Deployment means putting your website files on a server that runs 24/7. This way, anyone who enters your URL can see your website. Without deployment, the website only exists on your computer.</div>
+</div>
 
-A. To make the website run faster
-B. So others can access it through a URL, rather than it only being visible on your own computer
-C. To give the website a better design
-D. To protect the website from hackers
+<div class="quiz-q" data-answer="1">
+<p>2. After modifying a deployed website, what is the correct update process?</p>
+<label><input type="radio" name="q2" value="0"> Delete the GitHub repository and create a new one</label>
+<label><input type="radio" name="q2" value="1"> git add, git commit, git push, then wait a few minutes for it to automatically update</label>
+<label><input type="radio" name="q2" value="2"> Edit all files directly on the GitHub website</label>
+<label><input type="radio" name="q2" value="3"> You need to repurchase a domain name</label>
+<div class="quiz-explain">Just commit your changes to Git and push to GitHub. GitHub Pages will automatically detect the update and redeploy your website. It usually takes only 1-3 minutes.</div>
+</div>
 
-Answer: B — Deployment means putting your website files on a server that runs 24/7. This way, anyone who enters your URL can see your website. Without deployment, the website only exists on your computer.
+<div class="quiz-q" data-answer="2">
+<p>3. Which of the following is NOT a free website hosting platform?</p>
+<label><input type="radio" name="q3" value="0"> GitHub Pages</label>
+<label><input type="radio" name="q3" value="1"> Netlify</label>
+<label><input type="radio" name="q3" value="2"> Adobe Photoshop</label>
+<label><input type="radio" name="q3" value="3"> Vercel</label>
+<div class="quiz-explain">Adobe Photoshop is image editing software, not a website hosting platform. GitHub Pages, Netlify, and Vercel are all platforms that can host static websites for free.</div>
+</div>
 
----
-
-**2. After modifying a deployed website, what is the correct update process?**
-
-A. Delete the GitHub repository and create a new one
-B. `git add` → `git commit` → `git push`, then wait a few minutes for it to automatically update
-C. Edit all files directly on the GitHub website
-D. You need to repurchase a domain name
-
-Answer: B — Just commit your changes to Git and push to GitHub. GitHub Pages will automatically detect the update and redeploy your website. It usually takes only 1-3 minutes.
-
----
-
-**3. Which of the following is NOT a free website hosting platform?**
-
-A. GitHub Pages
-B. Netlify
-C. Adobe Photoshop
-D. Vercel
-
-Answer: C — Adobe Photoshop is image editing software, not a website hosting platform. GitHub Pages, Netlify, and Vercel are all platforms that can host static websites for free.
-
----
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## 🔗 Next Steps
 
