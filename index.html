@@ -802,7 +802,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   await fetchUsers();
   try {
     const saved = JSON.parse(localStorage.getItem('claude-course-user'));
-    if (saved && saved.name) { setCurrentUser(saved); }
+    if (saved && saved.name) {
+      // Migrate old Chinese role to English
+      if (saved.role === '管理員') saved.role = 'Admin';
+      if (saved.role === '學員') saved.role = 'Student';
+      if (saved.role === '試用') saved.role = 'Demo';
+      localStorage.setItem('claude-course-user', JSON.stringify(saved));
+      setCurrentUser(saved);
+    }
   } catch {}
 });
 document.getElementById('auth-pass')?.addEventListener('keypress', e => { if (e.key === 'Enter') tryLogin(); });
