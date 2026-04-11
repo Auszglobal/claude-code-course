@@ -805,29 +805,29 @@ body {
 </div>
 <script>
 // Multi-user auth with profiles — each user gets independent progress tracking
-// ── Shared progress API (Google Apps Script) ──
-// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-const PROGRESS_API_URL = '';
-let sharedProgress = {}; // { uid: { moduleId: true, ... }, ... }
+// ── Shared progress via JSONBlob (free, no auth needed) ──
+const JSONBLOB_ID = '019d7b3b-259e-78fe-8874-e2650dcc75d5';
+const JSONBLOB_URL = 'https://jsonblob.com/api/jsonBlob/' + JSONBLOB_ID;
+let sharedProgress = {};
 
 async function fetchSharedProgress() {
-  if (!PROGRESS_API_URL) return;
   try {
-    const res = await fetch(PROGRESS_API_URL);
-    sharedProgress = await res.json();
+    const res = await fetch(JSONBLOB_URL, { headers: { 'Accept': 'application/json' } });
+    if (res.ok) sharedProgress = await res.json();
   } catch { /* offline fallback */ }
 }
 
 async function pushProgressToCloud() {
-  if (!PROGRESS_API_URL || !currentUser) return;
+  if (!currentUser) return;
+  // Update local cache
+  sharedProgress[currentUser.uid] = { ...progress };
+  // Push entire shared state to JSONBlob
   try {
-    await fetch(PROGRESS_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ uid: currentUser.uid, progress })
+    await fetch(JSONBLOB_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(sharedProgress)
     });
-    // Also update local sharedProgress cache
-    sharedProgress[currentUser.uid] = { ...progress };
   } catch { /* silent fail, localStorage still works */ }
 }
 
