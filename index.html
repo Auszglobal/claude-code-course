@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 完全指南</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked-highlight@2.2.1/lib/index.umd.min.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --teal: #008B8B;
+  --accent: #00B4A6;
+  --dark: #1A1A2E;
+  --sidebar-w: 300px;
+  --bg: #f8f9fa;
+  --bg-card: #ffffff;
+  --text: #2d3748;
+  --text-secondary: #718096;
+  --border: #e2e8f0;
+  --code-bg: #1a1a2e;
+  --hover: #f0fdfa;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,0.1);
+  --transition: 0.25s ease;
+}
+
+/* Password gate */
+#auth-gate {
+  position: fixed; inset: 0; z-index: 99999;
+  background: linear-gradient(135deg, var(--dark) 0%, #0d1b2a 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+#auth-gate.hidden { display: none; }
+.auth-box {
+  background: rgba(255,255,255,0.06); backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 48px 40px; width: 380px; text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.auth-box h1 { color: var(--accent); font-size: 28px; margin-bottom: 8px; }
+.auth-box p { color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 32px; }
+.auth-box input {
+  width: 100%; padding: 14px 18px; border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 10px; background: rgba(255,255,255,0.06);
+  color: #fff; font-size: 16px; outline: none; margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+.auth-box input:focus { border-color: var(--accent); }
+.auth-box input::placeholder { color: rgba(255,255,255,0.35); }
+.auth-box button {
+  width: 100%; padding: 14px; background: var(--teal); color: #fff;
+  border: none; border-radius: 10px; font-size: 16px; font-weight: 600;
+  cursor: pointer; transition: background 0.2s; margin-top: 8px;
+}
+.auth-box button:hover { background: var(--accent); }
+.auth-error { color: #ff6b6b; font-size: 13px; margin-top: 8px; min-height: 20px; }
+
+[data-theme="dark"] {
+  --bg: #0f1117;
+  --bg-card: #1a1d2e;
+  --text: #e2e8f0;
+  --text-secondary: #a0aec0;
+  --border: #2d3748;
+  --hover: #1a2332;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--dark);
+  color: #cbd5e0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition);
+}
+
+.sidebar-header {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+
+.sidebar-header h1 {
+  font-size: 18px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.sidebar-header p {
+  font-size: 12px;
+  color: #718096;
+  margin-top: 4px;
+}
+
+/* Progress bar in sidebar */
+.progress-container {
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+
+.progress-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #718096;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-bar-track {
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--accent));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* Nav list */
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.phase-group { margin-bottom: 4px; }
+
+.phase-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--accent);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.phase-header:hover { background: rgba(255,255,255,0.04); }
+
+.phase-header .chevron {
+  margin-right: 8px;
+  font-size: 10px;
+  transition: transform 0.2s;
+  display: inline-block;
+  width: 16px;
+  text-align: center;
+}
+
+.phase-header.collapsed .chevron { transform: rotate(-90deg); }
+
+.phase-modules { overflow: hidden; }
+
+.phase-header.collapsed + .phase-modules { display: none; }
+
+.module-link {
+  display: flex;
+  align-items: center;
+  padding: 8px 20px 8px 36px;
+  font-size: 13px;
+  color: #a0aec0;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+.module-link:hover { background: rgba(255,255,255,0.06); color: #e2e8f0; }
+
+.module-link.active {
+  background: rgba(0, 180, 166, 0.12);
+  color: var(--accent);
+  border-right: 3px solid var(--accent);
+}
+
+.module-link .check {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #4a5568;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.module-link .check:hover { border-color: var(--accent); }
+
+.module-link .check.checked {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.module-link .title { flex: 1; }
+
+/* ── Main content ── */
+.main {
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+  transition: margin-left var(--transition);
+}
+
+/* Top bar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(8px);
+  transition: background var(--transition);
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.breadcrumb strong { color: var(--text); }
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Content area */
+.content-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+}
+
+/* ── Welcome page ── */
+.welcome { text-align: center; padding: 60px 20px; }
+
+.welcome-icon {
+  font-size: 64px;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.welcome h2 {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.welcome p {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin: 0 auto 40px;
+  line-height: 1.8;
+}
+
+.phase-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.phase-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow);
+}
+
+.phase-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+}
+
+.phase-card .card-icon { font-size: 28px; margin-bottom: 8px; }
+.phase-card h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.phase-card p { font-size: 12px; color: var(--text-secondary); }
+
+/* ── Markdown content styles ── */
+.markdown-body h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+  letter-spacing: -0.5px;
+}
+
+.markdown-body h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--teal);
+  margin: 36px 0 16px;
+}
+
+.markdown-body h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 12px;
+}
+
+.markdown-body h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 20px 0 8px;
+}
+
+.markdown-body p { margin-bottom: 16px; }
+
+.markdown-body ul, .markdown-body ol {
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.markdown-body li { margin-bottom: 6px; }
+
+.markdown-body a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.markdown-body a:hover { border-bottom-color: var(--accent); }
+
+.markdown-body blockquote {
+  border-left: 4px solid var(--accent);
+  background: var(--hover);
+  padding: 12px 20px;
+  margin: 16px 0;
+  border-radius: 0 8px 8px 0;
+  color: var(--text-secondary);
+}
+
+.markdown-body code {
+  background: rgba(0, 139, 139, 0.08);
+  color: var(--teal);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+}
+
+[data-theme="dark"] .markdown-body code {
+  background: rgba(0, 180, 166, 0.12);
+  color: var(--accent);
+}
+
+.markdown-body pre {
+  margin: 16px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.markdown-body pre code {
+  display: block;
+  padding: 20px;
+  background: var(--code-bg);
+  color: #e2e8f0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  overflow-x: auto;
+  border-radius: 0;
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.markdown-body thead th {
+  background: var(--dark);
+  color: white;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+[data-theme="dark"] .markdown-body thead th {
+  background: rgba(0, 180, 166, 0.15);
+  color: var(--accent);
+}
+
+.markdown-body tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.markdown-body tbody tr:hover td {
+  background: var(--hover);
+}
+
+.markdown-body hr {
+  border: none;
+  height: 1px;
+  background: var(--border);
+  margin: 32px 0;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+/* ── Prev/Next nav ── */
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.page-nav-btn {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+}
+
+.page-nav-btn:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+.page-nav-btn.next { text-align: right; align-items: flex-end; }
+
+.page-nav-btn .nav-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.page-nav-btn .nav-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.page-nav-btn.hidden { visibility: hidden; }
+
+/* Loading & error states */
+.loading {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-msg {
+  background: #fff5f5;
+  border: 1px solid #feb2b2;
+  color: #c53030;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  line-height: 1.7;
+}
+
+[data-theme="dark"] .error-msg {
+  background: rgba(197, 48, 48, 0.1);
+  border-color: rgba(197, 48, 48, 0.3);
+  color: #fc8181;
+}
+
+/* ── Overlay for mobile ── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 90;
+}
+
+.overlay.active { display: block; }
+
+/* ── Mobile responsive ── */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .hamburger { display: block; }
+  .content-wrapper { padding: 24px 16px 60px; }
+  .topbar { padding: 0 16px; }
+  .markdown-body h1 { font-size: 22px; }
+  .markdown-body h2 { font-size: 18px; }
+  .phase-cards { grid-template-columns: 1fr; }
+  .page-nav { flex-direction: column; }
+  .page-nav-btn.hidden { display: none; }
+}
+
+@media (max-width: 480px) {
+  .welcome h2 { font-size: 24px; }
+  .markdown-body pre code { font-size: 12px; padding: 14px; }
+}
+
+/* Scrollbar for sidebar */
+.sidebar::-webkit-scrollbar, .sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb, .sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+}
+
+/* Print */
+@media print {
+  .sidebar, .topbar, .page-nav { display: none !important; }
+  .main { margin-left: 0 !important; }
+}
+</style>
+</head>
+<body>
+<!-- Password Gate -->
+<div id="auth-gate">
+  <div class="auth-box">
+    <h1>Claude Code 完全指南</h1>
+    <p>請輸入帳號和密碼以繼續</p>
+    <input type="text" id="auth-user" placeholder="帳號 (Username)" autocomplete="username">
+    <input type="password" id="auth-pass" placeholder="密碼 (Password)" autocomplete="current-password">
+    <button onclick="tryLogin()">登入</button>
+    <div class="auth-error" id="auth-error"></div>
+  </div>
+</div>
+<script>
+// Simple client-side auth gate — SHA-256 hashed credentials
+// Username: student / Password: claudecode2026
+const VALID_HASH = '64a5ad1f47a65851d8b587f18d42b6ad2948e95732b0c5d9bcefb26aee4aa136';
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+async function tryLogin() {
+  const u = document.getElementById('auth-user').value.trim();
+  const p = document.getElementById('auth-pass').value;
+  const hash = await sha256(u + ':' + p);
+  if (hash === VALID_HASH) {
+    localStorage.setItem('claude-course-auth', 'ok');
+    document.getElementById('auth-gate').classList.add('hidden');
+  } else {
+    document.getElementById('auth-error').textContent = '帳號或密碼錯誤，請重試';
+    document.getElementById('auth-pass').value = '';
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('claude-course-auth') === 'ok') {
+    document.getElementById('auth-gate').classList.add('hidden');
+  }
+});
+document.getElementById('auth-pass')?.addEventListener('keypress', e => { if (e.key === 'Enter') tryLogin(); });
+document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('auth-pass').focus(); });
+</script>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h1>Claude Code 完全指南</h1>
+    <p>從零開始的 AI 編程之旅</p>
+  </div>
+
+  <div class="progress-container">
+    <div class="progress-label">
+      <span>學習進度</span>
+      <span id="progress-text">0 / 25</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progress-bar"></div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav" id="sidebar-nav"></nav>
+</aside>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Main -->
+<div class="main" id="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">&#9776;</button>
+      <div class="breadcrumb" id="breadcrumb">首頁</div>
+    </div>
+    <div class="topbar-right">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="切換深色/淺色模式">&#9790;</button>
+    </div>
+  </header>
+
+  <div class="content-wrapper">
+    <div id="content"></div>
+    <div class="page-nav" id="page-nav" style="display:none">
+      <div class="page-nav-btn" id="prev-btn">
+        <span class="nav-label">&#8592; 上一課</span>
+        <span class="nav-title" id="prev-title"></span>
+      </div>
+      <div class="page-nav-btn next" id="next-btn">
+        <span class="nav-label">下一課 &#8594;</span>
+        <span class="nav-title" id="next-title"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Module data ──
+const PHASES = [
+  {
+    id: 'phase-1',
+    label: 'Phase 1',
+    title: '入門篇',
+    icon: '&#x1F680;',
+    desc: '認識 Claude Code 並完成安裝',
+    modules: [
+      { id: '1.1', file: 'output/phase-1/module-1.1-what-is-claude-code.md', title: '什麼是 Claude Code？' },
+      { id: '1.2', file: 'output/phase-1/module-1.2-installation.md', title: '安裝 Claude Code' },
+      { id: '1.3', file: 'output/phase-1/module-1.3-first-command.md', title: '第一個指令' },
+      { id: '1.4', file: 'output/phase-1/module-1.4-basic-navigation.md', title: '基本導航' },
+    ]
+  },
+  {
+    id: 'phase-2',
+    label: 'Phase 2',
+    title: '基礎篇',
+    icon: '&#x1F4DA;',
+    desc: '掌握核心操作與文件管理',
+    modules: [
+      { id: '2.1', file: 'output/phase-2/module-2.1-claude-md.md', title: 'CLAUDE.md' },
+      { id: '2.2', file: 'output/phase-2/module-2.2-file-operations.md', title: '文件讀取與編輯' },
+      { id: '2.3', file: 'output/phase-2/module-2.3-search-navigation.md', title: '搜尋與導航' },
+      { id: '2.4', file: 'output/phase-2/module-2.4-git-basics.md', title: 'Git 基礎' },
+    ]
+  },
+  {
+    id: 'phase-3',
+    label: 'Phase 3',
+    title: '進階篇',
+    icon: '&#x2699;',
+    desc: '多文件操作與自動化',
+    modules: [
+      { id: '3.1', file: 'output/phase-3/module-3.1-multi-file-refactoring.md', title: '多文件操作' },
+      { id: '3.2', file: 'output/phase-3/module-3.2-automation-scripts.md', title: '自動化腳本' },
+      { id: '3.3', file: 'output/phase-3/module-3.3-debugging.md', title: '調試與修復' },
+      { id: '3.4', file: 'output/phase-3/module-3.4-testing.md', title: '測試與品質' },
+    ]
+  },
+  {
+    id: 'phase-4',
+    label: 'Phase 4',
+    title: '實戰篇',
+    icon: '&#x1F3AF;',
+    desc: '真實項目開發與部署',
+    modules: [
+      { id: '4.1', file: 'output/phase-4/module-4.1-web-project.md', title: '網頁項目' },
+      { id: '4.2', file: 'output/phase-4/module-4.2-api-integration.md', title: 'API 整合' },
+      { id: '4.3', file: 'output/phase-4/module-4.3-data-processing.md', title: '數據處理' },
+      { id: '4.4', file: 'output/phase-4/module-4.4-deployment.md', title: '部署與發布' },
+    ]
+  },
+  {
+    id: 'phase-5',
+    label: 'Phase 5',
+    title: '高級篇',
+    icon: '&#x1F451;',
+    desc: 'MCP、工作流與團隊協作',
+    modules: [
+      { id: '5.1', file: 'output/phase-5/module-5.1-mcp-servers.md', title: 'MCP 伺服器' },
+      { id: '5.2', file: 'output/phase-5/module-5.2-custom-workflows.md', title: '自定義工作流' },
+      { id: '5.3', file: 'output/phase-5/module-5.3-team-collaboration.md', title: '團隊協作' },
+      { id: '5.4', file: 'output/phase-5/module-5.4-capstone-project.md', title: '綜合實戰' },
+    ]
+  },
+  {
+    id: 'phase-bonus',
+    label: 'Bonus',
+    title: 'Skills 專題',
+    icon: '&#x2B50;',
+    desc: '擴展 Claude Code 能力',
+    modules: [
+      { id: 'B1', file: 'output/phase-bonus/module-B1-what-are-skills.md', title: 'Skills 是什麼' },
+      { id: 'B2', file: 'output/phase-bonus/module-B2-installing-skills.md', title: '安裝 Skills' },
+      { id: 'B3', file: 'output/phase-bonus/module-B3-top-10-skills.md', title: '十大 Skills' },
+      { id: 'B4', file: 'output/phase-bonus/module-B4-build-your-own-skill.md', title: '打造你的 Skill' },
+      { id: 'B5', file: 'output/phase-bonus/module-B5-skills-for-ausz.md', title: 'AUSZ 專屬 Skills' },
+    ]
+  },
+];
+
+// Flat list for prev/next navigation
+const ALL_MODULES = PHASES.flatMap(p => p.modules.map(m => ({ ...m, phase: p })));
+
+// ── State ──
+let currentModuleId = null;
+let progress = {};
+
+function loadProgress() {
+  try {
+    progress = JSON.parse(localStorage.getItem('claude-course-progress') || '{}');
+  } catch { progress = {}; }
+}
+
+function saveProgress() {
+  localStorage.setItem('claude-course-progress', JSON.stringify(progress));
+}
+
+function getCompletedCount() {
+  return ALL_MODULES.filter(m => progress[m.id]).length;
+}
+
+function updateProgressUI() {
+  const count = getCompletedCount();
+  const pct = Math.round((count / ALL_MODULES.length) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = count + ' / ' + ALL_MODULES.length;
+  // Update checkmarks
+  document.querySelectorAll('.module-link .check').forEach(el => {
+    const mid = el.dataset.moduleId;
+    if (progress[mid]) {
+      el.classList.add('checked');
+      el.innerHTML = '&#10003;';
+    } else {
+      el.classList.remove('checked');
+      el.innerHTML = '';
+    }
+  });
+}
+
+// ── Build sidebar ──
+function buildSidebar() {
+  const nav = document.getElementById('sidebar-nav');
+  let html = '';
+  PHASES.forEach(phase => {
+    html += `<div class="phase-group">
+      <div class="phase-header" data-phase="${phase.id}">
+        <span class="chevron">&#9662;</span>
+        ${phase.label} &mdash; ${phase.title}
+      </div>
+      <div class="phase-modules">`;
+    phase.modules.forEach(m => {
+      html += `<div class="module-link" data-module-id="${m.id}" data-file="${m.file}">
+        <span class="check" data-module-id="${m.id}"></span>
+        <span class="title">${m.id}  ${m.title}</span>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  nav.innerHTML = html;
+
+  // Phase collapse toggling
+  nav.querySelectorAll('.phase-header').forEach(h => {
+    h.addEventListener('click', () => h.classList.toggle('collapsed'));
+  });
+
+  // Module click
+  nav.querySelectorAll('.module-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      // If clicking the checkbox, toggle progress instead
+      if (e.target.classList.contains('check')) {
+        e.stopPropagation();
+        const mid = e.target.dataset.moduleId;
+        progress[mid] = !progress[mid];
+        saveProgress();
+        updateProgressUI();
+        return;
+      }
+      loadModule(link.dataset.moduleId, link.dataset.file);
+      closeMobileSidebar();
+    });
+  });
+}
+
+// ── Markdown rendering ──
+function configureMarked() {
+  marked.use(
+    markedHighlight.markedHighlight({
+      highlight: function(code, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+          try { return hljs.highlight(code, { language: lang }).value; } catch {}
+        }
+        try { return hljs.highlightAuto(code).value; } catch {}
+        return code;
+      }
+    })
+  );
+  marked.setOptions({ breaks: true, gfm: true });
+}
+
+// ── Load module ──
+async function loadModule(moduleId, filePath) {
+  currentModuleId = moduleId;
+
+  // Update active state in sidebar
+  document.querySelectorAll('.module-link').forEach(el => {
+    el.classList.toggle('active', el.dataset.moduleId === moduleId);
+  });
+
+  // Update breadcrumb
+  const mod = ALL_MODULES.find(m => m.id === moduleId);
+  if (mod) {
+    document.getElementById('breadcrumb').innerHTML =
+      `<span>${mod.phase.label} &mdash; ${mod.phase.title}</span> &nbsp;/&nbsp; <strong>${mod.id} ${mod.title}</strong>`;
+  }
+
+  // Show loading
+  const contentEl = document.getElementById('content');
+  contentEl.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在載入課程內容...</p></div>';
+  document.getElementById('page-nav').style.display = 'none';
+
+  try {
+    const resp = await fetch(filePath);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const md = await resp.text();
+    contentEl.innerHTML = '<div class="markdown-body">' + marked.parse(md) + '</div>';
+
+    // Re-highlight any code blocks that marked didn't catch
+    contentEl.querySelectorAll('pre code').forEach(block => {
+      if (!block.classList.contains('hljs')) {
+        hljs.highlightElement(block);
+      }
+    });
+
+    // Show prev/next
+    showPageNav(moduleId);
+
+    // Scroll to top
+    window.scrollTo({ top: 0 });
+
+    // Update URL hash
+    history.replaceState(null, '', '#' + moduleId);
+
+  } catch (err) {
+    contentEl.innerHTML = `<div class="error-msg">
+      <strong>無法載入模塊文件</strong><br><br>
+      文件路徑: <code>${filePath}</code><br>
+      錯誤: ${err.message}<br><br>
+      <strong>提示：</strong>如果你是用 <code>file://</code> 協議打開此頁面，<br>
+      某些瀏覽器會阻擋本地文件讀取。請嘗試以下方法：<br><br>
+      <code>cd ${filePath.split('/output/')[0] || '.'}</code><br>
+      <code>python -m http.server 8080</code><br><br>
+      然後在瀏覽器打開 <code>http://localhost:8080/index.html</code>
+    </div>`;
+    document.getElementById('page-nav').style.display = 'none';
+  }
+}
+
+function showPageNav(moduleId) {
+  const idx = ALL_MODULES.findIndex(m => m.id === moduleId);
+  const nav = document.getElementById('page-nav');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const prevTitle = document.getElementById('prev-title');
+  const nextTitle = document.getElementById('next-title');
+
+  nav.style.display = 'flex';
+
+  if (idx > 0) {
+    const prev = ALL_MODULES[idx - 1];
+    prevBtn.classList.remove('hidden');
+    prevTitle.textContent = prev.id + '  ' + prev.title;
+    prevBtn.onclick = () => { loadModule(prev.id, prev.file); closeMobileSidebar(); };
+  } else {
+    prevBtn.classList.add('hidden');
+    prevBtn.onclick = null;
+  }
+
+  if (idx < ALL_MODULES.length - 1) {
+    const next = ALL_MODULES[idx + 1];
+    nextBtn.classList.remove('hidden');
+    nextTitle.textContent = next.id + '  ' + next.title;
+    nextBtn.onclick = () => { loadModule(next.id, next.file); closeMobileSidebar(); };
+  } else {
+    nextBtn.classList.add('hidden');
+    nextBtn.onclick = null;
+  }
+}
+
+// ── Welcome page ──
+function showWelcome() {
+  currentModuleId = null;
+  document.querySelectorAll('.module-link').forEach(el => el.classList.remove('active'));
+  document.getElementById('breadcrumb').innerHTML = '首頁';
+  document.getElementById('page-nav').style.display = 'none';
+  history.replaceState(null, '', window.location.pathname);
+
+  let cards = '';
+  PHASES.forEach(phase => {
+    const first = phase.modules[0];
+    cards += `<div class="phase-card" onclick="loadModule('${first.id}','${first.file}')">
+      <div class="card-icon">${phase.icon}</div>
+      <h3>${phase.label} &mdash; ${phase.title}</h3>
+      <p>${phase.modules.length} 個模塊 &middot; ${phase.desc}</p>
+    </div>`;
+  });
+
+  document.getElementById('content').innerHTML = `<div class="welcome">
+    <span class="welcome-icon">&#x1F4BB;</span>
+    <h2>Claude Code 完全指南</h2>
+    <p>從零基礎開始，一步步學會使用 Claude Code 進行 AI 輔助編程。<br>共 ${ALL_MODULES.length} 個模塊，涵蓋從安裝到實戰的完整學習路徑。</p>
+    <div class="phase-cards">${cards}</div>
+  </div>`;
+}
+
+// ── Theme toggle ──
+function initTheme() {
+  const saved = localStorage.getItem('claude-course-theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById('theme-toggle').innerHTML = '&#9788;';
+  }
+}
+
+function toggleTheme() {
+  const btn = document.getElementById('theme-toggle');
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  if (isDark) {
+    document.documentElement.removeAttribute('data-theme');
+    btn.innerHTML = '&#9790;';
+    localStorage.setItem('claude-course-theme', 'light');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    btn.innerHTML = '&#9788;';
+    localStorage.setItem('claude-course-theme', 'dark');
+  }
+}
+
+// ── Mobile sidebar ──
+function openMobileSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('overlay').classList.add('active');
+}
+
+function closeMobileSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('active');
+}
+
+// ── Keyboard navigation ──
+function handleKeyboard(e) {
+  if (!currentModuleId) return;
+  const idx = ALL_MODULES.findIndex(m => m.id === currentModuleId);
+  if (e.key === 'ArrowLeft' && idx > 0) {
+    const prev = ALL_MODULES[idx - 1];
+    loadModule(prev.id, prev.file);
+  } else if (e.key === 'ArrowRight' && idx < ALL_MODULES.length - 1) {
+    const next = ALL_MODULES[idx + 1];
+    loadModule(next.id, next.file);
+  }
+}
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+  configureMarked();
+  loadProgress();
+  buildSidebar();
+  updateProgressUI();
+  initTheme();
+
+  document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+  document.getElementById('hamburger').addEventListener('click', openMobileSidebar);
+  document.getElementById('overlay').addEventListener('click', closeMobileSidebar);
+  document.addEventListener('keydown', handleKeyboard);
+
+  // Clicking the sidebar header goes home
+  document.querySelector('.sidebar-header').addEventListener('click', showWelcome);
+  document.querySelector('.sidebar-header').style.cursor = 'pointer';
+
+  // Check URL hash
+  const hash = window.location.hash.slice(1);
+  if (hash) {
+    const mod = ALL_MODULES.find(m => m.id === hash);
+    if (mod) {
+      loadModule(mod.id, mod.file);
+      // Expand the parent phase
+      const phaseEl = document.querySelector(`.module-link[data-module-id="${mod.id}"]`);
+      if (phaseEl) {
+        const header = phaseEl.closest('.phase-group')?.querySelector('.phase-header');
+        if (header) header.classList.remove('collapsed');
+      }
+      return;
+    }
+  }
+  showWelcome();
+});
+</script>
+</body>
+</html>
