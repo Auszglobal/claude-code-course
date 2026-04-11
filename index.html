@@ -1299,6 +1299,34 @@ const PHASES = [
     ]
   },
   {
+    id: 'phase-8',
+    label: 'Phase 8',
+    title: 'Mastery',
+    icon: '&#x1F9E0;',
+    desc: 'Prompting, cost management, IDE integration, memory, and multimodal',
+    modules: [
+      { id: '8.1', file: 'output/phase-8/module-8.1-effective-prompting.md', title: 'Effective Prompting' },
+      { id: '8.2', file: 'output/phase-8/module-8.2-context-cost-models.md', title: 'Context, Cost & Models' },
+      { id: '8.3', file: 'output/phase-8/module-8.3-ide-integration.md', title: 'IDE Integration' },
+      { id: '8.4', file: 'output/phase-8/module-8.4-memory-system.md', title: 'Memory System' },
+      { id: '8.5', file: 'output/phase-8/module-8.5-multimodal.md', title: 'Multimodal: Images & PDFs' },
+    ]
+  },
+  {
+    id: 'phase-9',
+    label: 'Phase 9',
+    title: 'Production',
+    icon: '&#x1F3ED;',
+    desc: 'Sub-agents, planning, databases, CI/CD, Docker, and security',
+    modules: [
+      { id: '9.1', file: 'output/phase-9/module-9.1-subagents.md', title: 'Sub-agents & Parallel Execution' },
+      { id: '9.2', file: 'output/phase-9/module-9.2-plan-mode.md', title: 'Plan Mode & Architecture' },
+      { id: '9.3', file: 'output/phase-9/module-9.3-database-operations.md', title: 'Database Operations' },
+      { id: '9.4', file: 'output/phase-9/module-9.4-headless-cicd.md', title: 'Headless Mode & CI/CD' },
+      { id: '9.5', file: 'output/phase-9/module-9.5-docker-security.md', title: 'Docker & Security' },
+    ]
+  },
+  {
     id: 'phase-bonus',
     label: 'Bonus',
     title: 'Skills Deep Dive',
@@ -1623,7 +1651,7 @@ function retryQuiz(btn) {
 const BADGE_ICONS = {
   'phase-1': '&#x1F680;', 'phase-2': '&#x1F4DA;', 'phase-3': '&#x2699;&#xFE0F;',
   'phase-4': '&#x1F3AF;', 'phase-5': '&#x1F451;', 'phase-6': '&#x1F916;',
-  'phase-7': '&#x1F517;', 'phase-bonus': '&#x2B50;'
+  'phase-7': '&#x1F517;', 'phase-8': '&#x1F9E0;', 'phase-9': '&#x1F3ED;', 'phase-bonus': '&#x2B50;'
 };
 
 function isPhaseComplete(phase) {
