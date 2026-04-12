@@ -15,9 +15,9 @@ By the end of this module, you will be able to:
 
 ### Why Short-Form Video Matters
 
-Short-form video is the fastest-growing content format on the internet. Platforms like TikTok, Instagram Reels, and YouTube Shorts all favor videos between 15 and 90 seconds. Think of short-form video like an elevator pitch — you have a tiny window to grab someone's attention, deliver value, and leave them wanting more.
+Short-form video is the fastest-growing content format on the internet. Platforms like TikTok, Instagram Reels, and YouTube Shorts all favor videos between 15 and 90 seconds. Think of short-form video like an elevator pitch — you have a tiny window to grab attention, deliver value, and leave people wanting more.
 
-The challenge is that creating one short video is easy. Creating one every day is exhausting. That is where Gemini comes in. Instead of staring at a blank page wondering what to post tomorrow, you can use Gemini to generate scripts, plan your shots, and map out an entire week of content in minutes.
+Creating one short video is easy. Creating one every day is exhausting. That is where Gemini comes in. Instead of staring at a blank page, you can use Gemini to generate scripts, plan shots, and map out an entire week of content in minutes.
 
 ### Anatomy of a Great Short-Form Video
 
@@ -25,9 +25,9 @@ Every successful short video follows a simple structure:
 
 | Section | Duration | Purpose |
 |---------|----------|---------|
-| **Hook** | 0–3 seconds | Stop the scroll. Ask a question or show something unexpected. |
-| **Body** | 3–50 seconds | Deliver the tip, story, or value. |
-| **CTA (Call to Action)** | Last 3–5 seconds | Tell the viewer what to do next: follow, comment, save. |
+| **Hook** | 0-3 seconds | Stop the scroll. Ask a question or show something unexpected. |
+| **Body** | 3-50 seconds | Deliver the tip, story, or value. |
+| **CTA (Call to Action)** | Last 3-5 seconds | Tell the viewer what to do next: follow, comment, save. |
 
 Think of it like a sandwich: the hook is the top bun that makes people pick it up, the body is the filling, and the CTA is the bottom bun that holds everything together.
 
@@ -35,9 +35,9 @@ Think of it like a sandwich: the hook is the top bun that makes people pick it u
 
 Each platform has slightly different rules:
 
-- **TikTok**: Trending sounds matter. Casual tone works best. 30–60 seconds is the sweet spot.
-- **Instagram Reels**: Polished visuals perform well. Hashtags still help with discovery. 15–30 seconds for maximum reach.
-- **YouTube Shorts**: Vertical video, under 60 seconds. Title and thumbnail matter less here — the first frame is your thumbnail.
+- **TikTok**: Trending sounds matter. Casual tone works best. 30-60 seconds is the sweet spot.
+- **Instagram Reels**: Polished visuals perform well. Hashtags help with discovery. 15-30 seconds for maximum reach.
+- **YouTube Shorts**: Vertical video, under 60 seconds. The first frame acts as your thumbnail.
 
 Gemini can help you adapt one idea for all three platforms by adjusting tone, length, and format.
 
@@ -204,8 +204,8 @@ except json.JSONDecodeError:
 
 ### Exercise 1: Create a Storyboard Prompt
 
-Write a Gemini prompt that takes a video script and turns it into a storyboard. Your storyboard should include:
-- A numbered list of shots (6–8 shots for a 30-second video)
+Write a Gemini prompt that turns a video script into a visual storyboard. Your storyboard should include:
+- A numbered list of 6-8 shots for a 30-second video
 - Camera angle for each shot (close-up, wide, screen recording)
 - Duration of each shot in seconds
 - Any text overlays or graphics
@@ -225,22 +225,22 @@ Compare the three outputs. Notice how the hook, pacing, and CTA change for each 
 
 ## 🔗 Next Steps
 
-In Phase 5, we move beyond content creation and into **automation and integration**. You will learn how to connect Gemini to external tools and APIs so it can do more than just generate text — it can take action. Get ready to build workflows that run on their own.
+In Phase 5, we move beyond content creation into **automation and integration**. You will learn how to connect Gemini to external tools and APIs so it can take action — not just generate text. Get ready to build workflows that run on their own.
 
 ---
 
 ## Mini Project: 7-Day Content Calendar for Your Brand
 
-**Time:** 15–20 minutes
+**Time:** 15-20 minutes
 
 Pick a real topic you care about (your job, a hobby, a side project). Use the content calendar script from Code Example 2 to generate a full week of short-form video ideas. Then:
 
 1. Pick your best 3 days from the calendar
 2. Use the script generator from Code Example 1 to write full scripts for those 3 videos
-3. For each script, manually add one line describing the background music mood (upbeat, chill, dramatic)
+3. For each script, add one line describing the background music mood (upbeat, chill, dramatic)
 4. Save everything in a single document — this is your ready-to-film content plan
 
-**Bonus:** Ask Gemini to suggest trending audio styles for each video based on the current platform trends.
+**Bonus:** Ask Gemini to suggest trending audio styles for each video based on current platform trends.
 
 ---
 
@@ -251,9 +251,9 @@ Pick a real topic you care about (your job, a hobby, a side project). Use the co
 <div class="quiz-q" data-answer="0"><p>3. Which platform benefits most from trending sounds?</p><label><input type="radio" name="q3" value="0"> TikTok</label><label><input type="radio" name="q3" value="1"> YouTube Shorts</label><label><input type="radio" name="q3" value="2"> LinkedIn</label><label><input type="radio" name="q3" value="3"> Email newsletters</label><div class="quiz-explain">TikTok's algorithm heavily favors videos that use trending sounds, making them a key factor in reach and discoverability.</div></div>
 <div class="quiz-q" data-answer="3"><p>4. Why should you mix content pillars throughout the week?</p><label><input type="radio" name="q4" value="0"> It saves money on production</label><label><input type="radio" name="q4" value="1"> Platforms require it in their terms of service</label><label><input type="radio" name="q4" value="2"> It makes the code run faster</label><label><input type="radio" name="q4" value="3"> It keeps your audience engaged and prevents repetition</label><div class="quiz-explain">Mixing content types (educational, entertaining, inspirational, behind-the-scenes) keeps your feed interesting and prevents your audience from getting bored with the same format every day.</div></div>
 <div class="quiz-q" data-answer="1"><p>5. What is the ideal length for an Instagram Reel to maximize reach?</p><label><input type="radio" name="q5" value="0"> 3-5 seconds</label><label><input type="radio" name="q5" value="1"> 15-30 seconds</label><label><input type="radio" name="q5" value="2"> 2-3 minutes</label><label><input type="radio" name="q5" value="3"> 10 minutes</label><div class="quiz-explain">Instagram Reels perform best at 15-30 seconds. Short enough to keep attention, long enough to deliver value.</div></div>
-<div class="quiz-q" data-answer="2"><p>6. In the script generator example, what format does the prompt use to structure the output?</p><label><input type="radio" name="q6" value="0"> Free-form paragraphs</label><label><input type="radio" name="q6" value="1"> CSV table</label><label><input type="radio" name="q6" value="2"> Labeled sections (HOOK, SCENE 1, SCENE 2, etc.)</label><label><input type="radio" name="q6" value="3"> Python dictionary</label><div class="quiz-explain">The prompt uses labeled sections like HOOK, SCENE 1, SCENE 2, SCENE 3, and CTA to give Gemini a clear structure to follow, making the output easy to read and use.</div></div>
+<div class="quiz-q" data-answer="2"><p>6. In the script generator, what format does the prompt use to structure the output?</p><label><input type="radio" name="q6" value="0"> Free-form paragraphs</label><label><input type="radio" name="q6" value="1"> CSV table</label><label><input type="radio" name="q6" value="2"> Labeled sections (HOOK, SCENE 1, SCENE 2, etc.)</label><label><input type="radio" name="q6" value="3"> Python dictionary</label><div class="quiz-explain">The prompt uses labeled sections like HOOK, SCENE 1, SCENE 2, SCENE 3, and CTA to give Gemini a clear structure to follow, making the output easy to read and use.</div></div>
 <div class="quiz-q" data-answer="0"><p>7. What is a storyboard used for in video production?</p><label><input type="radio" name="q7" value="0"> Mapping out each scene visually before filming</label><label><input type="radio" name="q7" value="1"> Editing the final video</label><label><input type="radio" name="q7" value="2"> Publishing the video to social media</label><label><input type="radio" name="q7" value="3"> Tracking video analytics</label><div class="quiz-explain">A storyboard maps out each scene before you start filming. It includes shot descriptions, camera angles, and durations so you know exactly what to record.</div></div>
-<div class="quiz-q" data-answer="3"><p>8. In the content calendar example, why does the code include a try-except block around json.loads?</p><label><input type="radio" name="q8" value="0"> To make the code run faster</label><label><input type="radio" name="q8" value="1"> Because Gemini always returns invalid JSON</label><label><input type="radio" name="q8" value="2"> To handle API key errors</label><label><input type="radio" name="q8" value="3"> Because Gemini might wrap JSON in markdown formatting, which would cause a parse error</label><div class="quiz-explain">Gemini sometimes wraps JSON output in markdown code blocks (```json ... ```). The try-except catches this and falls back to printing the raw text so the program does not crash.</div></div>
+<div class="quiz-q" data-answer="3"><p>8. In the content calendar code, why is there a try-except block around json.loads?</p><label><input type="radio" name="q8" value="0"> To make the code run faster</label><label><input type="radio" name="q8" value="1"> Because Gemini always returns invalid JSON</label><label><input type="radio" name="q8" value="2"> To handle API key errors</label><label><input type="radio" name="q8" value="3"> Because Gemini might wrap JSON in markdown formatting, causing a parse error</label><div class="quiz-explain">Gemini sometimes wraps JSON output in markdown code blocks. The try-except catches this and falls back to printing the raw text so the program does not crash.</div></div>
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

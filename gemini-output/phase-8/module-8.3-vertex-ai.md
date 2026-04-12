@@ -1,300 +1,446 @@
-# Module 8.3: Vertex AI — Google Cloud's Enterprise AI Platform
+# Module 8.3: Google Cloud Vertex AI
 
 ## 🎯 Learning Objectives
 
 After completing this module, you will be able to:
 
 - Understand what Vertex AI is and how it differs from Google AI Studio
-- Know when to choose Vertex AI over the free-tier Gemini API
-- Explain model tuning and fine-tuning at a high level
-- Understand enterprise security features like VPC Service Controls and IAM
-- Compare pricing between AI Studio and Vertex AI to make informed decisions
+- Know when to use Vertex AI versus the standard Gemini API
+- Understand model tuning and fine-tuning concepts
+- Grasp enterprise security and compliance features
+- Compare pricing between different Gemini access methods
+- Make an informed decision about which platform fits your needs
 
 ## 📖 Theory
 
 ### What Is Vertex AI?
 
-Think of Google AI Studio as a food truck. It is quick, convenient, and great for trying things out. You walk up, order, and get your food fast. But if you are running a restaurant chain that serves thousands of customers every day, you need a full commercial kitchen with health inspections, inventory management, and staff controls.
+Think of Google AI Studio as a cozy home kitchen. It is great for cooking meals, experimenting with recipes, and feeding your family. Now think of Vertex AI as a professional commercial kitchen in a restaurant. It has industrial equipment, food safety certifications, multiple stations for different chefs, and can serve hundreds of customers at once.
 
-**Vertex AI** is that commercial kitchen. It is Google Cloud's fully managed machine learning platform that lets businesses build, deploy, and scale AI applications with enterprise-grade security, monitoring, and compliance.
+Both kitchens can make the same food (use the same Gemini models). The difference is in scale, control, safety certifications, and professional features.
 
-Vertex AI is not a different AI model. It gives you access to the same Gemini models you already know, but wrapped in a layer of tools designed for serious production use.
+**Google AI Studio** is:
+- Free or low-cost to start
+- Quick to set up (just an API key)
+- Great for personal projects, prototypes, and small apps
+- Limited customization
 
-### AI Studio vs. Vertex AI: When to Use Which
+**Vertex AI** is:
+- Part of Google Cloud Platform (GCP)
+- Enterprise-grade with security, compliance, and governance
+- Supports model tuning and custom training
+- Has monitoring, logging, and deployment pipelines
+- Designed for production applications serving many users
 
-| Feature | Google AI Studio | Vertex AI |
-|---|---|---|
-| **Best for** | Learning, prototyping, personal projects | Production apps, business use |
-| **Setup** | Just an API key | Google Cloud project + service account |
-| **Security** | API key only | IAM roles, VPC, audit logs |
-| **Data residency** | No control | Choose your region |
-| **Model tuning** | Limited | Full tuning and fine-tuning |
-| **Monitoring** | Basic | Full dashboards, logging, alerts |
-| **SLA** | None | Enterprise SLA available |
-| **Cost** | Free tier + pay-per-use | Pay-per-use (slightly higher, but with guarantees) |
+### When Should You Use Vertex AI?
 
-**Rule of thumb:** If you are learning or building a side project, use AI Studio. If your company is building a product that handles customer data, use Vertex AI.
+Here is a simple decision guide:
 
-### Model Tuning and Fine-Tuning
+**Stick with AI Studio / Standard API if:**
+- You are building a personal project or prototype
+- Your app has a small number of users (under 100)
+- You do not handle sensitive data (medical, financial, personal)
+- You want the simplest setup possible
+- Budget is very limited
 
-Imagine you hired a brilliant new employee. They are very smart (that is the base Gemini model), but they do not know anything about your specific company. You have two ways to bring them up to speed:
+**Move to Vertex AI if:**
+- You are building for a business with real customers
+- You handle sensitive or regulated data
+- You need guaranteed uptime and performance
+- You want to customize (fine-tune) the model for your specific use case
+- Your company requires audit trails and access controls
+- You need to deploy across multiple regions
 
-1. **Prompt tuning** — You give them a detailed instruction manual every time they start work. This is like adding instructions to your system prompt. It is fast and costs nothing extra, but you are limited by the prompt size.
+### Model Tuning: Making Gemini Your Own
 
-2. **Fine-tuning (supervised tuning)** — You send them through a training program with hundreds of examples of how your company does things. After training, they just "know" the right way to respond without needing the manual. This is what Vertex AI fine-tuning does — you provide training examples, and Gemini learns your specific patterns.
+Out of the box, Gemini is a general-purpose model. It is like hiring a talented generalist. **Model tuning** is the process of training Gemini on your specific data so it becomes a specialist in your domain.
 
-Fine-tuning on Vertex AI works like this:
+There are two levels of customization:
 
-- You prepare a dataset of example prompts and ideal responses (at least 10, ideally hundreds)
-- Vertex AI creates a tuned version of the model
-- The tuned model responds in your company's style, using your terminology, following your rules
-- You get a private endpoint that only your application can access
+**1. Prompt Tuning (Lighter)**
+You give the model examples of ideal input-output pairs, and it learns your preferred style and format. It is like giving a new employee a handbook of "here is how we do things."
 
-### Enterprise Security Features
+- Easier and cheaper
+- No coding required (can be done in the Vertex AI console)
+- Good for style, tone, and format adjustments
+- Typically needs 50-500 examples
 
-When a company puts AI into production, security becomes critical. Vertex AI provides several layers of protection:
+**2. Fine-Tuning (Deeper)**
+You retrain parts of the model on your specific dataset. This is like sending that employee to a specialized training course.
 
-- **IAM (Identity and Access Management)** — Controls who can do what. For example, developers can use the model but cannot delete it. Managers can view usage reports. Only admins can change settings.
+- More powerful customization
+- Requires more data (hundreds to thousands of examples)
+- More expensive and time-consuming
+- Best for domain-specific terminology, reasoning patterns, or specialized tasks
 
-- **VPC Service Controls** — Creates a security boundary around your AI resources. Think of it as building a fence around your AI so data cannot leak out to the public internet.
+### Example: When Tuning Makes Sense
 
-- **Data residency** — You choose which Google Cloud region stores and processes your data. If your company operates in the EU and must comply with GDPR, you can ensure all data stays in European data centers.
+Imagine you run a legal firm. Gemini is good at general text, but it does not know your specific legal templates, your writing style, or the specific clauses your firm prefers in contracts.
 
-- **Audit logs** — Every API call, every model access, every configuration change is logged. If something goes wrong, you can trace exactly what happened.
+With fine-tuning, you could train Gemini on:
+- 500 contracts your firm has written
+- 200 legal memos in your preferred format
+- 100 client communications in your firm's tone
 
-- **Customer-Managed Encryption Keys (CMEK)** — By default, Google encrypts your data. With CMEK, you bring your own encryption keys, giving you full control over data access.
+After tuning, Gemini would draft contracts that sound like they came from your senior partner, not a generic AI.
+
+### Enterprise Security and Compliance
+
+For businesses handling sensitive data, security is not optional. Vertex AI provides several layers of protection:
+
+**Data Privacy:**
+- Your data never leaves your Google Cloud project
+- Google does not use your data to train its models
+- Data is encrypted at rest and in transit
+- You control data residency (which country/region stores your data)
+
+**Access Control:**
+- IAM (Identity and Access Management) — control who can access what
+- Service accounts with minimal permissions
+- Audit logs — every API call is recorded
+- VPC Service Controls — restrict data to your private network
+
+**Compliance Certifications:**
+- SOC 1, SOC 2, SOC 3 (security controls)
+- ISO 27001 (information security)
+- HIPAA (healthcare data in the US)
+- GDPR compliant (European data protection)
+- FedRAMP (US government)
+
+Think of it this way: AI Studio is like keeping documents on your personal laptop. Vertex AI is like keeping them in a bank vault with guards, cameras, access logs, and insurance.
 
 ### Pricing Comparison
 
-Vertex AI pricing is based on **tokens** (pieces of text), just like AI Studio, but the rates and structure differ:
+Understanding the cost difference helps you make smart decisions:
 
-| Model | AI Studio (per 1M tokens) | Vertex AI (per 1M tokens) |
-|---|---|---|
-| Gemini 2.0 Flash Input | $0.10 | $0.10 |
-| Gemini 2.0 Flash Output | $0.40 | $0.40 |
-| Gemini 2.5 Pro Input | $1.25 | $1.25 |
-| Gemini 2.5 Pro Output | $10.00 | $10.00 |
+**Google AI Studio / Standard Gemini API:**
+- Free tier available (limited requests per minute)
+- Pay-per-use pricing (per 1,000 tokens processed)
+- No minimum commitment
+- Gemini 2.0 Flash: approximately $0.10 per million input tokens
 
-The per-token pricing is often the same, but Vertex AI adds value through:
-- **Provisioned throughput** — Reserve capacity so your app never hits rate limits during traffic spikes
-- **Batch predictions** — Process large volumes of data at a 50% discount
-- **Enterprise support** — Guaranteed response times if something breaks
+**Vertex AI:**
+- Pay-per-use (similar token pricing, sometimes slightly different rates)
+- Additional costs for: compute resources, storage, networking
+- Provisioned throughput available (guaranteed capacity at a fixed rate)
+- Volume discounts for large-scale usage
+- Fine-tuning has separate training costs
 
-The real cost difference is in the Google Cloud infrastructure (compute, storage, networking) you use alongside Vertex AI.
+**Rule of thumb:** For small to medium projects (under $100/month in API costs), the standard API is usually more cost-effective. For large-scale production (thousands of daily users), Vertex AI's provisioned throughput and enterprise features often provide better value.
 
-## 💻 Code Example 1: Setting Up Vertex AI in Python
+## 💻 Code Example 1: Using Gemini Through Vertex AI
 
-This example shows how to connect to Gemini through Vertex AI instead of AI Studio. Notice the authentication uses a service account rather than a simple API key.
+This example shows how to use Gemini through the Vertex AI SDK instead of the standard API. The model is the same, but the setup and authentication are different.
 
 ```python
 # vertex_ai_setup.py
-# Connecting to Gemini through Vertex AI
+# Using Gemini through Google Cloud Vertex AI
 
-# Step 1: Install the Vertex AI SDK (run this in your terminal)
+# First, install the Vertex AI SDK:
 # pip install google-cloud-aiplatform
 
 import vertexai
-from vertexai.generative_models import GenerativeModel
+from vertexai.generative_models import GenerativeModel, Part
 
-# Step 2: Initialize Vertex AI with your project details
-# Replace these with your actual Google Cloud project info
-PROJECT_ID = "my-company-project"   # Your Google Cloud project ID
-REGION = "us-central1"              # The region closest to your users
-
+# Initialize Vertex AI with your project details
+# You need a Google Cloud project with Vertex AI API enabled
 vertexai.init(
-    project=PROJECT_ID,
-    location=REGION
+    project="your-gcp-project-id",  # Your Google Cloud project ID
+    location="us-central1"           # The region (choose one close to your users)
 )
 
-# Step 3: Create a model instance (same Gemini, different access path)
+# Create the model — same Gemini, different access path
 model = GenerativeModel("gemini-2.0-flash")
 
-# Step 4: Send a simple prompt
+# Basic text generation — works the same as the standard API
 response = model.generate_content(
-    "Explain what cloud computing is in two sentences."
+    "Explain the difference between machine learning and deep learning "
+    "in simple terms suitable for a business executive."
 )
-
-print("Vertex AI Response:")
+print("BASIC RESPONSE:")
 print(response.text)
 
-# Step 5: Use with system instructions (just like AI Studio)
-model_with_instructions = GenerativeModel(
+# ---- Vertex AI specific features ----
+
+# Feature 1: Safety settings with fine-grained control
+from vertexai.generative_models import HarmCategory, HarmBlockThreshold
+
+model_with_safety = GenerativeModel(
     "gemini-2.0-flash",
-    system_instruction="You are a helpful customer support agent for "
-                       "a software company called TechCo. Always be polite "
-                       "and refer customers to support.techco.com for "
-                       "complex issues."
+    safety_settings={
+        HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+    }
 )
 
-support_response = model_with_instructions.generate_content(
-    "My account is locked and I cannot log in."
+# Feature 2: System instructions for consistent behavior
+model_with_system = GenerativeModel(
+    "gemini-2.0-flash",
+    system_instruction="You are a helpful customer service agent for TechCorp. "
+                       "Always be polite and professional. Never discuss competitor "
+                       "products. If you don't know the answer, direct the customer "
+                       "to support@techcorp.com."
 )
 
-print("\nCustomer Support Response:")
-print(support_response.text)
+response = model_with_system.generate_content(
+    "How does your product compare to the competition?"
+)
+print("\nSYSTEM INSTRUCTION RESPONSE:")
+print(response.text)
+
+# Feature 3: Generation config for precise control
+from vertexai.generative_models import GenerationConfig
+
+config = GenerationConfig(
+    temperature=0.2,       # Low creativity — more factual and consistent
+    top_p=0.8,             # Focused responses
+    top_k=40,              # Consider top 40 token choices
+    max_output_tokens=500, # Limit response length
+    candidate_count=1      # Generate one response
+)
+
+response = model.generate_content(
+    "List the top 3 benefits of cloud computing for small businesses.",
+    generation_config=config
+)
+print("\nCONFIGURED RESPONSE:")
+print(response.text)
 ```
 
 ### Expected Output:
 
 ```
-Vertex AI Response:
-Cloud computing is the delivery of computing services like storage,
-servers, and software over the internet, so you do not need to own
-physical hardware. It lets businesses and individuals access powerful
-resources on demand and pay only for what they use.
+BASIC RESPONSE:
+Think of it this way: Machine Learning (ML) is like teaching a
+computer to recognize patterns by showing it lots of examples.
+Deep Learning is a specific type of ML that uses "neural networks"
+— inspired by how the human brain works — to handle more complex
+tasks like understanding images or human speech...
 
-Customer Support Response:
-I am sorry to hear you are having trouble logging in! I recommend
-visiting support.techco.com where our team can verify your identity
-and unlock your account right away. Is there anything else I can
-help you with?
+SYSTEM INSTRUCTION RESPONSE:
+Thank you for your interest in our products! While I'm not able to
+discuss specific competitor comparisons, I'd love to tell you about
+what makes TechCorp special. Our products are designed with...
+If you'd like a detailed feature overview, please reach out to
+support@techcorp.com and our team will be happy to help!
+
+CONFIGURED RESPONSE:
+1. **Cost Savings**: Cloud computing eliminates the need to buy and
+   maintain expensive servers. You pay only for what you use.
+2. **Scalability**: Easily scale up during busy periods and scale
+   down when demand is lower, without buying new hardware.
+3. **Remote Access**: Your team can access files and applications
+   from anywhere with an internet connection.
 ```
 
-## 💻 Code Example 2: Preparing a Fine-Tuning Dataset
+## 💻 Code Example 2: Monitoring and Logging in Vertex AI
 
-This example shows how to prepare a training dataset and start a fine-tuning job on Vertex AI. Fine-tuning teaches the model your specific style and patterns.
+This example demonstrates how to set up monitoring for your AI application — tracking usage, performance, and costs.
 
 ```python
-# fine_tuning_prep.py
-# Preparing data and launching a fine-tuning job on Vertex AI
+# vertex_monitoring.py
+# Monitor your Vertex AI usage and performance
 
 import vertexai
 from vertexai.generative_models import GenerativeModel
-from vertexai.tuning import sft  # sft = supervised fine-tuning
+import time
 import json
 
-# Initialize Vertex AI
-vertexai.init(project="my-company-project", location="us-central1")
+vertexai.init(project="your-gcp-project-id", location="us-central1")
 
-# Step 1: Prepare training data
-# Each example shows the model an input and the ideal output
-# The format is JSONL (one JSON object per line)
-training_examples = [
-    {
-        "messages": [
-            {"role": "user", "content": "What is your return policy?"},
-            {"role": "model", "content": "Great question! At ShopSmart, "
-             "we offer a 30-day hassle-free return policy. Simply bring "
-             "your item and receipt to any store, or start a return at "
-             "shopsmart.com/returns. Need help with a specific return?"}
-        ]
-    },
-    {
-        "messages": [
-            {"role": "user", "content": "Do you ship internationally?"},
-            {"role": "model", "content": "We sure do! ShopSmart ships "
-             "to over 50 countries. Standard international shipping "
-             "takes 7-14 business days. You can check shipping rates "
-             "for your country at shopsmart.com/shipping. Anything "
-             "else I can help with?"}
-        ]
-    },
-    {
-        "messages": [
-            {"role": "user", "content": "I got the wrong item."},
-            {"role": "model", "content": "Oh no, I am really sorry about "
-             "that! Let me help fix this right away. Please visit "
-             "shopsmart.com/returns and select 'Wrong Item Received.' "
-             "We will send you a prepaid return label and ship the "
-             "correct item with express delivery at no extra cost!"}
-        ]
-    }
-    # In practice, you need at least 10 examples.
-    # 100-500 examples produce much better results.
+model = GenerativeModel("gemini-2.0-flash")
+
+# Build a simple monitoring wrapper
+class MonitoredModel:
+    """Wraps a Gemini model with monitoring and logging."""
+
+    def __init__(self, model):
+        self.model = model
+        self.request_log = []    # Track all requests
+        self.total_requests = 0
+        self.total_input_tokens = 0
+        self.total_output_tokens = 0
+        self.total_latency_ms = 0
+
+    def generate(self, prompt, **kwargs):
+        """Generate content with monitoring."""
+
+        # Record start time
+        start_time = time.time()
+        self.total_requests += 1
+
+        try:
+            # Make the API call
+            response = self.model.generate_content(prompt, **kwargs)
+
+            # Calculate latency
+            latency_ms = (time.time() - start_time) * 1000
+
+            # Extract token usage from response metadata
+            usage = response.usage_metadata
+            input_tokens = usage.prompt_token_count
+            output_tokens = usage.candidates_token_count
+
+            # Update totals
+            self.total_input_tokens += input_tokens
+            self.total_output_tokens += output_tokens
+            self.total_latency_ms += latency_ms
+
+            # Log this request
+            log_entry = {
+                "request_number": self.total_requests,
+                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "prompt_preview": prompt[:80] + "..." if len(prompt) > 80 else prompt,
+                "input_tokens": input_tokens,
+                "output_tokens": output_tokens,
+                "latency_ms": round(latency_ms, 1),
+                "status": "success"
+            }
+            self.request_log.append(log_entry)
+
+            return response
+
+        except Exception as e:
+            latency_ms = (time.time() - start_time) * 1000
+            self.request_log.append({
+                "request_number": self.total_requests,
+                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "status": "error",
+                "error": str(e),
+                "latency_ms": round(latency_ms, 1)
+            })
+            raise
+
+    def get_stats(self):
+        """Return usage statistics."""
+        avg_latency = (self.total_latency_ms / self.total_requests
+                       if self.total_requests > 0 else 0)
+
+        # Estimate cost (approximate rates for Gemini 2.0 Flash)
+        input_cost = (self.total_input_tokens / 1_000_000) * 0.10
+        output_cost = (self.total_output_tokens / 1_000_000) * 0.40
+        total_cost = input_cost + output_cost
+
+        return {
+            "total_requests": self.total_requests,
+            "total_input_tokens": self.total_input_tokens,
+            "total_output_tokens": self.total_output_tokens,
+            "average_latency_ms": round(avg_latency, 1),
+            "estimated_cost_usd": round(total_cost, 4),
+            "errors": sum(1 for log in self.request_log if log["status"] == "error")
+        }
+
+    def print_dashboard(self):
+        """Print a monitoring dashboard."""
+        stats = self.get_stats()
+        print("\n" + "=" * 55)
+        print("     VERTEX AI MONITORING DASHBOARD")
+        print("=" * 55)
+        print(f"  Total Requests:      {stats['total_requests']}")
+        print(f"  Input Tokens:        {stats['total_input_tokens']:,}")
+        print(f"  Output Tokens:       {stats['total_output_tokens']:,}")
+        print(f"  Avg Latency:         {stats['average_latency_ms']} ms")
+        print(f"  Errors:              {stats['errors']}")
+        print(f"  Estimated Cost:      ${stats['estimated_cost_usd']:.4f}")
+        print("=" * 55)
+
+        print("\n  Request Log:")
+        for log in self.request_log[-5:]:  # Show last 5 requests
+            status_icon = "OK" if log["status"] == "success" else "ERR"
+            print(f"  [{status_icon}] #{log['request_number']} | "
+                  f"{log.get('input_tokens', '?')} in / "
+                  f"{log.get('output_tokens', '?')} out | "
+                  f"{log['latency_ms']}ms")
+
+
+# ---- Use the monitored model ----
+monitored = MonitoredModel(model)
+
+# Make several requests
+prompts = [
+    "What is cloud computing in one paragraph?",
+    "List 5 benefits of using AI in business.",
+    "Write a short product description for wireless headphones.",
+    "Explain what an API is to a non-technical person.",
 ]
 
-# Step 2: Save as JSONL file
-with open("training_data.jsonl", "w") as f:
-    for example in training_examples:
-        f.write(json.dumps(example) + "\n")
+for prompt in prompts:
+    response = monitored.generate(prompt)
+    print(f"Prompt: {prompt[:50]}...")
+    print(f"Response: {response.text[:100]}...\n")
 
-print("Training data saved to training_data.jsonl")
-print(f"Number of examples: {len(training_examples)}")
-
-# Step 3: Upload to Google Cloud Storage (GCS)
-# In practice, run this command in your terminal:
-# gsutil cp training_data.jsonl gs://my-bucket/tuning/training_data.jsonl
-
-# Step 4: Start the fine-tuning job
-# Note: This costs money and takes time (minutes to hours)
-# Uncomment the lines below when you are ready to run it for real
-
-# tuning_job = sft.train(
-#     source_model="gemini-2.0-flash",
-#     train_dataset="gs://my-bucket/tuning/training_data.jsonl",
-#     tuned_model_display_name="shopsmart-support-bot-v1",
-#     epochs=3,  # How many times to review the training data
-# )
-#
-# print(f"Tuning job started: {tuning_job.resource_name}")
-# print("This may take 30 minutes to a few hours.")
-
-# Step 5: Use the tuned model (after tuning completes)
-# tuned_model = GenerativeModel(tuning_job.tuned_model_endpoint_name)
-# response = tuned_model.generate_content("Where is my order?")
-# print(response.text)
-
-print("\n--- What happens after tuning ---")
-print("1. Vertex AI trains a custom version of Gemini on your data")
-print("2. You get a private model endpoint (a URL only you can access)")
-print("3. The tuned model responds in your company's style automatically")
-print("4. No need to put examples in the prompt every time")
+# Show the monitoring dashboard
+monitored.print_dashboard()
 ```
 
 ### Expected Output:
 
 ```
-Training data saved to training_data.jsonl
-Number of examples: 3
+Prompt: What is cloud computing in one paragraph?...
+Response: Cloud computing is the delivery of computing services — including servers, storage, databases...
 
---- What happens after tuning ---
-1. Vertex AI trains a custom version of Gemini on your data
-2. You get a private model endpoint (a URL only you can access)
-3. The tuned model responds in your company's style automatically
-4. No need to put examples in the prompt every time
+Prompt: List 5 benefits of using AI in business....
+Response: 1. Automation of repetitive tasks, freeing up employee time for strategic work...
+
+Prompt: Write a short product description for wireless h...
+Response: Experience pure audio freedom with our premium wireless headphones...
+
+Prompt: Explain what an API is to a non-technical person...
+Response: An API is like a waiter in a restaurant. You (the customer) tell the waiter...
+
+=======================================================
+     VERTEX AI MONITORING DASHBOARD
+=======================================================
+  Total Requests:      4
+  Input Tokens:        156
+  Output Tokens:       612
+  Avg Latency:         823.4 ms
+  Errors:              0
+  Estimated Cost:      $0.0003
+=======================================================
+
+  Request Log:
+  [OK] #1 | 28 in / 145 out | 756.2ms
+  [OK] #2 | 34 in / 178 out | 891.3ms
+  [OK] #3 | 42 in / 156 out | 812.7ms
+  [OK] #4 | 52 in / 133 out | 833.5ms
 ```
 
 ## ✍️ Hands-On Exercises
 
-### Exercise 1: Choose the Right Platform
+### Exercise 1: Build Your Decision Matrix
+Create a spreadsheet or document comparing AI Studio vs Vertex AI for a project you are interested in. Evaluate both options across: cost, setup complexity, security features, scalability, and customization options. Based on your analysis, which would you choose and why?
 
-Read each scenario below and decide whether you would recommend **AI Studio** or **Vertex AI**. Write down your answer and reasoning.
+**Hint:** Consider your current needs AND where you might be in 6-12 months. Sometimes starting with AI Studio and planning a migration to Vertex AI later is the smartest approach.
 
-1. A university student building a homework helper chatbot for personal use.
-2. A hospital building an AI that reads patient notes and must comply with health data regulations.
-3. A startup with 3 people prototyping a new product idea in a weekend hackathon.
-4. A bank deploying an AI fraud detection system that processes millions of transactions.
+### Exercise 2: Design a Fine-Tuning Dataset
+Choose a specific task you want Gemini to be better at (e.g., writing emails in your company's tone, classifying support tickets in your categories, generating product descriptions in your brand style). Create 20 example input-output pairs that you would use for fine-tuning. Think about what makes a great example vs. a poor one.
 
-**Hint:** Think about the security requirements, the scale, and whether the data is sensitive.
-
-### Exercise 2: Design a Training Dataset
-
-Pick a business you know (a coffee shop, a gym, a bookstore) and write 5 training examples in the same format as Code Example 2. Each example should have a realistic customer question and an ideal response in that business's voice and style.
-
-**Hint:** Think about the most common questions customers ask and how the business would want them answered. Include specific details like the business name, policies, and website.
+**Hint:** Great fine-tuning examples are diverse (covering different scenarios), high-quality (representing the output you actually want), and consistent (following the same format and style). Do not just create 20 variations of the same example.
 
 ## 🔗 Next Steps
 
-In the next module, you will learn how to bring Gemini to mobile devices. You will explore Gemini Nano for on-device AI on Android and build a simple AI chat app using Flutter and the Gemini API.
+In the next module, you will learn how to bring Gemini to mobile apps — using Gemini Nano for on-device AI on Android, building cross-platform apps with Flutter, and understanding when to use on-device vs. cloud processing.
 
 <div class="module-quiz">
 <h3>Module Quiz</h3>
 
-<div class="quiz-q" data-answer="2"><p>1. What is the best analogy for the difference between AI Studio and Vertex AI?</p><label><input type="radio" name="q1" value="0"> A. A bicycle vs. a car</label><label><input type="radio" name="q1" value="1"> B. A phone vs. a computer</label><label><input type="radio" name="q1" value="2"> C. A food truck vs. a commercial kitchen</label><label><input type="radio" name="q1" value="3"> D. A book vs. a movie</label><div class="quiz-explain">AI Studio is like a food truck: quick, convenient, and great for small-scale use. Vertex AI is like a commercial kitchen: built for production with proper controls, monitoring, and scalability for serious business use.</div></div>
+<div class="quiz-q" data-answer="1"><p>1. What is the best analogy for the difference between AI Studio and Vertex AI?</p><label><input type="radio" name="q1" value="0"> A. A bicycle vs. a car</label><label><input type="radio" name="q1" value="1"> B. A home kitchen vs. a professional commercial kitchen</label><label><input type="radio" name="q1" value="2"> C. A book vs. a movie</label><label><input type="radio" name="q1" value="3"> D. A phone vs. a computer</label><div class="quiz-explain">Both a home kitchen and a commercial kitchen can make the same food (use the same models), but the commercial kitchen has industrial equipment, certifications, and capacity to serve many customers — just like Vertex AI has enterprise features for production use.</div></div>
 
-<div class="quiz-q" data-answer="1"><p>2. What does fine-tuning a model do?</p><label><input type="radio" name="q2" value="0"> A. Makes the model run faster</label><label><input type="radio" name="q2" value="1"> B. Trains the model on your specific examples so it learns your style and patterns</label><label><input type="radio" name="q2" value="2"> C. Reduces the cost of every API call</label><label><input type="radio" name="q2" value="3"> D. Gives the model access to the internet</label><div class="quiz-explain">Fine-tuning takes the base Gemini model and trains it on your examples. After tuning, the model "knows" your company's style, terminology, and rules without you needing to include examples in every prompt.</div></div>
+<div class="quiz-q" data-answer="0"><p>2. When should a small startup typically use the standard Gemini API instead of Vertex AI?</p><label><input type="radio" name="q2" value="0"> A. When building prototypes with limited budget and few users</label><label><input type="radio" name="q2" value="1"> B. When handling sensitive medical data</label><label><input type="radio" name="q2" value="2"> C. When serving thousands of customers daily</label><label><input type="radio" name="q2" value="3"> D. When they need compliance certifications</label><div class="quiz-explain">The standard API is ideal for early-stage projects: it is quick to set up, has a free tier, and works well for prototypes and small user bases. Vertex AI becomes necessary as you scale and need enterprise features.</div></div>
 
-<div class="quiz-q" data-answer="0"><p>3. What is VPC Service Controls in Vertex AI?</p><label><input type="radio" name="q3" value="0"> A. A security boundary that prevents data from leaking to the public internet</label><label><input type="radio" name="q3" value="1"> B. A tool for making the model respond faster</label><label><input type="radio" name="q3" value="2"> C. A billing feature that controls costs</label><label><input type="radio" name="q3" value="3"> D. A way to share models with other companies</label><div class="quiz-explain">VPC Service Controls create a security perimeter around your AI resources. Think of it as a fence that keeps your data inside your organization's boundary, preventing unauthorized access or accidental data leaks.</div></div>
+<div class="quiz-q" data-answer="2"><p>3. What is the difference between "prompt tuning" and "fine-tuning"?</p><label><input type="radio" name="q3" value="0"> A. They are exactly the same thing</label><label><input type="radio" name="q3" value="1"> B. Prompt tuning changes the model permanently; fine-tuning is temporary</label><label><input type="radio" name="q3" value="2"> C. Prompt tuning adjusts style with examples; fine-tuning retrains parts of the model more deeply</label><label><input type="radio" name="q3" value="3"> D. Fine-tuning is free; prompt tuning costs extra</label><div class="quiz-explain">Prompt tuning is lighter — you provide examples and the model learns your preferred style. Fine-tuning is deeper — it retrains parts of the model on your data, allowing it to learn domain-specific knowledge and patterns.</div></div>
 
-<div class="quiz-q" data-answer="3"><p>4. How does Vertex AI authentication differ from AI Studio?</p><label><input type="radio" name="q4" value="0"> A. Vertex AI does not require any authentication</label><label><input type="radio" name="q4" value="1"> B. Both use the same simple API key</label><label><input type="radio" name="q4" value="2"> C. Vertex AI uses a username and password</label><label><input type="radio" name="q4" value="3"> D. Vertex AI uses service accounts and IAM roles instead of a simple API key</label><div class="quiz-explain">AI Studio uses a simple API key for access. Vertex AI uses Google Cloud's IAM system with service accounts, allowing fine-grained control over who can do what — like letting developers use the model but only admins change its settings.</div></div>
+<div class="quiz-q" data-answer="3"><p>4. Which compliance certification is specifically for healthcare data in the US?</p><label><input type="radio" name="q4" value="0"> A. SOC 2</label><label><input type="radio" name="q4" value="1"> B. GDPR</label><label><input type="radio" name="q4" value="2"> C. ISO 27001</label><label><input type="radio" name="q4" value="3"> D. HIPAA</label><div class="quiz-explain">HIPAA (Health Insurance Portability and Accountability Act) is the US regulation for protecting sensitive healthcare data. If your application handles medical information, HIPAA compliance is mandatory.</div></div>
 
-<div class="quiz-q" data-answer="2"><p>5. What is the minimum number of training examples recommended for fine-tuning?</p><label><input type="radio" name="q5" value="0"> A. 1</label><label><input type="radio" name="q5" value="1"> B. 5</label><label><input type="radio" name="q5" value="2"> C. At least 10, but 100-500 produce much better results</label><label><input type="radio" name="q5" value="3"> D. Exactly 1,000</label><div class="quiz-explain">Vertex AI requires at least 10 examples for fine-tuning, but more is better. Having 100 to 500 well-crafted examples gives the model enough patterns to learn your specific style and requirements effectively.</div></div>
+<div class="quiz-q" data-answer="1"><p>5. What does "data residency" mean in Vertex AI?</p><label><input type="radio" name="q5" value="0"> A. How long data is stored before deletion</label><label><input type="radio" name="q5" value="1"> B. The ability to control which country or region your data is stored in</label><label><input type="radio" name="q5" value="2"> C. Whether data is stored in the cloud or on your local computer</label><label><input type="radio" name="q5" value="3"> D. The format in which data is stored</label><div class="quiz-explain">Data residency means you control the geographic location where your data is processed and stored. This is crucial for businesses that must comply with regulations requiring data to stay within specific countries or regions (like GDPR in Europe).</div></div>
 
-<div class="quiz-q" data-answer="1"><p>6. What does "data residency" mean in Vertex AI?</p><label><input type="radio" name="q6" value="0"> A. Data is stored on your personal computer</label><label><input type="radio" name="q6" value="1"> B. You choose which geographic region stores and processes your data</label><label><input type="radio" name="q6" value="2"> C. Data is automatically deleted after 30 days</label><label><input type="radio" name="q6" value="3"> D. Data is shared across all Google Cloud regions for speed</label><div class="quiz-explain">Data residency lets you choose where your data lives. If your company must comply with regulations like GDPR in Europe, you can ensure all data stays in European data centers and is never processed elsewhere.</div></div>
+<div class="quiz-q" data-answer="0"><p>6. How many examples are typically needed for prompt tuning?</p><label><input type="radio" name="q6" value="0"> A. 50 to 500 examples</label><label><input type="radio" name="q6" value="1"> B. Just 1 or 2 examples</label><label><input type="radio" name="q6" value="2"> C. At least 100,000 examples</label><label><input type="radio" name="q6" value="3"> D. No examples are needed</label><div class="quiz-explain">Prompt tuning typically requires 50 to 500 high-quality examples. This is enough for the model to learn your preferred style, format, and patterns without requiring the massive datasets that deeper fine-tuning needs.</div></div>
 
-<div class="quiz-q" data-answer="0"><p>7. What is "provisioned throughput" in Vertex AI?</p><label><input type="radio" name="q7" value="0"> A. Reserving capacity so your app never hits rate limits during traffic spikes</label><label><input type="radio" name="q7" value="1"> B. A way to make the model smarter</label><label><input type="radio" name="q7" value="2"> C. Free API calls included in every plan</label><label><input type="radio" name="q7" value="3"> D. A feature that compresses data to save storage</label><div class="quiz-explain">Provisioned throughput means you reserve a certain amount of processing capacity in advance. This guarantees your application can handle high traffic without being slowed down or blocked by rate limits, which is critical for production apps.</div></div>
+<div class="quiz-q" data-answer="2"><p>7. What is the purpose of the monitoring dashboard in Code Example 2?</p><label><input type="radio" name="q7" value="0"> A. To make the application look more professional</label><label><input type="radio" name="q7" value="1"> B. To slow down API requests for safety</label><label><input type="radio" name="q7" value="2"> C. To track usage, costs, performance, and errors so you can optimize your application</label><label><input type="radio" name="q7" value="3"> D. To comply with Google's API requirements</label><div class="quiz-explain">Monitoring helps you understand how your application uses the API — how many tokens you consume, how fast responses are, what errors occur, and what it costs. This information is essential for optimizing performance and managing budgets.</div></div>
 
-<div class="quiz-q" data-answer="3"><p>8. Which scenario is the best fit for Vertex AI instead of AI Studio?</p><label><input type="radio" name="q8" value="0"> A. A student experimenting with AI for a school project</label><label><input type="radio" name="q8" value="1"> B. A developer testing a new prompt idea</label><label><input type="radio" name="q8" value="2"> C. A hobbyist building a personal recipe generator</label><label><input type="radio" name="q8" value="3"> D. A bank deploying AI fraud detection that processes millions of transactions with strict compliance requirements</label><div class="quiz-explain">Vertex AI is designed for enterprise production use. A bank processing millions of transactions needs the security (IAM, VPC, audit logs), compliance (data residency), scalability (provisioned throughput), and reliability (SLA) that only Vertex AI provides.</div></div>
+<div class="quiz-q" data-answer="3"><p>8. Why does Google state that "your data is never used to train its models" on Vertex AI?</p><label><input type="radio" name="q8" value="0"> A. Because they have enough training data already</label><label><input type="radio" name="q8" value="1"> B. Because it would make the model worse</label><label><input type="radio" name="q8" value="2"> C. Because training on customer data is technically impossible</label><label><input type="radio" name="q8" value="3"> D. To assure businesses that their sensitive and proprietary data remains private and secure</label><div class="quiz-explain">This is a critical enterprise promise. Businesses need to know that their trade secrets, customer data, and proprietary information will not be absorbed into a public AI model. Without this guarantee, many companies would not use the service.</div></div>
 
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
