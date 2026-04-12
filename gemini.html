@@ -1628,6 +1628,23 @@ body {
   <div class="loading-text">Loading...</div>
 </div>
 <script>
+// One-time cache clear on next visit
+(function() {
+  var clearKey = 'cache-cleared-v6';
+  if (!localStorage.getItem(clearKey)) {
+    if ('caches' in window) {
+      caches.keys().then(function(keys) {
+        return Promise.all(keys.map(function(k) { return caches.delete(k); }));
+      });
+    }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        regs.forEach(function(r) { r.unregister(); });
+      });
+    }
+    localStorage.setItem(clearKey, '1');
+  }
+})();
 // Sync check: if user already logged in, hide auth-gate immediately to prevent flash
 (function() {
   try {

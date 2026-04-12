@@ -1,4 +1,4 @@
-const CACHE_NAME = 'claude-course-v5';
+const CACHE_NAME = 'claude-course-v6';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -28,6 +28,13 @@ self.addEventListener('install', (e) => {
     caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
   );
   self.skipWaiting();
+});
+
+// Handle clear cache message
+self.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'CLEAR_CACHE') {
+    caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k))));
+  }
 });
 
 // Activate — clean old caches
