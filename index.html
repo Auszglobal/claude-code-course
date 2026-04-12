@@ -2441,6 +2441,7 @@ function handleQuizSubmit(quiz, moduleId) {
     saveProgress();
     updateProgressUI();
     checkNewBadges();
+    checkMilestones();
     addXP('module', XP_PER_MODULE, moduleId);
     addXP('quiz', XP_PER_QUIZ, moduleId);
     updateXPDisplay();
@@ -3424,6 +3425,28 @@ function snapshotBadges() {
   prevEarnedBadges = new Set();
   PHASES.forEach(p => { if (isPhaseComplete(p)) prevEarnedBadges.add(p.id); });
 }
+const MILESTONES = [
+  { pct: 25, icon: '&#x1F31F;', title: '25% Complete!', msg: 'Quarter of the way there — great start!' },
+  { pct: 50, icon: '&#x1F525;', title: 'Halfway!', msg: 'You\'re 50% done — keep the momentum!' },
+  { pct: 75, icon: '&#x1F680;', title: '75% Complete!', msg: 'Almost there — the finish line is in sight!' },
+  { pct: 100, icon: '&#x1F3C6;', title: 'Course Complete!', msg: 'You finished all modules! Download your certificate below.' },
+];
+function checkMilestones() {
+  if (!currentUser) return;
+  const pct = Math.round((getCompletedCount() / ALL_MODULES.length) * 100);
+  const key = 'claude-course-milestones-' + currentUser.uid;
+  let seen;
+  try { seen = JSON.parse(localStorage.getItem(key) || '[]'); } catch { seen = []; }
+  MILESTONES.forEach(m => {
+    if (pct >= m.pct && !seen.includes(m.pct)) {
+      seen.push(m.pct);
+      try { localStorage.setItem(key, JSON.stringify(seen)); } catch {}
+      const extra = m.pct === 100 ? ' <button class="share-toast-btn" onclick="generateCertificate()">Certificate</button>' : '';
+      showToast(m.icon, m.title, m.msg + extra, 5000);
+    }
+  });
+}
+
 function checkNewBadges() {
   PHASES.forEach(p => {
     if (isPhaseComplete(p) && !prevEarnedBadges.has(p.id)) {
