@@ -1570,21 +1570,23 @@ body {
   color: var(--text-secondary); cursor: pointer; font-size: 14px;
 }
 .dog-avatar {
-  width: 60px; height: 60px; border-radius: 50%; overflow: hidden;
-  border: 2px solid var(--accent); flex-shrink: 0; background: #1a1a2e;
+  width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+  border: 3px solid var(--accent); flex-shrink: 0; background: #1a1a2e;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 .dog-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Login page dogs */
 .auth-dogs {
-  display: flex; justify-content: center; gap: 16px; margin-bottom: 16px;
+  display: flex; justify-content: center; gap: 20px; margin-bottom: 16px;
 }
 .auth-dog-avatar {
-  width: 70px; height: 70px; border-radius: 50%; overflow: hidden;
+  width: 100px; height: 100px; border-radius: 50%; overflow: hidden;
   border: 3px solid var(--accent); background: #1a1a2e;
+  box-shadow: 0 4px 20px rgba(0,180,166,0.2);
 }
 .auth-dog-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.auth-dog-label { text-align: center; font-size: 10px; color: var(--text-secondary); margin-top: 4px; }
+.auth-dog-label { text-align: center; font-size: 12px; color: var(--text-secondary); margin-top: 6px; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -1620,7 +1622,7 @@ body {
         <div class="cc-check" id="check-gemini">&#x2713;</div>
       </a>
       <div class="auth-dogs" style="margin-top:20px;">
-        <div><div class="auth-dog-avatar"><img src="TT.jpeg" alt="TT"></div><div class="auth-dog-label">TT</div></div>
+        <div><div class="auth-dog-avatar"><img src="TT.PNG" alt="TT"></div><div class="auth-dog-label">TT</div></div>
         <div><div class="auth-dog-avatar"><img src="Chandon.PNG" alt="Chandon"></div><div class="auth-dog-label">Chandon</div></div>
       </div>
     </div>
@@ -2450,6 +2452,9 @@ async function loadModule(moduleId, filePath) {
 
     // Update URL hash
     history.replaceState(null, '', '#' + moduleId);
+
+    // Chance to show dog tip on module load (40% chance)
+    if (Math.random() < 0.4) setTimeout(() => showDogTip(), 3000);
 
   } catch (err) {
     contentEl.innerHTML = `<div class="error-msg">
@@ -3879,7 +3884,7 @@ const DOG_TIPS = {
     ]
   },
   tt: {
-    img: 'TT.jpeg', name: 'TT',
+    img: 'TT.PNG', name: 'TT',
     tips: [
       "Hey! You're doing great! Keep that streak going! 🔥",
       "Pro tip: use the flashcards to boost your memory!",
@@ -3911,9 +3916,9 @@ function showDogTip(who) {
 
 function scheduleDogTips() {
   if (_dogTimer) clearInterval(_dogTimer);
-  // Show first tip after 30s, then every 3 minutes
-  setTimeout(() => showDogTip(), 30000);
-  _dogTimer = setInterval(() => showDogTip(), 180000);
+  // Show first tip after 15s, then every 90 seconds
+  setTimeout(() => showDogTip(), 15000);
+  _dogTimer = setInterval(() => showDogTip(), 90000);
 }
 
 // ── Init ──
