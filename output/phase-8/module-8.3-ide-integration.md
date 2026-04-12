@@ -250,6 +250,51 @@ Do you write code daily?
 <div class="quiz-explain">In the VS Code extension, typing @filename.py in your chat message tells Claude Code to include that specific file as context. This works for both files and folders.</div>
 </div>
 
+<div class="quiz-q" data-answer="2">
+<p>4. What is the keyboard shortcut to open Claude Code in VS Code by default?</p>
+<label><input type="radio" name="q4" value="0"> Ctrl+K</label>
+<label><input type="radio" name="q4" value="1"> Ctrl+Shift+C</label>
+<label><input type="radio" name="q4" value="2"> Ctrl+L</label>
+<label><input type="radio" name="q4" value="3"> Ctrl+Space</label>
+<div class="quiz-explain">The default keybinding for opening the Claude Code panel in VS Code is Ctrl+L. You can also use the Command Palette (Ctrl+Shift+P) and search for "Claude Code" to access it.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. In the VS Code extension, how can you include a specific folder as context in your prompt?</p>
+<label><input type="radio" name="q5" value="0"> Drag the folder into the chat window</label>
+<label><input type="radio" name="q5" value="1"> Type <code>@src/components/</code> in your message</label>
+<label><input type="radio" name="q5" value="2"> Right-click the folder and select "Send to Claude"</label>
+<label><input type="radio" name="q5" value="3"> Open every file in the folder first</label>
+<div class="quiz-explain">The @ symbol followed by a path (file or folder) tells the VS Code extension to include that resource as context. This works for both individual files (@app.py) and entire directories (@src/components/).</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>6. Which Claude Code interface is best for automation and scripting?</p>
+<label><input type="radio" name="q6" value="0"> Terminal CLI — it can be integrated into shell scripts and CI/CD pipelines</label>
+<label><input type="radio" name="q6" value="1"> VS Code Extension — it has the best automation support</label>
+<label><input type="radio" name="q6" value="2"> Desktop App — it runs the fastest</label>
+<label><input type="radio" name="q6" value="3"> Web interface — it works without installation</label>
+<div class="quiz-explain">The terminal CLI is the only interface designed for scripting and automation. You can pipe prompts to it, use it in shell scripts, run it in CI/CD pipelines with the -p flag, and chain it with other command-line tools.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. What makes the IDE extension's inline diff feature valuable compared to terminal diffs?</p>
+<label><input type="radio" name="q7" value="0"> It's more accurate at detecting changes</label>
+<label><input type="radio" name="q7" value="1"> It prevents Claude from making mistakes</label>
+<label><input type="radio" name="q7" value="2"> It runs faster than terminal diffs</label>
+<label><input type="radio" name="q7" value="3"> It shows changes with visual colour coding (green/red) and lets you accept or reject each change with a click</label>
+<div class="quiz-explain">IDE inline diffs use colour-coded visual highlighting (green for additions, red for deletions) and provide Accept/Reject buttons for each change block. This is much easier to review than text-based diffs in the terminal.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. A colleague who doesn't write code regularly needs to review some files with Claude Code. Which interface would you recommend?</p>
+<label><input type="radio" name="q8" value="0"> Terminal CLI with custom flags</label>
+<label><input type="radio" name="q8" value="1"> The Desktop App or Web interface — no terminal or editor skills needed</label>
+<label><input type="radio" name="q8" value="2"> JetBrains plugin for maximum features</label>
+<label><input type="radio" name="q8" value="3"> VS Code Extension with all recommended settings</label>
+<div class="quiz-explain">The Desktop App and Web interface (claude.ai/code) are the most accessible for non-developers. The Desktop App requires a simple download, and the Web interface needs no installation at all — just open a browser and sign in.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

@@ -268,6 +268,51 @@ For very large features:
 <div class="quiz-explain">Extended Thinking activates automatically when Claude determines a task needs deeper analysis. It spends more time reasoning about the problem before giving a response, resulting in more thorough and accurate solutions for complex tasks.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. How do you activate Plan Mode using a keyboard shortcut?</p>
+<label><input type="radio" name="q4" value="0"> Press Shift+Tab to toggle Plan Mode on or off</label>
+<label><input type="radio" name="q4" value="1"> Press Ctrl+P to enter Plan Mode</label>
+<label><input type="radio" name="q4" value="2"> Press Escape to switch to Plan Mode</label>
+<label><input type="radio" name="q4" value="3"> Plan Mode cannot be activated with a keyboard shortcut</label>
+<div class="quiz-explain">Shift+Tab is the quick toggle for Plan Mode. You can also activate it naturally by including "plan" in your prompt, or Claude may enter it automatically when it detects a complex task.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>5. What is a key element that makes a plan "good" according to this module?</p>
+<label><input type="radio" name="q5" value="0"> It should be as short as possible</label>
+<label><input type="radio" name="q5" value="1"> It should include the full code for every change</label>
+<label><input type="radio" name="q5" value="2"> It should be written in a formal document format</label>
+<label><input type="radio" name="q5" value="3"> It should include ordered steps, affected files, identified risks, and success criteria</label>
+<div class="quiz-explain">A good plan has five elements: ordered steps (trackable progress), files listed (know what changes), risks identified (no surprises), rollback strategy (undo capability), and success criteria (know when done).</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. You ask Claude to give you two plans for implementing search — one with PostgreSQL full-text search and one with Elasticsearch. What pattern is this?</p>
+<label><input type="radio" name="q6" value="0"> Explore → Plan → Execute</label>
+<label><input type="radio" name="q6" value="1"> Plan Comparison — evaluating trade-offs between two approaches</label>
+<label><input type="radio" name="q6" value="2"> Incremental Planning</label>
+<label><input type="radio" name="q6" value="3"> Task Decomposition</label>
+<div class="quiz-explain">Plan Comparison asks Claude to produce two (or more) plans side by side with their trade-offs. This helps you make an informed architectural decision before any code is written, potentially saving days of rework.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. For a very large feature spanning weeks, which planning workflow is recommended?</p>
+<label><input type="radio" name="q7" value="0"> One massive plan covering every detail in a single session</label>
+<label><input type="radio" name="q7" value="1"> No planning — just start coding and see what happens</label>
+<label><input type="radio" name="q7" value="2"> Incremental Planning — save the high-level plan to a file, then create detailed plans for each phase in separate sessions</label>
+<label><input type="radio" name="q7" value="3"> Use only Extended Thinking for the entire feature</label>
+<div class="quiz-explain">Incremental Planning saves the overall architecture plan to a file, then uses separate sessions to plan and implement each phase. This prevents context overload and lets you adjust the plan as you learn more during implementation.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. What triggers Extended Thinking in Claude Code?</p>
+<label><input type="radio" name="q8" value="0"> You must type a special command to enable it</label>
+<label><input type="radio" name="q8" value="1"> It activates automatically when Claude determines a task needs deeper analysis</label>
+<label><input type="radio" name="q8" value="2"> It runs whenever you use Plan Mode</label>
+<label><input type="radio" name="q8" value="3"> It only works with the Opus model</label>
+<div class="quiz-explain">Extended Thinking is automatic — Claude determines on its own when a problem requires deeper reasoning (e.g., subtle race conditions, complex architecture decisions). You don't need to enable it; Claude spends extra time analysing when it judges the task warrants it.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

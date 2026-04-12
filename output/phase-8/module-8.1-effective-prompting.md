@@ -252,6 +252,51 @@ Take these vague prompts and rewrite them using the patterns above:
 <div class="quiz-explain">Starting fresh makes sense when you're moving to an unrelated task or when the current conversation is cluttered with failed attempts. For iterative work on the same feature, continuing the conversation preserves useful context.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. Which prompting pattern should you use when you want Claude Code to follow the style of existing code?</p>
+<label><input type="radio" name="q4" value="0"> Example-Driven — point to existing code as a reference</label>
+<label><input type="radio" name="q4" value="1"> Scope Limiting — restrict which files to touch</label>
+<label><input type="radio" name="q4" value="2"> Task Decomposition — break work into steps</label>
+<label><input type="radio" name="q4" value="3"> Constraint-First — state what NOT to do</label>
+<div class="quiz-explain">The Example-Driven pattern tells Claude to follow the same pattern as existing code (e.g., "follow the same pattern as src/routes/users.py"). This ensures consistency without you having to describe every detail of the coding style.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>5. What is wrong with the prompt: "Make the code better"?</p>
+<label><input type="radio" name="q5" value="0"> Claude Code doesn't understand English</label>
+<label><input type="radio" name="q5" value="1"> The prompt is too long and wastes tokens</label>
+<label><input type="radio" name="q5" value="2"> It has no success criteria — "better" is subjective and Claude doesn't know when the task is done</label>
+<label><input type="radio" name="q5" value="3"> Claude Code can only fix bugs, not improve code</label>
+<div class="quiz-explain">Without clear success criteria, Claude has to guess what "better" means. A specific prompt like "Reduce the function to under 20 lines while keeping all tests passing" gives Claude a measurable target.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. You have a complex task: extract auth logic from one file, create a new file, update all imports, and run tests. Which pattern fits best?</p>
+<label><input type="radio" name="q6" value="0"> Constraint-First</label>
+<label><input type="radio" name="q6" value="1"> Task Decomposition — break it into ordered steps</label>
+<label><input type="radio" name="q6" value="2"> Scope Limiting</label>
+<label><input type="radio" name="q6" value="3"> Example-Driven</label>
+<div class="quiz-explain">Task Decomposition breaks complex work into numbered steps that Claude executes in order. This is ideal when there's a clear sequence: first extract, then update imports, then test. Each step builds on the previous one.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. What does the /compact command do and when should you use it?</p>
+<label><input type="radio" name="q7" value="0"> It compresses your code files to save disk space — use it when your hard drive is full</label>
+<label><input type="radio" name="q7" value="1"> It deletes old messages — use it every few minutes</label>
+<label><input type="radio" name="q7" value="2"> It reformats your code — use it before committing</label>
+<label><input type="radio" name="q7" value="3"> It summarises the conversation to free up context space — use it when the context is filling up</label>
+<div class="quiz-explain">/compact summarises the conversation history into a shorter form while keeping key decisions and context. Use it proactively when working on long tasks to prevent the context window from filling up completely.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>8. Before sending a prompt to Claude Code, which of these is NOT on the recommended checklist?</p>
+<label><input type="radio" name="q8" value="0"> Is the task specific enough? (Did I name files and functions?)</label>
+<label><input type="radio" name="q8" value="1"> Is the scope clear? (Did I say what NOT to change?)</label>
+<label><input type="radio" name="q8" value="2"> Is the prompt written in a formal academic style?</label>
+<label><input type="radio" name="q8" value="3"> Is it verifiable? (How will I know it's done correctly?)</label>
+<div class="quiz-explain">The checklist focuses on specificity, scope, actionability, verifiability, and right-sizing. Formal academic style is irrelevant — Claude Code responds equally well to casual language as long as the instruction is clear and precise.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

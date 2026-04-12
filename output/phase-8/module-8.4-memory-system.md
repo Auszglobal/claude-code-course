@@ -287,6 +287,51 @@ Update your project CLAUDE.md as the project evolves:
 <div class="quiz-explain">You can either tell Claude to "remember" something (it saves to auto-memory files) or write it in CLAUDE.md (permanent instructions). Both persist across sessions. Conversation context and /compact only work within the current session.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. You tell Claude "Don't add docstrings to my code." In which memory layer is this saved?</p>
+<label><input type="radio" name="q4" value="0"> Auto-memory (feedback type) — Claude saves it automatically for future sessions</label>
+<label><input type="radio" name="q4" value="1"> CLAUDE.md — you need to write it manually</label>
+<label><input type="radio" name="q4" value="2"> Conversation context — it disappears when the session ends</label>
+<label><input type="radio" name="q4" value="3"> It isn't saved anywhere</label>
+<div class="quiz-explain">When you correct Claude's behaviour (like telling it not to do something), it automatically saves this as a "feedback" type auto-memory. Next session, Claude reads its memory files and applies the correction without being told again.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>5. You have a CLAUDE.md in ~/.claude/, one in your project root, and one in your project's src/ folder. When you're working in src/, which files does Claude read?</p>
+<label><input type="radio" name="q5" value="0"> Only the src/ CLAUDE.md</label>
+<label><input type="radio" name="q5" value="1"> Only the project root CLAUDE.md</label>
+<label><input type="radio" name="q5" value="2"> All three — global, project, and folder-scoped, with more specific files taking priority</label>
+<label><input type="radio" name="q5" value="3"> Only the global ~/.claude/CLAUDE.md</label>
+<div class="quiz-explain">Claude Code loads all applicable CLAUDE.md files in a hierarchy. More specific files (folder > project > global) take priority when there's a conflict, but all three contribute to Claude's instructions.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. What is the "Checkpoint Pattern" for multi-session workflows?</p>
+<label><input type="radio" name="q6" value="0"> Saving your code to a USB drive between sessions</label>
+<label><input type="radio" name="q6" value="1"> Saving a plan to a file in one session, then reading it at the start of the next session to continue</label>
+<label><input type="radio" name="q6" value="2"> Using /compact at checkpoints in your code</label>
+<label><input type="radio" name="q6" value="3"> Creating a git branch for every session</label>
+<div class="quiz-explain">The Checkpoint Pattern uses files as persistent memory between sessions. Save plans, progress notes, or decisions to a file (e.g., docs/plan.md), then start each new session by reading that file. This gives Claude full context without relying on conversation history.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. Where should you store temporary debugging notes that you only need for the current session?</p>
+<label><input type="radio" name="q7" value="0"> In CLAUDE.md (project level)</label>
+<label><input type="radio" name="q7" value="1"> In auto-memory</label>
+<label><input type="radio" name="q7" value="2"> In a new CLAUDE.md in the current folder</label>
+<label><input type="radio" name="q7" value="3"> Don't save them — just use the conversation context</label>
+<div class="quiz-explain">Temporary debugging notes don't need to persist. Using them in the current conversation context is sufficient. CLAUDE.md is for permanent instructions, and auto-memory is for things that should persist across sessions.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. How can you check what Claude Code remembers about your project from auto-memory?</p>
+<label><input type="radio" name="q8" value="0"> Ask Claude: "What do you remember about this project?"</label>
+<label><input type="radio" name="q8" value="1"> Run <code>/memory list</code> in the terminal</label>
+<label><input type="radio" name="q8" value="2"> Check the ~/.claude/settings.json file</label>
+<label><input type="radio" name="q8" value="3"> Look in the git log</label>
+<div class="quiz-explain">Simply asking Claude "What do you remember about this project?" will prompt it to read its auto-memory files and report what it knows. You can also browse the memory files directly at ~/.claude/projects/*/memory/.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

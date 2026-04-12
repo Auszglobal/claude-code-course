@@ -205,6 +205,51 @@ Claude identifies differences like wrong colours, misaligned elements, missing i
 <div class="quiz-explain">Claude Code can look at a design mockup image and build HTML/CSS to match it. It understands layout, colours, and component structure from images. It cannot edit images, watch videos, or generate artwork — it's an AI coding tool, not an image editor.</div>
 </div>
 
+<div class="quiz-q" data-answer="3">
+<p>4. Which of the following is NOT a way to share images with Claude Code?</p>
+<label><input type="radio" name="q4" value="0"> Drag and drop an image into the terminal</label>
+<label><input type="radio" name="q4" value="1"> Reference the file path (e.g., "Read ./screenshot.png")</label>
+<label><input type="radio" name="q4" value="2"> Paste from clipboard in an IDE extension</label>
+<label><input type="radio" name="q4" value="3"> Send the image via email to Claude</label>
+<div class="quiz-explain">Claude Code accepts images through drag-and-drop, file path references, and clipboard paste (in IDE extensions). There is no email-based interface — Claude Code works through the terminal, IDE, or web interface only.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. You ask Claude to build HTML from a design mockup, but the spacing doesn't match. What should you do?</p>
+<label><input type="radio" name="q5" value="0"> Start over with a completely new prompt</label>
+<label><input type="radio" name="q5" value="1"> Ask Claude to re-read the design image and compare it with the generated HTML, then fix the differences</label>
+<label><input type="radio" name="q5" value="2"> Manually edit the CSS yourself</label>
+<label><input type="radio" name="q5" value="3"> Use a different AI model</label>
+<div class="quiz-explain">Claude can compare the original design with its implementation by looking at both the image and the code. Asking it to identify and fix differences leverages its visual understanding for iterative refinement.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>6. What is the maximum number of PDF pages Claude Code can read in a single request?</p>
+<label><input type="radio" name="q6" value="0"> 5 pages</label>
+<label><input type="radio" name="q6" value="1"> 10 pages</label>
+<label><input type="radio" name="q6" value="2"> 20 pages</label>
+<label><input type="radio" name="q6" value="3"> Unlimited</label>
+<div class="quiz-explain">Claude Code can read up to 20 pages per PDF request. For larger documents, you need to specify page ranges (e.g., "Read pages 1-20" then "Read pages 21-40") to process the document in chunks.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>7. A colleague sent you a screenshot of a terminal error. How can Claude Code help?</p>
+<label><input type="radio" name="q7" value="0"> Claude can read the error text from the screenshot, identify the bug, and then fix the corresponding code</label>
+<label><input type="radio" name="q7" value="1"> Claude can only read screenshots if you first convert them to text</label>
+<label><input type="radio" name="q7" value="2"> Claude cannot process terminal screenshots</label>
+<label><input type="radio" name="q7" value="3"> Claude can fix the error only if you type it out manually</label>
+<div class="quiz-explain">Claude's multimodal capabilities let it read text in screenshots, including terminal output, error messages, and stack traces. It can identify the error, locate the relevant code file, and apply a fix — all from seeing a screenshot.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. Which of the following is a known limitation of Claude Code's image processing?</p>
+<label><input type="radio" name="q8" value="0"> It cannot process PNG files</label>
+<label><input type="radio" name="q8" value="1"> Very small text (under ~8px) in screenshots may be hard to read accurately</label>
+<label><input type="radio" name="q8" value="2"> It can only read images in dark mode</label>
+<label><input type="radio" name="q8" value="3"> It cannot identify colours in images</label>
+<div class="quiz-explain">While Claude's image processing is impressive, very small text can be difficult to read accurately. Other limitations include analysing only the first frame of animated GIFs and variable accuracy with handwriting. It handles standard-sized text, colours, and layouts well.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
