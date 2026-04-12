@@ -1632,27 +1632,32 @@ let dynamicUsers = [];
 const LOCAL_USERS_KEY = 'claude-course-dynamic-users';
 
 async function fetchDynamicUsers() {
+  let local; try { local = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { local = []; }
   try {
     const res = await fetch(USERS_BLOB_URL, { headers: { 'Accept': 'application/json' } });
     if (res.ok) {
-      dynamicUsers = await res.json();
-      // Merge any locally-saved users that didn't sync yet
-      let local; try { local = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { local = []; }
-      if (local.length > dynamicUsers.length) {
-        const cloudHashes = new Set(dynamicUsers.map(u => u.hash));
-        const unsyncedLocal = local.filter(u => !cloudHashes.has(u.hash));
-        if (unsyncedLocal.length > 0) {
-          dynamicUsers.push(...unsyncedLocal);
-          saveDynamicUsers(); // background sync
-        }
+      const cloud = await res.json();
+      if (!Array.isArray(cloud)) { dynamicUsers = local; return; }
+      // Union merge: combine cloud + any local users not in cloud
+      const cloudHashes = new Set(cloud.map(u => u.hash));
+      const localOnly = local.filter(u => u.hash && !cloudHashes.has(u.hash));
+      dynamicUsers = [...cloud, ...localOnly];
+      // If local had users missing from cloud, sync back
+      if (localOnly.length > 0) {
+        saveDynamicUsers(); // background sync
+      }
+      // If cloud was empty but local had users, also sync back
+      if (cloud.length === 0 && local.length > 0) {
+        dynamicUsers = local;
+        saveDynamicUsers();
       }
       try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
     } else {
-      try { dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { dynamicUsers = []; }
+      dynamicUsers = local;
     }
   } catch {
     // Offline — use local cache
-    try { dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { dynamicUsers = []; }
+    dynamicUsers = local;
   }
 }
 
