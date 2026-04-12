@@ -872,6 +872,15 @@ body {
 /* ── Welcome page ── */
 .welcome { text-align: center; padding: 60px 20px; }
 
+/* Confused Flag */
+.confused-btn {
+  background: none; border: none; font-size: 14px; cursor: pointer;
+  margin-left: 4px; opacity: 0.3; transition: opacity 0.2s;
+}
+.confused-btn:hover { opacity: 0.7; }
+.confused-btn.flagged { opacity: 1; }
+.confused-dot { font-size: 10px; margin-left: 4px; }
+
 /* Daily Goal */
 .daily-goal { margin-top: 6px; font-size: 11px; }
 .dg-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 4px; }
@@ -3254,6 +3263,43 @@ function addReadingTime(text) {
   bmBtn.title = 'Bookmark this module';
   bmBtn.onclick = () => toggleBookmark(currentModuleId);
   badge.insertAdjacentElement('afterend', bmBtn);
+
+  // Confused flag button
+  const confused = getConfusedModules();
+  const isConfused = confused.includes(currentModuleId);
+  const cfBtn = document.createElement('button');
+  cfBtn.className = 'confused-btn' + (isConfused ? ' flagged' : '');
+  cfBtn.innerHTML = '&#x2753;';
+  cfBtn.title = isConfused ? 'Remove confused flag' : 'Mark as confused — review later';
+  cfBtn.onclick = () => toggleConfused(currentModuleId);
+  bmBtn.insertAdjacentElement('afterend', cfBtn);
+}
+
+// ── Confused / Review Later ──
+function getConfusedModules() {
+  try { return JSON.parse(localStorage.getItem('claude-course-confused-' + (currentUser ? currentUser.uid : '_anon')) || '[]'); } catch { return []; }
+}
+function toggleConfused(moduleId) {
+  let list = getConfusedModules();
+  if (list.includes(moduleId)) list = list.filter(id => id !== moduleId);
+  else list.push(moduleId);
+  try { localStorage.setItem('claude-course-confused-' + (currentUser ? currentUser.uid : '_anon'), JSON.stringify(list)); } catch {}
+  const btn = document.querySelector('.confused-btn');
+  if (btn) {
+    btn.classList.toggle('flagged', list.includes(moduleId));
+    btn.title = list.includes(moduleId) ? 'Remove confused flag' : 'Mark as confused — review later';
+  }
+  updateConfusedIndicators();
+}
+function updateConfusedIndicators() {
+  const list = getConfusedModules();
+  document.querySelectorAll('.module-link .confused-dot').forEach(el => el.remove());
+  list.forEach(id => {
+    const link = document.querySelector(`.module-link[data-module-id="${id}"]`);
+    if (link && !link.querySelector('.confused-dot')) {
+      link.insertAdjacentHTML('beforeend', '<span class="confused-dot" title="Needs review">&#x2753;</span>');
+    }
+  });
 }
 
 // ── Theme toggle ──
@@ -3635,6 +3681,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   loadProgress();
   buildSidebar();
   updateProgressUI();
+  updateConfusedIndicators();
   initTheme();
   snapshotBadges();
   // Restore saved learning path
