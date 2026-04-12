@@ -18,18 +18,30 @@ Google Docs is where ideas become documents — reports, proposals, meeting note
 
 Gemini appears in two main ways inside Docs:
 
-1. **Side panel** — Click the Gemini sparkle icon in the toolbar to open a chat panel. You can ask it to write, rewrite, summarize, or brainstorm — all while keeping your document visible.
-2. **Inline "Help me write"** — Type `/` or click the sparkle icon in the document body. Describe what you need, and Gemini inserts content directly at your cursor position.
+1. **Side panel** — Click the Gemini sparkle icon in the toolbar to open a chat panel on the right side of your screen. You can ask it to write, rewrite, summarize, or brainstorm — all while keeping your document visible. Think of this as having a conversation with an editor who can see your entire document.
+2. **Inline "Help me write"** — Type `/` or click the sparkle icon in the document body. Describe what you need, and Gemini inserts content directly at your cursor position. This is like dictating to a very smart assistant who formats everything nicely.
 
 ### What Can Gemini Do in Docs?
 
-- **Generate content from scratch** — "Write a project status report for Q1 covering sales, engineering, and marketing."
-- **Rewrite existing text** — Select a paragraph, click the Gemini icon, and ask it to change tone, simplify language, or expand on a point.
-- **Summarize long documents** — Paste or reference a lengthy document and ask for an executive summary.
-- **Translate content** — Ask Gemini to translate your document (or sections of it) into another language.
-- **Proofread** — Highlight text and ask Gemini to check for grammar errors, awkward phrasing, or inconsistencies.
+Here are the five core capabilities, each one a potential time-saver in your daily work:
 
-Think of it like having an editor, translator, and writing coach sitting next to you — except they never get tired and they're available 24/7.
+- **Generate content from scratch** — "Write a project status report for Q1 covering sales, engineering, and marketing." Gemini produces structured text with headings, bullet points, and professional language.
+- **Rewrite existing text** — Select a paragraph, click the Gemini icon, and ask it to change tone, simplify language, or expand on a point. Your original stays safe until you accept the change.
+- **Summarize long documents** — Paste or reference a lengthy document and ask for an executive summary. Gemini distills pages of content into the essential points.
+- **Translate content** — Ask Gemini to translate your document (or sections of it) into another language. It handles not just word-for-word translation but also adjusts phrasing to sound natural in the target language.
+- **Proofread** — Highlight text and ask Gemini to check for grammar errors, awkward phrasing, or inconsistencies. It goes far beyond basic spell-check.
+
+Think of it like having an editor, translator, and writing coach sitting next to you — except they never get tired and they are available 24/7.
+
+### When to Use Each Feature
+
+| Task | Best Approach |
+|------|--------------|
+| Starting from a blank page | Inline "Help me write" with a detailed prompt |
+| Improving an existing draft | Select text, then use Gemini to rewrite |
+| Getting a quick summary | Side panel with "Summarize this document" |
+| Multi-language content | Translate section by section for accuracy |
+| Final quality check | Side panel proofreading request |
 
 ## 💻 Code Example 1: Writing and Refining a Report in Google Docs
 
@@ -77,6 +89,8 @@ Prompt: "Translate this paragraph into Japanese, keeping a professional
 business tone."
 ```
 
+You can also translate into multiple languages in sequence. Select the same text and ask for Spanish, French, or any language your stakeholders need.
+
 **Step 5: Proofread the entire document**
 
 Open the Gemini side panel and type:
@@ -88,11 +102,11 @@ formatting, and unclear sentences. List each issue with a suggested fix."
 
 ### Expected Output:
 
-Gemini produces a structured report with clear headings, bullet points, and professional language. The translation output appears inline, and the proofreading review lists specific issues like "Paragraph 3, sentence 2: 'have went' should be 'have gone'."
+Gemini produces a structured report with clear headings, bullet points, and professional language. The translation output appears inline, and the proofreading review lists specific issues like "Paragraph 3, sentence 2: 'have went' should be 'have gone'." Each suggestion comes with an explanation, so you learn as you edit.
 
 ## 💻 Code Example 2: Automated Document Generation with the Docs API and Gemini
 
-This script creates a Google Doc and fills it with Gemini-generated content — useful for producing templated reports at scale.
+This script creates a Google Doc and fills it with Gemini-generated content — useful for producing templated reports at scale. Imagine running this every Friday to generate your weekly standup summary automatically.
 
 ```python
 # doc_generator.py
@@ -104,8 +118,8 @@ from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 
 # --- Configuration ---
-GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
-TOKEN_FILE = "token.json"       # OAuth token from Google API setup
+GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"   # Replace with your actual API key
+TOKEN_FILE = "token.json"                 # OAuth token from Google API setup
 
 # Initialize Gemini client
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -124,11 +138,11 @@ Include these sections with markdown headings:
 Keep it concise and professional. About 300 words total."""
 
 response = client.models.generate_content(
-    model="gemini-2.0-flash",
+    model="gemini-2.0-flash",       # Fast and cost-effective for text generation
     contents=report_prompt
 )
 
-report_text = response.text  # The generated report content
+report_text = response.text          # The generated report content
 
 # Step 2: Create a new Google Doc
 doc = docs_service.documents().create(
@@ -145,7 +159,7 @@ docs_service.documents().batchUpdate(
         "requests": [
             {
                 "insertText": {
-                    "location": {"index": 1},   # Insert at beginning
+                    "location": {"index": 1},    # Index 1 = start of document body
                     "text": report_text
                 }
             }
@@ -154,6 +168,7 @@ docs_service.documents().batchUpdate(
 ).execute()
 
 print("Report content inserted successfully.")
+print(f"Open your doc: https://docs.google.com/document/d/{doc_id}/edit")
 ```
 
 ### Expected Output:
@@ -161,23 +176,24 @@ print("Report content inserted successfully.")
 ```
 Created document: https://docs.google.com/document/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ
 Report content inserted successfully.
+Open your doc: https://docs.google.com/document/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ/edit
 ```
 
-A new Google Doc appears in your Drive with a fully formatted weekly standup summary, ready to share with your team.
+A new Google Doc appears in your Drive with a fully formatted weekly standup summary, ready to share with your team. You can extend this script to run on a schedule, pull data from project management tools, or generate reports for multiple teams.
 
 ## ✍️ Hands-On Exercises
 
 **Exercise 1: The Three-Tone Challenge**
-Write a single paragraph (3-4 sentences) explaining what your company does. Then use Gemini to rewrite it in three tones: (1) formal for investors, (2) casual for social media, and (3) simplified for a 10-year-old. Compare the results and note how vocabulary, sentence length, and structure change.
+Write a single paragraph (3-4 sentences) explaining what your company or school does. Then use Gemini to rewrite it in three different tones: (1) formal for investors, (2) casual for social media, and (3) simplified for a 10-year-old. Compare the results and note how vocabulary, sentence length, and structure change across all three versions.
 
-> Hint: Select your text, open Gemini, and use prompts like "Rewrite this for a casual social media audience."
+> Hint: Select your text, open Gemini, and use prompts like "Rewrite this for a casual social media audience" or "Rewrite this so a 10-year-old could understand it."
 
 **Exercise 2: Instant Translator**
-Take any English paragraph from a document you've written. Use Gemini to translate it into two languages you don't speak. Then copy the translations back into Gemini and ask it to translate them back to English. How close is the round-trip translation to your original? This exercise builds intuition for how well AI handles nuance across languages.
+Take any English paragraph from a document you have written. Use Gemini to translate it into two languages you do not speak. Then copy the translations back into Gemini and ask it to translate them back to English. How close is the round-trip translation to your original? This exercise builds intuition for how well AI handles nuance across languages — and where human review is still essential.
 
 ## 🔗 Next Steps
 
-You've mastered AI-powered document creation. Next up is where numbers live. In **Module 5.3: Gemini in Google Sheets**, you'll learn how to generate formulas, analyze datasets, and create charts — all by describing what you need in plain English.
+You have mastered AI-powered document creation. Next up is where numbers live. In **Module 5.3: Gemini in Google Sheets**, you will learn how to generate formulas, analyze datasets, and create charts — all by describing what you need in plain English.
 
 ---
 
@@ -204,7 +220,7 @@ You've mastered AI-powered document creation. Next up is where numbers live. In 
 <label><input type="radio" name="q3" value="B" data-answer> B. It generates a rewritten version for you to review and accept</label><br>
 <label><input type="radio" name="q3" value="C"> C. It adds footnotes explaining formal alternatives</label><br>
 <label><input type="radio" name="q3" value="D"> D. It highlights informal words in red</label>
-<div class="quiz-explain" style="display:none;">Gemini generates a suggestion that you can review, accept, or modify before it replaces the original text.</div>
+<div class="quiz-explain" style="display:none;">Gemini generates a suggestion that you can review, accept, or modify before it replaces the original text. You always stay in control.</div>
 
 <p><strong>4. In the code example, what does the Docs API's batchUpdate method do?</strong></p>
 <label><input type="radio" name="q4" value="A"> A. Sends the document to all team members</label><br>
