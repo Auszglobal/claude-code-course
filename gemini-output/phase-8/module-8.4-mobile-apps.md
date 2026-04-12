@@ -1,84 +1,78 @@
-# Module 8.4: Gemini on Mobile — On-Device AI and Building Chat Apps
+# Module 8.4: Gemini on Mobile — Building AI-Powered Apps
 
 ## 🎯 Learning Objectives
 
 After completing this module, you will be able to:
 
-- Understand what Gemini Nano is and how on-device AI works on Android
-- Explain the trade-offs between on-device and cloud-based AI
-- Set up a Flutter project that connects to the Gemini API
-- Build a simple AI chat app with message history
-- Decide when to use on-device AI vs. cloud AI for mobile apps
+- Understand how Gemini works on mobile devices (Android and iOS)
+- Know the difference between on-device AI (Gemini Nano) and cloud-based AI
+- Set up Flutter with the Gemini API for cross-platform mobile development
+- Build a simple AI chat assistant for mobile
+- Decide when to use on-device processing vs. cloud processing
+- Design a mobile-first AI experience
 
 ## 📖 Theory
 
-### What Is Gemini Nano?
+### AI in Your Pocket
 
-You already know Gemini Pro and Gemini Flash — powerful models that run on Google's servers in the cloud. When your app sends a question, it travels over the internet to Google's data center, gets processed, and the answer travels back. This works great when you have a good internet connection.
+Your smartphone is already full of AI — autocorrect predicts your next word, your camera enhances photos automatically, and voice assistants respond to your commands. But until recently, most of this AI was limited and pre-programmed.
 
-But what about when you are on a plane, in a subway, or in an area with poor cell service?
+With Gemini, you can build mobile apps that have a genuine conversation, understand images you photograph, summarize long documents, and create content — all from a phone. This opens up entirely new kinds of apps.
 
-**Gemini Nano** is a smaller version of Gemini designed to run directly on your phone. It does not need the internet at all. The model lives inside the device itself, just like the calculator app on your phone does not need Wi-Fi to add numbers.
+### Two Ways to Run Gemini on Mobile
 
-Think of it this way: Gemini Pro is like calling an expert on the phone (powerful, but you need a connection). Gemini Nano is like having a knowledgeable friend sitting right next to you (less powerful, but always available and instant).
+There are two fundamentally different approaches, like two different ways to get food:
 
-### On-Device vs. Cloud: The Trade-Offs
+**1. Cloud-Based (The Restaurant)**
+Your app sends the user's question to Google's servers over the internet. Google's powerful computers run Gemini, generate the answer, and send it back to your phone.
 
-| Factor | On-Device (Gemini Nano) | Cloud (Gemini Pro/Flash) |
-|---|---|---|
-| **Internet required** | No | Yes |
-| **Speed** | Very fast (no network delay) | Depends on connection |
-| **Privacy** | Data never leaves the phone | Data sent to Google's servers |
-| **Capabilities** | Basic text tasks, summarization | Full power: images, long text, code |
-| **Model size** | Small (fits on a phone) | Large (runs on powerful servers) |
-| **Cost** | Free (no API calls) | Pay per API call |
-| **Availability** | Pixel 8+ and select Samsung devices | Any device with internet |
+- **Pros:** Full Gemini power, access to the latest model, handles complex tasks
+- **Cons:** Requires internet connection, has latency (takes a moment), costs money per request
+- **Best for:** Complex questions, long content generation, image analysis, tasks needing the most capable model
 
-**When to use on-device AI:**
-- Summarizing text or messages quickly
-- Smart Reply suggestions (like in Gmail)
-- Autocomplete and text rewriting
-- Sensitive data that should not leave the device (personal notes, health info)
+**2. On-Device with Gemini Nano (Home Cooking)**
+A smaller version of Gemini called **Gemini Nano** runs directly on the phone's chip. No internet needed. No data leaves the device.
 
-**When to use cloud AI:**
-- Analyzing images or documents
-- Long, complex conversations
-- Code generation or debugging
-- Tasks that need the most powerful model
+- **Pros:** Works offline, instant responses, complete privacy (data never leaves the phone), free (no API costs)
+- **Cons:** Less capable than the full model, limited to specific tasks, only available on certain devices (Pixel 8+, Samsung Galaxy S24+)
+- **Best for:** Quick text suggestions, summarization, smart reply, simple classification tasks
 
-### Flutter + Gemini: Building Mobile AI Apps
+### What Is Flutter?
 
-**Flutter** is Google's toolkit for building mobile apps that work on both Android and iPhone from a single codebase. Instead of writing one app in Java for Android and another in Swift for iPhone, you write it once in a language called Dart and Flutter compiles it for both platforms.
+**Flutter** is Google's toolkit for building apps that run on both Android and iOS from a single codebase. Think of it like writing one recipe that works in both an oven and a microwave — you write the code once and it runs on both platforms.
 
-Flutter and Gemini work together beautifully because Google provides an official package (`google_generative_ai`) that makes it easy to call the Gemini API from a Flutter app. The pattern is the same as what you learned in earlier modules — send a prompt, get a response — but wrapped in a mobile-friendly interface.
+For our purposes, Flutter is the easiest way to build a cross-platform mobile app that uses the Gemini API. You do not need to learn separate programming languages for Android (Kotlin) and iOS (Swift).
 
-### How a Chat App Works
+### Designing Mobile AI Experiences
 
-A chat app has a simple loop:
+Mobile AI apps are different from desktop apps. Here are key principles:
 
-1. The user types a message
-2. The app sends the message (plus conversation history) to Gemini
-3. Gemini sends back a response
-4. The app displays the response in a chat bubble
-5. Both messages get added to the history
-6. Repeat
+**1. Speed matters more than perfection.** Mobile users are impatient. Show a loading indicator. Stream responses word by word if possible. Make the app feel responsive.
 
-The conversation history is important because it gives Gemini context. Without it, every message would be treated as a brand new conversation, and the AI would not remember what you just talked about.
+**2. Typing is hard on phones.** Offer quick-reply buttons, voice input, and suggested prompts. Do not make users type long instructions.
 
-## 💻 Code Example 1: Simple Gemini Chat in Flutter
+**3. Context is limited.** Phone screens are small. Keep AI responses concise. Offer "expand" options for users who want more detail.
 
-This example creates a minimal chat screen that sends messages to Gemini and displays responses. It runs on both Android and iOS.
+**4. Offline matters.** People use phones on subways, in elevators, and in areas with poor signal. Consider what your app can do without internet.
+
+**5. Battery and data usage.** Heavy API calls drain battery and use mobile data. Cache responses when possible and avoid unnecessary API calls.
+
+## 💻 Code Example 1: Mobile AI Chat with Flutter and Gemini
+
+This example shows a complete Flutter app with a Gemini-powered chat interface. Even if you are new to Flutter, the comments explain each section.
 
 ```dart
 // main.dart
-// A simple AI chat app using Flutter and Gemini
+// A simple AI chat app using Flutter and the Gemini API
+
+// First, add these to your pubspec.yaml:
+// dependencies:
+//   flutter:
+//     sdk: flutter
+//   google_generative_ai: ^0.4.0
 
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-
-// Step 1: Set up your API key
-// In production, use environment variables — never hardcode keys!
-const String apiKey = 'YOUR_GEMINI_API_KEY';
 
 void main() {
   runApp(const GeminiChatApp());
@@ -93,15 +87,15 @@ class GeminiChatApp extends StatelessWidget {
     return MaterialApp(
       title: 'Gemini Chat',
       theme: ThemeData(
-        colorSchemeSeed: Colors.blue,   // App color theme
-        useMaterial3: true,             // Modern Material Design
+        colorSchemeSeed: Colors.blue,
+        useMaterial3: true,
       ),
-      home: const ChatScreen(),         // Our chat screen
+      home: const ChatScreen(),
     );
   }
 }
 
-// The chat screen where messages appear
+// The chat screen where messages are displayed
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
@@ -110,64 +104,65 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  // The Gemini model we will talk to
-  final model = GenerativeModel(
-    model: 'gemini-2.0-flash',
-    apiKey: apiKey,
-    systemInstruction: Content.text(
-      'You are a friendly and helpful assistant in a mobile app. '
-      'Keep responses concise since users are on their phones. '
-      'Use short paragraphs and simple language.'
-    ),
-  );
+  // Replace with your actual API key
+  static const apiKey = 'YOUR_API_KEY';
 
-  // Chat session keeps track of conversation history automatically
-  late final ChatSession chat;
+  // Set up the Gemini model
+  late final GenerativeModel _model;
+  late final ChatSession _chat;
 
-  // List of messages to display on screen
-  final List<ChatMessage> messages = [];
+  // Store chat messages for display
+  final List<ChatMessage> _messages = [];
 
   // Controller for the text input field
-  final TextEditingController textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
 
-  // Track whether we are waiting for a response
-  bool isLoading = false;
+  // Track whether AI is currently generating a response
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    chat = model.startChat();  // Start a new conversation
+    // Initialize the model with a system instruction
+    _model = GenerativeModel(
+      model: 'gemini-2.0-flash',
+      apiKey: apiKey,
+      systemInstruction: Content.text(
+        'You are a friendly, helpful assistant in a mobile chat app. '
+        'Keep responses concise (under 150 words) since this is a phone screen. '
+        'Use simple language. Be warm and encouraging.'
+      ),
+    );
+    _chat = _model.startChat();
   }
 
-  // Send a message to Gemini and get a response
-  Future<void> sendMessage(String text) async {
-    if (text.trim().isEmpty) return;  // Ignore empty messages
+  // Send a message and get AI response
+  Future<void> _sendMessage(String text) async {
+    if (text.trim().isEmpty) return;
 
-    // Add the user's message to the screen
+    // Add user message to the chat
     setState(() {
-      messages.add(ChatMessage(text: text, isUser: true));
-      isLoading = true;
+      _messages.add(ChatMessage(text: text, isUser: true));
+      _isLoading = true;
     });
-    textController.clear();
+    _textController.clear();
 
     try {
-      // Send to Gemini and wait for the response
-      final response = await chat.sendMessage(Content.text(text));
-      final reply = response.text ?? 'Sorry, I could not generate a response.';
+      // Send to Gemini and get response
+      final response = await _chat.sendMessage(Content.text(text));
+      final aiText = response.text ?? 'Sorry, I could not generate a response.';
 
-      // Add Gemini's response to the screen
       setState(() {
-        messages.add(ChatMessage(text: reply, isUser: false));
-        isLoading = false;
+        _messages.add(ChatMessage(text: aiText, isUser: false));
+        _isLoading = false;
       });
-    } catch (error) {
-      // Handle errors gracefully
+    } catch (e) {
       setState(() {
-        messages.add(ChatMessage(
-          text: 'Oops! Something went wrong. Please try again.',
+        _messages.add(ChatMessage(
+          text: 'Oops! Something went wrong. Please check your internet connection.',
           isUser: false,
         ));
-        isLoading = false;
+        _isLoading = false;
       });
     }
   }
@@ -175,40 +170,81 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Gemini Chat')),
+      appBar: AppBar(
+        title: const Text('Gemini Chat'),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      ),
       body: Column(
         children: [
-          // The message list (scrollable)
+          // Chat messages list
           Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                final msg = messages[index];
-                return MessageBubble(message: msg);
-              },
+            child: _messages.isEmpty
+                ? const Center(
+                    child: Text(
+                      'Say hello to start chatting!',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  )
+                : ListView.builder(
+                    padding: const EdgeInsets.all(8.0),
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      final message = _messages[index];
+                      return MessageBubble(message: message);
+                    },
+                  ),
+          ),
+
+          // Loading indicator
+          if (_isLoading)
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  SizedBox(width: 16),
+                  SizedBox(
+                    width: 20, height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  SizedBox(width: 8),
+                  Text('Thinking...', style: TextStyle(color: Colors.grey)),
+                ],
+              ),
+            ),
+
+          // Quick reply suggestions
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              children: [
+                _quickReplyButton('Tell me a fun fact'),
+                _quickReplyButton('Help me write an email'),
+                _quickReplyButton('Explain something simply'),
+              ],
             ),
           ),
-          // Loading indicator while waiting for Gemini
-          if (isLoading) const LinearProgressIndicator(),
-          // The text input area at the bottom
+
+          // Text input area
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
-                    controller: textController,
+                    controller: _textController,
                     decoration: const InputDecoration(
-                      hintText: 'Type a message...',
+                      hintText: 'Type your message...',
                       border: OutlineInputBorder(),
                     ),
-                    onSubmitted: sendMessage,
+                    onSubmitted: _sendMessage,
                   ),
                 ),
                 const SizedBox(width: 8),
                 IconButton(
+                  onPressed: () => _sendMessage(_textController.text),
                   icon: const Icon(Icons.send),
-                  onPressed: () => sendMessage(textController.text),
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ],
             ),
@@ -217,17 +253,28 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+
+  // Helper to create quick reply buttons
+  Widget _quickReplyButton(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: ActionChip(
+        label: Text(text),
+        onPressed: () => _sendMessage(text),
+      ),
+    );
+  }
 }
 
-// Data class to hold a single chat message
+// Data class for chat messages
 class ChatMessage {
   final String text;
-  final bool isUser;  // true = user message, false = AI message
+  final bool isUser;
 
   ChatMessage({required this.text, required this.isUser});
 }
 
-// Widget that displays a single message bubble
+// Widget to display a single message bubble
 class MessageBubble extends StatelessWidget {
   final ChatMessage message;
 
@@ -236,17 +283,19 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: message.isUser
-          ? Alignment.centerRight    // User messages on the right
-          : Alignment.centerLeft,    // AI messages on the left
+      alignment: message.isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-        padding: const EdgeInsets.all(12),
+        margin: const EdgeInsets.symmetric(vertical: 4.0),
+        padding: const EdgeInsets.all(12.0),
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.75,
+        ),
         decoration: BoxDecoration(
-          color: message.isUser ? Colors.blue[100] : Colors.grey[200],
+          color: message.isUser
+              ? Theme.of(context).colorScheme.primaryContainer
+              : Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(16),
         ),
-        constraints: const BoxConstraints(maxWidth: 280),
         child: Text(message.text),
       ),
     );
@@ -256,242 +305,270 @@ class MessageBubble extends StatelessWidget {
 
 ### Expected Output:
 
-When you run this app on your phone or emulator, you will see a clean chat interface:
-
 ```
-📸 [You should see a screen like this]
-┌──────────────────────────────┐
-│  Gemini Chat                 │
-├──────────────────────────────┤
-│                              │
-│        ┌──────────────┐      │
-│        │ Hi! What can  │     │
-│        │ you help with?│     │
-│        └──────────────┘      │
-│                              │
-│  ┌──────────────────┐        │
-│  │ What is the       │       │
-│  │ capital of France?│       │
-│  └──────────────────┘        │
-│                              │
-│        ┌──────────────┐      │
-│        │ The capital of│     │
-│        │ France is     │     │
-│        │ Paris!        │     │
-│        └──────────────┘      │
-│                              │
-│ ┌─────────────────────┐ [>] │
-│ │ Type a message...   │      │
-│ └─────────────────────┘      │
-└──────────────────────────────┘
+📸 [You should see on your phone]
+┌─────────────────────────────────────┐
+│  Gemini Chat                    ☰   │
+├─────────────────────────────────────┤
+│                                     │
+│              Say hello to           │
+│           start chatting!           │
+│                                     │
+│  ┌─────────────────────────┐        │
+│  │ Hi! What can you help   │  (You) │
+│  │ me with today?          │        │
+│  └─────────────────────────┘        │
+│                                     │
+│  ┌─────────────────────────┐        │
+│  │ Hey there! I'd love to  │  (AI)  │
+│  │ help! I can explain     │        │
+│  │ things simply, help     │        │
+│  │ with writing, answer    │        │
+│  │ questions, or just chat.│        │
+│  │ What's on your mind?    │        │
+│  └─────────────────────────┘        │
+│                                     │
+│ [Tell me a fun fact] [Help me...]   │
+│                                     │
+│ ┌──────────────────────────┐  ┌──┐  │
+│ │ Type your message...     │  │➤ │  │
+│ └──────────────────────────┘  └──┘  │
+└─────────────────────────────────────┘
 ```
 
-## 💻 Code Example 2: On-Device AI with Gemini Nano on Android
+## 💻 Code Example 2: On-Device vs. Cloud Decision Engine
 
-This example shows how to use Gemini Nano through Android's AICore service. The key difference is that no internet connection is needed — everything runs locally on the phone.
+This Python example demonstrates how to build a smart routing system that decides whether to handle a request on-device (fast, free, offline) or send it to the cloud (powerful, full Gemini).
 
-```kotlin
-// MainActivity.kt
-// Using Gemini Nano on-device through Android AICore
+```python
+# mobile_routing.py
+# Smart routing: decide between on-device and cloud AI processing
 
-// Step 0: Add these to your app's build.gradle.kts file:
-// implementation("com.google.ai.edge.aicore:aicore:0.0.3")
+import google.generativeai as genai
 
-package com.example.ondeviceai
+genai.configure(api_key="YOUR_API_KEY")
+cloud_model = genai.GenerativeModel("gemini-2.0-flash")
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.google.ai.edge.aicore.GenerativeModel
-import com.google.ai.edge.aicore.generationConfig
-import kotlinx.coroutines.launch
+# Simulated on-device model (in real Android, this would use Gemini Nano)
+class OnDeviceModel:
+    """Simulates Gemini Nano's on-device capabilities."""
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            OnDeviceAIScreen()
-        }
-    }
-}
+    def __init__(self):
+        # On-device model handles simple, fast tasks
+        self.supported_tasks = [
+            "smart_reply",       # Quick message responses
+            "summarize_short",   # Summarize short text (under 500 words)
+            "classify",          # Simple text classification
+            "autocomplete",      # Text completion/suggestion
+        ]
 
-@Composable
-fun OnDeviceAIScreen() {
-    // Set up the on-device model (no API key needed!)
-    val generativeModel = remember {
-        GenerativeModel(
-            generationConfig = generationConfig {
-                temperature = 0.7f   // Controls creativity (0 = focused, 1 = creative)
-                topK = 16            // Limits word choices for more focused output
-                maxOutputTokens = 256 // Keep responses short for on-device use
+    def can_handle(self, task_type):
+        """Check if this task can be handled on-device."""
+        return task_type in self.supported_tasks
+
+    def process(self, task_type, text):
+        """Process a task on-device (simulated)."""
+        if task_type == "smart_reply":
+            # Generate quick reply suggestions
+            return {
+                "replies": [
+                    "Sounds good!",
+                    "Thanks, I'll check it out.",
+                    "Let me get back to you on that."
+                ],
+                "processing_time_ms": 15,  # Very fast — on-device
+                "cost": 0.0  # Free — no API call
             }
-        )
-    }
+        elif task_type == "summarize_short":
+            words = text.split()
+            summary = " ".join(words[:20]) + "..."
+            return {
+                "summary": summary,
+                "processing_time_ms": 50,
+                "cost": 0.0
+            }
+        elif task_type == "classify":
+            # Simple sentiment detection
+            positive_words = ["great", "love", "awesome", "thanks", "good", "happy"]
+            negative_words = ["bad", "terrible", "hate", "awful", "angry", "disappointed"]
+            text_lower = text.lower()
+            pos = sum(1 for w in positive_words if w in text_lower)
+            neg = sum(1 for w in negative_words if w in text_lower)
+            sentiment = "positive" if pos > neg else "negative" if neg > pos else "neutral"
+            return {
+                "classification": sentiment,
+                "processing_time_ms": 10,
+                "cost": 0.0
+            }
+        return {"error": "Unsupported task"}
 
-    // State variables to track UI
-    var inputText by remember { mutableStateOf("") }
-    var outputText by remember { mutableStateOf("Tap 'Summarize' to try on-device AI!") }
-    var isProcessing by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
 
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp)
-    ) {
-        Text(
-            text = "On-Device AI (No Internet Needed)",
-            style = MaterialTheme.typography.headlineSmall
-        )
+class SmartRouter:
+    """Routes requests between on-device and cloud processing."""
 
-        Spacer(modifier = Modifier.height(16.dp))
+    def __init__(self):
+        self.on_device = OnDeviceModel()
+        self.cloud = cloud_model
+        self.stats = {"on_device": 0, "cloud": 0, "total_saved": 0.0}
 
-        // Text input area
-        OutlinedTextField(
-            value = inputText,
-            onValueChange = { inputText = it },
-            label = { Text("Paste text to summarize") },
-            modifier = Modifier.fillMaxWidth().height(200.dp),
-            maxLines = 10
-        )
+    def classify_task(self, user_input):
+        """Determine the best processing strategy for a request."""
 
-        Spacer(modifier = Modifier.height(8.dp))
+        input_length = len(user_input.split())
 
-        // Summarize button
-        Button(
-            onClick = {
-                scope.launch {
-                    isProcessing = true
-                    try {
-                        // This runs entirely on the device — no internet!
-                        val response = generativeModel.generateContent(
-                            "Summarize the following text in 2-3 sentences: $inputText"
-                        )
-                        outputText = response.text ?: "Could not generate summary."
-                    } catch (e: Exception) {
-                        outputText = "Error: ${e.message}. " +
-                            "Make sure your device supports Gemini Nano " +
-                            "(Pixel 8 or newer)."
-                    }
-                    isProcessing = false
-                }
-            },
-            enabled = inputText.isNotBlank() && !isProcessing,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(if (isProcessing) "Processing..." else "Summarize (On-Device)")
-        }
+        # Rules for routing
+        if input_length < 10 and "?" not in user_input:
+            return "smart_reply", "on_device"
+        elif input_length < 50 and any(word in user_input.lower()
+                for word in ["summarize", "summary", "tldr", "shorten"]):
+            return "summarize_short", "on_device"
+        elif input_length < 20 and any(word in user_input.lower()
+                for word in ["sentiment", "classify", "mood", "feeling"]):
+            return "classify", "on_device"
+        else:
+            return "complex", "cloud"
 
-        Spacer(modifier = Modifier.height(16.dp))
+    def process(self, user_input):
+        """Process a request using the best available method."""
 
-        // Output area
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Text(
-                text = outputText,
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
+        task_type, destination = self.classify_task(user_input)
 
-        Spacer(modifier = Modifier.height(8.dp))
+        print(f"  [Router: {destination.upper()} — task: {task_type}]")
 
-        // Info text
-        Text(
-            text = "This runs entirely on your device. " +
-                   "Your text is never sent to any server.",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.outline
-        )
-    }
-}
+        if destination == "on_device":
+            result = self.on_device.process(task_type, user_input)
+            self.stats["on_device"] += 1
+            # Estimate how much cloud processing would have cost
+            self.stats["total_saved"] += 0.0001  # Approximate cost saved
+            return result
+
+        else:
+            # Send to cloud Gemini
+            self.stats["cloud"] += 1
+            response = self.cloud.generate_content(user_input)
+            return {
+                "response": response.text,
+                "processing_time_ms": 800,  # Typical cloud latency
+                "cost": 0.0001  # Approximate cost
+            }
+
+    def print_stats(self):
+        """Show routing statistics."""
+        total = self.stats["on_device"] + self.stats["cloud"]
+        on_pct = (self.stats["on_device"] / total * 100) if total > 0 else 0
+        print(f"\n--- Routing Statistics ---")
+        print(f"On-device: {self.stats['on_device']} ({on_pct:.0f}%)")
+        print(f"Cloud:     {self.stats['cloud']} ({100-on_pct:.0f}%)")
+        print(f"Est. cost saved: ${self.stats['total_saved']:.4f}")
+
+
+# ---- Test the smart router ----
+router = SmartRouter()
+
+test_inputs = [
+    "Thanks for the update!",               # Simple — on-device smart reply
+    "Classify the sentiment: I love this product, it's amazing!",  # On-device
+    "Summarize: The meeting covered quarterly results and plans.",  # On-device
+    "Write a detailed marketing plan for launching a new product "
+    "in the Australian market, including target demographics, "
+    "channels, budget allocation, and timeline.",  # Complex — cloud
+    "What are the key differences between machine learning and "
+    "traditional programming? Give examples.",    # Complex — cloud
+]
+
+for user_input in test_inputs:
+    print(f"\nINPUT: {user_input[:60]}{'...' if len(user_input) > 60 else ''}")
+    result = router.process(user_input)
+
+    if "replies" in result:
+        print(f"QUICK REPLIES: {result['replies']}")
+    elif "classification" in result:
+        print(f"RESULT: {result['classification']}")
+    elif "summary" in result:
+        print(f"SUMMARY: {result['summary']}")
+    elif "response" in result:
+        print(f"RESPONSE: {result['response'][:120]}...")
+
+    print(f"TIME: {result.get('processing_time_ms', '?')}ms | "
+          f"COST: ${result.get('cost', 0):.4f}")
+    print("-" * 55)
+
+router.print_stats()
 ```
 
 ### Expected Output:
 
-When you paste a long news article and tap "Summarize," the app processes it locally:
-
 ```
-📸 [You should see a screen like this]
-┌──────────────────────────────┐
-│ On-Device AI (No Internet)   │
-├──────────────────────────────┤
-│ ┌──────────────────────────┐ │
-│ │ The European Space Agency│ │
-│ │ announced today that its │ │
-│ │ Mars rover has discovered│ │
-│ │ evidence of ancient water│ │
-│ │ channels beneath the     │ │
-│ │ surface of Mars...       │ │
-│ └──────────────────────────┘ │
-│                              │
-│ [  Summarize (On-Device)   ] │
-│                              │
-│ ┌──────────────────────────┐ │
-│ │ ESA's Mars rover found   │ │
-│ │ signs of ancient water   │ │
-│ │ channels underground.    │ │
-│ │ This suggests Mars once  │ │
-│ │ had conditions that could│ │
-│ │ support life.            │ │
-│ └──────────────────────────┘ │
-│                              │
-│ This runs entirely on your   │
-│ device. Your text is never   │
-│ sent to any server.          │
-└──────────────────────────────┘
-```
+INPUT: Thanks for the update!
+  [Router: ON_DEVICE — task: smart_reply]
+QUICK REPLIES: ['Sounds good!', "Thanks, I'll check it out.", "Let me get back to you on that."]
+TIME: 15ms | COST: $0.0000
+-------------------------------------------------------
 
-The key thing to notice: there is no API key, no network call, and no loading spinner waiting for a server. The response appears almost instantly because the AI is running right on the phone.
+INPUT: Classify the sentiment: I love this product, it's amazing!
+  [Router: ON_DEVICE — task: classify]
+RESULT: positive
+TIME: 10ms | COST: $0.0000
+-------------------------------------------------------
+
+INPUT: Summarize: The meeting covered quarterly results and plans.
+  [Router: ON_DEVICE — task: summarize_short]
+SUMMARY: Summarize: The meeting covered quarterly results and plans....
+TIME: 50ms | COST: $0.0000
+-------------------------------------------------------
+
+INPUT: Write a detailed marketing plan for launching a new produc...
+  [Router: CLOUD — task: complex]
+RESPONSE: ## Marketing Plan: Product Launch in Australia ...
+TIME: 800ms | COST: $0.0001
+-------------------------------------------------------
+
+INPUT: What are the key differences between machine learning and ...
+  [Router: CLOUD — task: complex]
+RESPONSE: Great question! Here are the key differences ...
+TIME: 800ms | COST: $0.0001
+-------------------------------------------------------
+
+--- Routing Statistics ---
+On-device: 3 (60%)
+Cloud:     2 (40%)
+Est. cost saved: $0.0003
+```
 
 ## ✍️ Hands-On Exercises
 
-### Exercise 1: Set Up a Flutter Project
+### Exercise 1: Design Your Mobile AI App
+Sketch out (on paper or in a notes app) a mobile AI app you would like to build. Define: (a) What problem does it solve? (b) Which features need cloud Gemini vs. on-device? (c) What happens when there is no internet? (d) What quick-reply buttons or shortcuts would you include? Write out the user journey from opening the app to completing their task.
 
-Install Flutter on your computer and create a new project. You do not need to build the full chat app yet — just get Flutter running and displaying a "Hello, Gemini!" message on an emulator or your phone.
+**Hint:** The best mobile AI apps solve a specific problem exceptionally well, rather than trying to do everything. Think about one task that takes too long on your phone today.
 
-Steps to follow:
-1. Visit flutter.dev and follow the installation guide for your operating system
-2. Run `flutter doctor` to check everything is set up
-3. Run `flutter create gemini_chat` to create a new project
-4. Run `flutter run` to see the default app on your emulator
-5. Change the text on the screen to "Hello, Gemini!" and hot-reload to see the change
+### Exercise 2: Build a Mobile-Optimized Prompt
+Take any complex prompt you have written in previous modules and rewrite it for mobile. The output should be concise (under 150 words), use bullet points for scannability, and include a "Learn more" option. Test both versions and compare readability on a small screen.
 
-**Hint:** Flutter's hot reload feature lets you see changes instantly without restarting the app. Just save the file and the app updates on your phone or emulator in under a second.
-
-### Exercise 2: Add Features to the Chat App
-
-Take Code Example 1 and add these two features. Try one at a time.
-
-1. **Message timestamps** — Show the time each message was sent (e.g., "2:30 PM") below each chat bubble.
-2. **Clear conversation** — Add a button in the app bar that clears all messages and starts a fresh conversation with Gemini.
-
-**Hint:** For timestamps, use `DateTime.now()` when creating each `ChatMessage` and format it with `TimeOfDay.fromDateTime(dateTime).format(context)`. For clearing the conversation, create a new `ChatSession` with `model.startChat()` and clear the messages list.
+**Hint:** Read your AI's response on your actual phone screen. If you have to scroll more than 3 times, the response is too long for mobile.
 
 ## 🔗 Next Steps
 
-In the next module, you will bring everything together by building multimodal agents — AI systems that combine image understanding, text processing, and code generation to solve complex multi-step tasks. You will build a product analyzer agent as a mini project and review everything you have learned in the course.
+In the final module of this course, you will bring everything together by building multimodal AI agents — systems that can see images, read text, write code, and use tools all in one workflow. You will also get a complete course summary and guidance for your continued learning journey.
 
 <div class="module-quiz">
 <h3>Module Quiz</h3>
 
-<div class="quiz-q" data-answer="1"><p>1. What is Gemini Nano?</p><label><input type="radio" name="q1" value="0"> A. A cheaper version of Gemini that uses less data</label><label><input type="radio" name="q1" value="1"> B. A smaller version of Gemini designed to run directly on mobile devices without internet</label><label><input type="radio" name="q1" value="2"> C. A Gemini model that only works on Pixel phones</label><label><input type="radio" name="q1" value="3"> D. A web browser plugin for Gemini</label><div class="quiz-explain">Gemini Nano is a compact version of the Gemini model optimized to run directly on mobile devices. It processes everything locally on the phone, requiring no internet connection. It is available on supported devices like Pixel 8 and newer Samsung phones.</div></div>
+<div class="quiz-q" data-answer="2"><p>1. What is the key difference between cloud Gemini and Gemini Nano on-device?</p><label><input type="radio" name="q1" value="0"> A. Gemini Nano is more powerful than cloud Gemini</label><label><input type="radio" name="q1" value="1"> B. Cloud Gemini works offline; Gemini Nano needs internet</label><label><input type="radio" name="q1" value="2"> C. Gemini Nano runs on the phone itself (fast, offline, free); cloud Gemini runs on Google's servers (powerful, needs internet)</label><label><input type="radio" name="q1" value="3"> D. They are identical in capabilities</label><div class="quiz-explain">Gemini Nano is a smaller model that runs directly on the phone — it is faster and works offline but less capable. Cloud Gemini is the full model running on Google's powerful servers, but requires an internet connection.</div></div>
 
-<div class="quiz-q" data-answer="0"><p>2. What is the biggest advantage of on-device AI over cloud AI?</p><label><input type="radio" name="q2" value="0"> A. It works without an internet connection and data never leaves the device</label><label><input type="radio" name="q2" value="1"> B. It is always smarter than cloud AI</label><label><input type="radio" name="q2" value="2"> C. It is free and cloud AI always costs money</label><label><input type="radio" name="q2" value="3"> D. It can process images better than cloud AI</label><div class="quiz-explain">On-device AI has two major advantages: it works offline (no internet needed) and it is private (your data never leaves your phone). This makes it ideal for sensitive information and situations with poor connectivity.</div></div>
+<div class="quiz-q" data-answer="0"><p>2. What is Flutter?</p><label><input type="radio" name="q2" value="0"> A. Google's toolkit for building apps that work on both Android and iOS from one codebase</label><label><input type="radio" name="q2" value="1"> B. A programming language created by Apple</label><label><input type="radio" name="q2" value="2"> C. A database for storing mobile app data</label><label><input type="radio" name="q2" value="3"> D. A cloud hosting service for mobile apps</label><div class="quiz-explain">Flutter is Google's UI toolkit that lets you write code once and deploy it on both Android and iOS. This saves time and money compared to building separate apps for each platform.</div></div>
 
-<div class="quiz-q" data-answer="2"><p>3. What is Flutter?</p><label><input type="radio" name="q3" value="0"> A. A programming language created by Apple</label><label><input type="radio" name="q3" value="1"> B. A database for storing chat messages</label><label><input type="radio" name="q3" value="2"> C. Google's toolkit for building apps that work on both Android and iOS from one codebase</label><label><input type="radio" name="q3" value="3"> D. A testing framework for mobile apps</label><div class="quiz-explain">Flutter is Google's UI toolkit that lets you write one codebase in the Dart language and compile it into native apps for Android, iOS, web, and desktop. This saves time because you do not need to build separate apps for each platform.</div></div>
+<div class="quiz-q" data-answer="1"><p>3. Why is response conciseness especially important for mobile AI?</p><label><input type="radio" name="q3" value="0"> A. Because mobile phones have less memory</label><label><input type="radio" name="q3" value="1"> B. Because phone screens are small and users are often multitasking or on the go</label><label><input type="radio" name="q3" value="2"> C. Because the Gemini API limits mobile responses</label><label><input type="radio" name="q3" value="3"> D. Because mobile data plans charge per word</label><div class="quiz-explain">Small screens and on-the-go usage mean mobile users want quick, scannable answers. A 500-word response that works great on a desktop feels overwhelming on a phone screen.</div></div>
 
-<div class="quiz-q" data-answer="3"><p>4. Why is conversation history important in a chat app?</p><label><input type="radio" name="q4" value="0"> A. It makes the app look professional</label><label><input type="radio" name="q4" value="1"> B. It is required by the Gemini API to function</label><label><input type="radio" name="q4" value="2"> C. It reduces the cost of API calls</label><label><input type="radio" name="q4" value="3"> D. It gives Gemini context so it remembers what you talked about earlier</label><div class="quiz-explain">Without conversation history, every message would be treated as a completely new conversation. Gemini would not remember your name, your previous questions, or any context. History lets the AI provide relevant, contextual responses.</div></div>
+<div class="quiz-q" data-answer="3"><p>4. Which devices currently support Gemini Nano on-device?</p><label><input type="radio" name="q4" value="0"> A. All Android phones</label><label><input type="radio" name="q4" value="1"> B. Only iPhones</label><label><input type="radio" name="q4" value="2"> C. Any phone with Wi-Fi</label><label><input type="radio" name="q4" value="3"> D. Select premium devices like Pixel 8+ and Samsung Galaxy S24+</label><div class="quiz-explain">Gemini Nano requires specific hardware capabilities (a powerful enough processor) and is currently available only on premium devices like Google Pixel 8 and newer, and Samsung Galaxy S24 and newer.</div></div>
 
-<div class="quiz-q" data-answer="1"><p>5. In the Flutter chat app, what does `ChatSession` do?</p><label><input type="radio" name="q5" value="0"> A. It encrypts the messages for security</label><label><input type="radio" name="q5" value="1"> B. It automatically manages conversation history so you do not have to track it manually</label><label><input type="radio" name="q5" value="2"> C. It connects to the phone's camera</label><label><input type="radio" name="q5" value="3"> D. It saves messages to a local database</label><div class="quiz-explain">ChatSession is a convenience feature of the Gemini SDK. It automatically keeps track of all the messages sent back and forth, so each new message includes the full conversation context without you needing to manage a history array yourself.</div></div>
+<div class="quiz-q" data-answer="0"><p>5. In the smart router example, what percentage of requests were handled on-device?</p><label><input type="radio" name="q5" value="0"> A. 60% — three out of five requests</label><label><input type="radio" name="q5" value="1"> B. 100% — all requests</label><label><input type="radio" name="q5" value="2"> C. 40% — two out of five requests</label><label><input type="radio" name="q5" value="3"> D. 0% — all went to cloud</label><div class="quiz-explain">Three of the five test requests (simple reply, sentiment classification, short summarization) were handled on-device, while two complex requests went to the cloud. This 60/40 split shows how many common tasks can be handled locally.</div></div>
 
-<div class="quiz-q" data-answer="0"><p>6. Which task is best suited for Gemini Nano (on-device) instead of cloud AI?</p><label><input type="radio" name="q6" value="0"> A. Summarizing private medical notes on a patient's phone</label><label><input type="radio" name="q6" value="1"> B. Analyzing a 50-page PDF document</label><label><input type="radio" name="q6" value="2"> C. Generating complex Python code</label><label><input type="radio" name="q6" value="3"> D. Having a long conversation with detailed follow-up questions</label><div class="quiz-explain">Medical notes are sensitive personal data that should not be sent to external servers. Gemini Nano processes everything on the device, so the data never leaves the phone. The task (summarization) is also well within Nano's capabilities.</div></div>
+<div class="quiz-q" data-answer="2"><p>6. Why do mobile AI apps include "quick reply" buttons?</p><label><input type="radio" name="q6" value="0"> A. Because the Gemini API requires them</label><label><input type="radio" name="q6" value="1"> B. To fill empty space on the screen</label><label><input type="radio" name="q6" value="2"> C. Because typing on a phone is slow and difficult, so preset options improve the experience</label><label><input type="radio" name="q6" value="3"> D. To limit what the AI can respond to</label><div class="quiz-explain">Typing on a phone keyboard is slower and more error-prone than on a desktop. Quick reply buttons let users tap once instead of typing a full message, making the app faster and more pleasant to use.</div></div>
 
-<div class="quiz-q" data-answer="2"><p>7. What happens if you try to use Gemini Nano on an unsupported phone?</p><label><input type="radio" name="q7" value="0"> A. It automatically falls back to cloud AI</label><label><input type="radio" name="q7" value="1"> B. The phone downloads the model from the internet</label><label><input type="radio" name="q7" value="2"> C. It throws an error because the model is not available on that device</label><label><input type="radio" name="q7" value="3"> D. It works but much more slowly</label><div class="quiz-explain">Gemini Nano requires specific hardware (like the Tensor G3 chip in Pixel 8). If the device does not have the required hardware and software support, the AICore service will not be available and an error will occur. Your app should handle this gracefully.</div></div>
+<div class="quiz-q" data-answer="1"><p>7. What is the main advantage of on-device AI processing for privacy?</p><label><input type="radio" name="q7" value="0"> A. On-device AI is encrypted</label><label><input type="radio" name="q7" value="1"> B. Data never leaves the phone — it is processed locally and nothing is sent to external servers</label><label><input type="radio" name="q7" value="2"> C. Google cannot see what model you are using</label><label><input type="radio" name="q7" value="3"> D. On-device AI deletes all data after processing</label><div class="quiz-explain">The strongest privacy guarantee is that data never leaves the device. With on-device processing, your personal messages, photos, and documents are analyzed right on your phone — no external server ever sees them.</div></div>
 
-<div class="quiz-q" data-answer="3"><p>8. Why does the Flutter code example use `setState()` when adding messages?</p><label><input type="radio" name="q8" value="0"> A. To save the message to the database</label><label><input type="radio" name="q8" value="1"> B. To send the message to Gemini</label><label><input type="radio" name="q8" value="2"> C. To encrypt the message</label><label><input type="radio" name="q8" value="3"> D. To tell Flutter the data has changed so it redraws the screen with the new message</label><div class="quiz-explain">In Flutter, the UI only updates when you call setState(). If you just add a message to the list without setState(), the data changes but the screen does not redraw, so the user would not see the new message. setState() triggers a rebuild of the widget.</div></div>
+<div class="quiz-q" data-answer="3"><p>8. What should a mobile AI app do when there is no internet connection?</p><label><input type="radio" name="q8" value="0"> A. Show an error and close the app</label><label><input type="radio" name="q8" value="1"> B. Pretend to work and give random responses</label><label><input type="radio" name="q8" value="2"> C. Ask the user to find Wi-Fi</label><label><input type="radio" name="q8" value="3"> D. Fall back to on-device capabilities for basic tasks and clearly tell the user which features need internet</label><div class="quiz-explain">Good mobile apps degrade gracefully. They should use on-device AI for what they can, clearly communicate which features require internet, and queue complex requests to process once connectivity returns.</div></div>
 
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
