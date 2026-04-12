@@ -33,6 +33,14 @@
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Accessibility */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.skip-link { position: absolute; top: -40px; left: 0; background: var(--accent); color: #fff; padding: 8px 16px; z-index: 9999; font-size: 14px; transition: top 0.2s; }
+.skip-link:focus { top: 0; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
 :root {
   --teal: #008B8B;
   --accent: #00B4A6;
@@ -1381,15 +1389,19 @@ body {
 </style>
 </head>
 <body>
+<a href="#content" class="skip-link">Skip to content</a>
+<div aria-live="polite" id="a11y-announce" class="sr-only"></div>
 <!-- Password Gate -->
-<div id="auth-gate">
+<div id="auth-gate" role="dialog" aria-modal="true" aria-label="Login">
   <div class="auth-box">
     <h1>Claude Code Complete Guide</h1>
     <p>Please enter your username and password to continue</p>
+    <label for="auth-user" class="sr-only">Username</label>
     <input type="text" id="auth-user" placeholder="Username" autocomplete="username">
+    <label for="auth-pass" class="sr-only">Password</label>
     <input type="password" id="auth-pass" placeholder="Password" autocomplete="current-password">
     <button onclick="tryLogin()">Login</button>
-    <div class="auth-error" id="auth-error"></div>
+    <div class="auth-error" id="auth-error" role="alert" aria-live="polite"></div>
   </div>
 </div>
 <script>
@@ -1747,7 +1759,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 </script>
 
 <!-- Admin Panel Modal -->
-<div class="admin-overlay hidden" id="admin-overlay" onclick="if(event.target===this)closeAdmin()">
+<div class="admin-overlay hidden" id="admin-overlay" role="dialog" aria-modal="true" aria-label="User Management" onclick="if(event.target===this)closeAdmin()">
   <div class="admin-panel">
     <button class="admin-close" onclick="closeAdmin()">&times;</button>
     <h2>User Management</h2>
@@ -1786,6 +1798,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 
   <div class="search-container">
     <span class="search-icon">&#x1F50D;</span>
+    <label for="search-input" class="sr-only">Search modules</label>
     <input class="search-input" id="search-input" type="text" placeholder="Search modules..." autocomplete="off">
     <div class="search-results" id="search-results"></div>
   </div>
@@ -1845,7 +1858,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 </div>
 
 <!-- Flashcard Overlay -->
-<div class="flashcard-overlay hidden" id="flashcard-overlay">
+<div class="flashcard-overlay hidden" id="flashcard-overlay" role="dialog" aria-modal="true" aria-label="Flashcards">
   <div class="flashcard-container">
     <div class="flashcard-counter" id="fc-counter"></div>
     <div class="flashcard" id="flashcard" onclick="this.classList.toggle('flipped')">
@@ -1869,7 +1882,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 </div>
 
 <!-- Glossary Panel -->
-<div id="glossary-panel">
+<div id="glossary-panel" role="dialog" aria-label="Glossary">
   <div class="gp-header">
     <h3>&#x1F4D6; Glossary</h3>
     <button class="gp-close" onclick="toggleGlossary()">&times;</button>
@@ -1879,7 +1892,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 </div>
 
 <!-- Prompt Templates Overlay -->
-<div class="prompt-lib-overlay hidden" id="prompt-lib-overlay" onclick="if(event.target===this)closePromptLib()">
+<div class="prompt-lib-overlay hidden" id="prompt-lib-overlay" role="dialog" aria-modal="true" aria-label="Prompt Templates" onclick="if(event.target===this)closePromptLib()">
   <div class="prompt-lib-panel">
     <div class="prompt-lib-header">
       <h3>&#x1F4CB; Prompt Templates</h3>
@@ -1891,7 +1904,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 </div>
 
 <!-- Cheat Sheet Overlay -->
-<div class="cheat-overlay hidden" id="cheat-overlay" onclick="if(event.target===this)closeCheatSheet()">
+<div class="cheat-overlay hidden" id="cheat-overlay" role="dialog" aria-modal="true" aria-label="Cheat Sheet" onclick="if(event.target===this)closeCheatSheet()">
   <div class="cheat-panel">
     <div class="cheat-header">
       <h3 id="cheat-title">Cheat Sheet</h3>
@@ -2358,6 +2371,8 @@ function handleQuizSubmit(quiz, moduleId) {
   if (passed) {
     resultEl.className = 'quiz-result pass';
     resultEl.innerHTML = `You scored ${correct}/${total} (${pct}%) — Passed! Module complete.`;
+    const announce = document.getElementById('a11y-announce');
+    if (announce) announce.textContent = `Quiz passed: ${correct} out of ${total} correct.`;
     // Auto-mark module as complete
     progress[moduleId] = true;
     saveProgress();
