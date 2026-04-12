@@ -109,6 +109,13 @@
   transition: all 0.2s; flex-shrink: 0;
 }
 .logout-btn:hover { border-color: #ff6b6b; color: #ff6b6b; }
+.data-btns { display: flex; gap: 6px; margin: 6px 20px 0; }
+.data-btn {
+  flex: 1; background: none; border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.5); border-radius: 6px;
+  padding: 4px 0; font-size: 10px; cursor: pointer; transition: all 0.2s;
+}
+.data-btn:hover { border-color: var(--accent); color: var(--accent); }
 .profile-progress { display: block; font-size: 10px; color: #718096; margin-top: 2px; }
 #admin-add-user-btn {
   width: calc(100% - 40px); margin: 8px 20px 12px;
@@ -1650,6 +1657,49 @@ async function adminDeleteUser(idx) {
   alert('User deleted.');
 }
 
+function exportProgress() {
+  if (!currentUser) return;
+  const data = {
+    user: { name: currentUser.name, uid: currentUser.uid, role: currentUser.role },
+    progress: progress,
+    xp: getXP(),
+    streak: (() => { try { return JSON.parse(localStorage.getItem('claude-course-streak-' + currentUser.uid) || '{}'); } catch { return {}; } })(),
+    bookmarks: getBookmarks(),
+    exportDate: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `claude-course-backup-${currentUser.uid}-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('&#x1F4E4;', 'Exported', 'Progress backup saved!', 2000);
+}
+
+function importProgress(e) {
+  const file = e.target.files[0];
+  if (!file || !currentUser) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!data.progress || !data.xp) { alert('Invalid backup file.'); return; }
+      if (!confirm(`Import data from "${data.user?.name || 'unknown'}" (${data.exportDate?.split('T')[0] || '?'})?\n\nThis will overwrite your current progress.`)) return;
+      progress = data.progress;
+      saveProgress();
+      try { localStorage.setItem(xpKey(), JSON.stringify(data.xp)); } catch {}
+      if (data.streak) { try { localStorage.setItem('claude-course-streak-' + currentUser.uid, JSON.stringify(data.streak)); } catch {} }
+      if (data.bookmarks) { try { localStorage.setItem('claude-course-bookmarks', JSON.stringify(data.bookmarks)); } catch {} }
+      updateProgressUI();
+      updateXPDisplay();
+      updateStreakDisplay();
+      showToast('&#x1F4E5;', 'Imported', 'Progress restored!', 2000);
+    } catch { alert('Failed to read backup file.'); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
 function logout() {
   currentUser = null;
   localStorage.removeItem('claude-course-user');
@@ -1753,6 +1803,11 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
     </div>
     <button class="logout-btn" onclick="logout()">Logout</button>
     <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
+  </div>
+  <div class="data-btns">
+    <button class="data-btn" onclick="exportProgress()">&#x1F4E4; Export</button>
+    <button class="data-btn" onclick="document.getElementById('import-file').click()">&#x1F4E5; Import</button>
+    <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importProgress(event)">
   </div>
   <button id="admin-add-user-btn" style="display:none;" onclick="openAdmin()">Manage Users</button>
 </aside>
