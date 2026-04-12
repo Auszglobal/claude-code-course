@@ -30,6 +30,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked-highlight@2.2.1/lib/index.umd.min.js"></script>
 <!-- mermaid loaded on demand -->
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyDps9rYTTlKXXoC4Y7Og9SVdtzhZGPlj18",
+  authDomain: "claude-code-course-df778.firebaseapp.com",
+  projectId: "claude-code-course-df778",
+  storageBucket: "claude-code-course-df778.firebasestorage.app",
+  messagingSenderId: "349390163097",
+  appId: "1:349390163097:web:ac5811aad7bc371d8ebc08"
+});
+const db = firebase.firestore();
+</script>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1513,29 +1526,23 @@ body {
 </div>
 <script>
 // Multi-user auth with profiles — each user gets independent progress tracking
-// ── Shared progress via JSONBlob (free, no auth needed) ──
-const JSONBLOB_ID = '019d7b3b-259e-78fe-8874-e2650dcc75d5';
-const JSONBLOB_URL = 'https://jsonblob.com/api/jsonBlob/' + JSONBLOB_ID;
+// ── Shared progress via Firebase Firestore ──
+const JSONBLOB_ID = null; // legacy — replaced by Firestore
+const JSONBLOB_URL = null;
 let sharedProgress = {};
 
 async function fetchSharedProgress() {
   try {
-    const res = await fetch(JSONBLOB_URL, { headers: { 'Accept': 'application/json' } });
-    if (res.ok) sharedProgress = await res.json();
+    const doc = await db.collection('progress').doc('shared').get();
+    if (doc.exists) sharedProgress = doc.data();
   } catch { /* offline fallback */ }
 }
 
 async function pushProgressToCloud() {
   if (!currentUser) return;
-  // Update local cache
   sharedProgress[currentUser.uid] = { ...progress };
-  // Push entire shared state to JSONBlob
   try {
-    await fetch(JSONBLOB_URL, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(sharedProgress)
-    });
+    await db.collection('progress').doc('shared').set(sharedProgress, { merge: true });
   } catch { /* silent fail, localStorage still works */ }
 }
 
@@ -1624,65 +1631,39 @@ function handleAvatarUpload(e) {
   reader.readAsDataURL(file);
 }
 
-// ── Admin panel (user management) ──
-const USERS_BLOB_ID = '019d7b3c-9e05-7dfc-adc1-ed680c138b6e';
-const USERS_BLOB_URL = 'https://jsonblob.com/api/jsonBlob/' + USERS_BLOB_ID;
+// ── Admin panel (user management via Firestore) ──
 let dynamicUsers = [];
-
 const LOCAL_USERS_KEY = 'claude-course-dynamic-users';
 
 async function fetchDynamicUsers() {
   let local; try { local = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { local = []; }
   try {
-    const res = await fetch(USERS_BLOB_URL, { headers: { 'Accept': 'application/json' } });
-    if (res.ok) {
-      const cloud = await res.json();
-      if (!Array.isArray(cloud)) { dynamicUsers = local; return; }
-      // Union merge: combine cloud + any local users not in cloud
-      const cloudHashes = new Set(cloud.map(u => u.hash));
-      const localOnly = local.filter(u => u.hash && !cloudHashes.has(u.hash));
-      dynamicUsers = [...cloud, ...localOnly];
-      // If local had users missing from cloud, sync back
-      if (localOnly.length > 0) {
-        saveDynamicUsers(); // background sync
-      }
-      // If cloud was empty but local had users, also sync back
-      if (cloud.length === 0 && local.length > 0) {
-        dynamicUsers = local;
-        saveDynamicUsers();
-      }
-      try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
-    } else {
-      dynamicUsers = local;
+    const doc = await db.collection('users').doc('students').get();
+    const cloud = doc.exists ? (doc.data().list || []) : [];
+    if (!Array.isArray(cloud)) { dynamicUsers = local; return; }
+    // Union merge: cloud + any local-only users
+    const cloudHashes = new Set(cloud.map(u => u.hash));
+    const localOnly = local.filter(u => u.hash && !cloudHashes.has(u.hash));
+    dynamicUsers = [...cloud, ...localOnly];
+    if (localOnly.length > 0 || (cloud.length === 0 && local.length > 0)) {
+      if (cloud.length === 0 && local.length > 0) dynamicUsers = local;
+      saveDynamicUsers();
     }
+    try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
   } catch {
-    // Offline — use local cache
     dynamicUsers = local;
   }
 }
 
-async function saveDynamicUsers(retries = 2) {
-  // Always save to localStorage immediately
-  try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch { /* quota exceeded */ }
-
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    try {
-      const res = await fetch(USERS_BLOB_URL, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(dynamicUsers)
-      });
-      if (res.ok) return true;
-      console.error('JSONBlob save failed:', res.status);
-      if (attempt < retries) { await new Promise(r => setTimeout(r, 1000)); continue; }
-    } catch (err) {
-      console.error('JSONBlob save error:', err);
-      if (attempt < retries) { await new Promise(r => setTimeout(r, 1000)); continue; }
-    }
+async function saveDynamicUsers() {
+  try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
+  try {
+    await db.collection('users').doc('students').set({ list: dynamicUsers });
+    return true;
+  } catch (err) {
+    console.error('Firestore save error:', err);
+    return false;
   }
-  // Cloud save failed but local save succeeded — user is still usable
-  console.warn('Cloud sync failed, saved locally. Will retry on next page load.');
-  return true;
 }
 
 function openAdmin() {
