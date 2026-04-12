@@ -361,6 +361,51 @@ Main rules (3-5):
 <div class="quiz-explain">Skills are best suited for "changing how Claude works," like following specific conventions or processes. A and D require connecting to external services (use MCP Server), B requires parallel processing (use Subagent).</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. How many tokens does a Skill's metadata typically consume when loaded at startup (Stage 1)?</p>
+<label><input type="radio" name="q4" value="0"> ~100 tokens per Skill</label>
+<label><input type="radio" name="q4" value="1"> ~5,000 tokens per Skill</label>
+<label><input type="radio" name="q4" value="2"> ~10,000 tokens per Skill</label>
+<label><input type="radio" name="q4" value="3"> Zero tokens — Skills are free to load</label>
+<div class="quiz-explain">Stage 1 (Progressive Disclosure) only loads the Skill's name and short description — approximately 100 tokens per Skill. This means even with many Skills installed, the startup cost is minimal. The full content (~5,000 tokens) is only loaded in Stage 2 when a task matches.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>5. You want Claude Code to connect to your company's Slack channel. Should you use a Skill, an MCP Server, or a Subagent?</p>
+<label><input type="radio" name="q5" value="0"> A Skill — it changes how Claude behaves</label>
+<label><input type="radio" name="q5" value="1"> A Subagent — it handles parallel processing</label>
+<label><input type="radio" name="q5" value="2"> An MCP Server — it connects Claude to an external data source</label>
+<label><input type="radio" name="q5" value="3"> None — Claude can already access Slack</label>
+<div class="quiz-explain">Connecting to external services like Slack requires an MCP Server (specifically server-slack). Skills change Claude's behaviour and workflow, MCP Servers connect to external tools and data, and Subagents handle parallel AI processing.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. What is in the "triggers" section of a SKILL.md file?</p>
+<label><input type="radio" name="q6" value="0"> API keys needed to activate the Skill</label>
+<label><input type="radio" name="q6" value="1"> The programming languages the Skill supports</label>
+<label><input type="radio" name="q6" value="2"> The dates when the Skill should be active</label>
+<label><input type="radio" name="q6" value="3"> Keywords that activate the Skill when found in the user's instruction</label>
+<div class="quiz-explain">The triggers section contains a list of keywords. When a user's instruction contains any of these keywords, Claude Code recognises that this Skill is relevant and loads its full content. Think of them as category labels on a book.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>7. A SKILL.md file can be used across Claude Code (CLI), Claude.ai (web), and the Claude API. What does this mean?</p>
+<label><input type="radio" name="q7" value="0"> You need to install different versions for each platform</label>
+<label><input type="radio" name="q7" value="1"> Skills are cross-platform — write once, use everywhere</label>
+<label><input type="radio" name="q7" value="2"> Only the metadata works across platforms</label>
+<label><input type="radio" name="q7" value="3"> The Skill needs to be converted to different formats</label>
+<div class="quiz-explain">Because Skills are plain Markdown files with a standard format, the same SKILL.md works identically across all Claude interfaces. This means you invest time creating a Skill once and benefit from it everywhere you use Claude.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. Without a "frontend-design" Skill, Claude might generate a login page using random frameworks and styles. With the Skill installed, what changes?</p>
+<label><input type="radio" name="q8" value="0"> Claude consistently uses the specified framework, colours, accessibility rules, and includes test files as defined in the Skill</label>
+<label><input type="radio" name="q8" value="1"> Claude generates the page faster</label>
+<label><input type="radio" name="q8" value="2"> Claude uses more tokens per response</label>
+<label><input type="radio" name="q8" value="3"> Nothing changes — Skills don't affect code output</label>
+<div class="quiz-explain">Skills transform Claude from a generalist into your team's expert. The frontend-design Skill specifies exact frameworks (React+TypeScript), styling (Tailwind), colours (brand palette), requirements (accessibility, tests), and patterns (mobile-first). Every output becomes consistent with your standards.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

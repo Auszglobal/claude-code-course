@@ -342,6 +342,51 @@ Using this simplified template, design a Skill for your own work:
 <div class="quiz-explain">"OAuth token expired" is an authentication issue, belonging to the AUTH category. Clear error classification lets managers quickly identify the nature of the problem.</div>
 </div>
 
+<div class="quiz-q" data-answer="3">
+<p>4. Why does the invoice-automation Skill have a "Skip Logic" section using <code>invoice_agent_state.json</code>?</p>
+<label><input type="radio" name="q4" value="0"> To make the script run faster</label>
+<label><input type="radio" name="q4" value="1"> To save disk space</label>
+<label><input type="radio" name="q4" value="2"> To prevent the script from running on weekends</label>
+<label><input type="radio" name="q4" value="3"> To track which invoices have already been sent and prevent duplicate sends</label>
+<div class="quiz-explain">The state file records processed booking IDs. When the script runs again, it checks this file and skips bookings that already have invoices sent. This prevents duplicate invoices — a critical business requirement that could cause confusion and financial errors.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. The booking-intake Skill specifies "Never use Camry or Kluger" for vehicle types. Why is this rule important?</p>
+<label><input type="radio" name="q5" value="0"> Because these vehicles are unreliable</label>
+<label><input type="radio" name="q5" value="1"> Because AUSZ Global is a premium European-only chauffeur service, and these vehicles don't match the brand positioning</label>
+<label><input type="radio" name="q5" value="2"> Because the Django admin system doesn't support these vehicle names</label>
+<label><input type="radio" name="q5" value="3"> Because they are too expensive</label>
+<div class="quiz-explain">Brand consistency is critical for a premium service. AUSZ only uses European vehicles (Mercedes, BMW, Audi). Without this explicit rule, Claude might default to common vehicle types that don't align with the luxury brand image.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>6. What is the core error handling principle shared across all three AUSZ Skills?</p>
+<label><input type="radio" name="q6" value="0"> Never let a single failure interrupt the entire batch</label>
+<label><input type="radio" name="q6" value="1"> Stop all processing at the first error</label>
+<label><input type="radio" name="q6" value="2"> Retry every failed operation 10 times</label>
+<label><input type="radio" name="q6" value="3"> Send an email to the manager for every error</label>
+<div class="quiz-explain">In batch processing, one failure shouldn't block all remaining items. If invoice #3 fails, you still need to process invoices #4 through #50. Log the error, skip the problematic item, and continue — then report all errors at the end.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. The daily-ops-reporter classifies errors into NETWORK, AUTH, DATA, and BROWSER. What category would "Element not found on page" fall under?</p>
+<label><input type="radio" name="q7" value="0"> NETWORK</label>
+<label><input type="radio" name="q7" value="1"> DATA</label>
+<label><input type="radio" name="q7" value="2"> BROWSER — it's a Playwright automation failure</label>
+<label><input type="radio" name="q7" value="3"> AUTH</label>
+<div class="quiz-explain">"Element not found" is a Playwright/browser automation issue — the script couldn't locate a UI element on the page. This falls under the BROWSER category, which includes timeouts, missing elements, and page crashes during automated browser interactions.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. Why do all three AUSZ Skills specify using <code>ausz_shared.log()</code> instead of Python's built-in <code>print()</code>?</p>
+<label><input type="radio" name="q8" value="0"> Because print() is deprecated in Python</label>
+<label><input type="radio" name="q8" value="1"> To avoid Windows cp1252 encoding errors and ensure consistent, centralised logging across all scripts</label>
+<label><input type="radio" name="q8" value="2"> Because print() doesn't work in Windows Task Scheduler</label>
+<label><input type="radio" name="q8" value="3"> Because ausz_shared.log() is faster</label>
+<div class="quiz-explain">Windows uses cp1252 encoding by default, which can cause crashes when logging non-ASCII characters (like Chinese or emoji). <code>ausz_shared.log()</code> handles encoding safely and writes to centralised log files that the daily-ops-reporter can read.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
