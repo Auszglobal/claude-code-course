@@ -571,6 +571,12 @@
 .study-time-val { font-weight: 600; color: var(--accent); }
 .study-time-lbl { color: var(--text-secondary); font-size: 10px; }
 
+/* Flashcard Rating */
+.fc-rating { text-align: center; margin-top: 8px; }
+.fc-rate-btn { border: none; color: #fff; padding: 6px 16px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600; }
+.fc-rate-btn:hover { opacity: 0.85; }
+.fc-due-badge { font-size: 10px; background: #e74c3c; color: #fff; padding: 1px 6px; border-radius: 8px; margin-left: 4px; }
+
 /* Streak Display */
 .streak-display {
   display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px;
@@ -1886,6 +1892,14 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
         </div>
       </div>
     </div>
+    <div class="fc-rating" id="fc-rating" style="display:none;">
+      <span style="font-size:11px;color:var(--text-secondary);">How well did you know this?</span>
+      <div style="display:flex;gap:8px;margin-top:6px;">
+        <button class="fc-rate-btn" style="background:#e74c3c;" onclick="rateCard(0)">Again</button>
+        <button class="fc-rate-btn" style="background:#f39c12;" onclick="rateCard(1)">Hard</button>
+        <button class="fc-rate-btn" style="background:#27ae60;" onclick="rateCard(2)">Easy</button>
+      </div>
+    </div>
     <div class="flashcard-nav">
       <button class="fc-prev" onclick="fcNav(-1)">&#8592; Prev</button>
       <button class="fc-close" onclick="closeFlashcards()">Close</button>
@@ -2957,10 +2971,27 @@ const FLASHCARD_DATA = {
   ],
 };
 
-let fcCards = [], fcIndex = 0;
+let fcCards = [], fcIndex = 0, fcPhaseId = '';
+
+function srKey() { return 'claude-course-sr-' + (currentUser ? currentUser.uid : '_anon'); }
+function getSRData() { try { return JSON.parse(localStorage.getItem(srKey()) || '{}'); } catch { return {}; } }
+
 function openFlashcards(phaseId) {
-  fcCards = FLASHCARD_DATA[phaseId] || [];
-  if (!fcCards.length) return;
+  const raw = FLASHCARD_DATA[phaseId] || [];
+  if (!raw.length) return;
+  fcPhaseId = phaseId;
+  const sr = getSRData();
+  const now = Date.now();
+  // Sort: due cards first (by due date), then unseen
+  fcCards = raw.map((card, i) => {
+    const key = phaseId + ':' + i;
+    const s = sr[key] || { interval: 0, due: 0, ease: 2 };
+    return { ...card, _key: key, _due: s.due, _interval: s.interval, _ease: s.ease };
+  }).sort((a, b) => {
+    const aDue = a._due <= now ? 0 : 1;
+    const bDue = b._due <= now ? 0 : 1;
+    return aDue - bDue || a._due - b._due;
+  });
   fcIndex = 0;
   renderFlashcard();
   document.getElementById('flashcard-overlay').classList.remove('hidden');
@@ -2968,8 +2999,34 @@ function openFlashcards(phaseId) {
 function renderFlashcard() {
   document.getElementById('fc-question').textContent = fcCards[fcIndex].q;
   document.getElementById('fc-answer').textContent = fcCards[fcIndex].a;
-  document.getElementById('fc-counter').textContent = `${fcIndex + 1} / ${fcCards.length}`;
+  const isDue = fcCards[fcIndex]._due <= Date.now();
+  const dueTag = isDue ? ' <span class="fc-due-badge">due</span>' : '';
+  document.getElementById('fc-counter').innerHTML = `${fcIndex + 1} / ${fcCards.length}${dueTag}`;
   document.getElementById('flashcard').classList.remove('flipped');
+  document.getElementById('fc-rating').style.display = 'none';
+  // Show rating buttons when card is flipped
+  document.getElementById('flashcard').onclick = function() {
+    this.classList.toggle('flipped');
+    if (this.classList.contains('flipped')) {
+      document.getElementById('fc-rating').style.display = 'block';
+    }
+  };
+}
+function rateCard(quality) {
+  // quality: 0=Again, 1=Hard, 2=Easy
+  const sr = getSRData();
+  const card = fcCards[fcIndex];
+  const s = sr[card._key] || { interval: 0, due: 0, ease: 2 };
+  const intervals = { 0: 60000, 1: null, 2: null }; // 1 min for Again
+  if (quality === 0) { s.interval = 60000; s.ease = Math.max(1.3, s.ease - 0.2); }
+  else if (quality === 1) { s.interval = Math.max(300000, (s.interval || 300000) * 1.2); }
+  else { s.interval = Math.max(300000, (s.interval || 300000) * s.ease); s.ease = Math.min(3, s.ease + 0.1); }
+  s.due = Date.now() + s.interval;
+  sr[card._key] = s;
+  try { localStorage.setItem(srKey(), JSON.stringify(sr)); } catch {}
+  // Auto advance
+  if (fcIndex < fcCards.length - 1) { fcIndex++; renderFlashcard(); }
+  else { document.getElementById('fc-rating').style.display = 'none'; }
 }
 function fcNav(dir) {
   fcIndex = (fcIndex + dir + fcCards.length) % fcCards.length;
@@ -2977,7 +3034,6 @@ function fcNav(dir) {
 }
 function closeFlashcards() {
   document.getElementById('flashcard-overlay').classList.add('hidden');
-  // Award XP for reviewing flashcards
   if (fcCards.length > 0) {
     addXP('flashcard', XP_PER_FLASHCARD, 'review-' + new Date().toISOString().split('T')[0]);
     updateXPDisplay();
