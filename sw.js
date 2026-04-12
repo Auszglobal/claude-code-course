@@ -1,4 +1,4 @@
-const CACHE_NAME = 'claude-course-v3';
+const CACHE_NAME = 'claude-course-v4';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -8,6 +8,8 @@ const STATIC_ASSETS = [
   '/og-image.png',
   '/icon-192.png',
   '/icon-512.png',
+  '/TT.jpeg',
+  '/chandon.jpeg',
   'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css',
   'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js',
@@ -36,8 +38,8 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
 
-  // Network-first for module content files and API calls
-  if (url.pathname.endsWith('.md') || url.hostname === 'jsonblob.com') {
+  // Network-first for HTML, module content, and API calls
+  if (url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname.endsWith('.md') || url.hostname.includes('firestore')) {
     e.respondWith(
       fetch(e.request)
         .then((res) => {
