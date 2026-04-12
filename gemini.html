@@ -964,6 +964,14 @@ body {
 .dg-set { background: none; border: none; color: var(--accent); font-size: 10px; cursor: pointer; padding: 0; }
 .dg-set:hover { text-decoration: underline; }
 
+/* Recommendation Cards */
+.rec-card {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px; transition: all 0.2s;
+}
+.rec-card:hover { background: rgba(255,255,255,0.08); border-color: var(--accent); }
+
 /* Cross Course Cards */
 .cross-course-card {
   display: flex; align-items: center; gap: 10px; padding: 12px 16px;
@@ -2631,6 +2639,42 @@ function getBadgesHTML() {
 }
 
 // ── Welcome page ──
+function getRecommendations() {
+  if (!currentUser || getCompletedCount() === 0) return '';
+  const confused = getConfusedModules();
+  const items = [];
+  // 1. Confused modules need review
+  if (confused.length > 0) {
+    const mod = ALL_MODULES.find(m => m.id === confused[0]);
+    if (mod) items.push({ icon: '&#x2753;', label: 'Review needed', title: `${mod.id} ${mod.title}`, reason: 'You flagged this as confusing', file: mod.file, id: mod.id });
+  }
+  // 2. Next uncompleted module
+  const next = ALL_MODULES.find(m => !progress[m.id]);
+  if (next && (!items.length || items[0].id !== next.id)) {
+    items.push({ icon: '&#x27A1;', label: 'Continue', title: `${next.id} ${next.title}`, reason: 'Next in your learning path', file: next.file, id: next.id });
+  }
+  // 3. Flashcard review (spaced repetition due)
+  const srData = typeof getSRData === 'function' ? getSRData() : {};
+  const dueCount = Object.values(srData).filter(s => s.due && s.due <= Date.now()).length;
+  if (dueCount > 0) {
+    items.push({ icon: '&#x1F4A1;', label: 'Flashcards due', title: `${dueCount} cards ready for review`, reason: 'Spaced repetition — review to remember', isFlashcard: true });
+  }
+  if (items.length === 0) return '';
+  return `<div style="margin-bottom:20px;">
+    <h3 style="font-size:14px;color:var(--text-secondary);margin-bottom:10px;">&#x1F4CC; Recommended for you</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      ${items.map(i => `<div class="rec-card" onclick="${i.isFlashcard ? '' : `loadModule('${i.id}','${i.file}')`}" style="cursor:pointer;">
+        <span style="font-size:18px;">${i.icon}</span>
+        <div style="flex:1;">
+          <div style="font-weight:600;font-size:13px;color:var(--text);">${i.title}</div>
+          <div style="font-size:11px;color:var(--text-secondary);">${i.reason}</div>
+        </div>
+        <span style="font-size:11px;color:var(--accent);">${i.label}</span>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
 function getCrossCourseBadge() {
   if (!currentUser) return '';
   const gemProg = Object.keys(progress).filter(k => progress[k]).length;
@@ -2732,6 +2776,7 @@ function showWelcome() {
     <p>Learn AI-powered creativity and automation with Google Gemini, step by step from zero.<br>${ALL_MODULES.length} modules covering images, video, Google Workspace, Maps, and business applications.</p>
     ${continueHTML}
     ${getCrossCourseBadge()}
+    ${getRecommendations()}
     ${getPathsHTML()}
     <div class="team-leaderboard">
       <h3>Team Progress</h3>
