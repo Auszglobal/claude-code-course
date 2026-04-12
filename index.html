@@ -41,7 +41,7 @@ firebase.initializeApp({
   messagingSenderId: "349390163097",
   appId: "1:349390163097:web:ac5811aad7bc371d8ebc08"
 });
-const db = firebase.firestore();
+var db = firebase.firestore();
 </script>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1546,7 +1546,7 @@ body {
     </div>
     <div class="auth-box">
       <div class="auth-dogs">
-        <div><div class="auth-dog-avatar"><img src="tt.jpeg" alt="TT"></div><div class="auth-dog-label">TT</div></div>
+        <div><div class="auth-dog-avatar"><img src="TT.jpeg" alt="TT"></div><div class="auth-dog-label">TT</div></div>
         <div><div class="auth-dog-avatar"><img src="chandon.jpeg" alt="Chandon"></div><div class="auth-dog-label">Chandon</div></div>
       </div>
       <h1>Claude Code Complete Guide</h1>
@@ -1674,6 +1674,7 @@ const LOCAL_USERS_KEY = 'claude-course-dynamic-users';
 async function fetchDynamicUsers() {
   let local; try { local = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { local = []; }
   try {
+    if (typeof db === 'undefined') { dynamicUsers = local; return; }
     const doc = await db.collection('users').doc('students').get();
     const cloud = doc.exists ? (doc.data().list || []) : [];
     if (!Array.isArray(cloud)) { dynamicUsers = local; return; }
@@ -1683,16 +1684,18 @@ async function fetchDynamicUsers() {
     dynamicUsers = [...cloud, ...localOnly];
     if (localOnly.length > 0 || (cloud.length === 0 && local.length > 0)) {
       if (cloud.length === 0 && local.length > 0) dynamicUsers = local;
-      saveDynamicUsers();
+      await saveDynamicUsers();
     }
     try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
-  } catch {
+  } catch (err) {
+    console.error('Firestore fetch error:', err);
     dynamicUsers = local;
   }
 }
 
 async function saveDynamicUsers() {
   try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
+  if (typeof db === 'undefined') return false;
   try {
     await db.collection('users').doc('students').set({ list: dynamicUsers });
     return true;
@@ -3768,7 +3771,7 @@ const DOG_TIPS = {
     ]
   },
   tt: {
-    img: 'tt.jpeg', name: 'TT',
+    img: 'TT.jpeg', name: 'TT',
     tips: [
       "Hey! You're doing great! Keep that streak going! 🔥",
       "Pro tip: use the flashcards to boost your memory!",
