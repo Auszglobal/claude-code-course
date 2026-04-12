@@ -86,18 +86,43 @@ var db = firebase.firestore();
   box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
 .auth-intro {
-  flex: 1; background: linear-gradient(160deg, rgba(0,139,139,0.2), rgba(0,180,166,0.05));
+  flex: 1; background: linear-gradient(160deg, rgba(0,139,139,0.12), rgba(0,0,0,0.2));
   border: 1px solid rgba(255,255,255,0.08); border-right: none;
-  padding: 40px 32px; display: flex; flex-direction: column; justify-content: center;
+  padding: 40px 28px; display: flex; flex-direction: column; justify-content: center;
 }
-.auth-intro h2 { color: var(--accent); font-size: 20px; margin-bottom: 16px; }
-.auth-intro p { color: rgba(255,255,255,0.65); font-size: 13px; line-height: 1.7; margin-bottom: 12px; }
-.auth-intro .auth-features { list-style: none; padding: 0; margin: 16px 0 0; }
-.auth-intro .auth-features li {
-  color: rgba(255,255,255,0.7); font-size: 12px; padding: 6px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+/* Course Cards */
+.course-card {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px;
+  border-radius: 14px; border: 2px solid rgba(255,255,255,0.1);
+  text-decoration: none; margin-bottom: 10px; transition: all 0.25s; cursor: pointer;
+  background: rgba(255,255,255,0.03);
 }
-.auth-intro .auth-features li span { margin-right: 8px; }
+.course-card:hover { border-color: rgba(255,255,255,0.25); transform: translateY(-1px); }
+.course-card.claude-card.active { border-color: #D97706; background: rgba(217,119,6,0.1); }
+.course-card.gemini-card.active { border-color: #4285F4; background: rgba(66,133,244,0.1); }
+.cc-logo {
+  width: 48px; height: 48px; border-radius: 12px; display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+}
+.claude-card .cc-logo { background: rgba(217,119,6,0.15); }
+.gemini-card .cc-logo { background: rgba(66,133,244,0.15); }
+.cc-info { flex: 1; }
+.cc-name { font-size: 16px; font-weight: 700; color: #fff; }
+.claude-card .cc-name { color: #F59E0B; }
+.gemini-card .cc-name { color: #60A5FA; }
+.cc-desc { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.cc-tags { display: flex; gap: 6px; margin-top: 6px; }
+.cc-tags span {
+  font-size: 9px; padding: 2px 8px; border-radius: 10px;
+  background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5);
+}
+.cc-check {
+  width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: #fff; flex-shrink: 0;
+}
+.claude-card.active .cc-check { background: #D97706; border-color: #D97706; }
+.gemini-card.active .cc-check { background: #4285F4; border-color: #4285F4; }
 .auth-box {
   background: rgba(255,255,255,0.06); backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,0.1);
@@ -1232,9 +1257,13 @@ body {
 
 /* ── Mobile responsive ── */
 @media (max-width: 768px) {
-  .auth-wrapper { flex-direction: column; max-width: 400px; }
-  .auth-intro { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 28px 24px; }
-  .auth-box { width: 100%; padding: 32px 24px; }
+  .auth-wrapper { flex-direction: column; max-width: 420px; }
+  .auth-intro { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 24px 20px; }
+  .auth-box { width: 100%; padding: 28px 24px; }
+  .auth-dogs { margin-top: 12px !important; }
+  .course-card { padding: 12px 14px; }
+  .cc-logo { width: 40px; height: 40px; }
+  .cc-name { font-size: 14px; }
   .sidebar {
     transform: translateX(-100%);
     width: 280px;
@@ -1532,40 +1561,56 @@ body {
 <div id="auth-gate" role="dialog" aria-modal="true" aria-label="Login">
   <div class="auth-wrapper">
     <div class="auth-intro">
-      <h2>What is Claude Code?</h2>
-      <p>Claude Code is an <strong>AI-powered programming tool</strong> built by Anthropic. Unlike regular AI chatbots that only generate text, Claude Code can <strong>read your files, write code, run commands, and build real projects</strong> — all from your terminal.</p>
-      <p>Think of it as hiring a brilliant developer who sits inside your computer, ready to help you code, debug, and automate anything.</p>
-      <ul class="auth-features">
-        <li><span>&#x1F4BB;</span> Works directly in your terminal — reads and edits real files</li>
-        <li><span>&#x1F916;</span> Understands your entire codebase, not just snippets</li>
-        <li><span>&#x26A1;</span> Runs commands, creates projects, fixes bugs automatically</li>
-        <li><span>&#x1F517;</span> Connects to GitHub, Google, Slack, AWS and more via MCP</li>
-        <li><span>&#x1F9E0;</span> Remembers your preferences across sessions</li>
-        <li><span>&#x1F465;</span> Works in VS Code, JetBrains, Desktop, Web, and CLI</li>
-      </ul>
-      <p style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.4);">This course covers 47 modules across 10 phases — from zero to production.</p>
-    </div>
-    <div class="auth-box">
-      <div class="auth-dogs">
+      <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;text-align:center;">Choose your course</p>
+      <a href="index.html" class="course-card claude-card active" onclick="selectCourse(event,'claude')">
+        <div class="cc-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm2.07-7.75l-.9.92C11.45 10.9 11 11.5 11 13h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H6c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="#D97706"/></svg>
+        </div>
+        <div class="cc-info">
+          <div class="cc-name">Claude Code</div>
+          <div class="cc-desc">AI-powered programming &middot; 47 modules</div>
+          <div class="cc-tags"><span>Terminal</span><span>Coding</span><span>Automation</span></div>
+        </div>
+        <div class="cc-check" id="check-claude">&#x2713;</div>
+      </a>
+      <a href="gemini.html" class="course-card gemini-card" onclick="selectCourse(event,'gemini')">
+        <div class="cc-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#4285F4"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z" fill="white"/></svg>
+        </div>
+        <div class="cc-info">
+          <div class="cc-name">Google Gemini</div>
+          <div class="cc-desc">Images, Video, Workspace &middot; 37 modules</div>
+          <div class="cc-tags"><span>Images</span><span>Video</span><span>Maps</span></div>
+        </div>
+        <div class="cc-check" id="check-gemini"></div>
+      </a>
+      <div class="auth-dogs" style="margin-top:20px;">
         <div><div class="auth-dog-avatar"><img src="TT.jpeg" alt="TT"></div><div class="auth-dog-label">TT</div></div>
         <div><div class="auth-dog-avatar"><img src="chandon.jpeg" alt="Chandon"></div><div class="auth-dog-label">Chandon</div></div>
       </div>
+    </div>
+    <div class="auth-box">
       <h1>AUSZ Learning Hub</h1>
-      <p>Welcome! TT &amp; Chandon are here to help you learn.</p>
+      <p>Login to start learning</p>
       <label for="auth-user" class="sr-only">Username</label>
       <input type="text" id="auth-user" placeholder="Username" autocomplete="username">
       <label for="auth-pass" class="sr-only">Password</label>
       <input type="password" id="auth-pass" placeholder="Password" autocomplete="current-password">
       <button onclick="tryLogin()">Login</button>
       <div class="auth-error" id="auth-error" role="alert" aria-live="polite"></div>
-      <div class="course-picker" id="course-picker" style="margin-top:20px;">
-        <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;">Choose your course:</p>
-        <a href="index.html" class="course-pick-btn" style="display:block;padding:14px;background:linear-gradient(135deg,#008B8B,#00B4A6);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;margin-bottom:8px;">&#x1F916; Claude Code (47 modules)</a>
-        <a href="gemini.html" class="course-pick-btn" style="display:block;padding:14px;background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;">&#x2728; Google Gemini (37 modules)</a>
-      </div>
     </div>
   </div>
 </div>
+<script>
+function selectCourse(e, course) {
+  e.preventDefault();
+  document.querySelectorAll('.course-card').forEach(c => c.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  document.getElementById('check-claude').textContent = course === 'claude' ? '\u2713' : '';
+  document.getElementById('check-gemini').textContent = course === 'gemini' ? '\u2713' : '';
+  localStorage.setItem('selected-course', course);
+}
+</script>
 <script>
 // Multi-user auth with profiles — each user gets independent progress tracking
 // ── Shared progress via Firebase Firestore ──
@@ -1611,6 +1656,12 @@ async function sha256(str) {
 function setCurrentUser(user) {
   currentUser = user;
   try { localStorage.setItem('claude-course-user', JSON.stringify(user)); } catch { /* quota exceeded */ }
+  // Redirect to selected course if not already there
+  const selected = localStorage.getItem('selected-course');
+  if (selected === 'gemini' && !window.location.pathname.includes('gemini')) {
+    window.location.href = 'gemini.html';
+    return;
+  }
   document.getElementById('auth-gate').classList.add('hidden');
   updateProfileUI();
 }

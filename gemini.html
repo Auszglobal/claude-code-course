@@ -86,18 +86,42 @@ var db = firebase.firestore();
   box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
 .auth-intro {
-  flex: 1; background: linear-gradient(160deg, rgba(0,139,139,0.2), rgba(0,180,166,0.05));
+  flex: 1; background: linear-gradient(160deg, rgba(0,139,139,0.12), rgba(0,0,0,0.2));
   border: 1px solid rgba(255,255,255,0.08); border-right: none;
-  padding: 40px 32px; display: flex; flex-direction: column; justify-content: center;
+  padding: 40px 28px; display: flex; flex-direction: column; justify-content: center;
 }
-.auth-intro h2 { color: var(--accent); font-size: 20px; margin-bottom: 16px; }
-.auth-intro p { color: rgba(255,255,255,0.65); font-size: 13px; line-height: 1.7; margin-bottom: 12px; }
-.auth-intro .auth-features { list-style: none; padding: 0; margin: 16px 0 0; }
-.auth-intro .auth-features li {
-  color: rgba(255,255,255,0.7); font-size: 12px; padding: 6px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+/* Course Cards */
+.course-card {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px;
+  border-radius: 14px; border: 2px solid rgba(255,255,255,0.1);
+  text-decoration: none; margin-bottom: 10px; transition: all 0.25s; cursor: pointer;
+  background: rgba(255,255,255,0.03);
 }
-.auth-intro .auth-features li span { margin-right: 8px; }
+.course-card:hover { border-color: rgba(255,255,255,0.25); transform: translateY(-1px); }
+.course-card.claude-card.active { border-color: #D97706; background: rgba(217,119,6,0.1); }
+.course-card.gemini-card.active { border-color: #4285F4; background: rgba(66,133,244,0.1); }
+.cc-logo {
+  width: 48px; height: 48px; border-radius: 12px; display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+}
+.claude-card .cc-logo { background: rgba(217,119,6,0.15); }
+.gemini-card .cc-logo { background: rgba(66,133,244,0.15); }
+.cc-info { flex: 1; }
+.cc-name { font-size: 16px; font-weight: 700; color: #fff; }
+.claude-card .cc-name { color: #F59E0B; }
+.gemini-card .cc-name { color: #60A5FA; }
+.cc-desc { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.cc-tags { display: flex; gap: 6px; margin-top: 6px; }
+.cc-tags span {
+  font-size: 9px; padding: 2px 8px; border-radius: 10px;
+  background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5);
+}
+.cc-check {
+  width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: #fff; flex-shrink: 0;
+}
+.claude-card.active .cc-check { background: #D97706; border-color: #D97706; }
 .auth-box {
   background: rgba(255,255,255,0.06); backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,0.1);
@@ -1532,372 +1556,55 @@ body {
 <div id="auth-gate" role="dialog" aria-modal="true" aria-label="Login">
   <div class="auth-wrapper">
     <div class="auth-intro">
-      <h2>What is Google Gemini?</h2>
-      <p>Google Gemini is an <strong>AI-powered creative and productivity tool</strong> built by Google DeepMind. It can <strong>generate images, create videos, automate Google Workspace, analyse data, and connect to Google Maps</strong> — all through natural conversation.</p>
-      <p>Think of it as having a creative genius and business assistant who knows the entire Google ecosystem, ready to help you create, analyse, and automate anything.</p>
-      <ul class="auth-features">
-        <li><span>&#x1F4BB;</span> Generate stunning images and edit photos with Imagen 3</li>
-        <li><span>&#x1F916;</span> Create videos from text descriptions with Veo 2</li>
-        <li><span>&#x26A1;</span> Automate Gmail, Docs, Sheets, and Slides</li>
-        <li><span>&#x1F517;</span> Integrate with Google Maps for location intelligence</li>
-        <li><span>&#x1F9E0;</span> Analyse data and generate business reports</li>
-        <li><span>&#x1F465;</span> 2M token context — process entire books and codebases</li>
-      </ul>
-      <p style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.4);">This course covers 37 modules across 8 phases — from zero to multimodal agents.</p>
-    </div>
-    <div class="auth-box">
-      <div class="auth-dogs">
+      <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;text-align:center;">Choose your course</p>
+      <a href="index.html" class="course-card claude-card" onclick="selectCourse(event,'claude')">
+        <div class="cc-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm2.07-7.75l-.9.92C11.45 10.9 11 11.5 11 13h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H6c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="#D97706"/></svg>
+        </div>
+        <div class="cc-info">
+          <div class="cc-name">Claude Code</div>
+          <div class="cc-desc">AI-powered programming &middot; 47 modules</div>
+          <div class="cc-tags"><span>Terminal</span><span>Coding</span><span>Automation</span></div>
+        </div>
+        <div class="cc-check" id="check-claude"></div>
+      </a>
+      <a href="gemini.html" class="course-card gemini-card active" onclick="selectCourse(event,'gemini')">
+        <div class="cc-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#4285F4"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z" fill="white"/></svg>
+        </div>
+        <div class="cc-info">
+          <div class="cc-name">Google Gemini</div>
+          <div class="cc-desc">Images, Video, Workspace &middot; 37 modules</div>
+          <div class="cc-tags"><span>Images</span><span>Video</span><span>Maps</span></div>
+        </div>
+        <div class="cc-check" id="check-gemini">&#x2713;</div>
+      </a>
+      <div class="auth-dogs" style="margin-top:20px;">
         <div><div class="auth-dog-avatar"><img src="TT.jpeg" alt="TT"></div><div class="auth-dog-label">TT</div></div>
         <div><div class="auth-dog-avatar"><img src="chandon.jpeg" alt="Chandon"></div><div class="auth-dog-label">Chandon</div></div>
       </div>
+    </div>
+    <div class="auth-box">
       <h1>AUSZ Learning Hub</h1>
-      <p>Welcome! TT &amp; Chandon are here to help you learn.</p>
+      <p>Login to start learning</p>
       <label for="auth-user" class="sr-only">Username</label>
       <input type="text" id="auth-user" placeholder="Username" autocomplete="username">
       <label for="auth-pass" class="sr-only">Password</label>
       <input type="password" id="auth-pass" placeholder="Password" autocomplete="current-password">
       <button onclick="tryLogin()">Login</button>
       <div class="auth-error" id="auth-error" role="alert" aria-live="polite"></div>
-      <div class="course-picker" id="course-picker" style="margin-top:20px;">
-        <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;">Choose your course:</p>
-        <a href="gemini.html" class="course-pick-btn" style="display:block;padding:14px;background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;margin-bottom:8px;">&#x2728; Google Gemini (37 modules)</a>
-        <a href="index.html" class="course-pick-btn" style="display:block;padding:14px;background:linear-gradient(135deg,#008B8B,#00B4A6);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;">&#x1F916; Claude Code (47 modules)</a>
-      </div>
     </div>
   </div>
 </div>
 <script>
-// Multi-user auth with profiles — each user gets independent progress tracking
-// ── Shared progress via Firebase Firestore ──
-const JSONBLOB_ID = null; // legacy — replaced by Firestore
-const JSONBLOB_URL = null;
-let sharedProgress = {};
-
-async function fetchSharedProgress() {
-  try {
-    const doc = await db.collection('gemini-progress').doc('shared').get();
-    if (doc.exists) sharedProgress = doc.data();
-  } catch { /* offline fallback */ }
+function selectCourse(e, course) {
+  e.preventDefault();
+  document.querySelectorAll('.course-card').forEach(c => c.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  document.getElementById('check-claude').textContent = course === 'claude' ? '\u2713' : '';
+  document.getElementById('check-gemini').textContent = course === 'gemini' ? '\u2713' : '';
+  localStorage.setItem('selected-course', course);
 }
-
-async function pushProgressToCloud() {
-  if (!currentUser) return;
-  sharedProgress[currentUser.uid] = { ...progress };
-  try {
-    await db.collection('gemini-progress').doc('shared').set(sharedProgress, { merge: true });
-  } catch { /* silent fail, localStorage still works */ }
-}
-
-let USERS = [];
-let currentUser = null;
-
-async function fetchUsersFromFile() {
-  try {
-    const res = await fetch('users.json?t=' + Date.now());
-    return await res.json();
-  } catch { return []; }
-}
-
-async function fetchUsers() {
-  const [fileUsers] = await Promise.all([fetchUsersFromFile(), fetchDynamicUsers()]);
-  USERS = [...fileUsers, ...dynamicUsers];
-}
-
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-
-function setCurrentUser(user) {
-  currentUser = user;
-  try { localStorage.setItem('claude-course-user', JSON.stringify(user)); } catch { /* quota exceeded */ }
-  document.getElementById('auth-gate').classList.add('hidden');
-  updateProfileUI();
-}
-
-function getAvatarKey() {
-  return currentUser ? 'gemini-course-avatar-' + currentUser.uid : null;
-}
-
-function updateProfileUI() {
-  const el = document.getElementById('user-profile');
-  if (el && currentUser) {
-    const avatarEl = document.getElementById('profile-avatar');
-    const savedAvatar = localStorage.getItem(getAvatarKey());
-    if (savedAvatar) {
-      avatarEl.innerHTML = `<img src="${savedAvatar}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
-    } else {
-      avatarEl.textContent = currentUser.name.charAt(0).toUpperCase();
-    }
-    avatarEl.onclick = () => document.getElementById('avatar-upload').click();
-    avatarEl.title = 'Click to change avatar';
-    avatarEl.style.cursor = 'pointer';
-    document.getElementById('profile-name-display').textContent = currentUser.name;
-    document.getElementById('profile-role-display').textContent = currentUser.role;
-    el.style.display = 'flex';
-    // Show admin button for Admin
-    const adminBtn = document.getElementById('admin-add-user-btn');
-    if (adminBtn) adminBtn.style.display = currentUser.role === 'Admin' ? 'block' : 'none';
-  }
-  loadProgress();
-  updateProgressUI();
-  updateStreakDisplay();
-  updateStudyTimeDisplay();
-  updateDailyGoalDisplay();
-}
-
-function handleAvatarUpload(e) {
-  const file = e.target.files[0];
-  if (!file || !currentUser) return;
-  const reader = new FileReader();
-  reader.onload = function(ev) {
-    // Resize to 100x100 to save localStorage space
-    const img = new Image();
-    img.onload = function() {
-      const canvas = document.createElement('canvas');
-      canvas.width = 100; canvas.height = 100;
-      const ctx = canvas.getContext('2d');
-      const size = Math.min(img.width, img.height);
-      const sx = (img.width - size) / 2, sy = (img.height - size) / 2;
-      ctx.drawImage(img, sx, sy, size, size, 0, 0, 100, 100);
-      try {
-        localStorage.setItem(getAvatarKey(), canvas.toDataURL('image/jpeg', 0.8));
-      } catch {
-        alert('Storage full — cannot save avatar. Try clearing old data.');
-        return;
-      }
-      updateProfileUI();
-    };
-    img.src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-// ── Admin panel (user management via Firestore) ──
-let dynamicUsers = [];
-const LOCAL_USERS_KEY = 'claude-course-dynamic-users';
-
-async function fetchDynamicUsers() {
-  let local; try { local = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { local = []; }
-  try {
-    if (typeof db === 'undefined') { dynamicUsers = local; return; }
-    const doc = await db.collection('users').doc('students').get();
-    const cloud = doc.exists ? (doc.data().list || []) : [];
-    if (!Array.isArray(cloud)) { dynamicUsers = local; return; }
-    // Union merge: cloud + any local-only users
-    const cloudHashes = new Set(cloud.map(u => u.hash));
-    const localOnly = local.filter(u => u.hash && !cloudHashes.has(u.hash));
-    dynamicUsers = [...cloud, ...localOnly];
-    if (localOnly.length > 0 || (cloud.length === 0 && local.length > 0)) {
-      if (cloud.length === 0 && local.length > 0) dynamicUsers = local;
-      await saveDynamicUsers();
-    }
-    try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
-  } catch (err) {
-    console.error('Firestore fetch error:', err);
-    dynamicUsers = local;
-  }
-}
-
-async function saveDynamicUsers() {
-  try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
-  if (typeof db === 'undefined') return false;
-  try {
-    await db.collection('users').doc('students').set({ list: dynamicUsers });
-    return true;
-  } catch (err) {
-    console.error('Firestore save error:', err);
-    return false;
-  }
-}
-
-function openAdmin() {
-  renderAdminUserList();
-  document.getElementById('admin-overlay').classList.remove('hidden');
-}
-
-function closeAdmin() {
-  document.getElementById('admin-overlay').classList.add('hidden');
-}
-
-function renderAdminUserList() {
-  const list = document.getElementById('admin-user-list');
-  // Show all dynamic (editable) users
-  let html = '<p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">Students (editable)</p>';
-  if (dynamicUsers.length === 0) {
-    html += '<p style="font-size:13px;color:var(--text-secondary);font-style:italic;">No students added yet.</p>';
-  }
-  dynamicUsers.forEach((u, i) => {
-    html += `<div class="admin-user-row">
-      <div class="admin-name">${u.name}</div>
-      <div class="admin-role">${u.role}</div>
-      <button class="admin-btn" onclick="adminEditUser(${i})">Edit</button>
-      <button class="admin-btn" onclick="adminResetPw(${i})">Reset PW</button>
-      <button class="admin-btn danger" onclick="adminDeleteUser(${i})">Delete</button>
-    </div>`;
-  });
-  list.innerHTML = html;
-}
-
-async function adminAddUser() {
-  const btn = document.getElementById('admin-save-btn');
-  const name = document.getElementById('admin-new-name').value.trim();
-  const role = document.getElementById('admin-new-role').value.trim() || 'Student';
-  const username = document.getElementById('admin-new-username').value.trim().toLowerCase();
-  const password = document.getElementById('admin-new-password').value;
-
-  if (!name || !username || !password) { alert('Please fill in all fields.'); return; }
-
-  const hash = await sha256(username + ':' + password);
-  if ([...USERS, ...dynamicUsers].find(u => u.hash === hash)) {
-    alert('This account already exists!'); return;
-  }
-
-  // Show loading
-  btn.disabled = true;
-  btn.innerHTML = '<span class="btn-spinner"></span>Saving...';
-
-  const uid = username.replace(/[^a-z0-9]/g, '');
-  dynamicUsers.push({ hash, name, role, uid });
-  await saveDynamicUsers();
-  // Reload users list
-  USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
-  renderAdminUserList();
-
-  // Clear inputs & restore button
-  document.getElementById('admin-new-name').value = '';
-  document.getElementById('admin-new-username').value = '';
-  document.getElementById('admin-new-password').value = '';
-  btn.disabled = false;
-  btn.innerHTML = 'Add User';
-  alert('User "' + name + '" added successfully!');
-}
-
-async function adminEditUser(idx) {
-  const u = dynamicUsers[idx];
-  const newName = prompt('Display Name:', u.name);
-  if (newName === null) return;
-  const newRole = prompt('Role:', u.role);
-  if (newRole === null) return;
-  dynamicUsers[idx].name = newName.trim();
-  dynamicUsers[idx].role = newRole.trim();
-  await saveDynamicUsers();
-  USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
-  renderAdminUserList();
-  alert('User updated!');
-}
-
-async function adminResetPw(idx) {
-  const u = dynamicUsers[idx];
-  const username = prompt('Confirm username for ' + u.name + ':');
-  if (!username) return;
-  const newPw = prompt('New password:');
-  if (!newPw) return;
-  dynamicUsers[idx].hash = await sha256(username.trim().toLowerCase() + ':' + newPw);
-  await saveDynamicUsers();
-  USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
-  alert('Password reset for ' + u.name + '!');
-}
-
-async function adminDeleteUser(idx) {
-  const u = dynamicUsers[idx];
-  if (!confirm('Delete user "' + u.name + '"? This cannot be undone.')) return;
-  dynamicUsers.splice(idx, 1);
-  await saveDynamicUsers();
-  USERS = [...(await fetchUsersFromFile()), ...dynamicUsers];
-  renderAdminUserList();
-  alert('User deleted.');
-}
-
-function exportProgress() {
-  if (!currentUser) return;
-  const data = {
-    user: { name: currentUser.name, uid: currentUser.uid, role: currentUser.role },
-    progress: progress,
-    xp: getXP(),
-    streak: (() => { try { return JSON.parse(localStorage.getItem('gemini-course-streak-' + currentUser.uid) || '{}'); } catch { return {}; } })(),
-    studyTime: getStudyTime(),
-    bookmarks: getBookmarks(),
-    exportDate: new Date().toISOString()
-  };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `claude-course-backup-${currentUser.uid}-${new Date().toISOString().split('T')[0]}.json`;
-  a.click();
-  URL.revokeObjectURL(a.href);
-  showToast('&#x1F4E4;', 'Exported', 'Progress backup saved!', 2000);
-}
-
-function importProgress(e) {
-  const file = e.target.files[0];
-  if (!file || !currentUser) return;
-  const reader = new FileReader();
-  reader.onload = function(ev) {
-    try {
-      const data = JSON.parse(ev.target.result);
-      if (!data.progress || !data.xp) { alert('Invalid backup file.'); return; }
-      if (!confirm(`Import data from "${data.user?.name || 'unknown'}" (${data.exportDate?.split('T')[0] || '?'})?\n\nThis will overwrite your current progress.`)) return;
-      progress = data.progress;
-      saveProgress();
-      try { localStorage.setItem(xpKey(), JSON.stringify(data.xp)); } catch {}
-      if (data.streak) { try { localStorage.setItem('gemini-course-streak-' + currentUser.uid, JSON.stringify(data.streak)); } catch {} }
-      if (data.bookmarks) { try { localStorage.setItem('gemini-course-bookmarks', JSON.stringify(data.bookmarks)); } catch {} }
-      if (data.studyTime) { try { localStorage.setItem(studyTimeKey(), JSON.stringify(data.studyTime)); } catch {} }
-      updateProgressUI();
-      updateXPDisplay();
-      updateStreakDisplay();
-      showToast('&#x1F4E5;', 'Imported', 'Progress restored!', 2000);
-    } catch { alert('Failed to read backup file.'); }
-  };
-  reader.readAsText(file);
-  e.target.value = '';
-}
-
-function logout() {
-  currentUser = null;
-  localStorage.removeItem('claude-course-user');
-  document.getElementById('auth-gate').classList.remove('hidden');
-  document.getElementById('auth-user').value = '';
-  document.getElementById('auth-pass').value = '';
-  document.getElementById('auth-error').textContent = '';
-  const el = document.getElementById('user-profile');
-  if (el) el.style.display = 'none';
-}
-
-async function tryLogin() {
-  const u = document.getElementById('auth-user').value.trim().toLowerCase();
-  const p = document.getElementById('auth-pass').value;
-  if (!USERS.length) await fetchUsers();
-  const hash = await sha256(u + ':' + p);
-  const found = USERS.find(user => user.hash === hash);
-  if (found) {
-    setCurrentUser({ name: found.name, role: found.role, uid: found.uid || u });
-  } else {
-    document.getElementById('auth-error').textContent = 'Incorrect username or password. Please try again.';
-    document.getElementById('auth-pass').value = '';
-  }
-}
-
-let _dataReady = null;
-document.addEventListener('DOMContentLoaded', () => {
-  _dataReady = (async () => {
-    await Promise.all([fetchUsers(), fetchSharedProgress()]);
-    try {
-      const saved = JSON.parse(localStorage.getItem('claude-course-user'));
-      if (saved && saved.name) {
-        // Migrate old Chinese role to English
-        if (saved.role === '管理員') saved.role = 'Admin';
-        if (saved.role === '學員') saved.role = 'Student';
-        if (saved.role === '試用') saved.role = 'Demo';
-        try { localStorage.setItem('claude-course-user', JSON.stringify(saved)); } catch {}
-        setCurrentUser(saved);
-      }
-    } catch {}
-  })();
-});
-document.getElementById('auth-pass')?.addEventListener('keypress', e => { if (e.key === 'Enter') tryLogin(); });
-document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('auth-pass').focus(); });
 </script>
 
 <!-- Admin Panel Modal -->
