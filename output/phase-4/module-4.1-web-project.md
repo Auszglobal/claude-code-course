@@ -247,6 +247,51 @@ my-portfolio/
 <div class="quiz-explain">The more specific your description (including content, colors, style, etc.), the better Claude Code can generate results that match your expectations. Vague instructions lead to vague results.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. What is the minimum set of files Claude Code typically generates for a basic website?</p>
+<label><input type="radio" name="q4" value="0"> index.html and styles.css</label>
+<label><input type="radio" name="q4" value="1"> app.py and database.db</label>
+<label><input type="radio" name="q4" value="2"> package.json and node_modules</label>
+<label><input type="radio" name="q4" value="3"> main.js and config.yml</label>
+<div class="quiz-explain">A basic website needs at minimum an HTML file (index.html) for structure and a CSS file (styles.css) for styling. These two files are enough to create a complete, viewable web page.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>5. You want to change the background colour of your website from blue to green. What is the best way to ask Claude Code?</p>
+<label><input type="radio" name="q5" value="0"> "Fix the colours"</label>
+<label><input type="radio" name="q5" value="1"> "Open styles.css and change line 14"</label>
+<label><input type="radio" name="q5" value="2"> "Change the main background colour in styles.css from blue to green (#2d6a4f)"</label>
+<label><input type="radio" name="q5" value="3"> "Rewrite the entire CSS file"</label>
+<div class="quiz-explain">Being specific about which file to change, what property to modify, and what the new value should be (including a hex code) gives Claude Code the clearest instruction. Vague prompts lead to unpredictable results.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. Why should you preview your website in a browser after every change?</p>
+<label><input type="radio" name="q6" value="0"> Because Claude Code cannot generate code without a browser open</label>
+<label><input type="radio" name="q6" value="1"> To verify the changes look correct and catch any visual issues early</label>
+<label><input type="radio" name="q6" value="2"> Because the code only works while the browser is open</label>
+<label><input type="radio" name="q6" value="3"> Because browsers automatically fix code errors</label>
+<div class="quiz-explain">Previewing in a browser lets you see exactly what visitors will see. You can catch layout issues, colour mismatches, or missing elements immediately rather than discovering them later.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. What does the term "responsive design" mean for a website?</p>
+<label><input type="radio" name="q7" value="0"> The website loads faster on newer computers</label>
+<label><input type="radio" name="q7" value="1"> The website responds to voice commands</label>
+<label><input type="radio" name="q7" value="2"> The website only works on desktop computers</label>
+<label><input type="radio" name="q7" value="3"> The website adjusts its layout to look good on screens of different sizes (phone, tablet, desktop)</label>
+<div class="quiz-explain">Responsive design means the website automatically adapts its layout based on the screen size. A two-column layout on desktop might become a single column on a phone, ensuring readability on all devices.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. You built a website and want to add a new "My Projects" page. What should you tell Claude Code to ensure consistency?</p>
+<label><input type="radio" name="q8" value="0"> "Create a new projects.html page that uses the same styles.css and has the same navigation bar as index.html"</label>
+<label><input type="radio" name="q8" value="1"> "Make a new page"</label>
+<label><input type="radio" name="q8" value="2"> "Copy index.html and rename it"</label>
+<label><input type="radio" name="q8" value="3"> "Write a projects page from scratch with new styles"</label>
+<div class="quiz-explain">Telling Claude Code to reuse the same stylesheet and navigation bar ensures visual consistency between pages. Without this instruction, Claude might create a completely different design for the new page.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

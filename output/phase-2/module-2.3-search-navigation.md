@@ -1,6 +1,6 @@
 # Module 2.3: Searching and Navigating the Codebase -- Finding What You Need in a Sea of Files
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Use filename search (Glob) to find specific types of files
   - Use content search (Grep) to find specific text within files
@@ -8,7 +8,7 @@
   - Combine "search + read" workflows
   - Have Claude Code quickly locate information in large projects
 
-## Theory
+## 📖 Theory
 
 ### Why Do You Need Search?
 
@@ -51,7 +51,7 @@ Analogy: you're searching an entire bookshelf for the word "Claude." Grep will t
 
 You don't need to flip through page by page -- Grep does it instantly.
 
-## Code Example 1: Building Practice Files
+## 💻 Code Example 1: Building Practice Files
 
 To practise the search feature, let's first create a project with multiple files. After launching Claude Code, type:
 
@@ -123,7 +123,7 @@ Please find all files in the breakfast folder
 
 This time it will only show the 3 files in the breakfast folder.
 
-## Code Example 2: Content Search + Combined Workflows
+## 💻 Code Example 2: Content Search + Combined Workflows
 
 ### Searching by Content (Grep)
 
@@ -187,7 +187,7 @@ Claude Code will search through all recipe files, analyse the contents, and tell
 
 This is the power of Claude Code -- it doesn't just perform mechanical searches, it can **understand** your question.
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Search Challenge
 
@@ -241,11 +241,56 @@ This exercise simulates a real workflow: find a file first, read it, then modify
 <div class="quiz-explain">When you want to search for specific text within file contents, Claude Code uses Grep. Glob can only search by filename (e.g., all .txt files) but can't search what's written inside files. Grep goes through every line of every file and finds where your specified text appears.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. What does the Glob pattern <code>*.txt</code> match?</p>
+<label><input type="radio" name="q4" value="0"> All files ending with .txt in the current directory</label>
+<label><input type="radio" name="q4" value="1"> All files in every subdirectory</label>
+<label><input type="radio" name="q4" value="2"> Only files named exactly "txt"</label>
+<label><input type="radio" name="q4" value="3"> All hidden files</label>
+<div class="quiz-explain">The <code>*</code> wildcard matches any characters, so <code>*.txt</code> means "any filename that ends with .txt." It matches files like notes.txt, report.txt, and data.txt, but only in the current directory (not subdirectories — you'd need <code>**/*.txt</code> for that).</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>5. You want to find all files that mention "error" or "Error" inside your project. What is the best approach?</p>
+<label><input type="radio" name="q5" value="0"> Use Glob to search for files named "error"</label>
+<label><input type="radio" name="q5" value="1"> Open every file manually and read through them</label>
+<label><input type="radio" name="q5" value="2"> Ask Claude Code to search for files containing "error" — it will use Grep to search inside file contents</label>
+<label><input type="radio" name="q5" value="3"> Delete all files and start over</label>
+<div class="quiz-explain">Since you want to search inside files (not by filename), this is a Grep task. You can simply ask Claude Code in natural language: "Find all files that contain the word error." Claude Code will search through the contents of every file for you.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. What makes Claude Code's search capability more powerful than a simple text search?</p>
+<label><input type="radio" name="q6" value="0"> It can only search one file at a time</label>
+<label><input type="radio" name="q6" value="1"> It can understand your intent — for example, finding "cold dishes" by analysing recipe contents, not just matching keywords</label>
+<label><input type="radio" name="q6" value="2"> It requires you to know exact file paths</label>
+<label><input type="radio" name="q6" value="3"> It only works with .txt files</label>
+<div class="quiz-explain">Claude Code goes beyond simple keyword matching. It can understand your questions and analyse file contents intelligently. For example, if you ask "find recipes that don't require cooking," it can identify cold dishes like salads and smoothies even if the word "cold" doesn't appear in the file.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. You searched for recipes containing "cheese" and found 3 files. What would be a natural next step?</p>
+<label><input type="radio" name="q7" value="0"> Delete the files you don't need</label>
+<label><input type="radio" name="q7" value="1"> Close Claude Code</label>
+<label><input type="radio" name="q7" value="2"> Search for "cheese" again to make sure</label>
+<label><input type="radio" name="q7" value="3"> Ask Claude Code to read the full contents of the files you're interested in</label>
+<div class="quiz-explain">The "search + read" combo is a very common workflow. After finding files with search, you typically want to read their full contents. You can even combine both steps in one request: "Find all recipes with cheese and show me their contents."</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>8. In the Glob pattern <code>file?.txt</code>, what does the <code>?</code> match?</p>
+<label><input type="radio" name="q8" value="0"> Any number of characters</label>
+<label><input type="radio" name="q8" value="1"> Zero or one character</label>
+<label><input type="radio" name="q8" value="2"> Exactly one character (any character)</label>
+<label><input type="radio" name="q8" value="3"> Only numeric characters</label>
+<div class="quiz-explain">The <code>?</code> wildcard matches exactly one character. So <code>file?.txt</code> would match file1.txt, fileA.txt, or filex.txt, but NOT file10.txt (because "10" is two characters) or file.txt (because there's no character between "file" and ".txt").</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You've now mastered the skill of quickly finding anything in a project! Search + read + edit -- these three skills combined form the core of Claude Code's everyday workflow.
 

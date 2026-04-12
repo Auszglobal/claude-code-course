@@ -1,6 +1,6 @@
 # Module 1.4: Basic Navigation
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Understand the concept of "working directory"
   - Ask Claude Code to list files in a folder
@@ -10,7 +10,7 @@
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### What Is a "Working Directory"?
 
@@ -50,7 +50,7 @@ C:\Users\kin\Documents\report.txt
 
 ---
 
-## Code Example 1: Exploring Files and Folders
+## 💻 Code Example 1: Exploring Files and Folders
 
 ### Preparation
 
@@ -137,7 +137,7 @@ claude-practice/           <- Your main practice folder
 
 ---
 
-## Code Example 2: Navigation and Reading Files
+## 💻 Code Example 2: Navigation and Reading Files
 
 ### Reading Files in Different Locations
 
@@ -216,7 +216,7 @@ Here are some commonly used natural language navigation commands:
 
 ---
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Build Your Study Notes System
 1. Launch Claude Code (in the `claude-practice` folder)
@@ -271,11 +271,137 @@ Here are some commonly used natural language navigation commands:
 <div class="quiz-explain">You just need to describe the file's location in natural language, for example "Read report.txt in the projects folder." Claude Code will automatically find the correct path and read the contents.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. On Mac, what does the <code>~</code> symbol represent in a file path?</p>
+<label><input type="radio" name="q4" value="0"> Your user home directory (e.g., /Users/YourName/)</label>
+<label><input type="radio" name="q4" value="1"> The root of the hard drive</label>
+<label><input type="radio" name="q4" value="2"> The desktop folder</label>
+<label><input type="radio" name="q4" value="3"> A temporary folder</label>
+<div class="quiz-explain">The <code>~</code> (tilde) symbol is a shortcut for your home directory. On Mac, <code>~/Documents</code> is the same as <code>/Users/YourName/Documents</code>. It saves you from typing the full path every time.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>5. You have files in three subfolders: projects/, notes/, and backup/. How would you ask Claude Code to show you everything?</p>
+<label><input type="radio" name="q5" value="0"> You must navigate to each folder individually and ask separately</label>
+<label><input type="radio" name="q5" value="1"> This is impossible — Claude Code can only see one folder at a time</label>
+<label><input type="radio" name="q5" value="2"> You need to memorise and type a special command</label>
+<label><input type="radio" name="q5" value="3"> Ask Claude Code to "show the complete structure of the current folder, including all subfolders"</label>
+<div class="quiz-explain">Claude Code can display the entire folder tree structure at once. Just ask in natural language — for example, "Show the complete structure including all subfolders and files" — and it will give you a clear overview of everything.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. What is the key difference between Windows and Mac file paths?</p>
+<label><input type="radio" name="q6" value="0"> Windows paths are longer than Mac paths</label>
+<label><input type="radio" name="q6" value="1"> Windows uses backslashes <code>\</code> while Mac uses forward slashes <code>/</code></label>
+<label><input type="radio" name="q6" value="2"> Mac paths start with a drive letter like C:</label>
+<label><input type="radio" name="q6" value="3"> There is no difference</label>
+<div class="quiz-explain">The most notable difference is the separator: Windows uses backslashes (<code>C:\Users\kin\</code>) while Mac uses forward slashes (<code>/Users/kin/</code>). When using Claude Code, you usually don't need to worry about this — just describe locations in natural language.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. You can't remember which folder contains a file called "report.txt". What is the easiest way to find it using Claude Code?</p>
+<label><input type="radio" name="q7" value="0"> Open every folder manually and look inside</label>
+<label><input type="radio" name="q7" value="1"> Reinstall Claude Code with search capabilities</label>
+<label><input type="radio" name="q7" value="2"> Ask Claude Code: "Help me find where report.txt is"</label>
+<label><input type="radio" name="q7" value="3"> It is not possible to search for files with Claude Code</label>
+<div class="quiz-explain">Claude Code can search across the current folder and all subfolders for any file. Just describe what you're looking for in natural language, and it will locate the file and tell you the exact path.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. If Claude Code's working directory is <code>~/claude-practice</code>, which files can it see by default?</p>
+<label><input type="radio" name="q8" value="0"> The files and subfolders inside ~/claude-practice</label>
+<label><input type="radio" name="q8" value="1"> All files on the entire computer</label>
+<label><input type="radio" name="q8" value="2"> Only system files</label>
+<label><input type="radio" name="q8" value="3"> Only files on the desktop</label>
+<div class="quiz-explain">The working directory determines which folder Claude Code is "standing in." By default, it can see and work with the files and subfolders in that directory. You can still ask it to look at files in other locations by specifying the path.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🏗️ Mini Project: Organise a Project Folder
+
+Put everything you learned in Phase 1 together by creating a well-organised project folder from scratch — using only Claude Code commands.
+
+### Requirements
+- Create a main project folder with at least 3 subfolders
+- Create at least 5 files spread across different subfolders
+- Each file should have meaningful content (not just empty files)
+- Navigate between folders and verify everything is in the right place
+- Display the final folder structure as a tree
+
+### Step-by-Step Guide
+
+1. **Open your terminal and launch Claude Code in your practice area:**
+
+   **Windows:**
+   ```bash
+   cd C:\claude-practice
+   claude
+   ```
+   **Mac:**
+   ```bash
+   cd ~/claude-practice
+   claude
+   ```
+
+2. **Ask Claude Code to create the project structure:**
+   ```
+   Create a folder called my-first-project with the following structure:
+   - A subfolder called docs/ containing a file called README.txt with the text "Welcome to my first project!"
+   - A subfolder called src/ containing a file called app.txt with the text "This is where the main code goes"
+   - A subfolder called assets/ containing a file called notes.txt with the text "Images and resources go here"
+   ```
+
+3. **Add more files to the structure:**
+   ```
+   Inside my-first-project, add the following:
+   - In docs/, create a file called setup-guide.txt with the text "Step 1: Install Claude Code. Step 2: Start building!"
+   - In src/, create a file called helpers.txt with the text "Helper functions and utilities"
+   ```
+
+4. **Navigate and verify your work:**
+   ```
+   Show me the complete folder structure of my-first-project, including all subfolders and files
+   ```
+
+5. **Read a file to confirm its contents:**
+   ```
+   Read the contents of README.txt inside the docs folder of my-first-project
+   ```
+
+6. **Search for a file:**
+   ```
+   Find all .txt files inside my-first-project
+   ```
+
+### Expected Result
+
+After completing all steps, your folder structure should look like this:
+
+```
+my-first-project/
+├── assets/
+│   └── notes.txt
+├── docs/
+│   ├── README.txt
+│   └── setup-guide.txt
+└── src/
+    ├── app.txt
+    └── helpers.txt
+```
+
+You should have 5 files across 3 subfolders, each with meaningful content that you can read and verify.
+
+### Bonus Challenge
+- Add a fourth subfolder called `tests/` with a file called `checklist.txt` that lists 3 things you learned in Phase 1
+- Ask Claude Code to count how many total files are in the entire `my-first-project` folder (including subfolders)
+- Try asking Claude Code to find only files that contain the word "code" in their contents
+
+---
+
+## 🔗 Next Steps
 
 Great work! You've now mastered the basic navigation skills in Claude Code -- knowing where you are, browsing files, reading contents, and working across different folders.
 

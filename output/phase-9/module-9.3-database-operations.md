@@ -1,6 +1,6 @@
 # Module 9.3: Database Operations
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Create and query SQLite databases using Claude Code
   - Connect to PostgreSQL databases for production work
@@ -8,7 +8,7 @@
   - Apply safety practices when working with production data
   - Use Claude Code to generate schemas, queries, and seed data
 
-## Theory
+## 📖 Theory
 
 ### Why Databases Matter
 
@@ -39,7 +39,7 @@ Design Schema → Create Tables → Write Queries → Generate Seed Data → Deb
 
 You describe what you need in plain English, and Claude writes the SQL or ORM code.
 
-## Code Example 1: SQLite with Claude Code
+## 💻 Code Example 1: SQLite with Claude Code
 
 ### Creating a database:
 
@@ -94,7 +94,7 @@ You describe what you need in plain English, and Claude writes the SQL or ORM co
 
 Claude writes a query with a JOIN, date comparison, and proper parameter binding.
 
-## Code Example 2: PostgreSQL with Claude Code
+## 💻 Code Example 2: PostgreSQL with Claude Code
 
 ### Connecting to a remote database:
 
@@ -156,7 +156,7 @@ Order.objects.filter(
 ).order_by('-total_revenue')
 ```
 
-## Supplementary Example: Database Migrations
+## 💻 Supplementary Example: Database Migrations
 
 ### What Are Migrations?
 
@@ -205,7 +205,7 @@ Migration 004: Add index on orders.created_at
 | Optimise | "This query is slow — add appropriate indexes" |
 | Debug | "This query returns empty results but the data exists. Help me find why" |
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Build a SQLite Database
 1. Ask Claude Code to create a SQLite database for a simple blog with three tables: authors, posts, and comments
@@ -256,10 +256,55 @@ Migration 004: Add index on orders.created_at
 <div class="quiz-explain">Hardcoded credentials in source code are a major security risk. If the code is pushed to GitHub (even a private repo), the credentials are exposed. Always use environment variables or .env files, and never commit those to git.</div>
 </div>
 
+<div class="quiz-q" data-answer="3">
+<p>4. What does the <code>REFERENCES users(id)</code> clause do when creating a tasks table?</p>
+<label><input type="radio" name="q4" value="0"> It copies all data from the users table</label>
+<label><input type="radio" name="q4" value="1"> It deletes the user when a task is created</label>
+<label><input type="radio" name="q4" value="2"> It makes the tasks table read-only</label>
+<label><input type="radio" name="q4" value="3"> It creates a foreign key relationship, ensuring each task is linked to a valid user</label>
+<div class="quiz-explain">A foreign key (REFERENCES) creates a relationship between tables. It ensures that every user_id in the tasks table must match an existing id in the users table, maintaining data integrity and preventing orphaned records.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. Why should you use transactions for multi-step database operations?</p>
+<label><input type="radio" name="q5" value="0"> If any step fails, the entire operation rolls back to its original state, preventing partial/corrupt data</label>
+<label><input type="radio" name="q5" value="1"> Transactions make queries run faster</label>
+<label><input type="radio" name="q5" value="2"> Transactions are required by Python</label>
+<label><input type="radio" name="q5" value="3"> Transactions automatically back up the database</label>
+<div class="quiz-explain">Transactions ensure atomicity — either all steps succeed or none do. Without transactions, if step 2 of 3 fails, you're left with partially applied changes that can corrupt your data.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>6. You want to find all overdue tasks with their owner's name. Which SQL concept do you need?</p>
+<label><input type="radio" name="q6" value="0"> INSERT — to add new records</label>
+<label><input type="radio" name="q6" value="1"> DELETE — to remove old tasks</label>
+<label><input type="radio" name="q6" value="2"> JOIN — to combine data from the tasks and users tables</label>
+<label><input type="radio" name="q6" value="3"> CREATE TABLE — to make a new table</label>
+<div class="quiz-explain">A JOIN combines rows from two or more tables based on a related column (like user_id). To get tasks with user names, you JOIN the tasks table with the users table on the user_id/id columns.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>7. Why should you never commit .db files to Git?</p>
+<label><input type="radio" name="q7" value="0"> Git doesn't support binary files at all</label>
+<label><input type="radio" name="q7" value="1"> Database files are binary and don't diff well — they bloat the repository and can't be meaningfully reviewed</label>
+<label><input type="radio" name="q7" value="2"> .db files contain viruses</label>
+<label><input type="radio" name="q7" value="3"> They would overwrite other team members' local databases</label>
+<div class="quiz-explain">SQLite .db files are binary, so Git can't show meaningful diffs. Every change creates a full copy in git history, quickly bloating the repository. Instead, commit the schema (migration files) and use scripts to generate test data.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. What Django ORM method would you use to group orders by category and calculate total revenue?</p>
+<label><input type="radio" name="q8" value="0"> <code>.values('category').annotate(total=Sum('amount'))</code></label>
+<label><input type="radio" name="q8" value="1"> <code>.filter(category).count()</code></label>
+<label><input type="radio" name="q8" value="2"> <code>.select_related('category').all()</code></label>
+<label><input type="radio" name="q8" value="3"> <code>.order_by('category').first()</code></label>
+<div class="quiz-explain"><code>.values('category')</code> groups by category (like SQL GROUP BY), and <code>.annotate(total=Sum('amount'))</code> calculates the sum for each group. This is the Django ORM equivalent of <code>SELECT category, SUM(amount) FROM orders GROUP BY category</code>.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Now you can work with databases confidently. In the next module, **9.4: Headless Mode & CI/CD Pipelines**, we'll learn how to run Claude Code without a human at the keyboard — perfect for automation, code review bots, and continuous integration.

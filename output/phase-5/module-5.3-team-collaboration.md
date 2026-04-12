@@ -1,6 +1,6 @@
 # Module 5.3: Team Collaboration Best Practices
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand the difference between global and project-level CLAUDE.md configurations
   - Use Claude Code to conduct code reviews
@@ -8,7 +8,7 @@
   - Plan a branching strategy for your team's use of Claude Code
   - Understand permission modes and security considerations
 
-## Theory
+## 📖 Theory
 
 ### Claude Code in a Team Setting
 
@@ -30,7 +30,7 @@ With proper configuration, everyone on the team can:
 
 Key concept: **The project-level CLAUDE.md should be committed to Git**, so that every team member's Claude Code reads the same instructions.
 
-## Code Example 1: Creating a Shared Team CLAUDE.md
+## 💻 Code Example 1: Creating a Shared Team CLAUDE.md
 
 Let's create a comprehensive CLAUDE.md for a team project:
 
@@ -94,7 +94,7 @@ git push
 ### Expected Output:
 After every team member pulls the latest code, their Claude Code will automatically follow the conventions defined in CLAUDE.md.
 
-## Code Example 2: Using Claude Code for Code Reviews
+## 💻 Code Example 2: Using Claude Code for Code Reviews
 
 Claude Code can help you review other people's code. Here's the complete review workflow:
 
@@ -163,7 +163,7 @@ Overall code quality is good! Ready to merge once the above issues are fixed."
 ### Expected Output:
 Your review comments will appear on the PR page, and team members can see and respond to them.
 
-## Code Example 3: Creating a Pull Request with Claude Code
+## 💻 Code Example 3: Creating a Pull Request with Claude Code
 
 Let's walk through the complete process from creating a branch to submitting a PR:
 
@@ -220,7 +220,7 @@ N/A (text-based component)"
 ### Expected Output:
 The command will output the URL of the newly created PR, which you can open in a browser to view.
 
-## Code Example 4: Branching Strategy and Permission Control
+## 💻 Code Example 4: Branching Strategy and Permission Control
 
 ### Recommended Team Branching Strategy
 
@@ -270,7 +270,7 @@ This configuration means:
 
 Commit this configuration to Git and all team members will have the same safety rules applied.
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Create a Team CLAUDE.md
 1. Choose one of your projects (or create a new practice project)
@@ -319,10 +319,55 @@ Commit this configuration to Git and all team members will have the same safety 
 <div class="quiz-explain">Claude Code reads the project's CLAUDE.md as the convention baseline and also references the project's existing code style for consistency checks.</div>
 </div>
 
+<div class="quiz-q" data-answer="3">
+<p>4. What is the purpose of creating a Pull Request instead of pushing directly to the main branch?</p>
+<label><input type="radio" name="q4" value="0"> Pull Requests make the code run faster</label>
+<label><input type="radio" name="q4" value="1"> Pull Requests are required by Git itself</label>
+<label><input type="radio" name="q4" value="2"> Pull Requests automatically fix bugs in the code</label>
+<label><input type="radio" name="q4" value="3"> Pull Requests allow team members to review and discuss changes before merging into the main codebase</label>
+<div class="quiz-explain">Pull Requests create a review step before changes reach the main branch. Team members can inspect the code, leave comments, suggest improvements, and catch bugs — preventing broken code from reaching production.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. Which command checks out a Pull Request locally so you can review it?</p>
+<label><input type="radio" name="q5" value="0"> <code>gh pr checkout 42</code></label>
+<label><input type="radio" name="q5" value="1"> <code>git clone pr-42</code></label>
+<label><input type="radio" name="q5" value="2"> <code>git pull request 42</code></label>
+<label><input type="radio" name="q5" value="3"> <code>gh pr download 42</code></label>
+<div class="quiz-explain"><code>gh pr checkout 42</code> switches your local repository to the branch associated with PR #42, allowing you to review the code, run tests, and test the changes locally before approving.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>6. Why should <code>git push --force</code> be in the "deny" list for team projects?</p>
+<label><input type="radio" name="q6" value="0"> It's slower than regular push</label>
+<label><input type="radio" name="q6" value="1"> It uses more network bandwidth</label>
+<label><input type="radio" name="q6" value="2"> It overwrites remote history and can permanently destroy teammates' committed work</label>
+<label><input type="radio" name="q6" value="3"> It's an outdated command that no longer works</label>
+<div class="quiz-explain">Force push rewrites the remote branch history. If a teammate has commits on that branch, force push can permanently delete their work. In team environments, this is one of the most dangerous Git operations.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>7. What is the recommended branch naming convention described in this module?</p>
+<label><input type="radio" name="q7" value="0"> date-username-description (e.g., 2026-04-12-alex-login)</label>
+<label><input type="radio" name="q7" value="1"> type/description (e.g., feature/user-auth, fix/login-bug)</label>
+<label><input type="radio" name="q7" value="2"> Random names chosen by the developer</label>
+<label><input type="radio" name="q7" value="3"> Always use the main branch for all work</label>
+<div class="quiz-explain">The convention <code>feature/name</code>, <code>fix/name</code>, <code>chore/name</code> makes it instantly clear what type of work a branch contains. This helps team members understand the purpose of each branch at a glance.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. What is the difference between the global CLAUDE.md and the project CLAUDE.md?</p>
+<label><input type="radio" name="q8" value="0"> Global (~/.claude/CLAUDE.md) is personal and private; project (root/CLAUDE.md) is shared with the team via Git</label>
+<label><input type="radio" name="q8" value="1"> Global is for large projects; project is for small projects</label>
+<label><input type="radio" name="q8" value="2"> Global is read first; project is never read</label>
+<label><input type="radio" name="q8" value="3"> There is no difference — they are the same file</label>
+<div class="quiz-explain">The global CLAUDE.md stores your personal preferences (only visible to you). The project CLAUDE.md is committed to Git and shared with all team members, ensuring everyone's Claude Code follows the same conventions.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You've now mastered the key skills for team collaboration! In the final module, **5.4: Capstone Project**, we'll apply everything you've learned throughout the entire course to build a complete project from scratch -- this will be your graduation project!

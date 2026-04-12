@@ -1,6 +1,6 @@
 # Module B3: Top 10 Must-Have Skills -- Supercharge Your Claude Code
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand what Claude Code Skills are and how they extend Claude Code's capabilities
   - Install and use both official and community-contributed Skills
@@ -8,7 +8,7 @@
   - Use the frontend-design Skill to quickly build web pages
   - Use the TDD Skill to practise "write tests first, then code"
 
-## Theory
+## 📖 Theory
 
 ### What Are Skills?
 
@@ -183,7 +183,7 @@ npx skills add BehiSecc/awesome-claude-skills
 
 ---
 
-## Code Example 1: Building a Landing Page with frontend-design
+## 💻 Code Example 1: Building a Landing Page with frontend-design
 
 ### Step 1: Install the Skill
 
@@ -226,7 +226,7 @@ Claude Code will generate `index.html` (structure), `styles.css` (styling + resp
 
 ---
 
-## Code Example 2: Writing Code with the TDD Skill
+## 💻 Code Example 2: Writing Code with the TDD Skill
 
 ### Step 1: Install and Create the Project
 
@@ -313,7 +313,7 @@ The third step is **Refactor** -- Claude Code will optimise the code (e.g., extr
 
 ---
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Install Your First Skill
 Pick a Skill that interests you, install it, launch Claude Code, give it a relevant task, and observe whether its behaviour changes. We recommend starting with `obra/superpowers`.
@@ -353,13 +353,58 @@ Install frontend-design, ask Claude Code to build a web page on a topic you like
 <div class="quiz-explain">A single install of obra/superpowers gives you 20+ Skills covering TDD, debugging, Git workflows, and more.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. What does the "varlock" Skill protect against?</p>
+<label><input type="radio" name="q4" value="0"> API keys, passwords, and secrets accidentally ending up in code or being committed to Git</label>
+<label><input type="radio" name="q4" value="1"> Computer viruses and malware</label>
+<label><input type="radio" name="q4" value="2"> Unauthorised users accessing Claude Code</label>
+<label><input type="radio" name="q4" value="3"> Code formatting errors</label>
+<div class="quiz-explain">The varlock Skill ensures sensitive data (API keys, passwords, tokens) is properly managed — creating .env templates, verifying .gitignore coverage, and using secure reading methods. It prevents the common mistake of hardcoding secrets in source code.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. What is the "Red-Green-Refactor" cycle in TDD?</p>
+<label><input type="radio" name="q5" value="0"> Write code in red text, change it to green, then refactor</label>
+<label><input type="radio" name="q5" value="1"> Write failing tests (Red), write code to pass them (Green), then optimise the code (Refactor)</label>
+<label><input type="radio" name="q5" value="2"> Delete old code (Red), write new code (Green), review it (Refactor)</label>
+<label><input type="radio" name="q5" value="3"> Plan in red, build in green, deploy in refactor</label>
+<div class="quiz-explain">TDD follows a strict cycle: Red (write a test that fails because the feature doesn't exist yet), Green (write the minimum code to make the test pass), Refactor (improve the code quality while keeping tests passing). This ensures every feature has test coverage from the start.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. The webapp-testing Skill uses Playwright. What does Playwright do?</p>
+<label><input type="radio" name="q6" value="0"> It writes CSS styles for web pages</label>
+<label><input type="radio" name="q6" value="1"> It generates HTML templates</label>
+<label><input type="radio" name="q6" value="2"> It compiles JavaScript for production</label>
+<label><input type="radio" name="q6" value="3"> It automates browser interactions — clicking buttons, filling forms, and verifying page content</label>
+<div class="quiz-explain">Playwright is a browser automation framework. It launches a real browser, navigates to pages, interacts with elements (clicks, types, submits forms), and verifies results — essentially simulating a real user to test web applications.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. Why is having "more Skills isn't always better" mentioned as advice?</p>
+<label><input type="radio" name="q7" value="0"> Too many Skills will crash Claude Code</label>
+<label><input type="radio" name="q7" value="1"> Extra Skills cost money per installation</label>
+<label><input type="radio" name="q7" value="2"> Irrelevant Skills can trigger incorrectly and add unnecessary context; mastering a few relevant ones is more effective</label>
+<label><input type="radio" name="q7" value="3"> Claude Code has a limit of 5 Skills maximum</label>
+<div class="quiz-explain">While each Skill's metadata cost is small (~100 tokens), having many irrelevant Skills increases the chance of false triggers. It's better to install 3-5 Skills that match your actual workflow and master them, rather than installing 20 Skills you rarely use.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. You want Claude Code to automatically follow Clean Architecture and SOLID principles when designing new features. Which Skill should you install?</p>
+<label><input type="radio" name="q8" value="0"> software-architecture</label>
+<label><input type="radio" name="q8" value="1"> frontend-design</label>
+<label><input type="radio" name="q8" value="2"> debug-skill</label>
+<label><input type="radio" name="q8" value="3"> better-commits</label>
+<div class="quiz-explain">The software-architecture Skill guides Claude to follow Clean Architecture patterns, SOLID principles, and established design patterns. It's ideal for structuring new projects or refactoring existing ones to be more maintainable.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
 ---
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations on getting to know the top 10 must-have Skills! We recommend installing 2-3 Skills you need most to experience the difference, then using skill-creator to build your own Skill to share with your team.
 

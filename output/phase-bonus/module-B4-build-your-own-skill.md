@@ -1,6 +1,6 @@
 # Module B4: Build Your Own Skill from Scratch
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand the complete structure of a Skill (SKILL.md format) and the purpose of each section
   - Explain how the Progressive Disclosure mechanism saves tokens
@@ -8,7 +8,7 @@
   - Install and test your custom Skill locally
   - Build a dedicated Skill for your most frequently repeated tasks
 
-## Theory
+## 📖 Theory
 
 ### What Is a Skill?
 
@@ -108,7 +108,7 @@ Input and expected output examples. Claude is excellent at "learning from exampl
 
 Lists common errors. When Claude sees these reminders, it proactively avoids these pitfalls.
 
-## Code Example 1: Building a "Python Script Generator" Skill
+## 💻 Code Example 1: Building a "Python Script Generator" Skill
 
 Let's build a truly practical Skill -- every time you ask Claude to write Python, it will automatically follow PEP8 standards and include type hints.
 
@@ -296,7 +296,7 @@ After installing this Skill, every time you tell Claude Code "help me write a Py
 - Follow PEP8 and the 88-character line width limit
 - Add error handling and usage examples
 
-## Code Example 2: Installing and Testing Your Skill
+## 💻 Code Example 2: Installing and Testing Your Skill
 
 ### Step 1: Verify the File Location
 
@@ -384,7 +384,7 @@ In Claude Code, you can use a slash command to view currently loaded Skills:
 
 This will list all detected Skills and their trigger status.
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise: Build a Skill for Your Most Frequently Repeated Task
 
@@ -490,11 +490,56 @@ triggers:
 <div class="quiz-explain">Skill metadata is loaded when Claude Code starts up. After adding or modifying a SKILL.md, you need to restart Claude Code for it to detect the changes.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. Why should the "Common Mistakes" section be included in a SKILL.md?</p>
+<label><input type="radio" name="q4" value="0"> Claude proactively avoids listed mistakes when generating code, reducing errors</label>
+<label><input type="radio" name="q4" value="1"> It's required by the SKILL.md format specification</label>
+<label><input type="radio" name="q4" value="2"> It makes the file larger and more authoritative</label>
+<label><input type="radio" name="q4" value="3"> It's only useful for human readers, not Claude</label>
+<div class="quiz-explain">When Claude sees a "Common Mistakes" section, it actively avoids those patterns. For example, listing "Do NOT use bare except:" prevents Claude from generating lazy exception handling. This is one of the most effective Skill sections for improving output quality.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>5. You want to check if Claude is actually following your Skill's instructions. What's the best way to verify?</p>
+<label><input type="radio" name="q5" value="0"> Check if the Skill file exists in the correct folder</label>
+<label><input type="radio" name="q5" value="1"> Read the SKILL.md file manually</label>
+<label><input type="radio" name="q5" value="2"> Count the number of lines in Claude's output</label>
+<label><input type="radio" name="q5" value="3"> Compare Claude's output against the Skill's rules — check for type hints, docstrings, naming conventions, etc.</label>
+<div class="quiz-explain">The proof is in the output. Compare what Claude generates against each rule in your Skill: Does it have type hints? Google-style docstrings? Proper import ordering? If these elements are consistently present, the Skill is working.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. What is the difference between "When to Use" and "When NOT to Use" sections in a Skill?</p>
+<label><input type="radio" name="q6" value="0"> They are the same section with different names</label>
+<label><input type="radio" name="q6" value="1"> "When to Use" defines activation conditions; "When NOT to Use" prevents false triggers on irrelevant tasks</label>
+<label><input type="radio" name="q6" value="2"> "When to Use" is for beginners; "When NOT to Use" is for experts</label>
+<label><input type="radio" name="q6" value="3"> "When NOT to Use" is optional and has no effect</label>
+<div class="quiz-explain">The "When NOT to Use" section is crucial for preventing false triggers. Without it, a Python Skill might activate when you're asking about Python concepts (not writing code), or when you explicitly want quick-and-dirty code without type hints.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. Your Skill file is saved at <code>~/.claude/skills/my-skill.SKILL.md</code> but Claude doesn't detect it. What should you check first?</p>
+<label><input type="radio" name="q7" value="0"> Whether the file is too large</label>
+<label><input type="radio" name="q7" value="1"> Whether you have internet access</label>
+<label><input type="radio" name="q7" value="2"> Whether you've restarted Claude Code since creating the file</label>
+<label><input type="radio" name="q7" value="3"> Whether the file contains valid Python</label>
+<div class="quiz-explain">Claude Code loads Skill metadata at startup only. If you created or modified a SKILL.md while Claude Code was running, you must restart it. Also verify the file is in the correct directory and ends with .SKILL.md.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. Why do Skill "Examples" (showing input and expected output) improve Claude's behaviour?</p>
+<label><input type="radio" name="q8" value="0"> Claude excels at "learning from examples" — concrete examples show the exact quality and format expected</label>
+<label><input type="radio" name="q8" value="1"> Examples are required for the SKILL.md to be valid</label>
+<label><input type="radio" name="q8" value="2"> Examples make the Skill load faster</label>
+<label><input type="radio" name="q8" value="3"> Examples are only useful for beginners reading the Skill</label>
+<div class="quiz-explain">Examples are a form of few-shot learning. By showing Claude exactly what a good input and output look like, you anchor its behaviour to a concrete standard. Rules describe what to do; examples show how to do it. Both together are more effective than either alone.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations! You've learned how to build your own Skill from scratch. This is one of the most powerful features in advanced Claude Code usage -- you can encapsulate any repetitive work pattern into a Skill so Claude executes to your standards every time.
 

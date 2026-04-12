@@ -281,9 +281,150 @@ Commit and push all changes to GitHub
 <div class="quiz-explain">Adobe Photoshop is image editing software, not a website hosting platform. GitHub Pages, Netlify, and Vercel are all platforms that can host static websites for free.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. What does <code>git push -u origin main</code> do?</p>
+<label><input type="radio" name="q4" value="0"> Uploads your local code to GitHub and sets up tracking between your local main branch and the remote</label>
+<label><input type="radio" name="q4" value="1"> Downloads code from GitHub to your computer</label>
+<label><input type="radio" name="q4" value="2"> Deletes the remote repository</label>
+<label><input type="radio" name="q4" value="3"> Creates a new branch called "origin"</label>
+<div class="quiz-explain"><code>git push</code> uploads your commits to GitHub. The <code>-u</code> flag sets up tracking so future pushes only need <code>git push</code> without specifying the remote and branch. <code>origin</code> is the remote name, and <code>main</code> is the branch.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>5. You deployed your website but see a 404 error when visiting the URL. What is the most likely cause?</p>
+<label><input type="radio" name="q5" value="0"> Your internet connection is too slow</label>
+<label><input type="radio" name="q5" value="1"> GitHub Pages doesn't support your browser</label>
+<label><input type="radio" name="q5" value="2"> You need to pay for a GitHub premium account</label>
+<label><input type="radio" name="q5" value="3"> GitHub Pages deployment takes a few minutes — wait 2-3 minutes and try again</label>
+<div class="quiz-explain">After enabling GitHub Pages or pushing an update, there's a delay of 1-3 minutes before the site goes live. If you see a 404 immediately after deployment, simply wait and refresh. If it persists, check that index.html is in the correct directory.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. Why must a GitHub Pages repository be set to "Public" on the free plan?</p>
+<label><input type="radio" name="q6" value="0"> Because private repositories don't support HTML files</label>
+<label><input type="radio" name="q6" value="1"> Because the free version of GitHub Pages only works with public repositories</label>
+<label><input type="radio" name="q6" value="2"> Because public repositories load faster</label>
+<label><input type="radio" name="q6" value="3"> Because Git doesn't work with private repositories</label>
+<div class="quiz-explain">GitHub's free tier only enables GitHub Pages for public repositories. To use GitHub Pages with a private repository, you need a paid GitHub plan (Pro, Team, or Enterprise).</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. What is the correct order of the deployment update workflow?</p>
+<label><input type="radio" name="q7" value="0"> git push → git commit → git add → wait</label>
+<label><input type="radio" name="q7" value="1"> git commit → git add → git push → wait</label>
+<label><input type="radio" name="q7" value="2"> git add → git commit → git push → wait for auto-update</label>
+<label><input type="radio" name="q7" value="3"> git push → wait → git add → git commit</label>
+<div class="quiz-explain">The correct workflow is: (1) <code>git add</code> to stage your changes, (2) <code>git commit</code> to save them with a message, (3) <code>git push</code> to upload to GitHub, then (4) wait 1-3 minutes for GitHub Pages to rebuild.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. What advantage does Netlify's drag-and-drop deployment have over GitHub Pages?</p>
+<label><input type="radio" name="q8" value="0"> It supports more programming languages</label>
+<label><input type="radio" name="q8" value="1"> You can deploy by simply dragging a folder into the browser — no Git knowledge required</label>
+<label><input type="radio" name="q8" value="2"> It provides a faster internet connection</label>
+<label><input type="radio" name="q8" value="3"> It costs less than GitHub Pages</label>
+<div class="quiz-explain">Netlify allows you to deploy by dragging your project folder directly into the Netlify dashboard in your browser. This is much simpler for beginners who haven't learned Git yet. GitHub Pages requires Git commands.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
+
+## 🏗️ Mini Project: Deploy a Personal Portfolio
+
+Build a polished personal portfolio webpage and deploy it live to the internet using GitHub Pages. By the end, you will have a real URL you can share with anyone.
+
+### Requirements
+- Create a single-page portfolio website with HTML and CSS
+- Include at least 3 sections: an introduction, a skills list, and a contact section
+- Deploy it to GitHub Pages with a working public URL
+- Make at least one update after the initial deployment
+
+### Step-by-Step Guide
+
+1. **Create the project folder and start Claude Code:**
+   ```bash
+   mkdir ~/Desktop/portfolio
+   cd ~/Desktop/portfolio
+   claude
+   ```
+
+2. **Ask Claude Code to build the portfolio page:**
+   ```
+   Create a personal portfolio website with a single index.html and style.css file.
+   Include:
+   - A header with my name "Your Name" and a short tagline
+   - An "About Me" section with 2-3 sentences
+   - A "Skills" section listing: Claude Code, HTML/CSS, Git, Problem Solving
+   - A "Contact" section with a placeholder email address
+   Make it look clean and modern with a pleasant colour scheme. Mobile-friendly.
+   ```
+
+3. **Preview the page locally:**
+
+   Open the file in your browser to check it looks good:
+
+   **Windows:**
+   ```bash
+   start index.html
+   ```
+   **Mac:**
+   ```bash
+   open index.html
+   ```
+
+4. **Initialise Git and make the first commit:**
+   ```
+   Initialise a Git repository, then commit all files with the message "Initial portfolio site"
+   ```
+
+5. **Create a GitHub repository and push:**
+   ```
+   Help me create a new public GitHub repository called portfolio and push my code to it
+   ```
+
+   If you need to do it manually:
+   - Go to [github.com/new](https://github.com/new) and create a repository called `portfolio` (public, no README)
+   - Then tell Claude Code:
+   ```
+   Connect this project to my GitHub repo at https://github.com/YOUR-USERNAME/portfolio.git and push
+   ```
+
+6. **Enable GitHub Pages:**
+   - Go to your repository on GitHub
+   - Click **Settings** > **Pages**
+   - Under "Source," select **Deploy from a branch**
+   - Choose **main** branch, **/ (root)** folder
+   - Click **Save**
+   - Wait 2-3 minutes, then visit `https://YOUR-USERNAME.github.io/portfolio/`
+
+7. **Make an update and redeploy:**
+   ```
+   Add a "Projects" section to my portfolio that lists 3 projects:
+   1. "Calculator" - A Python calculator with full test suite
+   2. "File Organiser" - A folder organisation system
+   3. "This Portfolio" - The website you are looking at right now
+   Then commit and push with the message "Add projects section"
+   ```
+
+8. **Verify the update is live:**
+
+   Wait 2-3 minutes, then refresh your portfolio URL. The new Projects section should appear.
+
+### Expected Result
+
+You should have:
+- A live website at `https://YOUR-USERNAME.github.io/portfolio/`
+- A clean, mobile-friendly portfolio with 4 sections (About, Skills, Projects, Contact)
+- 2 commits in your Git history
+- A URL you can share with friends, family, or put on your resume
+
+### Bonus Challenge
+- Add a dark mode toggle button using a small bit of JavaScript (ask Claude Code to help)
+- Add a favicon (the small icon that appears in the browser tab)
+- Try using a custom domain name if you own one (GitHub Pages supports this in Settings > Pages > Custom domain)
+
+---
 
 ## 🔗 Next Steps
 

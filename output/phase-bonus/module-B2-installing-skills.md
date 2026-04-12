@@ -1,6 +1,6 @@
 # Module B2: Installing Skills -- 3 Methods
 
-## Learning Objectives
+## 🎯 Learning Objectives
 
 - After completing this lesson you will be able to:
   - Install Skills with a single `npx` command (the easiest method)
@@ -11,7 +11,7 @@
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### Where Are Skills Installed?
 
@@ -48,7 +48,7 @@ Let's learn each method one by one!
 
 ---
 
-## Code Example 1: Method 1 -- npx Installation (Recommended)
+## 💻 Code Example 1: Method 1 -- npx Installation (Recommended)
 
 `npx` is a tool that comes with Node.js and can run installation scripts directly from the internet. If you already have Node.js installed (which you should have from Module 1.2), you can use this method.
 
@@ -176,7 +176,7 @@ After installation, your `~/.claude/skills/` folder will contain new subfolders,
 
 ---
 
-## Code Example 2: Method 2 -- Manual Copy (Most Reliable on Windows)
+## 💻 Code Example 2: Method 2 -- Manual Copy (Most Reliable on Windows)
 
 If npx has issues (network restrictions, version conflicts, etc.), manual copying is the most reliable method. This approach gives you complete control over what gets installed.
 
@@ -318,7 +318,7 @@ ls ~/.claude/skills/
 
 ---
 
-## Code Example 3: Method 3 -- Claude Code Plugin Command
+## 💻 Code Example 3: Method 3 -- Claude Code Plugin Command
 
 The latest version of Claude Code supports managing Skills directly in the conversation, without needing to leave the Claude Code environment.
 
@@ -462,7 +462,7 @@ claude
 
 ---
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Install Your First Skill
 
@@ -524,12 +524,57 @@ Find the SKILL.md file you just installed and open it with any text editor (Note
 <div class="quiz-explain">Claude Code is designed to scan the <code>~/.claude/skills/</code> folder at startup, loading all Skill metadata (names and short descriptions). If you add a new Skill while it's running, you need to restart so Claude Code can scan again.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. You ran <code>npx skills add obra/superpowers</code> but the Skill doesn't appear when you use Claude Code. What is the most likely fix?</p>
+<label><input type="radio" name="q4" value="0"> Restart Claude Code — Skills are only scanned at startup</label>
+<label><input type="radio" name="q4" value="1"> Run the command again with administrator privileges</label>
+<label><input type="radio" name="q4" value="2"> Update your operating system</label>
+<label><input type="radio" name="q4" value="3"> Clear your browser cache</label>
+<div class="quiz-explain">Claude Code scans the skills folder only at startup. If you install a new Skill while Claude Code is running, you must exit and restart it for the new Skill to be detected and loaded.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>5. On Mac, which command correctly copies a Skill folder to the Claude skills directory?</p>
+<label><input type="radio" name="q5" value="0"> <code>xcopy skills\tdd ~/.claude/skills/tdd /E /I</code></label>
+<label><input type="radio" name="q5" value="1"> <code>move skills/tdd ~/.claude/skills/</code></label>
+<label><input type="radio" name="q5" value="2"> <code>copy skills/tdd ~/.claude/skills/tdd</code></label>
+<label><input type="radio" name="q5" value="3"> <code>cp -r skills/tdd ~/.claude/skills/</code></label>
+<div class="quiz-explain">On Mac/Linux, <code>cp -r</code> copies a folder recursively (including all subfiles). The <code>xcopy</code> command is Windows-only. This is one of the key platform differences to remember when following installation instructions.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>6. What is the correct folder structure for an installed Skill?</p>
+<label><input type="radio" name="q6" value="0"> <code>~/.claude/SKILL.md</code> (directly in .claude folder)</label>
+<label><input type="radio" name="q6" value="1"> <code>~/skills/tdd/SKILL.md</code> (in home directory)</label>
+<label><input type="radio" name="q6" value="2"> <code>~/.claude/skills/tdd/SKILL.md</code> (in a subfolder under skills)</label>
+<label><input type="radio" name="q6" value="3"> <code>~/.claude/plugins/tdd/SKILL.md</code> (in a plugins folder)</label>
+<div class="quiz-explain">Each Skill should be in its own subfolder inside <code>~/.claude/skills/</code>. The SKILL.md file must be inside a named subfolder (e.g., <code>tdd/SKILL.md</code>), not directly in the skills root.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>7. Which installation method gives you the most control over exactly what gets installed?</p>
+<label><input type="radio" name="q7" value="0"> npx command — it handles everything automatically</label>
+<label><input type="radio" name="q7" value="1"> Manual copy — you can see and choose every file being installed</label>
+<label><input type="radio" name="q7" value="2"> Plugin command — it selects the best Skills for you</label>
+<label><input type="radio" name="q7" value="3"> All methods give identical control</label>
+<div class="quiz-explain">Manual copy (Method 2) is the most transparent. You clone the repository, browse available Skills, and copy only the ones you want. This gives you full visibility into what's being installed on your system.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. What should you check if you get "permission denied" when trying to copy a Skill file on Mac?</p>
+<label><input type="radio" name="q8" value="0"> The folder permissions — try prefixing the command with <code>sudo</code></label>
+<label><input type="radio" name="q8" value="1"> Your internet connection</label>
+<label><input type="radio" name="q8" value="2"> Whether Node.js is installed</label>
+<label><input type="radio" name="q8" value="3"> Your Claude Code subscription status</label>
+<div class="quiz-explain">"Permission denied" on Mac usually means the target folder has restricted permissions. Using <code>sudo</code> (e.g., <code>sudo cp -r ...</code>) runs the command with administrator privileges. Alternatively, you can change the folder permissions with <code>chmod</code>.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
 ---
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations on learning how to install Skills! In the upcoming modules, we'll learn **how to write your own Skill** -- you'll discover that customising a Skill for your specific workflow can multiply Claude Code's efficiency several times over. See you there!

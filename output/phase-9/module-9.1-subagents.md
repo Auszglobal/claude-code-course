@@ -1,6 +1,6 @@
 # Module 9.1: Sub-agents & Parallel Execution
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand what sub-agents are and how they work in Claude Code
   - Identify when parallel execution improves efficiency
@@ -8,7 +8,7 @@
   - Understand git worktrees for isolated agent work
   - Know the limitations and trade-offs of parallel execution
 
-## Theory
+## 📖 Theory
 
 ### What Are Sub-agents?
 
@@ -74,7 +74,7 @@ Sub-agents are most valuable when you have **independent tasks** — work that d
 └─────────────────────┘
 ```
 
-## Code Example 1: Automatic Sub-agent Usage
+## 💻 Code Example 1: Automatic Sub-agent Usage
 
 Claude Code often uses sub-agents automatically when it recognises a task that benefits from parallel execution. You don't need to do anything special:
 
@@ -114,7 +114,7 @@ Claude Code often uses sub-agents automatically when it recognises a task that b
 
 Claude spawns a sub-agent for each file, reads them simultaneously, and combines the summaries.
 
-## Code Example 2: Git Worktrees for Safe Isolation
+## 💻 Code Example 2: Git Worktrees for Safe Isolation
 
 ### What Are Git Worktrees?
 
@@ -160,7 +160,7 @@ A git worktree is like having a **second copy of your project** that shares the 
 
 You can then choose which approach to apply to your main code.
 
-## Supplementary Example: When NOT to Use Sub-agents
+## 💻 Supplementary Example: When NOT to Use Sub-agents
 
 Sub-agents aren't always the answer. Here are the trade-offs:
 
@@ -191,7 +191,7 @@ Is the task independent? (no shared state needed)
 | "Add a column to the database, then update the model, then update the API" | No | Each step depends on the previous |
 | "Compare our auth with 3 different open-source implementations" | Yes | Each comparison is independent |
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Parallel Codebase Exploration
 1. Open a project with at least 10 files
@@ -238,10 +238,55 @@ Is the task independent? (no shared state needed)
 <div class="quiz-explain">Sub-agents work independently and can't see each other's results. If task B depends on task A's output (like refactoring a function and then updating its callers), you need sequential execution, not parallel sub-agents.</div>
 </div>
 
+<div class="quiz-q" data-answer="3">
+<p>4. You ask Claude Code to review 5 modified files in a Pull Request. How do sub-agents help?</p>
+<label><input type="radio" name="q4" value="0"> They merge the files automatically</label>
+<label><input type="radio" name="q4" value="1"> They each review the same file for redundancy</label>
+<label><input type="radio" name="q4" value="2"> They translate the code to a different language</label>
+<label><input type="radio" name="q4" value="3"> Each sub-agent reviews a different file simultaneously, then the main agent combines all findings</label>
+<div class="quiz-explain">Since each file review is independent, sub-agents can review them in parallel. One agent reads auth.py, another reads api.py, etc. The main agent then combines all the individual reviews into a comprehensive report.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. Why can't sub-agents share information with each other during execution?</p>
+<label><input type="radio" name="q5" value="0"> It's a bug that hasn't been fixed yet</label>
+<label><input type="radio" name="q5" value="1"> Each sub-agent gets its own isolated context window and cannot see other agents' work</label>
+<label><input type="radio" name="q5" value="2"> They use different programming languages</label>
+<label><input type="radio" name="q5" value="3"> They run on different computers</label>
+<div class="quiz-explain">Sub-agents are designed with context isolation — each one starts with a clean slate and only knows what the main agent tells it. This isolation ensures independent execution but means they can't coordinate directly with each other.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>6. You need to refactor a function and then update all files that call it. Should you use sub-agents?</p>
+<label><input type="radio" name="q6" value="0"> Yes — have one agent refactor and another update callers simultaneously</label>
+<label><input type="radio" name="q6" value="1"> Yes — but only use Explore-type agents</label>
+<label><input type="radio" name="q6" value="2"> No — the tasks are dependent (updating callers requires the refactored function to be done first)</label>
+<label><input type="radio" name="q6" value="3"> No — sub-agents can't modify code</label>
+<div class="quiz-explain">This is a sequential dependency: you must finish refactoring the function before you can update its callers, because the callers need to match the new function signature. Sub-agents are for independent, parallel tasks only.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>7. What happens to your main working directory when a sub-agent makes changes in a git worktree?</p>
+<label><input type="radio" name="q7" value="0"> Nothing — your main directory stays untouched; changes are isolated in the worktree</label>
+<label><input type="radio" name="q7" value="1"> Your main directory is automatically updated with the changes</label>
+<label><input type="radio" name="q7" value="2"> Your main directory is deleted and replaced</label>
+<label><input type="radio" name="q7" value="3"> Both directories show the same changes simultaneously</label>
+<div class="quiz-explain">Git worktrees are isolated copies that share the same git history but have separate working directories. Changes in a worktree don't affect your main directory, making it safe for experimental work.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>8. Using 4 sub-agents to read 4 files costs more tokens than 1 agent reading the same 4 files sequentially. Why might you still choose sub-agents?</p>
+<label><input type="radio" name="q8" value="0"> Because sub-agents produce better analysis</label>
+<label><input type="radio" name="q8" value="1"> Because sub-agents are required for reading multiple files</label>
+<label><input type="radio" name="q8" value="2"> Because the time saved by parallel execution is worth the extra cost</label>
+<label><input type="radio" name="q8" value="3"> Because sequential reading is not supported</label>
+<div class="quiz-explain">Sub-agents trade cost for speed. Each agent has startup overhead (loading CLAUDE.md, initialising context), so 4 agents cost more than 1 sequential agent. But when time is critical — like reviewing a PR before a meeting — the speed benefit outweighs the extra cost.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You now understand how Claude Code leverages parallel execution for speed. In the next module, **9.2: Plan Mode & Complex Architecture**, we'll learn how to use Plan Mode to design before building — essential for large, multi-file tasks.

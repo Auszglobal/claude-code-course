@@ -29,9 +29,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked-highlight@2.2.1/lib/index.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<!-- mermaid loaded on demand -->
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyDps9rYTTlKXXoC4Y7Og9SVdtzhZGPlj18",
+  authDomain: "claude-code-course-df778.firebaseapp.com",
+  projectId: "claude-code-course-df778",
+  storageBucket: "claude-code-course-df778.firebasestorage.app",
+  messagingSenderId: "349390163097",
+  appId: "1:349390163097:web:ac5811aad7bc371d8ebc08"
+});
+const db = firebase.firestore();
+</script>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Accessibility */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.skip-link { position: absolute; top: -40px; left: 0; background: var(--accent); color: #fff; padding: 8px 16px; z-index: 9999; font-size: 14px; transition: top 0.2s; }
+.skip-link:focus { top: 0; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
 
 :root {
   --teal: #008B8B;
@@ -109,6 +130,13 @@
   transition: all 0.2s; flex-shrink: 0;
 }
 .logout-btn:hover { border-color: #ff6b6b; color: #ff6b6b; }
+.data-btns { display: flex; gap: 6px; margin: 6px 20px 0; }
+.data-btn {
+  flex: 1; background: none; border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.5); border-radius: 6px;
+  padding: 4px 0; font-size: 10px; cursor: pointer; transition: all 0.2s;
+}
+.data-btn:hover { border-color: var(--accent); color: var(--accent); }
 .profile-progress { display: block; font-size: 10px; color: #718096; margin-top: 2px; }
 #admin-add-user-btn {
   width: calc(100% - 40px); margin: 8px 20px 12px;
@@ -548,6 +576,41 @@
 .xp-text { font-size: 9px; color: var(--text-secondary); white-space: nowrap; }
 .xp-toast-bonus { font-size: 11px; color: #ffd700; font-weight: 700; }
 
+/* Study Time */
+.study-time-display {
+  display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px;
+}
+.study-time-icon { font-size: 13px; }
+.study-time-val { font-weight: 600; color: var(--accent); }
+.study-time-lbl { color: var(--text-secondary); font-size: 10px; }
+
+/* Share Menu */
+.share-menu { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9000; display: flex; align-items: center; justify-content: center; }
+.share-menu-inner { background: var(--bg); border-radius: 12px; padding: 24px; min-width: 280px; text-align: center; }
+.share-menu-inner h4 { margin-bottom: 16px; color: var(--text); }
+.share-btn { display: block; width: 100%; padding: 10px; margin: 6px 0; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; color: #fff; }
+.share-btn.linkedin { background: #0077B5; }
+.share-btn.twitter { background: #1DA1F2; }
+.share-btn.copy { background: var(--accent); }
+.share-btn.close { background: rgba(255,255,255,0.1); color: var(--text-secondary); }
+.share-toast-btn { background: var(--accent); color: #fff; border: none; padding: 2px 10px; border-radius: 4px; font-size: 10px; cursor: pointer; margin-left: 6px; }
+
+/* Flashcard Rating */
+.fc-rating { text-align: center; margin-top: 8px; }
+.fc-rate-btn { border: none; color: #fff; padding: 6px 16px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600; }
+.fc-rate-btn:hover { opacity: 0.85; }
+.fc-due-badge { font-size: 10px; background: #e74c3c; color: #fff; padding: 1px 6px; border-radius: 8px; margin-left: 4px; }
+
+/* Streak Display */
+.streak-display {
+  display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px;
+}
+.streak-flame { font-size: 14px; line-height: 1; }
+.streak-count { font-weight: 700; color: #ff6b35; }
+.streak-label { color: var(--text-secondary); font-size: 10px; }
+.streak-display.inactive .streak-flame { opacity: 0.3; filter: grayscale(1); }
+.streak-display.inactive .streak-count { color: var(--text-secondary); }
+
 /* Cheat Sheet overlay */
 .cheat-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center; }
 .cheat-overlay.hidden { display: none; }
@@ -821,6 +884,49 @@ body {
 
 /* ── Welcome page ── */
 .welcome { text-align: center; padding: 60px 20px; }
+
+/* Confused Flag */
+.confused-btn {
+  background: none; border: none; font-size: 14px; cursor: pointer;
+  margin-left: 4px; opacity: 0.3; transition: opacity 0.2s;
+}
+.confused-btn:hover { opacity: 0.7; }
+.confused-btn.flagged { opacity: 1; }
+.confused-dot { font-size: 10px; margin-left: 4px; }
+
+/* Daily Goal */
+.daily-goal { margin-top: 6px; font-size: 11px; }
+.dg-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 4px; }
+.dg-fill { height: 100%; background: linear-gradient(90deg, #27ae60, #2ecc71); border-radius: 2px; transition: width 0.4s; }
+.dg-text { display: flex; justify-content: space-between; align-items: center; }
+.dg-label { color: var(--text-secondary); font-size: 10px; }
+.dg-done { color: #27ae60; font-weight: 600; }
+.dg-set { background: none; border: none; color: var(--accent); font-size: 10px; cursor: pointer; padding: 0; }
+.dg-set:hover { text-decoration: underline; }
+
+/* Quick Review */
+.quick-review {
+  background: rgba(0,139,139,0.08); border: 1px solid rgba(0,180,166,0.2);
+  border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px;
+}
+.quick-review .qr-header { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+.quick-review ul { margin: 0; padding-left: 18px; color: var(--text); line-height: 1.7; }
+.quick-review li { margin-bottom: 2px; }
+
+/* Continue Learning */
+.continue-section {
+  background: linear-gradient(135deg, rgba(0,139,139,0.15), rgba(0,180,166,0.08));
+  border: 1px solid rgba(0,180,166,0.3); border-radius: 12px; padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+  margin-bottom: 24px; transition: all 0.2s;
+}
+.continue-section:hover { border-color: var(--accent); transform: translateY(-2px); }
+.continue-label { font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+.continue-title { font-size: 18px; font-weight: 700; color: var(--text); }
+.continue-phase { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.continue-right { text-align: center; }
+.continue-pct { font-size: 28px; font-weight: 700; color: var(--accent); }
+.continue-sub { font-size: 11px; color: var(--text-secondary); }
 
 .welcome-icon {
   font-size: 64px;
@@ -1188,6 +1294,7 @@ body {
 .search-result-item:hover { background: rgba(0,180,166,0.15); color: #e2e8f0; }
 .search-result-item .sr-phase { font-size: 10px; color: var(--accent); text-transform: uppercase; }
 .search-result-item .sr-title { font-weight: 600; }
+.search-result-item .sr-snippet { font-size: 11px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .search-result-item mark { background: rgba(0,180,166,0.3); color: #fff; border-radius: 2px; padding: 0 2px; }
 
 /* ── Bookmark ── */
@@ -1361,45 +1468,81 @@ body {
   .sidebar, .topbar, .page-nav { display: none !important; }
   .main { margin-left: 0 !important; }
 }
+
+/* Dog Assistant */
+.dog-assistant {
+  position: fixed; bottom: 20px; right: 20px; z-index: 5000;
+  display: flex; align-items: flex-end; gap: 10px;
+  animation: dogSlideIn 0.4s ease-out;
+}
+@keyframes dogSlideIn { from { transform: translateY(80px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.dog-bubble {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 16px 16px 4px 16px;
+  padding: 14px 18px; max-width: 280px; box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  font-size: 13px; line-height: 1.6; color: var(--text); position: relative;
+}
+.dog-bubble .dog-name { font-weight: 700; color: var(--accent); font-size: 11px; margin-bottom: 4px; }
+.dog-bubble .dog-close {
+  position: absolute; top: 6px; right: 10px; background: none; border: none;
+  color: var(--text-secondary); cursor: pointer; font-size: 14px;
+}
+.dog-avatar {
+  width: 60px; height: 60px; border-radius: 50%; overflow: hidden;
+  border: 2px solid var(--accent); flex-shrink: 0; background: #1a1a2e;
+}
+.dog-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Login page dogs */
+.auth-dogs {
+  display: flex; justify-content: center; gap: 16px; margin-bottom: 16px;
+}
+.auth-dog-avatar {
+  width: 70px; height: 70px; border-radius: 50%; overflow: hidden;
+  border: 3px solid var(--accent); background: #1a1a2e;
+}
+.auth-dog-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.auth-dog-label { text-align: center; font-size: 10px; color: var(--text-secondary); margin-top: 4px; }
 </style>
 </head>
 <body>
+<a href="#content" class="skip-link">Skip to content</a>
+<div aria-live="polite" id="a11y-announce" class="sr-only"></div>
 <!-- Password Gate -->
-<div id="auth-gate">
+<div id="auth-gate" role="dialog" aria-modal="true" aria-label="Login">
   <div class="auth-box">
+    <div class="auth-dogs">
+      <div><div class="auth-dog-avatar"><img src="tt.jpeg" alt="TT"></div><div class="auth-dog-label">TT</div></div>
+      <div><div class="auth-dog-avatar"><img src="chandon.jpeg" alt="Chandon"></div><div class="auth-dog-label">Chandon</div></div>
+    </div>
     <h1>Claude Code Complete Guide</h1>
-    <p>Please enter your username and password to continue</p>
+    <p>Welcome! TT &amp; Chandon are here to help you learn.</p>
+    <label for="auth-user" class="sr-only">Username</label>
     <input type="text" id="auth-user" placeholder="Username" autocomplete="username">
+    <label for="auth-pass" class="sr-only">Password</label>
     <input type="password" id="auth-pass" placeholder="Password" autocomplete="current-password">
     <button onclick="tryLogin()">Login</button>
-    <div class="auth-error" id="auth-error"></div>
+    <div class="auth-error" id="auth-error" role="alert" aria-live="polite"></div>
   </div>
 </div>
 <script>
 // Multi-user auth with profiles — each user gets independent progress tracking
-// ── Shared progress via JSONBlob (free, no auth needed) ──
-const JSONBLOB_ID = '019d7b3b-259e-78fe-8874-e2650dcc75d5';
-const JSONBLOB_URL = 'https://jsonblob.com/api/jsonBlob/' + JSONBLOB_ID;
+// ── Shared progress via Firebase Firestore ──
+const JSONBLOB_ID = null; // legacy — replaced by Firestore
+const JSONBLOB_URL = null;
 let sharedProgress = {};
 
 async function fetchSharedProgress() {
   try {
-    const res = await fetch(JSONBLOB_URL, { headers: { 'Accept': 'application/json' } });
-    if (res.ok) sharedProgress = await res.json();
+    const doc = await db.collection('progress').doc('shared').get();
+    if (doc.exists) sharedProgress = doc.data();
   } catch { /* offline fallback */ }
 }
 
 async function pushProgressToCloud() {
   if (!currentUser) return;
-  // Update local cache
   sharedProgress[currentUser.uid] = { ...progress };
-  // Push entire shared state to JSONBlob
   try {
-    await fetch(JSONBLOB_URL, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(sharedProgress)
-    });
+    await db.collection('progress').doc('shared').set(sharedProgress, { merge: true });
   } catch { /* silent fail, localStorage still works */ }
 }
 
@@ -1425,7 +1568,7 @@ async function sha256(str) {
 
 function setCurrentUser(user) {
   currentUser = user;
-  localStorage.setItem('claude-course-user', JSON.stringify(user));
+  try { localStorage.setItem('claude-course-user', JSON.stringify(user)); } catch { /* quota exceeded */ }
   document.getElementById('auth-gate').classList.add('hidden');
   updateProfileUI();
 }
@@ -1456,6 +1599,9 @@ function updateProfileUI() {
   }
   loadProgress();
   updateProgressUI();
+  updateStreakDisplay();
+  updateStudyTimeDisplay();
+  updateDailyGoalDisplay();
 }
 
 function handleAvatarUpload(e) {
@@ -1472,7 +1618,12 @@ function handleAvatarUpload(e) {
       const size = Math.min(img.width, img.height);
       const sx = (img.width - size) / 2, sy = (img.height - size) / 2;
       ctx.drawImage(img, sx, sy, size, size, 0, 0, 100, 100);
-      localStorage.setItem(getAvatarKey(), canvas.toDataURL('image/jpeg', 0.8));
+      try {
+        localStorage.setItem(getAvatarKey(), canvas.toDataURL('image/jpeg', 0.8));
+      } catch {
+        alert('Storage full — cannot save avatar. Try clearing old data.');
+        return;
+      }
       updateProfileUI();
     };
     img.src = ev.target.result;
@@ -1480,60 +1631,39 @@ function handleAvatarUpload(e) {
   reader.readAsDataURL(file);
 }
 
-// ── Admin panel (user management) ──
-const USERS_BLOB_ID = '019d7b3c-9e05-7dfc-adc1-ed680c138b6e';
-const USERS_BLOB_URL = 'https://jsonblob.com/api/jsonBlob/' + USERS_BLOB_ID;
+// ── Admin panel (user management via Firestore) ──
 let dynamicUsers = [];
-
 const LOCAL_USERS_KEY = 'claude-course-dynamic-users';
 
 async function fetchDynamicUsers() {
+  let local; try { local = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { local = []; }
   try {
-    const res = await fetch(USERS_BLOB_URL, { headers: { 'Accept': 'application/json' } });
-    if (res.ok) {
-      dynamicUsers = await res.json();
-      // Merge any locally-saved users that didn't sync yet
-      const local = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
-      if (local.length > dynamicUsers.length) {
-        const cloudHashes = new Set(dynamicUsers.map(u => u.hash));
-        const unsyncedLocal = local.filter(u => !cloudHashes.has(u.hash));
-        if (unsyncedLocal.length > 0) {
-          dynamicUsers.push(...unsyncedLocal);
-          saveDynamicUsers(); // background sync
-        }
-      }
-      localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers));
-    } else {
-      dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
+    const doc = await db.collection('users').doc('students').get();
+    const cloud = doc.exists ? (doc.data().list || []) : [];
+    if (!Array.isArray(cloud)) { dynamicUsers = local; return; }
+    // Union merge: cloud + any local-only users
+    const cloudHashes = new Set(cloud.map(u => u.hash));
+    const localOnly = local.filter(u => u.hash && !cloudHashes.has(u.hash));
+    dynamicUsers = [...cloud, ...localOnly];
+    if (localOnly.length > 0 || (cloud.length === 0 && local.length > 0)) {
+      if (cloud.length === 0 && local.length > 0) dynamicUsers = local;
+      saveDynamicUsers();
     }
+    try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
   } catch {
-    // Offline — use local cache
-    dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
+    dynamicUsers = local;
   }
 }
 
-async function saveDynamicUsers(retries = 2) {
-  // Always save to localStorage immediately
-  localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers));
-
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    try {
-      const res = await fetch(USERS_BLOB_URL, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(dynamicUsers)
-      });
-      if (res.ok) return true;
-      console.error('JSONBlob save failed:', res.status);
-      if (attempt < retries) { await new Promise(r => setTimeout(r, 1000)); continue; }
-    } catch (err) {
-      console.error('JSONBlob save error:', err);
-      if (attempt < retries) { await new Promise(r => setTimeout(r, 1000)); continue; }
-    }
+async function saveDynamicUsers() {
+  try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
+  try {
+    await db.collection('users').doc('students').set({ list: dynamicUsers });
+    return true;
+  } catch (err) {
+    console.error('Firestore save error:', err);
+    return false;
   }
-  // Cloud save failed but local save succeeded — user is still usable
-  console.warn('Cloud sync failed, saved locally. Will retry on next page load.');
-  return true;
 }
 
 function openAdmin() {
@@ -1634,6 +1764,51 @@ async function adminDeleteUser(idx) {
   alert('User deleted.');
 }
 
+function exportProgress() {
+  if (!currentUser) return;
+  const data = {
+    user: { name: currentUser.name, uid: currentUser.uid, role: currentUser.role },
+    progress: progress,
+    xp: getXP(),
+    streak: (() => { try { return JSON.parse(localStorage.getItem('claude-course-streak-' + currentUser.uid) || '{}'); } catch { return {}; } })(),
+    studyTime: getStudyTime(),
+    bookmarks: getBookmarks(),
+    exportDate: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `claude-course-backup-${currentUser.uid}-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('&#x1F4E4;', 'Exported', 'Progress backup saved!', 2000);
+}
+
+function importProgress(e) {
+  const file = e.target.files[0];
+  if (!file || !currentUser) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!data.progress || !data.xp) { alert('Invalid backup file.'); return; }
+      if (!confirm(`Import data from "${data.user?.name || 'unknown'}" (${data.exportDate?.split('T')[0] || '?'})?\n\nThis will overwrite your current progress.`)) return;
+      progress = data.progress;
+      saveProgress();
+      try { localStorage.setItem(xpKey(), JSON.stringify(data.xp)); } catch {}
+      if (data.streak) { try { localStorage.setItem('claude-course-streak-' + currentUser.uid, JSON.stringify(data.streak)); } catch {} }
+      if (data.bookmarks) { try { localStorage.setItem('claude-course-bookmarks', JSON.stringify(data.bookmarks)); } catch {} }
+      if (data.studyTime) { try { localStorage.setItem(studyTimeKey(), JSON.stringify(data.studyTime)); } catch {} }
+      updateProgressUI();
+      updateXPDisplay();
+      updateStreakDisplay();
+      showToast('&#x1F4E5;', 'Imported', 'Progress restored!', 2000);
+    } catch { alert('Failed to read backup file.'); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
 function logout() {
   currentUser = null;
   localStorage.removeItem('claude-course-user');
@@ -1670,7 +1845,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (saved.role === '管理員') saved.role = 'Admin';
         if (saved.role === '學員') saved.role = 'Student';
         if (saved.role === '試用') saved.role = 'Demo';
-        localStorage.setItem('claude-course-user', JSON.stringify(saved));
+        try { localStorage.setItem('claude-course-user', JSON.stringify(saved)); } catch {}
         setCurrentUser(saved);
       }
     } catch {}
@@ -1681,7 +1856,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 </script>
 
 <!-- Admin Panel Modal -->
-<div class="admin-overlay hidden" id="admin-overlay" onclick="if(event.target===this)closeAdmin()">
+<div class="admin-overlay hidden" id="admin-overlay" role="dialog" aria-modal="true" aria-label="User Management" onclick="if(event.target===this)closeAdmin()">
   <div class="admin-panel">
     <button class="admin-close" onclick="closeAdmin()">&times;</button>
     <h2>User Management</h2>
@@ -1720,6 +1895,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 
   <div class="search-container">
     <span class="search-icon">&#x1F50D;</span>
+    <label for="search-input" class="sr-only">Search modules</label>
     <input class="search-input" id="search-input" type="text" placeholder="Search modules..." autocomplete="off">
     <div class="search-results" id="search-results"></div>
   </div>
@@ -1733,9 +1909,17 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
       <span class="profile-role" id="profile-role-display"></span>
       <span class="profile-progress" id="profile-progress-display"></span>
       <div class="xp-display" id="xp-display"></div>
+      <div class="streak-display" id="streak-display"></div>
+      <div class="study-time-display" id="study-time-display"></div>
+      <div class="daily-goal" id="daily-goal"></div>
     </div>
     <button class="logout-btn" onclick="logout()">Logout</button>
     <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
+  </div>
+  <div class="data-btns">
+    <button class="data-btn" onclick="exportProgress()">&#x1F4E4; Export</button>
+    <button class="data-btn" onclick="document.getElementById('import-file').click()">&#x1F4E5; Import</button>
+    <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importProgress(event)">
   </div>
   <button id="admin-add-user-btn" style="display:none;" onclick="openAdmin()">Manage Users</button>
 </aside>
@@ -1773,7 +1957,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 </div>
 
 <!-- Flashcard Overlay -->
-<div class="flashcard-overlay hidden" id="flashcard-overlay">
+<div class="flashcard-overlay hidden" id="flashcard-overlay" role="dialog" aria-modal="true" aria-label="Flashcards">
   <div class="flashcard-container">
     <div class="flashcard-counter" id="fc-counter"></div>
     <div class="flashcard" id="flashcard" onclick="this.classList.toggle('flipped')">
@@ -1788,6 +1972,14 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
         </div>
       </div>
     </div>
+    <div class="fc-rating" id="fc-rating" style="display:none;">
+      <span style="font-size:11px;color:var(--text-secondary);">How well did you know this?</span>
+      <div style="display:flex;gap:8px;margin-top:6px;">
+        <button class="fc-rate-btn" style="background:#e74c3c;" onclick="rateCard(0)">Again</button>
+        <button class="fc-rate-btn" style="background:#f39c12;" onclick="rateCard(1)">Hard</button>
+        <button class="fc-rate-btn" style="background:#27ae60;" onclick="rateCard(2)">Easy</button>
+      </div>
+    </div>
     <div class="flashcard-nav">
       <button class="fc-prev" onclick="fcNav(-1)">&#8592; Prev</button>
       <button class="fc-close" onclick="closeFlashcards()">Close</button>
@@ -1797,7 +1989,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 </div>
 
 <!-- Glossary Panel -->
-<div id="glossary-panel">
+<div id="glossary-panel" role="dialog" aria-label="Glossary">
   <div class="gp-header">
     <h3>&#x1F4D6; Glossary</h3>
     <button class="gp-close" onclick="toggleGlossary()">&times;</button>
@@ -1807,7 +1999,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 </div>
 
 <!-- Prompt Templates Overlay -->
-<div class="prompt-lib-overlay hidden" id="prompt-lib-overlay" onclick="if(event.target===this)closePromptLib()">
+<div class="prompt-lib-overlay hidden" id="prompt-lib-overlay" role="dialog" aria-modal="true" aria-label="Prompt Templates" onclick="if(event.target===this)closePromptLib()">
   <div class="prompt-lib-panel">
     <div class="prompt-lib-header">
       <h3>&#x1F4CB; Prompt Templates</h3>
@@ -1819,7 +2011,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 </div>
 
 <!-- Cheat Sheet Overlay -->
-<div class="cheat-overlay hidden" id="cheat-overlay" onclick="if(event.target===this)closeCheatSheet()">
+<div class="cheat-overlay hidden" id="cheat-overlay" role="dialog" aria-modal="true" aria-label="Cheat Sheet" onclick="if(event.target===this)closeCheatSheet()">
   <div class="cheat-panel">
     <div class="cheat-header">
       <h3 id="cheat-title">Cheat Sheet</h3>
@@ -1996,7 +2188,7 @@ function loadProgress() {
 }
 
 function saveProgress() {
-  localStorage.setItem(progressKey(), JSON.stringify(progress));
+  try { localStorage.setItem(progressKey(), JSON.stringify(progress)); } catch { /* quota exceeded */ }
   pushProgressToCloud();
 }
 
@@ -2096,6 +2288,7 @@ function configureMarked() {
 
 // ── Load module ──
 async function loadModule(moduleId, filePath) {
+  startStudyTimer(moduleId);
   currentModuleId = moduleId;
 
   // Update active state in sidebar
@@ -2144,6 +2337,9 @@ async function loadModule(moduleId, filePath) {
     // Add TL;DR summary card
     addTldrCard(moduleId);
 
+    // Add quick review of previous module
+    addQuickReview(moduleId);
+
     // Initialize quizzes
     initQuizzes(moduleId);
 
@@ -2162,8 +2358,17 @@ async function loadModule(moduleId, filePath) {
       pre.replaceWith(div);
     });
     if (contentEl.querySelector('.mermaid')) {
-      mermaid.initialize({ startOnLoad: false, theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'default' });
-      mermaid.run({ nodes: contentEl.querySelectorAll('.mermaid') });
+      const runMermaid = () => {
+        mermaid.initialize({ startOnLoad: false, theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'default' });
+        mermaid.run({ nodes: contentEl.querySelectorAll('.mermaid') });
+      };
+      if (typeof mermaid !== 'undefined') { runMermaid(); }
+      else {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+        s.onload = runMermaid;
+        document.head.appendChild(s);
+      }
     }
 
     // Show prev/next
@@ -2286,17 +2491,23 @@ function handleQuizSubmit(quiz, moduleId) {
   if (passed) {
     resultEl.className = 'quiz-result pass';
     resultEl.innerHTML = `You scored ${correct}/${total} (${pct}%) — Passed! Module complete.`;
+    const announce = document.getElementById('a11y-announce');
+    if (announce) announce.textContent = `Quiz passed: ${correct} out of ${total} correct.`;
     // Auto-mark module as complete
     progress[moduleId] = true;
     saveProgress();
     updateProgressUI();
     checkNewBadges();
+    checkMilestones();
+    recordDailyCompletion();
     addXP('module', XP_PER_MODULE, moduleId);
     addXP('quiz', XP_PER_QUIZ, moduleId);
     updateXPDisplay();
+    setTimeout(() => showDogTip('tt'), 1500);
   } else {
     resultEl.className = 'quiz-result fail';
     resultEl.innerHTML = `You scored ${correct}/${total} (${pct}%) — Need 70% to pass. <br><button class="quiz-retry" onclick="retryQuiz(this)">Try Again</button>`;
+    setTimeout(() => showDogTip('chandon'), 1500);
   }
 
   quiz.querySelector('.quiz-submit').disabled = true;
@@ -2384,8 +2595,8 @@ function showWelcome() {
   const circumference = 2 * Math.PI * 35;
   USERS.filter(u => u.role !== 'Admin').forEach(user => {
     const uid = user.uid || user.name.toLowerCase().replace(/\s+/g, '');
-    const progressData = sharedProgress[uid]
-      || JSON.parse(localStorage.getItem('claude-course-progress-' + uid) || '{}');
+    let progressData = sharedProgress[uid];
+    if (!progressData) { try { progressData = JSON.parse(localStorage.getItem('claude-course-progress-' + uid) || '{}'); } catch { progressData = {}; } }
     const completed = ALL_MODULES.filter(m => progressData[m.id]).length;
     const pct = Math.round((completed / ALL_MODULES.length) * 100);
     const offset = circumference - (circumference * pct / 100);
@@ -2408,10 +2619,29 @@ function showWelcome() {
     </div>`;
   });
 
+  // Build continue learning section
+  let continueHTML = '';
+  const nextModule = ALL_MODULES.find(m => !progress[m.id]);
+  if (nextModule && getCompletedCount() > 0) {
+    const pct = Math.round((getCompletedCount() / ALL_MODULES.length) * 100);
+    continueHTML = `<div class="continue-section" onclick="loadModule('${nextModule.id}','${nextModule.file}')">
+      <div class="continue-left">
+        <div class="continue-label">&#x1F449; Continue where you left off</div>
+        <div class="continue-title">${nextModule.id} — ${nextModule.title}</div>
+        <div class="continue-phase">${nextModule.phase.label}: ${nextModule.phase.title}</div>
+      </div>
+      <div class="continue-right">
+        <div class="continue-pct">${pct}%</div>
+        <div class="continue-sub">${getCompletedCount()}/${ALL_MODULES.length}</div>
+      </div>
+    </div>`;
+  }
+
   document.getElementById('content').innerHTML = `<div class="welcome">
     <span class="welcome-icon">&#x1F4BB;</span>
     <h2>Claude Code Complete Guide</h2>
     <p>Learn AI-powered programming with Claude Code, step by step from zero.<br>${ALL_MODULES.length} modules covering the complete learning path from installation to real-world projects.</p>
+    ${continueHTML}
     ${getPathsHTML()}
     <div class="team-leaderboard">
       <h3>Team Progress</h3>
@@ -2448,28 +2678,60 @@ function addCopyButtons() {
   });
 }
 
-// ── Search ──
+// ── Search (full-text) ──
+let _searchIndex = null;
+async function buildSearchIndex() {
+  if (_searchIndex) return _searchIndex;
+  _searchIndex = {};
+  await Promise.all(ALL_MODULES.map(async m => {
+    try {
+      const res = await fetch(m.file);
+      if (res.ok) _searchIndex[m.id] = (await res.text()).toLowerCase().replace(/[#*`<>|[\]]/g, ' ');
+    } catch { _searchIndex[m.id] = ''; }
+  }));
+  return _searchIndex;
+}
+
 function initSearch() {
   const input = document.getElementById('search-input');
   const results = document.getElementById('search-results');
+  let searchTimer;
+  // Prefetch index on first focus
+  input.addEventListener('focus', () => buildSearchIndex(), { once: true });
+
   input.addEventListener('input', () => {
+    clearTimeout(searchTimer);
     const q = input.value.trim().toLowerCase();
     if (q.length < 2) { results.classList.remove('active'); return; }
-    const matches = ALL_MODULES.filter(m =>
-      m.title.toLowerCase().includes(q) || m.id.toLowerCase().includes(q) ||
-      m.phase.title.toLowerCase().includes(q) || m.phase.desc.toLowerCase().includes(q)
-    ).slice(0, 10);
-    if (matches.length === 0) { results.innerHTML = '<div class="search-result-item">No results found</div>'; }
-    else {
-      results.innerHTML = matches.map(m => {
-        const highlighted = m.title.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>');
-        return `<div class="search-result-item" onclick="loadModule('${m.id}','${m.file}');document.getElementById('search-results').classList.remove('active');document.getElementById('search-input').value='';">
-          <div class="sr-phase">${m.phase.label} — ${m.phase.title}</div>
-          <div class="sr-title">${m.id} ${highlighted}</div>
-        </div>`;
-      }).join('');
-    }
-    results.classList.add('active');
+    searchTimer = setTimeout(async () => {
+      const idx = await buildSearchIndex();
+      const escQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const matches = ALL_MODULES.filter(m =>
+        m.title.toLowerCase().includes(q) || m.id.toLowerCase().includes(q) ||
+        m.phase.title.toLowerCase().includes(q) || m.phase.desc.toLowerCase().includes(q) ||
+        (idx[m.id] && idx[m.id].includes(q))
+      ).slice(0, 10);
+      if (matches.length === 0) { results.innerHTML = '<div class="search-result-item">No results found</div>'; }
+      else {
+        results.innerHTML = matches.map(m => {
+          const highlighted = m.title.replace(new RegExp(`(${escQ})`, 'gi'), '<mark>$1</mark>');
+          // Show content snippet if matched in body
+          let snippet = '';
+          if (idx[m.id] && idx[m.id].includes(q)) {
+            const pos = idx[m.id].indexOf(q);
+            const start = Math.max(0, pos - 40);
+            const raw = idx[m.id].slice(start, pos + q.length + 40).trim();
+            snippet = `<div class="sr-snippet">...${raw.replace(new RegExp(`(${escQ})`, 'gi'), '<mark>$1</mark>')}...</div>`;
+          }
+          return `<div class="search-result-item" onclick="loadModule('${m.id}','${m.file}');document.getElementById('search-results').classList.remove('active');document.getElementById('search-input').value='';">
+            <div class="sr-phase">${m.phase.label} — ${m.phase.title}</div>
+            <div class="sr-title">${m.id} ${highlighted}</div>
+            ${snippet}
+          </div>`;
+        }).join('');
+      }
+      results.classList.add('active');
+    }, 200);
   });
   document.addEventListener('click', e => {
     if (!e.target.closest('.search-container')) results.classList.remove('active');
@@ -2484,7 +2746,7 @@ function toggleBookmark(moduleId) {
   let bm = getBookmarks();
   if (bm.includes(moduleId)) bm = bm.filter(id => id !== moduleId);
   else bm.push(moduleId);
-  localStorage.setItem('claude-course-bookmarks', JSON.stringify(bm));
+  try { localStorage.setItem('claude-course-bookmarks', JSON.stringify(bm)); } catch { /* quota exceeded */ }
   // Update button state
   const btn = document.querySelector('.bookmark-btn');
   if (btn) { btn.classList.toggle('bookmarked', bm.includes(moduleId)); btn.innerHTML = bm.includes(moduleId) ? '&#9733;' : '&#9734;'; }
@@ -2514,7 +2776,7 @@ function addNotesSection(moduleId) {
   div.querySelector('.notes-textarea').addEventListener('input', (e) => {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
-      localStorage.setItem(getNotesKey(moduleId), e.target.value);
+      try { localStorage.setItem(getNotesKey(moduleId), e.target.value); } catch { /* quota exceeded */ }
       const indicator = document.getElementById('notes-saved');
       indicator.classList.add('show');
       setTimeout(() => indicator.classList.remove('show'), 1500);
@@ -2545,7 +2807,7 @@ let activePath = null;
 function setLearningPath(pathId) {
   if (activePath === pathId) { activePath = null; }
   else { activePath = pathId; }
-  localStorage.setItem('claude-course-path', activePath || '');
+  try { localStorage.setItem('claude-course-path', activePath || ''); } catch { /* quota exceeded */ }
   highlightPathModules();
   showWelcome();
 }
@@ -2600,7 +2862,9 @@ const LEVEL_NAMES = ['Newbie','Learner','Explorer','Builder','Maker','Pro','Expe
 function xpKey() { return 'claude-course-xp-' + (currentUser ? currentUser.uid : '_anon'); }
 
 function getXP() {
-  return JSON.parse(localStorage.getItem(xpKey()) || '{"total":0,"log":{}}');
+  try {
+    return JSON.parse(localStorage.getItem(xpKey()) || '{"total":0,"log":{}}');
+  } catch { return { total: 0, log: {} }; }
 }
 
 function addXP(source, amount, id) {
@@ -2609,7 +2873,7 @@ function addXP(source, amount, id) {
   if (data.log[logKey]) return data; // Already earned
   data.total += amount;
   data.log[logKey] = Date.now();
-  localStorage.setItem(xpKey(), JSON.stringify(data));
+  try { localStorage.setItem(xpKey(), JSON.stringify(data)); } catch { /* quota exceeded */ }
   showToast('&#x2B50;', `+${amount} XP`, source === 'module' ? 'Module completed!' : source === 'quiz' ? 'Quiz passed!' : source === 'flashcard' ? 'Flashcards reviewed!' : 'Streak bonus!', 2500);
   return data;
 }
@@ -2669,26 +2933,138 @@ function closeCheatSheet() {
 function updateStreak() {
   if (!currentUser) return;
   const key = 'claude-course-streak-' + currentUser.uid;
-  const data = JSON.parse(localStorage.getItem(key) || '{"count":0,"lastDate":""}');
+  let data;
+  try { data = JSON.parse(localStorage.getItem(key) || '{"count":0,"lastDate":""}'); } catch { data = { count: 0, lastDate: '' }; }
   const today = new Date().toISOString().split('T')[0];
   if (data.lastDate === today) return data.count;
   const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
   if (data.lastDate === yesterday) { data.count++; }
   else if (data.lastDate !== today) { data.count = 1; }
   data.lastDate = today;
-  localStorage.setItem(key, JSON.stringify(data));
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch { /* quota exceeded */ }
   if (data.count >= 2) {
     addXP('streak', XP_PER_STREAK, 'streak-' + today);
     updateXPDisplay();
   }
+  updateStreakDisplay();
   return data.count;
 }
 function getStreakCount() {
   if (!currentUser) return 0;
   const key = 'claude-course-streak-' + currentUser.uid;
-  const data = JSON.parse(localStorage.getItem(key) || '{"count":0}');
-  return data.count;
+  try { return JSON.parse(localStorage.getItem(key) || '{"count":0}').count; } catch { return 0; }
 }
+
+function updateStreakDisplay() {
+  const el = document.getElementById('streak-display');
+  if (!el) return;
+  const count = getStreakCount();
+  const active = count > 0;
+  el.className = 'streak-display' + (active ? '' : ' inactive');
+  el.innerHTML = `<span class="streak-flame">&#x1F525;</span>
+    <span class="streak-count">${count}</span>
+    <span class="streak-label">${count === 1 ? 'day streak' : 'day streak'}</span>`;
+}
+
+// ── Daily Goal ──
+function dailyGoalKey() { return 'claude-course-dailygoal-' + (currentUser ? currentUser.uid : '_anon'); }
+
+function getDailyGoal() {
+  try { return JSON.parse(localStorage.getItem(dailyGoalKey()) || '{"target":2,"log":{}}'); } catch { return { target: 2, log: {} }; }
+}
+
+function getTodayCompleted() {
+  const data = getDailyGoal();
+  const today = new Date().toISOString().split('T')[0];
+  return data.log[today] || 0;
+}
+
+function recordDailyCompletion() {
+  const data = getDailyGoal();
+  const today = new Date().toISOString().split('T')[0];
+  data.log[today] = (data.log[today] || 0) + 1;
+  try { localStorage.setItem(dailyGoalKey(), JSON.stringify(data)); } catch {}
+  updateDailyGoalDisplay();
+}
+
+function setDailyGoalTarget() {
+  const data = getDailyGoal();
+  const input = prompt('Set daily module goal:', data.target);
+  if (input === null) return;
+  const n = parseInt(input);
+  if (isNaN(n) || n < 1 || n > 20) return;
+  data.target = n;
+  try { localStorage.setItem(dailyGoalKey(), JSON.stringify(data)); } catch {}
+  updateDailyGoalDisplay();
+}
+
+function updateDailyGoalDisplay() {
+  const el = document.getElementById('daily-goal');
+  if (!el) return;
+  const data = getDailyGoal();
+  const done = getTodayCompleted();
+  const pct = Math.min(100, Math.round((done / data.target) * 100));
+  const achieved = done >= data.target;
+  el.innerHTML = `<div class="dg-text">
+    <span class="dg-label">&#x1F3AF; Today: <span class="${achieved ? 'dg-done' : ''}">${done}/${data.target}</span> modules</span>
+    <button class="dg-set" onclick="setDailyGoalTarget()">Set goal</button>
+  </div>
+  <div class="dg-bar"><div class="dg-fill" style="width:${pct}%"></div></div>`;
+}
+
+// ── Study Time Tracking ──
+let _studyStart = null;
+let _studyModuleId = null;
+
+function studyTimeKey() { return 'claude-course-studytime-' + (currentUser ? currentUser.uid : '_anon'); }
+
+function getStudyTime() {
+  try { return JSON.parse(localStorage.getItem(studyTimeKey()) || '{}'); } catch { return {}; }
+}
+
+function startStudyTimer(moduleId) {
+  // Save time for previous module
+  if (_studyModuleId && _studyStart) {
+    const elapsed = Math.round((Date.now() - _studyStart) / 1000);
+    if (elapsed > 3 && elapsed < 7200) { // between 3s and 2h
+      const data = getStudyTime();
+      data[_studyModuleId] = (data[_studyModuleId] || 0) + elapsed;
+      try { localStorage.setItem(studyTimeKey(), JSON.stringify(data)); } catch {}
+    }
+  }
+  _studyModuleId = moduleId;
+  _studyStart = Date.now();
+}
+
+function getTotalStudyMinutes() {
+  const data = getStudyTime();
+  const totalSec = Object.values(data).reduce((a, b) => a + b, 0);
+  return Math.round(totalSec / 60);
+}
+
+function updateStudyTimeDisplay() {
+  const el = document.getElementById('study-time-display');
+  if (!el) return;
+  const mins = getTotalStudyMinutes();
+  const hrs = Math.floor(mins / 60);
+  const m = mins % 60;
+  const display = hrs > 0 ? `${hrs}h ${m}m` : `${m}m`;
+  el.innerHTML = `<span class="study-time-icon">&#x23F1;</span>
+    <span class="study-time-val">${display}</span>
+    <span class="study-time-lbl">studied</span>`;
+}
+
+// Save time when leaving page
+window.addEventListener('beforeunload', () => {
+  if (_studyModuleId && _studyStart) {
+    const elapsed = Math.round((Date.now() - _studyStart) / 1000);
+    if (elapsed > 3 && elapsed < 7200) {
+      const data = getStudyTime();
+      data[_studyModuleId] = (data[_studyModuleId] || 0) + elapsed;
+      try { localStorage.setItem(studyTimeKey(), JSON.stringify(data)); } catch {}
+    }
+  }
+});
 
 // ── Flashcard System ──
 const FLASHCARD_DATA = {
@@ -2747,10 +3123,27 @@ const FLASHCARD_DATA = {
   ],
 };
 
-let fcCards = [], fcIndex = 0;
+let fcCards = [], fcIndex = 0, fcPhaseId = '';
+
+function srKey() { return 'claude-course-sr-' + (currentUser ? currentUser.uid : '_anon'); }
+function getSRData() { try { return JSON.parse(localStorage.getItem(srKey()) || '{}'); } catch { return {}; } }
+
 function openFlashcards(phaseId) {
-  fcCards = FLASHCARD_DATA[phaseId] || [];
-  if (!fcCards.length) return;
+  const raw = FLASHCARD_DATA[phaseId] || [];
+  if (!raw.length) return;
+  fcPhaseId = phaseId;
+  const sr = getSRData();
+  const now = Date.now();
+  // Sort: due cards first (by due date), then unseen
+  fcCards = raw.map((card, i) => {
+    const key = phaseId + ':' + i;
+    const s = sr[key] || { interval: 0, due: 0, ease: 2 };
+    return { ...card, _key: key, _due: s.due, _interval: s.interval, _ease: s.ease };
+  }).sort((a, b) => {
+    const aDue = a._due <= now ? 0 : 1;
+    const bDue = b._due <= now ? 0 : 1;
+    return aDue - bDue || a._due - b._due;
+  });
   fcIndex = 0;
   renderFlashcard();
   document.getElementById('flashcard-overlay').classList.remove('hidden');
@@ -2758,8 +3151,34 @@ function openFlashcards(phaseId) {
 function renderFlashcard() {
   document.getElementById('fc-question').textContent = fcCards[fcIndex].q;
   document.getElementById('fc-answer').textContent = fcCards[fcIndex].a;
-  document.getElementById('fc-counter').textContent = `${fcIndex + 1} / ${fcCards.length}`;
+  const isDue = fcCards[fcIndex]._due <= Date.now();
+  const dueTag = isDue ? ' <span class="fc-due-badge">due</span>' : '';
+  document.getElementById('fc-counter').innerHTML = `${fcIndex + 1} / ${fcCards.length}${dueTag}`;
   document.getElementById('flashcard').classList.remove('flipped');
+  document.getElementById('fc-rating').style.display = 'none';
+  // Show rating buttons when card is flipped
+  document.getElementById('flashcard').onclick = function() {
+    this.classList.toggle('flipped');
+    if (this.classList.contains('flipped')) {
+      document.getElementById('fc-rating').style.display = 'block';
+    }
+  };
+}
+function rateCard(quality) {
+  // quality: 0=Again, 1=Hard, 2=Easy
+  const sr = getSRData();
+  const card = fcCards[fcIndex];
+  const s = sr[card._key] || { interval: 0, due: 0, ease: 2 };
+  const intervals = { 0: 60000, 1: null, 2: null }; // 1 min for Again
+  if (quality === 0) { s.interval = 60000; s.ease = Math.max(1.3, s.ease - 0.2); }
+  else if (quality === 1) { s.interval = Math.max(300000, (s.interval || 300000) * 1.2); }
+  else { s.interval = Math.max(300000, (s.interval || 300000) * s.ease); s.ease = Math.min(3, s.ease + 0.1); }
+  s.due = Date.now() + s.interval;
+  sr[card._key] = s;
+  try { localStorage.setItem(srKey(), JSON.stringify(sr)); } catch {}
+  // Auto advance
+  if (fcIndex < fcCards.length - 1) { fcIndex++; renderFlashcard(); }
+  else { document.getElementById('fc-rating').style.display = 'none'; }
 }
 function fcNav(dir) {
   fcIndex = (fcIndex + dir + fcCards.length) % fcCards.length;
@@ -2767,7 +3186,6 @@ function fcNav(dir) {
 }
 function closeFlashcards() {
   document.getElementById('flashcard-overlay').classList.add('hidden');
-  // Award XP for reviewing flashcards
   if (fcCards.length > 0) {
     addXP('flashcard', XP_PER_FLASHCARD, 'review-' + new Date().toISOString().split('T')[0]);
     updateXPDisplay();
@@ -2776,49 +3194,78 @@ function closeFlashcards() {
 
 // ── Completion Certificate ──
 function generateCertificate() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 1200; canvas.height = 800;
-  const ctx = canvas.getContext('2d');
-  // Background
-  const grad = ctx.createLinearGradient(0, 0, 1200, 800);
-  grad.addColorStop(0, '#1A1A2E'); grad.addColorStop(1, '#0d1b2a');
-  ctx.fillStyle = grad; ctx.fillRect(0, 0, 1200, 800);
-  // Border
-  ctx.strokeStyle = '#00B4A6'; ctx.lineWidth = 4;
-  ctx.strokeRect(30, 30, 1140, 740);
-  ctx.strokeStyle = 'rgba(0,180,166,0.3)'; ctx.lineWidth = 1;
-  ctx.strokeRect(40, 40, 1120, 720);
-  // Title
-  ctx.fillStyle = '#00B4A6'; ctx.font = 'bold 16px Arial'; ctx.textAlign = 'center';
-  ctx.fillText('CERTIFICATE OF COMPLETION', 600, 120);
-  ctx.fillStyle = '#e2e8f0'; ctx.font = 'bold 42px Georgia';
-  ctx.fillText('Claude Code Complete Guide', 600, 200);
-  // Subtitle
-  ctx.fillStyle = '#718096'; ctx.font = '18px Arial';
-  ctx.fillText('This certifies that', 600, 290);
-  // Name
-  ctx.fillStyle = '#00B4A6'; ctx.font = 'bold 36px Georgia';
-  ctx.fillText(currentUser ? currentUser.name : 'Student', 600, 350);
-  // Details
-  ctx.fillStyle = '#a0aec0'; ctx.font = '16px Arial';
-  ctx.fillText('has successfully completed all ' + ALL_MODULES.length + ' modules', 600, 420);
-  ctx.fillText('covering the complete learning path from installation to production.', 600, 450);
-  // Phases completed
+  const name = currentUser ? currentUser.name : 'Student';
   const completedPhases = PHASES.filter(p => isPhaseComplete(p)).length;
-  ctx.fillText(completedPhases + ' phases completed | ' + ALL_MODULES.length + ' modules | ' + (ALL_MODULES.length * 3) + ' quiz questions passed', 600, 490);
-  // Date
-  ctx.fillStyle = '#718096'; ctx.font = '14px Arial';
-  ctx.fillText('Issued on ' + new Date().toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' }), 600, 560);
-  // Logo text
-  ctx.fillStyle = '#008B8B'; ctx.font = 'bold 20px Arial';
-  ctx.fillText('AUSZ Global', 600, 640);
-  ctx.fillStyle = '#718096'; ctx.font = '13px Arial';
-  ctx.fillText('auszglobal.com.au', 600, 665);
-  // Download
-  const link = document.createElement('a');
-  link.download = 'claude-code-certificate-' + (currentUser ? currentUser.name.toLowerCase().replace(/\s+/g, '-') : 'student') + '.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
+  const date = new Date().toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' });
+  const xp = getXP().total;
+  const lvl = getLevel(xp);
+  const lvlName = LEVEL_NAMES[lvl - 1] || 'Newbie';
+
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head><title>Certificate — ${name}</title>
+<style>
+@media print { @page { size: landscape; margin: 0; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .no-print { display: none !important; } }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: #f0f0f0; font-family: Georgia, serif; }
+.cert { width: 1100px; height: 750px; background: linear-gradient(135deg, #1A1A2E, #0d1b2a); position: relative; padding: 50px; color: #e2e8f0; }
+.border-outer { position: absolute; inset: 20px; border: 3px solid #00B4A6; }
+.border-inner { position: absolute; inset: 28px; border: 1px solid rgba(0,180,166,0.3); }
+.content { position: relative; z-index: 1; text-align: center; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+.label { color: #00B4A6; font-size: 14px; letter-spacing: 6px; text-transform: uppercase; font-family: Arial, sans-serif; }
+h1 { font-size: 38px; color: #e2e8f0; margin: 8px 0; }
+.subtitle { color: #718096; font-size: 17px; font-family: Arial, sans-serif; }
+.student-name { color: #00B4A6; font-size: 34px; margin: 10px 0; }
+.details { color: #a0aec0; font-size: 15px; font-family: Arial, sans-serif; line-height: 1.8; }
+.stats { display: flex; gap: 40px; margin: 16px 0; }
+.stat { text-align: center; }
+.stat-val { color: #00B4A6; font-size: 28px; font-weight: bold; font-family: Arial; }
+.stat-lbl { color: #718096; font-size: 11px; font-family: Arial; letter-spacing: 1px; text-transform: uppercase; }
+.footer { color: #718096; font-size: 13px; font-family: Arial, sans-serif; margin-top: auto; }
+.footer strong { color: #008B8B; font-size: 18px; display: block; margin-bottom: 4px; }
+.actions { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; }
+.actions button { padding: 10px 24px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; }
+.btn-pdf { background: #00B4A6; color: #fff; }
+.btn-png { background: #334155; color: #e2e8f0; }
+</style></head><body>
+<div class="cert">
+  <div class="border-outer"></div><div class="border-inner"></div>
+  <div class="content">
+    <div class="label">Certificate of Completion</div>
+    <h1>Claude Code Complete Guide</h1>
+    <div class="subtitle">This certifies that</div>
+    <div class="student-name">${name}</div>
+    <div class="details">has successfully completed the full course covering<br>AI-powered programming with Claude Code</div>
+    <div class="stats">
+      <div class="stat"><div class="stat-val">${completedPhases}</div><div class="stat-lbl">Phases</div></div>
+      <div class="stat"><div class="stat-val">${ALL_MODULES.length}</div><div class="stat-lbl">Modules</div></div>
+      <div class="stat"><div class="stat-val">${xp}</div><div class="stat-lbl">XP Earned</div></div>
+      <div class="stat"><div class="stat-val">Lv.${lvl}</div><div class="stat-lbl">${lvlName}</div></div>
+    </div>
+    <div class="footer">
+      <strong>AUSZ Global</strong>
+      auszglobal.com.au &nbsp;|&nbsp; Issued ${date}
+    </div>
+  </div>
+</div>
+<div class="actions no-print">
+  <button class="btn-pdf" onclick="window.print()">&#x1F4C4; Save as PDF</button>
+  <button class="btn-png" onclick="downloadPNG()">&#x1F5BC; Download PNG</button>
+</div>
+<scr` + `ipt>
+function downloadPNG(){
+  const c=document.querySelector('.cert'),r=c.getBoundingClientRect();
+  const canvas=document.createElement('canvas');canvas.width=r.width*2;canvas.height=r.height*2;
+  const ctx=canvas.getContext('2d');ctx.scale(2,2);
+  import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js')
+    .catch(()=>null).then(()=>{
+      if(typeof html2canvas!=='undefined'){html2canvas(c,{scale:2,useCORS:true}).then(cv=>{
+        const a=document.createElement('a');a.download='certificate-${name.toLowerCase().replace(/\\s+/g,'-')}.png';
+        a.href=cv.toDataURL('image/png');a.click();});}
+      else{alert('PNG download requires internet. Use Save as PDF instead.');}
+    });
+}
+</scr` + `ipt></body></html>`);
+  w.document.close();
 }
 
 // ── Estimated Reading Time ──
@@ -2842,6 +3289,43 @@ function addReadingTime(text) {
   bmBtn.title = 'Bookmark this module';
   bmBtn.onclick = () => toggleBookmark(currentModuleId);
   badge.insertAdjacentElement('afterend', bmBtn);
+
+  // Confused flag button
+  const confused = getConfusedModules();
+  const isConfused = confused.includes(currentModuleId);
+  const cfBtn = document.createElement('button');
+  cfBtn.className = 'confused-btn' + (isConfused ? ' flagged' : '');
+  cfBtn.innerHTML = '&#x2753;';
+  cfBtn.title = isConfused ? 'Remove confused flag' : 'Mark as confused — review later';
+  cfBtn.onclick = () => toggleConfused(currentModuleId);
+  bmBtn.insertAdjacentElement('afterend', cfBtn);
+}
+
+// ── Confused / Review Later ──
+function getConfusedModules() {
+  try { return JSON.parse(localStorage.getItem('claude-course-confused-' + (currentUser ? currentUser.uid : '_anon')) || '[]'); } catch { return []; }
+}
+function toggleConfused(moduleId) {
+  let list = getConfusedModules();
+  if (list.includes(moduleId)) list = list.filter(id => id !== moduleId);
+  else list.push(moduleId);
+  try { localStorage.setItem('claude-course-confused-' + (currentUser ? currentUser.uid : '_anon'), JSON.stringify(list)); } catch {}
+  const btn = document.querySelector('.confused-btn');
+  if (btn) {
+    btn.classList.toggle('flagged', list.includes(moduleId));
+    btn.title = list.includes(moduleId) ? 'Remove confused flag' : 'Mark as confused — review later';
+  }
+  updateConfusedIndicators();
+}
+function updateConfusedIndicators() {
+  const list = getConfusedModules();
+  document.querySelectorAll('.module-link .confused-dot').forEach(el => el.remove());
+  list.forEach(id => {
+    const link = document.querySelector(`.module-link[data-module-id="${id}"]`);
+    if (link && !link.querySelector('.confused-dot')) {
+      link.insertAdjacentHTML('beforeend', '<span class="confused-dot" title="Needs review">&#x2753;</span>');
+    }
+  });
 }
 
 // ── Theme toggle ──
@@ -2859,11 +3343,11 @@ function toggleTheme() {
   if (isDark) {
     document.documentElement.removeAttribute('data-theme');
     btn.innerHTML = '&#9790;';
-    localStorage.setItem('claude-course-theme', 'light');
+    try { localStorage.setItem('claude-course-theme', 'light'); } catch {}
   } else {
     document.documentElement.setAttribute('data-theme', 'dark');
     btn.innerHTML = '&#9788;';
-    localStorage.setItem('claude-course-theme', 'dark');
+    try { localStorage.setItem('claude-course-theme', 'dark'); } catch {}
   }
 }
 
@@ -3004,6 +3488,22 @@ function getDiffBadgeHeader(diff) {
 }
 
 // ── TL;DR Summary Cards ──
+function addQuickReview(moduleId) {
+  if (typeof MODULE_TLDR === 'undefined') return;
+  const idx = ALL_MODULES.findIndex(m => m.id === moduleId);
+  if (idx <= 0) return; // No previous module
+  const prev = ALL_MODULES[idx - 1];
+  const points = MODULE_TLDR[prev.id];
+  if (!points || !points.length) return;
+  const body = document.querySelector('.markdown-body');
+  if (!body) return;
+  const card = document.createElement('div');
+  card.className = 'quick-review';
+  card.innerHTML = `<div class="qr-header">&#x1F504; Quick review from <strong>${prev.id} ${prev.title}</strong></div>
+    <ul>${points.slice(0, 3).map(p => `<li>${p}</li>`).join('')}</ul>`;
+  body.insertBefore(card, body.firstChild);
+}
+
 function addTldrCard(moduleId) {
   if (typeof MODULE_TLDR === 'undefined') return;
   const points = MODULE_TLDR[moduleId];
@@ -3084,14 +3584,71 @@ function snapshotBadges() {
   prevEarnedBadges = new Set();
   PHASES.forEach(p => { if (isPhaseComplete(p)) prevEarnedBadges.add(p.id); });
 }
+const MILESTONES = [
+  { pct: 25, icon: '&#x1F31F;', title: '25% Complete!', msg: 'Quarter of the way there — great start!' },
+  { pct: 50, icon: '&#x1F525;', title: 'Halfway!', msg: 'You\'re 50% done — keep the momentum!' },
+  { pct: 75, icon: '&#x1F680;', title: '75% Complete!', msg: 'Almost there — the finish line is in sight!' },
+  { pct: 100, icon: '&#x1F3C6;', title: 'Course Complete!', msg: 'You finished all modules! Download your certificate below.' },
+];
+function checkMilestones() {
+  if (!currentUser) return;
+  const pct = Math.round((getCompletedCount() / ALL_MODULES.length) * 100);
+  const key = 'claude-course-milestones-' + currentUser.uid;
+  let seen;
+  try { seen = JSON.parse(localStorage.getItem(key) || '[]'); } catch { seen = []; }
+  MILESTONES.forEach(m => {
+    if (pct >= m.pct && !seen.includes(m.pct)) {
+      seen.push(m.pct);
+      try { localStorage.setItem(key, JSON.stringify(seen)); } catch {}
+      const extra = m.pct === 100 ? ' <button class="share-toast-btn" onclick="generateCertificate()">Certificate</button>' : '';
+      showToast(m.icon, m.title, m.msg + extra, 5000);
+    }
+  });
+}
+
 function checkNewBadges() {
   PHASES.forEach(p => {
     if (isPhaseComplete(p) && !prevEarnedBadges.has(p.id)) {
       const icon = BADGE_ICONS[p.id] || '&#x1F3C6;';
-      showToast(icon, `Badge Unlocked!`, `You completed ${p.label} — ${p.title}!`);
+      showToast(icon, `Badge Unlocked!`, `You completed ${p.label} — ${p.title}! <button class="share-toast-btn" onclick="shareAchievement('Completed ${p.label} — ${p.title}')">Share</button>`);
+      showPhaseSummary(p);
     }
   });
   snapshotBadges();
+}
+
+function showPhaseSummary(phase) {
+  const skills = phase.modules.map(m => `<li>${m.title}</li>`).join('');
+  const overlay = document.createElement('div');
+  overlay.className = 'share-menu';
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  overlay.innerHTML = `<div class="share-menu-inner" style="max-width:400px;text-align:left;">
+    <h4 style="text-align:center;margin-bottom:12px;">${phase.icon} ${phase.label} Complete!</h4>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;">Skills you've mastered:</p>
+    <ul style="padding-left:18px;font-size:13px;line-height:1.8;color:var(--text);">${skills}</ul>
+    <p style="font-size:12px;color:var(--text-secondary);margin-top:12px;text-align:center;">
+      ${phase.modules.length} modules &middot; ${phase.modules.length * 3} quiz questions passed
+    </p>
+    <button class="share-btn close" style="margin-top:12px;" onclick="this.closest('.share-menu').remove()">Continue Learning</button>
+  </div>`;
+  document.body.appendChild(overlay);
+}
+
+function shareAchievement(achievement) {
+  const name = currentUser ? currentUser.name : 'A student';
+  const text = `${name} just earned an achievement on Claude Code Complete Guide: ${achievement}! 🎉`;
+  const url = 'https://learn.auszglobal.com.au';
+  const shareMenu = document.createElement('div');
+  shareMenu.className = 'share-menu';
+  shareMenu.innerHTML = `
+    <div class="share-menu-inner">
+      <h4>Share your achievement</h4>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}" target="_blank" class="share-btn linkedin">LinkedIn</a>
+      <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}" target="_blank" class="share-btn twitter">X / Twitter</a>
+      <button class="share-btn copy" onclick="navigator.clipboard.writeText('${text.replace(/'/g, "\\'")} ${url}');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Link',1500);">Copy Link</button>
+      <button class="share-btn close" onclick="this.closest('.share-menu').remove()">Close</button>
+    </div>`;
+  document.body.appendChild(shareMenu);
 }
 
 // ── Onboarding Tour ──
@@ -3114,7 +3671,7 @@ function renderTourStep() {
   document.querySelectorAll('.tour-overlay,.tour-highlight,.tour-popover').forEach(e => e.remove());
 
   if (tourStep >= TOUR_STEPS.length) {
-    localStorage.setItem('claude-course-tour-done', '1');
+    try { localStorage.setItem('claude-course-tour-done', '1'); } catch {}
     return;
   }
 
@@ -3159,7 +3716,57 @@ function renderTourStep() {
 function nextTourStep() { tourStep++; renderTourStep(); }
 function endTour() {
   document.querySelectorAll('.tour-overlay,.tour-highlight,.tour-popover').forEach(e => e.remove());
-  localStorage.setItem('claude-course-tour-done', '1');
+  try { localStorage.setItem('claude-course-tour-done', '1'); } catch {}
+}
+
+// ── Dog Assistants (Chandon & TT) ──
+const DOG_TIPS = {
+  chandon: {
+    img: 'chandon.jpeg', name: 'Chandon',
+    tips: [
+      "Don't rush — take your time to understand each concept before moving on.",
+      "Try the hands-on exercises! Reading alone won't make you a pro.",
+      "Stuck? Use the ❓ button to flag this module for later review.",
+      "Remember to take breaks. Your brain needs time to absorb new info.",
+      "Check the Cheat Sheet for quick reference — it's a real time saver!",
+    ]
+  },
+  tt: {
+    img: 'tt.jpeg', name: 'TT',
+    tips: [
+      "Hey! You're doing great! Keep that streak going! 🔥",
+      "Pro tip: use the flashcards to boost your memory!",
+      "Almost done with this phase — don't give up now!",
+      "You've been studying for a while — maybe grab a coffee? ☕",
+      "Quiz time! Make sure you score 70% to unlock the next module.",
+    ]
+  }
+};
+
+let _dogTimer = null;
+function showDogTip(who) {
+  // Remove existing
+  document.querySelectorAll('.dog-assistant').forEach(el => el.remove());
+  const dog = DOG_TIPS[who || (Math.random() > 0.5 ? 'chandon' : 'tt')];
+  const tip = dog.tips[Math.floor(Math.random() * dog.tips.length)];
+  const el = document.createElement('div');
+  el.className = 'dog-assistant';
+  el.innerHTML = `<div class="dog-bubble">
+    <button class="dog-close" onclick="this.closest('.dog-assistant').remove()">&times;</button>
+    <div class="dog-name">${dog.name} says:</div>
+    ${tip}
+  </div>
+  <div class="dog-avatar"><img src="${dog.img}" alt="${dog.name}"></div>`;
+  document.body.appendChild(el);
+  // Auto dismiss after 8s
+  setTimeout(() => { if (el.parentNode) el.remove(); }, 8000);
+}
+
+function scheduleDogTips() {
+  if (_dogTimer) clearInterval(_dogTimer);
+  // Show first tip after 30s, then every 3 minutes
+  setTimeout(() => showDogTip(), 30000);
+  _dogTimer = setInterval(() => showDogTip(), 180000);
 }
 
 // ── Init ──
@@ -3168,13 +3775,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   loadProgress();
   buildSidebar();
   updateProgressUI();
+  updateConfusedIndicators();
   initTheme();
   snapshotBadges();
   // Restore saved learning path
   activePath = localStorage.getItem('claude-course-path') || null;
   highlightPathModules();
-  // Initialize XP display
+  // Initialize XP, streak, study time, and daily goal display
   updateXPDisplay();
+  updateStreakDisplay();
+  updateStudyTimeDisplay();
+  updateDailyGoalDisplay();
 
   document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
   document.getElementById('hamburger').addEventListener('click', openMobileSidebar);
@@ -3207,6 +3818,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Start onboarding tour for first-time users
   setTimeout(() => startTour(), 800);
+
+  // Start dog assistant tips
+  scheduleDogTips();
 
   // Register service worker for PWA / offline
   if ('serviceWorker' in navigator) {

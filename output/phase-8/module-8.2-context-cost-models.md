@@ -1,6 +1,6 @@
 # Module 8.2: Context, Cost & Model Selection
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand what the context window is and how tokens work
   - Use /compact and /clear to manage conversation length
@@ -8,7 +8,7 @@
   - Apply cost-saving strategies to reduce API spending
   - Monitor your usage with the /cost command
 
-## Theory
+## 📖 Theory
 
 ### What Is the Context Window?
 
@@ -63,7 +63,7 @@ Message 4 (8:00) → Full price again — cache expired (more than 5 minutes)
 
 **The takeaway:** If you're actively working, keep a steady pace. A 10-minute coffee break means your next message costs more because the cache expired.
 
-## Code Example 1: Checking and Managing Context
+## 💻 Code Example 1: Checking and Managing Context
 
 ### Checking your usage:
 
@@ -113,7 +113,7 @@ Use /clear when:
 - The conversation is full of dead ends and failed attempts
 - You want Claude to re-examine the code without preconceptions
 
-## Code Example 2: Switching Models
+## 💻 Code Example 2: Switching Models
 
 ### Check your current model:
 
@@ -162,7 +162,7 @@ Use /clear when:
   in src/payments/processor.py and src/queue/worker.py
 ```
 
-## Supplementary Example: Cost-Saving Strategies
+## 💻 Supplementary Example: Cost-Saving Strategies
 
 ### Strategy 1: Read Only What You Need
 
@@ -214,7 +214,7 @@ Don't wait for the "context full" warning. Compact proactively:
 > Now let's work on the API endpoints...
 ```
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Model Selection Practice
 For each scenario below, decide which model you'd use and why:
@@ -267,10 +267,55 @@ For each scenario below, decide which model you'd use and why:
 <div class="quiz-explain">Prompt caching keeps your processed conversation context warm for 5 minutes. Messages sent within this window are cheaper because Claude doesn't need to re-process the entire context. This is why steady, active work sessions are more cost-efficient than sporadic use.</div>
 </div>
 
+<div class="quiz-q" data-answer="1">
+<p>4. You need to rename a variable across a single file. Which model is the most cost-effective choice?</p>
+<label><input type="radio" name="q4" value="0"> Opus — most capable</label>
+<label><input type="radio" name="q4" value="1"> Haiku — fastest and cheapest for simple mechanical tasks</label>
+<label><input type="radio" name="q4" value="2"> Sonnet — balanced</label>
+<label><input type="radio" name="q4" value="3"> It doesn't matter — use whatever is selected</label>
+<div class="quiz-explain">Variable renaming is a simple, mechanical task that doesn't require deep reasoning. Haiku handles these tasks perfectly at a fraction of the cost. Save Opus for complex architecture decisions and Sonnet for standard feature work.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. Why is the prompt "Read all files in the src/ directory" considered expensive?</p>
+<label><input type="radio" name="q5" value="0"> It consumes tokens for every file, even ones that aren't relevant to your task</label>
+<label><input type="radio" name="q5" value="1"> It causes Claude Code to crash</label>
+<label><input type="radio" name="q5" value="2"> It requires a premium subscription</label>
+<label><input type="radio" name="q5" value="3"> It takes longer to type than a specific prompt</label>
+<div class="quiz-explain">Every file Claude reads consumes tokens from your context window. Reading all files in a directory loads many irrelevant files, wasting tokens and money. A targeted prompt like "Read src/auth/login.py" only loads what you need.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. You sent a message at 0:00, another at 1:30, and then went for a 10-minute break. Your next message at 11:30 will cost more. Why?</p>
+<label><input type="radio" name="q6" value="0"> Claude Code charges extra for breaks</label>
+<label><input type="radio" name="q6" value="1"> Your API key expired during the break</label>
+<label><input type="radio" name="q6" value="2"> Claude forgot everything during the break</label>
+<label><input type="radio" name="q6" value="3"> The prompt cache has a 5-minute TTL — after the break, the cache expired and Claude must re-process the full context</label>
+<div class="quiz-explain">Prompt caching keeps your processed context warm for 5 minutes. Messages within this window are cheaper (cache hit). After 5 minutes of inactivity, the cache expires (cache miss), and the next message costs full price because Claude re-processes everything.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. What is the recommended strategy for a large task that would fill the entire context window?</p>
+<label><input type="radio" name="q7" value="0"> Send it all in one massive prompt</label>
+<label><input type="radio" name="q7" value="1"> Switch to a more powerful model</label>
+<label><input type="radio" name="q7" value="2"> Break it into multiple sessions, saving progress to files between sessions</label>
+<label><input type="radio" name="q7" value="3"> Use /compact repeatedly in the same session</label>
+<div class="quiz-explain">Breaking large tasks across sessions keeps each session's context fresh and cheap. Save plans and progress to files (e.g., docs/plan.md), then start each new session by reading that file. This is more cost-effective than one overloaded session.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. Approximately how many tokens does a 100-line Python file consume?</p>
+<label><input type="radio" name="q8" value="0"> ~1,500 tokens</label>
+<label><input type="radio" name="q8" value="1"> ~100 tokens</label>
+<label><input type="radio" name="q8" value="2"> ~10,000 tokens</label>
+<label><input type="radio" name="q8" value="3"> ~50 tokens</label>
+<div class="quiz-explain">A rough guide is ~10-15 tokens per line of code. A 100-line Python file therefore uses approximately 1,000-1,500 tokens. This helps you estimate costs when deciding whether to read an entire file or ask Claude to search for specific lines.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Now you know how to manage your context and costs effectively. In the next module, **8.3: IDE Integration — VS Code & JetBrains**, we'll explore how to use Claude Code inside your favourite code editor for an even smoother workflow.

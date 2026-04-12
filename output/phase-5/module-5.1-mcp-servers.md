@@ -1,6 +1,6 @@
 # Module 5.1: MCP Servers and External Tools
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand what MCP (Model Context Protocol) is and what it does
   - Explain how MCP servers extend Claude Code's capabilities
@@ -8,7 +8,7 @@
   - Use MCP tools to access external services (such as databases and file systems)
   - Explore available servers in the MCP ecosystem
 
-## Theory
+## 📖 Theory
 
 ### What is MCP?
 
@@ -45,7 +45,7 @@ You (customer)  ->  Claude Code (waiter)  ->  MCP Server (kitchen)  ->  External
 | API servers | An interpreter helping you communicate | GitHub, Slack, Google |
 | Specialised tool servers | A professional technician | Design tools, deployment services |
 
-## Code Example 1: Viewing Your Current MCP Configuration
+## 💻 Code Example 1: Viewing Your Current MCP Configuration
 
 Before installing new MCP servers, let's understand Claude Code's configuration file structure.
 
@@ -86,7 +86,7 @@ MCP servers can be configured in two places:
 ### Expected Output:
 You will see the current contents of your config file. If you haven't configured MCP yet, the file might not have an `mcpServers` section -- that's perfectly normal, we're about to add it.
 
-## Code Example 2: Installing and Configuring an MCP Server
+## 💻 Code Example 2: Installing and Configuring an MCP Server
 
 Let's install a practical MCP server -- the **filesystem server**, which allows Claude Code to safely access files in a specified directory.
 
@@ -165,7 +165,7 @@ If you're curious what the config file looks like, it will be something like thi
 ### Expected Output:
 After running `claude mcp list`, you should see the name and status of the server you just added. If the status shows `connected`, everything is working correctly.
 
-## Supplementary Example: Exploring the MCP Ecosystem
+## 💻 Supplementary Example: Exploring the MCP Ecosystem
 
 The MCP ecosystem is growing rapidly. Here are some commonly used MCP servers:
 
@@ -193,7 +193,7 @@ claude mcp list
 You can also browse all available MCP servers on this website:
 - Official MCP server list: https://github.com/modelcontextprotocol/servers
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Install Your First MCP Server
 1. Choose any MCP server from the table above
@@ -240,10 +240,55 @@ You can also browse all available MCP servers on this website:
 <div class="quiz-explain">MCP servers can be configured at the global level (shared across all projects) or at the project level (used only by that project), giving you great flexibility.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. Which command installs an MCP server package globally using npm?</p>
+<label><input type="radio" name="q4" value="0"> <code>npm install -g @modelcontextprotocol/server-filesystem</code></label>
+<label><input type="radio" name="q4" value="1"> <code>pip install mcp-server-filesystem</code></label>
+<label><input type="radio" name="q4" value="2"> <code>claude install server-filesystem</code></label>
+<label><input type="radio" name="q4" value="3"> <code>apt-get install mcp-filesystem</code></label>
+<div class="quiz-explain">MCP servers are Node.js packages installed via npm. The <code>-g</code> flag installs globally so the server is available system-wide, not just in one project.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. What is the best analogy for MCP in relation to Claude Code?</p>
+<label><input type="radio" name="q5" value="0"> A second brain that stores Claude's memories</label>
+<label><input type="radio" name="q5" value="1"> An App Store that lets Claude install new abilities</label>
+<label><input type="radio" name="q5" value="2"> A programming language Claude uses internally</label>
+<label><input type="radio" name="q5" value="3"> A backup system for your files</label>
+<div class="quiz-explain">MCP is like an App Store for Claude Code. Just as installing apps on your phone gives it new capabilities (maps, banking, food delivery), installing MCP servers gives Claude Code new abilities (database access, API connections, file management).</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. You want Claude Code to be able to query your company's PostgreSQL database. Which type of MCP server should you install?</p>
+<label><input type="radio" name="q6" value="0"> server-filesystem</label>
+<label><input type="radio" name="q6" value="1"> server-slack</label>
+<label><input type="radio" name="q6" value="2"> server-github</label>
+<label><input type="radio" name="q6" value="3"> server-postgres</label>
+<div class="quiz-explain">Each MCP server provides a specific capability. <code>server-postgres</code> connects Claude Code to PostgreSQL databases, <code>server-filesystem</code> provides secure file access, <code>server-slack</code> connects to Slack, and <code>server-github</code> works with GitHub.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>7. What happens when you run <code>claude mcp add sqlite npx @modelcontextprotocol/server-sqlite /path/to/db.db</code>?</p>
+<label><input type="radio" name="q7" value="0"> It creates a new SQLite database at the specified path</label>
+<label><input type="radio" name="q7" value="1"> It registers an MCP server named "sqlite" that can connect to the specified database file</label>
+<label><input type="radio" name="q7" value="2"> It converts the database to a different format</label>
+<label><input type="radio" name="q7" value="3"> It deletes the existing database and creates a backup</label>
+<div class="quiz-explain">The <code>claude mcp add</code> command registers a new MCP server with a given name, command, and arguments. It adds the configuration to your settings so Claude Code can use that server to interact with the specified database.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>8. If you configure an MCP server in your project's <code>.claude/settings.json</code> (not the global one), who can use it?</p>
+<label><input type="radio" name="q8" value="0"> Everyone on the internet</label>
+<label><input type="radio" name="q8" value="1"> All projects on your computer</label>
+<label><input type="radio" name="q8" value="2"> Only Claude Code sessions running in that specific project</label>
+<label><input type="radio" name="q8" value="3"> Only the person who installed it</label>
+<div class="quiz-explain">Project-level MCP configuration only applies when Claude Code is running inside that project directory. This lets you have different MCP servers for different projects without them interfering with each other.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Great work! You've learned how to extend Claude Code's capabilities. In the next module, **5.2: Custom Workflows and Hooks**, we'll learn how to set up automatic triggers that make Claude Code run actions you define before or after specific operations -- just like setting up smart home automation rules!

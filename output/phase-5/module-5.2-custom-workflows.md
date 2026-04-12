@@ -1,6 +1,6 @@
 # Module 5.2: Custom Workflows and Hooks
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand what Hooks are and their role in Claude Code
   - Distinguish between the three Hook types: PreToolUse, PostToolUse, and Notification
@@ -8,7 +8,7 @@
   - Create custom Slash Commands
   - Design an automated workflow that fits your work habits
 
-## Theory
+## 📖 Theory
 
 ### What Are Hooks?
 
@@ -37,7 +37,7 @@ Hooks can help you:
 3. **Real-time alerts** -- notify you when a long-running task completes
 4. **Quality control** -- automatically run tests after every file write
 
-## Code Example 1: Setting Up a Simple Notification Hook
+## 💻 Code Example 1: Setting Up a Simple Notification Hook
 
 Let's start with the simplest Hook -- popping up a desktop notification when Claude Code needs your attention.
 
@@ -87,7 +87,7 @@ The config file will look like this:
 ### Expected Output:
 Once configured, whenever Claude Code completes a long-running task or needs you to confirm an operation, you'll see a desktop notification popup.
 
-## Code Example 2: Creating a Security Protection Hook
+## 💻 Code Example 2: Creating a Security Protection Hook
 
 Now let's build a more practical Hook -- blocking Claude Code from modifying sensitive files (such as `.env` files).
 
@@ -143,7 +143,7 @@ Let's break down this configuration:
 ### Expected Output:
 When you try to have Claude Code edit a `.env` file, the Hook will intercept the operation and display an error message. Claude Code will tell you that you need to edit it manually.
 
-## Code Example 3: Creating a PostToolUse Hook
+## 💻 Code Example 3: Creating a PostToolUse Hook
 
 This Hook will automatically remind you to make a Git commit after Claude Code edits a file:
 
@@ -168,7 +168,7 @@ This Hook will automatically remind you to make a Git commit after Claude Code e
 ### Expected Output:
 Each time Claude Code modifies or creates a file, you'll see a reminder in the terminal prompting you to commit to Git in a timely manner.
 
-## Code Example 4: Custom Slash Commands
+## 💻 Code Example 4: Custom Slash Commands
 
 In addition to Hooks, Claude Code also supports custom **Slash Commands**. Think of these as keyboard shortcuts for your commonly used operations.
 
@@ -225,7 +225,7 @@ In Claude Code, type a slash followed by the command name:
 ### Expected Output:
 After typing `/format`, Claude Code reads the contents of `.claude/commands/format.md` as a prompt and automatically executes the steps described within.
 
-## Code Example 5: A Complete Workflow Configuration
+## 💻 Code Example 5: A Complete Workflow Configuration
 
 Here's a complete `settings.json` example combining multiple Hook types:
 
@@ -281,7 +281,7 @@ Here's a complete `settings.json` example combining multiple Hook types:
 }
 ```
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Create Your First Hook
 1. Open your `~/.claude/settings.json`
@@ -327,10 +327,55 @@ Here's a complete `settings.json` example combining multiple Hook types:
 <div class="quiz-explain">When a PreToolUse Hook command returns a non-zero exit code (like exit 1), Claude Code blocks the tool operation. This is the key mechanism for implementing security protections.</div>
 </div>
 
+<div class="quiz-q" data-answer="2">
+<p>4. What is the role of the "matcher" field in a Hook configuration?</p>
+<label><input type="radio" name="q4" value="0"> It determines how fast the Hook runs</label>
+<label><input type="radio" name="q4" value="1"> It sets the priority of the Hook</label>
+<label><input type="radio" name="q4" value="2"> It specifies which tool(s) the Hook should trigger on (e.g., "Write|Edit" or "Bash")</label>
+<label><input type="radio" name="q4" value="3"> It matches the user's name for permissions</label>
+<div class="quiz-explain">The matcher field uses a pattern (like "Write|Edit") to specify which Claude Code tools will trigger the Hook. The pipe symbol <code>|</code> means "or" — so "Write|Edit" triggers when either the Write or Edit tool is used.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. You want Claude Code to automatically run tests after every file edit. Which Hook type should you use?</p>
+<label><input type="radio" name="q5" value="0"> PostToolUse — triggers after a tool is used</label>
+<label><input type="radio" name="q5" value="1"> PreToolUse — triggers before a tool is used</label>
+<label><input type="radio" name="q5" value="2"> Notification — triggers when Claude needs attention</label>
+<label><input type="radio" name="q5" value="3"> OnStartup — triggers when Claude Code starts</label>
+<div class="quiz-explain">PostToolUse runs after a tool completes. By matching on "Write|Edit", you can automatically run tests every time Claude Code finishes modifying a file, catching issues immediately.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. How do you invoke a custom Slash Command in Claude Code?</p>
+<label><input type="radio" name="q6" value="0"> By running it from the terminal outside Claude Code</label>
+<label><input type="radio" name="q6" value="1"> By typing a slash followed by the command name (e.g., <code>/format</code>)</label>
+<label><input type="radio" name="q6" value="2"> By editing settings.json and restarting</label>
+<label><input type="radio" name="q6" value="3"> By double-clicking the .md file in your file explorer</label>
+<div class="quiz-explain">Custom Slash Commands are invoked by typing <code>/</code> followed by the filename (without the .md extension) in the Claude Code conversation. Claude reads the contents of the matching .md file as instructions.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. What is the environment variable <code>$CLAUDE_TOOL_INPUT</code> used for in a PreToolUse Hook?</p>
+<label><input type="radio" name="q7" value="0"> It stores the API key for authentication</label>
+<label><input type="radio" name="q7" value="1"> It contains the output from the previous command</label>
+<label><input type="radio" name="q7" value="2"> It holds the current working directory path</label>
+<label><input type="radio" name="q7" value="3"> It contains the input data that Claude is about to send to the tool (e.g., file path being written)</label>
+<div class="quiz-explain"><code>$CLAUDE_TOOL_INPUT</code> holds the input that Claude Code is about to pass to a tool. In a PreToolUse Hook, you can inspect this value to check whether the operation should be allowed or blocked (e.g., checking if the file path contains ".env").</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. What is the key difference between Hooks and Slash Commands?</p>
+<label><input type="radio" name="q8" value="0"> Hooks run automatically on triggers; Slash Commands are manually invoked by typing <code>/commandname</code></label>
+<label><input type="radio" name="q8" value="1"> Hooks are written in Python; Slash Commands are written in JavaScript</label>
+<label><input type="radio" name="q8" value="2"> Hooks only work on Mac; Slash Commands work on all platforms</label>
+<label><input type="radio" name="q8" value="3"> There is no difference — they are the same feature</label>
+<div class="quiz-explain">Hooks are automatic triggers that fire when Claude Code uses specific tools (before, after, or on notification). Slash Commands are user-initiated — you explicitly type them when you want a specific workflow to run.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You've now learned how to build a personalised Claude Code working environment! In the next module, **5.3: Team Collaboration Best Practices**, we'll learn how to share these configurations across a team, conduct code reviews, and manage Pull Requests -- making Claude Code a great partner for team collaboration.

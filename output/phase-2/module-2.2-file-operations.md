@@ -1,6 +1,6 @@
 # Module 2.2: Reading and Editing Files -- Let AI Manage Your Files
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Have Claude Code read the contents of any file
   - Have Claude Code create brand new files
@@ -8,7 +8,7 @@
   - Understand what a "diff" (difference comparison) is
   - Review what changes Claude Code made before accepting them
 
-## Theory
+## 📖 Theory
 
 ### Why Are File Operations So Important?
 
@@ -53,7 +53,7 @@ A diff is like the redline markup used when revising contracts. You can clearly 
 
 **Important: Always review the diff before accepting changes!** Just like you'd read the revised terms before signing a contract.
 
-## Code Example 1: Reading and Creating Files
+## 💻 Code Example 1: Reading and Creating Files
 
 ### Preparation
 
@@ -131,7 +131,7 @@ my-first-project/
 └── shopping-list.txt  (just created)
 ```
 
-## Code Example 2: Editing Existing Files
+## 💻 Code Example 2: Editing Existing Files
 
 ### Step 1: Modify Specific Content in a File
 
@@ -218,7 +218,7 @@ Please add a "Learning Progress" section to README.md with the following:
 
 Claude Code will use the Edit tool to add only this section to README.md, without touching any existing content.
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: The Three-Step File Operation
 
@@ -272,11 +272,56 @@ Observe whether Claude Code uses Write or Edit at each step.
 <div class="quiz-explain">Build good habits: always review the diff before making a decision. Claude Code is very smart, but it can occasionally misunderstand your intent. As the project owner, the final decision is yours. Look first, then confirm -- that's the safest approach.</div>
 </div>
 
+<div class="quiz-q" data-answer="2">
+<p>4. You already have a file called "notes.txt" and you ask Claude Code to Write a brand new "notes.txt". What will happen to the original file?</p>
+<label><input type="radio" name="q4" value="0"> Claude Code will automatically rename the old file to notes-backup.txt</label>
+<label><input type="radio" name="q4" value="1"> Claude Code will merge the old and new content together</label>
+<label><input type="radio" name="q4" value="2"> The old file will be completely overwritten with the new content</label>
+<label><input type="radio" name="q4" value="3"> Claude Code will refuse to create the file</label>
+<div class="quiz-explain">The Write tool creates a file from scratch. If a file with the same name already exists, it will be completely overwritten. This is why you should be careful — if you want to add content without losing the original, use the Edit tool instead.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. In a diff display, what does a green line starting with <code>+</code> mean?</p>
+<label><input type="radio" name="q5" value="0"> This line was deleted</label>
+<label><input type="radio" name="q5" value="1"> This line is new content that was added</label>
+<label><input type="radio" name="q5" value="2"> This line has an error</label>
+<label><input type="radio" name="q5" value="3"> This line was not changed</label>
+<div class="quiz-explain">In a diff, green lines with <code>+</code> represent newly added content, while red lines with <code>-</code> represent deleted content. Lines without any symbol were not changed. This colour coding makes it easy to see exactly what was modified.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>6. You want to add a new paragraph to the end of an existing 50-line document. Which tool should Claude Code use?</p>
+<label><input type="radio" name="q6" value="0"> Edit — because you only want to modify a specific part without affecting the rest</label>
+<label><input type="radio" name="q6" value="1"> Write — because the document needs updating</label>
+<label><input type="radio" name="q6" value="2"> Read — because you need to see the document first</label>
+<label><input type="radio" name="q6" value="3"> It doesn't matter which tool is used</label>
+<div class="quiz-explain">Edit is the right choice when you want to modify or add content to an existing file without overwriting everything else. Write would replace the entire document, which is not what you want when you just need to append a paragraph.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. Which of the following is the correct order for a typical file workflow in Claude Code?</p>
+<label><input type="radio" name="q7" value="0"> Edit, Read, Write</label>
+<label><input type="radio" name="q7" value="1"> Write, Write, Write</label>
+<label><input type="radio" name="q7" value="2"> Read, Read, Read</label>
+<label><input type="radio" name="q7" value="3"> Read (check current content), Edit (make changes), Read (verify changes)</label>
+<div class="quiz-explain">A good workflow is: first Read the file to understand its current contents, then Edit to make your desired changes, then Read again to verify the changes are correct. This read-modify-verify cycle ensures accuracy.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. You asked Claude Code to change "red" to "blue" in a CSS file, but the diff shows it also changed "redirect" to "blueirect". What should you do?</p>
+<label><input type="radio" name="q8" value="0"> Accept the changes — Claude Code knows best</label>
+<label><input type="radio" name="q8" value="1"> Reject the changes and ask Claude Code to only change the colour value, not other words containing "red"</label>
+<label><input type="radio" name="q8" value="2"> Accept and fix it manually later</label>
+<label><input type="radio" name="q8" value="3"> Close Claude Code immediately</label>
+<div class="quiz-explain">This is exactly why you should always review the diff before accepting! If Claude Code made an unintended change, reject it and give a more specific instruction. In this case, you could say "change the colour value red to blue, but don't modify any other occurrences of 'red' in other words."</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You've now mastered Claude Code's core file operation skills! You can have the AI read, create, and modify any file.
 

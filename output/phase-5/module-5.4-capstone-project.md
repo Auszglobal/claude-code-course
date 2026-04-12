@@ -1,6 +1,6 @@
 # Module 5.4: Capstone Project
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Independently use Claude Code to build a complete project from scratch
   - Integrate a frontend (HTML/CSS/JS) with a backend (Python)
@@ -8,7 +8,7 @@
   - Use Git for version control and deploy to GitHub Pages
   - Confidently apply Claude Code to a variety of development tasks
 
-## Theory
+## 📖 Theory
 
 ### Your Graduation Project: A Personal Task Manager
 
@@ -960,7 +960,7 @@ Then in the GitHub repository settings:
 ### Expected Output:
 You'll get a public URL that anyone can visit to use your task management system.
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Add a New Feature
 Use Claude Code to add a new feature to your task management system. Here are some ideas:
@@ -1006,11 +1006,122 @@ Based on the features you've added, update the CLAUDE.md to reflect the project'
 <div class="quiz-explain">GitHub Pages is a static web hosting service, suitable for deploying HTML, CSS, JavaScript, and other frontend files. Backend programs need other services (like AWS or Heroku) for deployment.</div>
 </div>
 
+<div class="quiz-q" data-answer="2">
+<p>4. In the task manager's backend, what does <code>max([t["id"] for t in tasks], default=0) + 1</code> do?</p>
+<label><input type="radio" name="q4" value="0"> Deletes the task with the highest ID</label>
+<label><input type="radio" name="q4" value="1"> Counts the total number of tasks</label>
+<label><input type="radio" name="q4" value="2"> Finds the highest existing ID and adds 1 to create a unique new ID</label>
+<label><input type="radio" name="q4" value="3"> Sorts all tasks by their ID</label>
+<div class="quiz-explain">This expression finds the maximum ID currently in the task list and adds 1, ensuring every new task gets a unique ID. The <code>default=0</code> handles the case when the list is empty (so the first task gets ID 1).</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. Why does the frontend use <code>localStorage</code> instead of the Python backend's JSON file?</p>
+<label><input type="radio" name="q5" value="0"> Because a static HTML page deployed to GitHub Pages cannot communicate with a Python backend</label>
+<label><input type="radio" name="q5" value="1"> Because localStorage is faster than JSON</label>
+<label><input type="radio" name="q5" value="2"> Because JSON files cannot store task data</label>
+<label><input type="radio" name="q5" value="3"> Because Python is not supported by modern browsers</label>
+<div class="quiz-explain">GitHub Pages only hosts static files (HTML, CSS, JS). It cannot run Python scripts. The frontend uses localStorage (browser storage) as a standalone solution. In a production app, you'd need a server to bridge the frontend and backend.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. What is the purpose of the <code>escapeHtml()</code> function in the frontend code?</p>
+<label><input type="radio" name="q6" value="0"> It makes text display in bold</label>
+<label><input type="radio" name="q6" value="1"> It prevents XSS attacks by converting special HTML characters to safe text</label>
+<label><input type="radio" name="q6" value="2"> It translates text to different languages</label>
+<label><input type="radio" name="q6" value="3"> It compresses the text to save storage space</label>
+<div class="quiz-explain">XSS (Cross-Site Scripting) attacks happen when user input containing HTML/JavaScript is rendered directly on the page. <code>escapeHtml()</code> converts special characters like <code>&lt;</code> and <code>&gt;</code> into safe text, preventing malicious code injection.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. Why is a <code>.gitignore</code> file important for this project?</p>
+<label><input type="radio" name="q7" value="0"> It makes Git run faster</label>
+<label><input type="radio" name="q7" value="1"> It automatically backs up important files</label>
+<label><input type="radio" name="q7" value="2"> It encrypts sensitive files before committing</label>
+<label><input type="radio" name="q7" value="3"> It tells Git which files to exclude from version control, like test data and system files</label>
+<div class="quiz-explain">The .gitignore file prevents unwanted files (test data, OS files like .DS_Store, IDE settings) from being committed to the repository. This keeps the repo clean and avoids sharing irrelevant or sensitive files.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>8. What does the <code>git checkout --orphan gh-pages</code> command do in the deployment process?</p>
+<label><input type="radio" name="q8" value="0"> It downloads a backup of the repository</label>
+<label><input type="radio" name="q8" value="1"> It deletes all branches except main</label>
+<label><input type="radio" name="q8" value="2"> It creates a new branch with no commit history, perfect for deploying only the frontend files</label>
+<label><input type="radio" name="q8" value="3"> It merges all branches together</label>
+<div class="quiz-explain">An orphan branch starts with no history — a clean slate. This is useful for GitHub Pages because you only want the frontend files on the deployment branch, without the backend code or full project history.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🏗️ Bonus Mini Challenge: Add a "Due Date" Feature
+
+You have built a working task manager -- now extend it with a due date feature. This challenge tests your ability to modify both frontend and backend code, update tests, and redeploy.
+
+### Requirements
+- Each task should optionally have a due date
+- Tasks that are past their due date should be highlighted in red
+- Add a "Sort by due date" button to the frontend
+- Update the backend and tests to handle the new field
+- Commit and push the changes
+
+### Step-by-Step Guide
+
+1. **Start Claude Code in your task-manager project:**
+   ```bash
+   cd ~/task-manager
+   claude
+   ```
+
+2. **Update the backend to support due dates:**
+   ```
+   Modify the add_task function in backend/task_manager.py to accept an optional due_date parameter (format: YYYY-MM-DD). Store it in the task object. If no due date is given, set it to null.
+   ```
+
+3. **Update the frontend to show and set due dates:**
+   ```
+   Update frontend/index.html and frontend/app.js to:
+   - Add a date input field next to the task input
+   - Display the due date next to each task
+   - Highlight tasks in red if the due date is in the past
+   - Add a "Sort by due date" button that reorders the list
+   ```
+
+4. **Update the tests:**
+   ```
+   Add 3 new tests to tests/test_task_manager.py:
+   - test_add_task_with_due_date
+   - test_add_task_without_due_date
+   - test_list_tasks_sorts_by_due_date
+   Then run all tests to make sure nothing is broken.
+   ```
+
+5. **Run the tests:**
+   ```bash
+   python -m unittest tests/test_task_manager.py -v
+   ```
+
+6. **Commit and push:**
+   ```
+   Commit all changes with the message "Add due date feature with sorting and overdue highlighting" and push to GitHub
+   ```
+
+### Expected Result
+
+When you are done, your task manager should:
+- Let you add tasks with or without a due date
+- Show a red highlight on overdue tasks
+- Sort tasks by due date when the button is clicked
+- Pass all existing tests plus the 3 new ones
+
+### Bonus Challenge
+- Add a notification badge in the page title showing the count of overdue tasks (e.g., "(3) Task Manager")
+- Add a "Due This Week" filter that only shows tasks due in the next 7 days
+
+---
+
+## 🔗 Next Steps
 
 ### Congratulations on Completing the Entire Course!
 

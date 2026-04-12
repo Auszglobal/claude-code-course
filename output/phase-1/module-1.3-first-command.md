@@ -1,6 +1,6 @@
 # Module 1.3: Your First Command
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Successfully launch Claude Code
   - Understand the different parts of the Claude Code interface
@@ -10,7 +10,7 @@
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### How Claude Code Works
 
@@ -31,7 +31,7 @@ You have three choices:
 
 ---
 
-## Code Example 1: Launching Claude Code and Getting to Know the Interface
+## 💻 Code Example 1: Launching Claude Code and Getting to Know the Interface
 
 ### Step 1: Create a Practice Folder
 
@@ -99,7 +99,7 @@ After a successful launch, you'll see version information, usage tips, and a `>`
 
 ---
 
-## Code Example 2: Giving Your First Command
+## 💻 Code Example 2: Giving Your First Command
 
 ### Have Claude Code Create a Text File
 
@@ -218,7 +218,7 @@ Ctrl + C (hold Ctrl, then press C)
 
 ---
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Create Your Self-Introduction File
 1. Launch Claude Code in the `claude-practice` folder
@@ -266,11 +266,56 @@ Ctrl + C (hold Ctrl, then press C)
 <div class="quiz-explain">The most common ways to exit are typing <code>/exit</code> or pressing the keyboard shortcut <code>Ctrl + C</code>. Both safely end the Claude Code session.</div>
 </div>
 
+<div class="quiz-q" data-answer="2">
+<p>4. Before launching Claude Code, why is it recommended to create a dedicated practice folder first?</p>
+<label><input type="radio" name="q4" value="0"> Because Claude Code cannot run without a new folder</label>
+<label><input type="radio" name="q4" value="1"> Because it makes Claude Code run faster</label>
+<label><input type="radio" name="q4" value="2"> To keep your practice files organised and avoid accidentally modifying important files elsewhere</label>
+<label><input type="radio" name="q4" value="3"> Because the terminal requires it</label>
+<div class="quiz-explain">Creating a dedicated practice folder is a good habit. It keeps your experiments organised in one place and ensures Claude Code operates on practice files rather than your important documents or system files.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. What does the <code>cwd</code> shown in the Claude Code interface stand for?</p>
+<label><input type="radio" name="q5" value="0"> Current working directory — the folder Claude Code is currently operating in</label>
+<label><input type="radio" name="q5" value="1"> Claude Web Dashboard</label>
+<label><input type="radio" name="q5" value="2"> Command Window Display</label>
+<label><input type="radio" name="q5" value="3"> Computer-Wide Detection</label>
+<div class="quiz-explain"><code>cwd</code> stands for "current working directory." It tells you which folder Claude Code is currently "looking at." Any file operations will happen relative to this folder unless you specify otherwise.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. You ask Claude Code to create a file, but then change your mind. At the permission prompt, what should you do?</p>
+<label><input type="radio" name="q6" value="0"> Shut down your computer immediately</label>
+<label><input type="radio" name="q6" value="1"> Press Y to allow it anyway</label>
+<label><input type="radio" name="q6" value="2"> Close the terminal window</label>
+<label><input type="radio" name="q6" value="3"> Press N to deny the action — Claude Code will cancel it safely</label>
+<div class="quiz-explain">Pressing N (Deny) is the proper way to cancel an action. Claude Code respects your decision and makes no changes. This is exactly what the permission system is designed for — giving you full control at every step.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>7. What does "Allow always" mean when Claude Code asks for permission?</p>
+<label><input type="radio" name="q7" value="0"> It allows Claude Code to do anything forever without restrictions</label>
+<label><input type="radio" name="q7" value="1"> It tells Claude Code not to ask again for this specific type of action in the current session</label>
+<label><input type="radio" name="q7" value="2"> It saves a permanent setting that can never be changed</label>
+<label><input type="radio" name="q7" value="3"> It sends your files to the cloud automatically</label>
+<div class="quiz-explain">"Allow always" is a convenience option that tells Claude Code to stop asking permission for that particular type of action. It helps you work faster when you trust the operation, but you can always restart the session to reset permissions.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>8. After Claude Code creates a file for you, how can you verify the file actually exists?</p>
+<label><input type="radio" name="q8" value="0"> You have to take Claude Code's word for it — there's no way to check</label>
+<label><input type="radio" name="q8" value="1"> Reinstall Claude Code and check</label>
+<label><input type="radio" name="q8" value="2"> Ask Claude Code to read the file, or open the folder in File Explorer / Finder to check manually</label>
+<label><input type="radio" name="q8" value="3"> Restart your computer</label>
+<div class="quiz-explain">You can verify a file was created by asking Claude Code to read it back to you, or by navigating to the folder using File Explorer (Windows) or Finder (Mac) and opening the file with a text editor. Both methods confirm the file exists and has the correct content.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Excellent! You've successfully completed your first interaction with Claude Code and created your first file.
 

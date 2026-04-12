@@ -1,6 +1,6 @@
 # Module 1.1: What Is Claude Code?
 
-## Learning Objectives
+## 🎯 Learning Objectives
 
 After completing this lesson, you will be able to:
 - Explain what Claude Code is in your own words
@@ -11,7 +11,7 @@ After completing this lesson, you will be able to:
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### What Is Claude Code?
 
@@ -93,7 +93,7 @@ This "ask before acting" design ensures you always stay in control -- Claude Cod
 
 ---
 
-## Code Example 1: Your First Claude Code Conversation
+## 💻 Code Example 1: Your First Claude Code Conversation
 
 > Note: This example is meant to give you a preview of the Claude Code experience. You don't need to actually do this yet -- installation steps will be covered in detail in Module 1.2.
 
@@ -144,7 +144,7 @@ The key point: you don't need to memorise any "commands"! Just describe what you
 
 ---
 
-## Code Example 2: Having Claude Code Create a File for You
+## 💻 Code Example 2: Having Claude Code Create a File for You
 
 Here's a slightly more advanced example showing how Claude Code can create a complete file for you:
 
@@ -182,7 +182,7 @@ Did you notice? Before actually creating the file, Claude Code shows you the con
 
 ---
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Think About Your Use Cases
 
@@ -241,11 +241,56 @@ Try to find and open the terminal on your computer:
 <div class="quiz-explain">Claude Code has a safety mechanism. Before performing any action that could affect your files, it explains its plan and asks for your confirmation. You always have ultimate control.</div>
 </div>
 
+<div class="quiz-q" data-answer="2">
+<p>4. Which company developed Claude Code?</p>
+<label><input type="radio" name="q4" value="0"> OpenAI</label>
+<label><input type="radio" name="q4" value="1"> Google</label>
+<label><input type="radio" name="q4" value="2"> Anthropic</label>
+<label><input type="radio" name="q4" value="3"> Microsoft</label>
+<div class="quiz-explain">Claude Code is developed by Anthropic. It is an AI command-line tool that runs in your terminal and can interact directly with your computer's files and commands.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. Which of the following tasks can Claude Code help you with?</p>
+<label><input type="radio" name="q5" value="0"> Create files, edit code, and search for information on your computer</label>
+<label><input type="radio" name="q5" value="1"> Only answer questions in a chat window</label>
+<label><input type="radio" name="q5" value="2"> Only browse the internet</label>
+<label><input type="radio" name="q5" value="3"> Only send emails</label>
+<div class="quiz-explain">Claude Code can directly create files, edit code, search for information, run commands, and much more on your computer. It goes far beyond just chatting — it can actually perform actions on your system.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. How does Claude Code's three-step workflow operate?</p>
+<label><input type="radio" name="q6" value="0"> Execute first, then ask, then report</label>
+<label><input type="radio" name="q6" value="1"> Ask, report, then execute</label>
+<label><input type="radio" name="q6" value="2"> Report, execute, then ask</label>
+<label><input type="radio" name="q6" value="3"> You describe the task, Claude Code plans and confirms, then executes and reports</label>
+<div class="quiz-explain">Claude Code follows a safe three-step workflow: first you describe your request, then Claude Code plans the action and asks for confirmation, and finally it executes and reports the result. This ensures you always stay in control.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>7. You want to organise 50 scattered files into folders. Which approach best describes how Claude Code helps?</p>
+<label><input type="radio" name="q7" value="0"> It gives you a written guide and you do it manually</label>
+<label><input type="radio" name="q7" value="1"> You describe what you want in plain language and Claude Code moves the files for you</label>
+<label><input type="radio" name="q7" value="2"> You must write a program first before Claude Code can help</label>
+<label><input type="radio" name="q7" value="3"> Claude Code cannot help with file organisation</label>
+<div class="quiz-explain">One of Claude Code's strengths is that you simply describe the task in everyday language — such as "organise these files by type" — and it will directly perform the actions on your computer. No coding knowledge is required.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>8. Why is Claude Code described as "beginner-friendly" even for people with zero programming experience?</p>
+<label><input type="radio" name="q8" value="0"> Because it only works with simple tasks</label>
+<label><input type="radio" name="q8" value="1"> Because it comes with a built-in tutorial game</label>
+<label><input type="radio" name="q8" value="2"> Because you can use everyday language to give instructions — no coding knowledge needed</label>
+<label><input type="radio" name="q8" value="3"> Because it automatically installs all software for you</label>
+<div class="quiz-explain">Claude Code accepts instructions in natural, everyday language. You don't need to memorise commands or learn programming syntax. Just describe what you want to do, and Claude Code handles the technical details.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations on completing the first lesson! Now you understand what Claude Code is and what it can do.
 

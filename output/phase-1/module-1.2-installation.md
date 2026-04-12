@@ -1,6 +1,6 @@
 # Module 1.2: Installing Claude Code
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Understand what Node.js is and why you need it
   - Successfully install Node.js on Windows or Mac
@@ -10,7 +10,7 @@
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### What Is Node.js? Why Do You Need It?
 
@@ -36,7 +36,7 @@ An API Key is a long string of characters that lets Anthropic know "you are the 
 
 ---
 
-## Code Example 1: Installing Node.js
+## 💻 Code Example 1: Installing Node.js
 
 ### Windows Installation Steps
 
@@ -122,7 +122,7 @@ npm --version
 
 ---
 
-## Code Example 2: Getting an API Key and Installing Claude Code
+## 💻 Code Example 2: Getting an API Key and Installing Claude Code
 
 ### Step 1: Create an Anthropic Account and Get an API Key
 
@@ -215,7 +215,7 @@ If you see a welcome message and a prompt, congratulations -- the installation w
 
 ---
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Complete the Full Installation Process
 Follow the steps above to complete the following on your computer:
@@ -268,11 +268,56 @@ Write down these three version numbers in a notebook -- they may come in handy f
 <div class="quiz-explain"><code>-g</code> stands for global, meaning it installs to a shared location on your entire computer, so you can use the <code>claude</code> command from any folder. Without <code>-g</code>, it would only work in the folder where it was installed.</div>
 </div>
 
+<div class="quiz-q" data-answer="2">
+<p>4. Which version of Node.js should you download for the most stable experience?</p>
+<label><input type="radio" name="q4" value="0"> The "Current" version (latest features)</label>
+<label><input type="radio" name="q4" value="1"> The oldest version available</label>
+<label><input type="radio" name="q4" value="2"> The LTS (Long-Term Support) version</label>
+<label><input type="radio" name="q4" value="3"> Any version — it doesn't matter</label>
+<div class="quiz-explain">LTS stands for Long-Term Support, which means this version receives ongoing bug fixes and security updates. It is the most stable and recommended choice, especially for beginners.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. After installing Node.js, how can you verify the installation was successful?</p>
+<label><input type="radio" name="q5" value="0"> Run <code>node --version</code> in the terminal and check that a version number appears</label>
+<label><input type="radio" name="q5" value="1"> Open the Node.js website and click "Verify"</label>
+<label><input type="radio" name="q5" value="2"> Restart your computer and look for a Node.js icon on the desktop</label>
+<label><input type="radio" name="q5" value="3"> Send an email to Anthropic support</label>
+<div class="quiz-explain">Running <code>node --version</code> in the terminal is the standard way to confirm Node.js is installed. If it shows a version number like v22.14.0, the installation was successful.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. Why doesn't anything appear on screen when you paste your API Key into Claude Code?</p>
+<label><input type="radio" name="q6" value="0"> Because Claude Code is broken</label>
+<label><input type="radio" name="q6" value="1"> Because you pasted it incorrectly</label>
+<label><input type="radio" name="q6" value="2"> Because your API Key has expired</label>
+<label><input type="radio" name="q6" value="3"> Because it is a security feature — sensitive input is hidden to prevent others from seeing it</label>
+<div class="quiz-explain">This is a standard security feature in terminals. When entering passwords or API keys, the characters are intentionally hidden so that someone looking over your shoulder cannot see your sensitive information. Just paste and press Enter.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>7. On a Mac, if you get a "permission denied" error when installing Claude Code, what should you try?</p>
+<label><input type="radio" name="q7" value="0"> Delete Node.js and reinstall</label>
+<label><input type="radio" name="q7" value="1"> Add <code>sudo</code> before the install command</label>
+<label><input type="radio" name="q7" value="2"> Switch to a Windows computer</label>
+<label><input type="radio" name="q7" value="3"> Close the terminal and open a browser instead</label>
+<div class="quiz-explain">On Mac, <code>sudo</code> gives the command administrator-level permissions. Running <code>sudo npm install -g @anthropic-ai/claude-code</code> solves most permission issues. On Windows, you would run the Command Prompt as Administrator instead.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. What is npm?</p>
+<label><input type="radio" name="q8" value="0"> A package manager that comes with Node.js, like an app store for installing tools</label>
+<label><input type="radio" name="q8" value="1"> A programming language</label>
+<label><input type="radio" name="q8" value="2"> A type of API Key</label>
+<label><input type="radio" name="q8" value="3"> A text editor</label>
+<div class="quiz-explain">npm (Node Package Manager) is the built-in "app store" that comes with Node.js. Just as you install apps from the App Store on your phone, you use npm to install tools like Claude Code with a single command.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations on completing the installation! Your computer is now set up and ready to go.
 

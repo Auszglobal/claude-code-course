@@ -1,6 +1,6 @@
 # Module 2.4: Git Basics and Version Control -- Adding a "Save Game" Feature to Your Project
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Understand what Git is and why it's so important
   - Have Claude Code check the Git status of your project
@@ -8,7 +8,7 @@
   - Have Claude Code view the commit history
   - Understand basic version control concepts
 
-## Theory
+## 📖 Theory
 
 ### What Is Git?
 
@@ -82,7 +82,7 @@ Before we start hands-on work, let's understand a few basic concepts:
 
 > Don't worry: These concepts will make sense naturally as you practise. And Claude Code handles these steps for you -- just say "save my work" and you're done.
 
-## Code Example 1: Initialising Git and Making Your First Commit
+## 💻 Code Example 1: Initialising Git and Making Your First Commit
 
 ### Step 1: Create a New Project and Initialise Git
 
@@ -169,7 +169,7 @@ Please commit index.html to Git with the commit message "Create welcome page"
 
 Congratulations! Your first "game save" has been created!
 
-## Code Example 2: Modifying Files and Creating More Save Points
+## 💻 Code Example 2: Modifying Files and Creating More Save Points
 
 ### Step 1: Modify a File
 
@@ -251,7 +251,7 @@ A commit message is like a game save description. A good description lets you qu
 
 > Tip: Good commit messages answer the question "why was this change made" rather than "what was changed." Git already records what was changed (the diff), so the message should explain the reason.
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Complete a Three-Commit Workflow
 
@@ -308,11 +308,143 @@ Experience the power of version control -- you can review how your project has e
 <div class="quiz-explain">A good commit message should clearly describe why this change was made. "Add user login form page" lets you immediately know what this commit did when reviewing history in the future. The other options are too vague and don't provide useful information.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. What does "untracked" mean in Git terminology?</p>
+<label><input type="radio" name="q4" value="0"> Git sees the file but hasn't been told to track its changes yet</label>
+<label><input type="radio" name="q4" value="1"> The file has been deleted</label>
+<label><input type="radio" name="q4" value="2"> The file is corrupted</label>
+<label><input type="radio" name="q4" value="3"> The file is being tracked by another program</label>
+<div class="quiz-explain">"Untracked" means Git knows the file exists but hasn't been instructed to monitor it. It's like a new item on your desk that you haven't decided whether to file yet. You need to add it to the staging area before Git will include it in a commit.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. What is the "staging area" in the Git workflow?</p>
+<label><input type="radio" name="q5" value="0"> A folder where deleted files are stored</label>
+<label><input type="radio" name="q5" value="1"> A preparation zone where changes are gathered before being officially committed</label>
+<label><input type="radio" name="q5" value="2"> A place where Git stores error logs</label>
+<label><input type="radio" name="q5" value="3"> The same as the working directory</label>
+<div class="quiz-explain">The staging area is like an outbox. You place changes there when they're ready to be committed. This gives you control over which changes to include in each commit — you don't have to save everything at once.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>6. You've made changes to 3 files. You want to save (commit) only 2 of them. Is this possible with Git?</p>
+<label><input type="radio" name="q6" value="0"> No — Git always commits all changed files at once</label>
+<label><input type="radio" name="q6" value="1"> No — you must commit each file in a separate session</label>
+<label><input type="radio" name="q6" value="2"> Yes — you can choose which files to add to the staging area before committing</label>
+<label><input type="radio" name="q6" value="3"> Yes — but only if you delete the third file first</label>
+<div class="quiz-explain">Git lets you selectively add files to the staging area. You can tell Claude Code: "Commit only index.html and style.css with the message..." and the third file's changes will remain uncommitted for later.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. Why is version control compared to a "save game" system?</p>
+<label><input type="radio" name="q7" value="0"> Because programming is like playing a game</label>
+<label><input type="radio" name="q7" value="1"> Because Git was originally designed for games</label>
+<label><input type="radio" name="q7" value="2"> Because you can only save once</label>
+<label><input type="radio" name="q7" value="3"> Because you can save your project's state at any point and return to any previous save later</label>
+<div class="quiz-explain">Just like a game save lets you go back to a previous point if things go wrong, Git commits let you record your project's state and return to any earlier version. This safety net means you can experiment boldly without fear of permanently breaking things.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. You accidentally broke your project after several changes. How can Git help?</p>
+<label><input type="radio" name="q8" value="0"> You can view the commit history and go back to the last working version</label>
+<label><input type="radio" name="q8" value="1"> Git automatically prevents all bugs</label>
+<label><input type="radio" name="q8" value="2"> Git will fix the code for you</label>
+<label><input type="radio" name="q8" value="3"> You have to start the project from scratch</label>
+<div class="quiz-explain">This is one of Git's greatest strengths. When something goes wrong, you can view the history of commits and restore your project to a previous state where everything was working. This is why making frequent, descriptive commits is so important.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🏗️ Mini Project: Your First Repository
+
+Bring together everything from Phase 2 by creating a real Git repository with a CLAUDE.md file, multiple commits, and pushing it to GitHub.
+
+### Requirements
+- Create a new project folder and initialise it as a Git repository
+- Add a CLAUDE.md configuration file with project rules
+- Create at least 2 other files (e.g., index.html and style.css)
+- Make at least 3 separate commits with clear, descriptive messages
+- Push the repository to GitHub so it is publicly accessible
+
+### Step-by-Step Guide
+
+1. **Create the project folder and start Claude Code:**
+
+   **Windows (Git Bash) and Mac / Linux:**
+   ```bash
+   mkdir ~/Desktop/my-portfolio
+   cd ~/Desktop/my-portfolio
+   claude
+   ```
+
+2. **Initialise Git and create your CLAUDE.md:**
+   ```
+   Please initialise a Git repository here, then create a CLAUDE.md file with the following content:
+   - Project name: My Portfolio
+   - Description: A simple personal website
+   - Code style: Use 2-space indentation for HTML/CSS
+   - Rule: All images must have alt text
+   ```
+
+3. **Commit the CLAUDE.md:**
+   ```
+   Please commit CLAUDE.md to Git with the message "Add project configuration file"
+   ```
+
+4. **Create an index.html file:**
+   ```
+   Create a simple index.html with a welcome heading that says "Welcome to My Portfolio" and a short paragraph about yourself. Keep it simple — just HTML, no CSS yet.
+   ```
+
+5. **Commit the HTML file:**
+   ```
+   Please commit index.html with the message "Add homepage with welcome message"
+   ```
+
+6. **Create a stylesheet:**
+   ```
+   Create a style.css file that makes the page look nice — center the text, add a pleasant background colour, and use a clean font. Then link it in index.html.
+   ```
+
+7. **Commit the styling changes:**
+   ```
+   Please commit all changes with the message "Add stylesheet and improve homepage design"
+   ```
+
+8. **Review your commit history:**
+   ```
+   Show me the full Git commit history for this project
+   ```
+
+9. **Push to GitHub (requires a GitHub account):**
+   ```
+   Help me create a new public repository on GitHub called my-portfolio and push all my commits to it
+   ```
+
+   If you don't have the `gh` CLI installed, Claude Code will guide you through creating the repo on github.com manually and running:
+   ```bash
+   git remote add origin https://github.com/YOUR-USERNAME/my-portfolio.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+### Expected Result
+
+When you are done, you should have:
+- A GitHub repository at `https://github.com/YOUR-USERNAME/my-portfolio`
+- 3 commits visible in the commit history, each with a clear message
+- 3 files in the repo: `CLAUDE.md`, `index.html`, and `style.css`
+- Running `git log` shows all 3 commits with timestamps and descriptions
+
+### Bonus Challenge
+- Enable GitHub Pages on your repository (Settings > Pages > Deploy from branch > main) and visit your live website at `https://YOUR-USERNAME.github.io/my-portfolio`
+- Add a fourth commit that updates the page content, push it, and watch your live site update automatically
+
+---
+
+## 🔗 Next Steps
 
 Excellent! You've completed all of Phase 2! Let's recap what you've learned:
 

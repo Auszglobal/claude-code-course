@@ -355,6 +355,51 @@ and add a link tag in the HTML to reference it.
 <div class="quiz-explain">When a function is used (imported) by multiple files, renaming it means you must update all the places that reference it, or the program will throw an error saying the function can't be found. That's why multi-file operations are important.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. You have 20 files scattered in one folder. You want to sort them into subfolders by type. What should you tell Claude Code?</p>
+<label><input type="radio" name="q4" value="0"> Describe the desired folder structure in natural language and let Claude Code plan and execute the reorganisation</label>
+<label><input type="radio" name="q4" value="1"> Move each file manually and ask Claude Code to verify afterwards</label>
+<label><input type="radio" name="q4" value="2"> Delete all files and recreate them in the correct folders</label>
+<label><input type="radio" name="q4" value="3"> It's not possible to organise files with Claude Code</label>
+<div class="quiz-explain">Claude Code excels at multi-file operations. You can describe the desired result — for example, "put Python files in src/, test files in tests/, web files in web/" — and Claude Code will analyse the files and plan the reorganisation for you.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>5. During a refactoring operation, Claude Code proposes changes to 10 files. You want to proceed cautiously. What can you ask?</p>
+<label><input type="radio" name="q5" value="0"> "Cancel everything and forget about it"</label>
+<label><input type="radio" name="q5" value="1"> "Just change all of them — I trust you completely"</label>
+<label><input type="radio" name="q5" value="2"> "Show me only the first file"</label>
+<label><input type="radio" name="q5" value="3"> "Please modify only one file first so I can verify, then proceed with the rest"</label>
+<div class="quiz-explain">Asking Claude Code to modify one file at a time is a safe, cautious approach. This lets you verify each change before moving on to the next file. You can also ask for a preview of all changes without actually modifying anything.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>6. What is the main goal of extracting duplicate code into a shared module?</p>
+<label><input type="radio" name="q6" value="0"> To make the project have more files</label>
+<label><input type="radio" name="q6" value="1"> To make the program run faster</label>
+<label><input type="radio" name="q6" value="2"> To eliminate repetition — so you only need to update the code in one place instead of many</label>
+<label><input type="radio" name="q6" value="3"> To satisfy a requirement from the programming language</label>
+<div class="quiz-explain">When the same code appears in multiple files, fixing a bug or making a change means updating every copy. By extracting it into a shared module, you maintain a single source of truth. Update it once and every file that uses it gets the fix automatically.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>7. After Claude Code completes a multi-file refactoring, what is the most important next step?</p>
+<label><input type="radio" name="q7" value="0"> Immediately delete the old backup files</label>
+<label><input type="radio" name="q7" value="1"> Test the program to confirm it still works correctly</label>
+<label><input type="radio" name="q7" value="2"> Celebrate and move on to the next task</label>
+<label><input type="radio" name="q7" value="3"> Rewrite all the files from scratch</label>
+<div class="quiz-explain">After any refactoring, testing is crucial. Refactoring is supposed to improve structure without changing functionality, so you need to verify that the program still behaves exactly as before. Running existing tests or manually checking key features is the safest approach.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>8. You renamed a function from <code>calc</code> to <code>add_numbers</code> in the definition file, but forgot to update the files that import it. What will happen?</p>
+<label><input type="radio" name="q8" value="0"> The program will run correctly — it automatically detects renamed functions</label>
+<label><input type="radio" name="q8" value="1"> The program will silently give wrong results</label>
+<label><input type="radio" name="q8" value="2"> The program will crash with an error saying it cannot find the function <code>calc</code></label>
+<label><input type="radio" name="q8" value="3"> The old function name will continue to work alongside the new one</label>
+<div class="quiz-explain">If other files still try to import <code>calc</code> but the function is now called <code>add_numbers</code>, the program will throw an ImportError or NameError. This is exactly why multi-file refactoring is important — all references must be updated consistently.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

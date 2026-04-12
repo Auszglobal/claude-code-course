@@ -420,38 +420,84 @@ while True:
 
 ---
 
-## ❓ 小測驗（3 條題目）
+<div class="module-quiz">
+<h3>Module Quiz</h3>
 
-**1. SDK 和 CLI 最大的差別是什麼？**
+<div class="quiz-q" data-answer="1">
+<p>1. SDK 和 CLI 最大的差別是什麼？</p>
+<label><input type="radio" name="q1" value="0"> SDK 比較慢，CLI 比較快</label>
+<label><input type="radio" name="q1" value="1"> SDK 讓你在自己的程式裡呼叫 Claude，CLI 是直接在終端機互動</label>
+<label><input type="radio" name="q1" value="2"> SDK 只能用 Python，CLI 可以用任何語言</label>
+<label><input type="radio" name="q1" value="3"> SDK 是免費的，CLI 需要付費</label>
+<div class="quiz-explain">CLI（命令列）是你直接在終端機跟 Claude 對話的方式，而 SDK 是一個程式庫，讓你在自己寫的 Python 或 Node.js 程式裡呼叫 Claude 的功能。簡單來說，CLI 是「你對 Claude 說話」，SDK 是「你的程式對 Claude 說話」。</div>
+</div>
 
-A. SDK 比較慢，CLI 比較快
-B. SDK 讓你在自己的程式裡呼叫 Claude，CLI 是直接在終端機互動
-C. SDK 只能用 Python，CLI 可以用任何語言
-D. SDK 是免費的，CLI 需要付費
+<div class="quiz-q" data-answer="2">
+<p>2. 在 Tool Use 的流程中，當 Claude 決定使用某個工具時，實際執行工具的是誰？</p>
+<label><input type="radio" name="q2" value="0"> Claude 自己在雲端執行工具</label>
+<label><input type="radio" name="q2" value="1"> Anthropic 的伺服器執行工具</label>
+<label><input type="radio" name="q2" value="2"> 你的程式碼負責執行工具，然後把結果回傳給 Claude</label>
+<label><input type="radio" name="q2" value="3"> 工具會自動執行，不需要任何人介入</label>
+<div class="quiz-explain">這是 Tool Use 的核心概念。Claude 只負責「決定要用哪個工具」和「提供輸入參數」，但實際的工具執行是由你的程式碼完成的。你的程式收到 Claude 的工具請求後，執行對應的邏輯，再把結果回傳給 Claude，讓它根據結果生成最終回覆。</div>
+</div>
 
-答案：**B** — CLI（命令列）是你直接在終端機跟 Claude 對話的方式，而 SDK 是一個程式庫，讓你在自己寫的 Python 或 Node.js 程式裡呼叫 Claude 的功能。簡單來說，CLI 是「你對 Claude 說話」，SDK 是「你的程式對 Claude 說話」。
+<div class="quiz-q" data-answer="1">
+<p>3. 以下哪個場景最適合使用 Managed Agents？</p>
+<label><input type="radio" name="q3" value="0"> 我想在終端機裡快速問 Claude 一個問題</label>
+<label><input type="radio" name="q3" value="1"> 我想建立一個 24 小時自動運行的客服機器人</label>
+<label><input type="radio" name="q3" value="2"> 我想在自己的 Python 腳本裡生成一段文字</label>
+<label><input type="radio" name="q3" value="3"> 我想讓 Claude 幫我寫一個簡單的函式</label>
+<div class="quiz-explain">Managed Agents 的最大優勢是可以部署到雲端、24 小時待命、被外部事件觸發。自動客服機器人需要隨時回應客戶訊息，這正是 Managed Agents 的強項。其他選項用 CLI（A、D）或基礎 SDK（C）就能完成。</div>
+</div>
 
----
+<div class="quiz-q" data-answer="0">
+<p>4. 在 Python SDK 中，<code>client.messages.create()</code> 的 <code>max_tokens</code> 參數有什麼作用？</p>
+<label><input type="radio" name="q4" value="0"> 限制 Claude 回覆的最大長度（以 token 為單位）</label>
+<label><input type="radio" name="q4" value="1"> 設定你的 API 每月使用上限</label>
+<label><input type="radio" name="q4" value="2"> 限制你發送訊息的長度</label>
+<label><input type="radio" name="q4" value="3"> 設定 Claude 的記憶容量</label>
+<div class="quiz-explain"><code>max_tokens</code> 限制的是 Claude 回覆的最大 token 數量。例如設定 1024 就表示回覆最多 1024 個 token。這有助於控制成本和回覆長度，但不影響你發送的訊息長度。</div>
+</div>
 
-**2. 在 Tool Use 的流程中，當 Claude 決定使用某個工具時，實際執行工具的是誰？**
+<div class="quiz-q" data-answer="2">
+<p>5. 在 Node.js Agent 範例中，當 <code>response.stop_reason === "tool_use"</code> 時，程式應該怎麼做？</p>
+<label><input type="radio" name="q5" value="0"> 直接顯示 Claude 的回覆然後結束程式</label>
+<label><input type="radio" name="q5" value="1"> 重新發送使用者的原始問題</label>
+<label><input type="radio" name="q5" value="2"> 執行 Claude 請求的工具，將結果回傳給 Claude，然後繼續對話迴圈</label>
+<label><input type="radio" name="q5" value="3"> 切換到不同的 AI 模型</label>
+<div class="quiz-explain">當 stop_reason 是 "tool_use" 時，表示 Claude 想使用一個工具。程式需要找到工具請求、執行對應的工具邏輯、將結果作為 tool_result 回傳給 Claude，然後繼續迴圈讓 Claude 處理結果。</div>
+</div>
 
-A. Claude 自己在雲端執行工具
-B. Anthropic 的伺服器執行工具
-C. 你的程式碼負責執行工具，然後把結果回傳給 Claude
-D. 工具會自動執行，不需要任何人介入
+<div class="quiz-q" data-answer="3">
+<p>6. 為什麼 SDK 會自動讀取環境變數 <code>ANTHROPIC_API_KEY</code> 而不是在程式碼中直接寫入金鑰？</p>
+<label><input type="radio" name="q6" value="0"> 因為環境變數讓程式跑得更快</label>
+<label><input type="radio" name="q6" value="1"> 因為 Python 不支援字串常數</label>
+<label><input type="radio" name="q6" value="2"> 因為環境變數可以讓不同電腦使用不同的金鑰</label>
+<label><input type="radio" name="q6" value="3"> 為了安全 — 避免金鑰被意外提交到 Git 並公開暴露</label>
+<div class="quiz-explain">將 API 金鑰寫在程式碼中，一旦提交到 GitHub（即使是私有倉庫），金鑰就有暴露的風險。環境變數將敏感資訊與程式碼分離，是業界標準的安全做法。</div>
+</div>
 
-答案：**C** — 這是 Tool Use 的核心概念。Claude 只負責「決定要用哪個工具」和「提供輸入參數」，但實際的工具執行是由你的程式碼完成的。你的程式收到 Claude 的工具請求後，執行對應的邏輯，再把結果回傳給 Claude，讓它根據結果生成最終回覆。
+<div class="quiz-q" data-answer="1">
+<p>7. 在 Tool Use 中，<code>input_schema</code> 的作用是什麼？</p>
+<label><input type="radio" name="q7" value="0"> 定義工具的回傳值格式</label>
+<label><input type="radio" name="q7" value="1"> 告訴 Claude 這個工具需要什麼輸入參數、類型和描述</label>
+<label><input type="radio" name="q7" value="2"> 設定工具的執行速度</label>
+<label><input type="radio" name="q7" value="3"> 限制哪些使用者可以使用這個工具</label>
+<div class="quiz-explain"><code>input_schema</code> 使用 JSON Schema 格式定義工具的輸入參數，包括參數名稱、類型、描述和是否必填。Claude 根據這個定義來決定如何傳入正確的參數值。</div>
+</div>
 
----
+<div class="quiz-q" data-answer="0">
+<p>8. Sonnet、Opus 和 Haiku 三個模型中，日常開發最推薦使用哪一個？</p>
+<label><input type="radio" name="q8" value="0"> Sonnet — 性價比最高，適合大多數日常任務</label>
+<label><input type="radio" name="q8" value="1"> Opus — 最強大，應該始終使用</label>
+<label><input type="radio" name="q8" value="2"> Haiku — 最便宜，所有任務都應使用</label>
+<label><input type="radio" name="q8" value="3"> 三個模型完全一樣，沒有差別</label>
+<div class="quiz-explain">Sonnet 是平衡效能與成本的最佳選擇，適合日常開發的大多數任務。Opus 最強但最貴，適合複雜推理；Haiku 最快最便宜，適合簡單機械性任務。根據任務選擇合適的模型是控制成本的關鍵。</div>
+</div>
 
-**3. 以下哪個場景最適合使用 Managed Agents？**
-
-A. 我想在終端機裡快速問 Claude 一個問題
-B. 我想建立一個 24 小時自動運行的客服機器人
-C. 我想在自己的 Python 腳本裡生成一段文字
-D. 我想讓 Claude 幫我寫一個簡單的函式
-
-答案：**B** — Managed Agents 的最大優勢是可以部署到雲端、24 小時待命、被外部事件觸發。自動客服機器人需要隨時回應客戶訊息，這正是 Managed Agents 的強項。其他選項用 CLI（A、D）或基礎 SDK（C）就能完成。
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ---
 

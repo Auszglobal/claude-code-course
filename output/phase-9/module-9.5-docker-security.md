@@ -1,6 +1,6 @@
 # Module 9.5: Docker, Git Worktrees & Security Deep Dive
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Use Claude Code to create Dockerfiles and docker-compose configurations
   - Understand git worktrees for isolated parallel development
@@ -8,7 +8,7 @@
   - Configure Claude Code's permission system for maximum safety
   - Apply a security checklist before deploying AI-assisted code
 
-## Theory
+## 📖 Theory
 
 ### Part 1: Docker with Claude Code
 
@@ -71,7 +71,7 @@ Claude Code writes excellent code, but all code — human or AI-generated — sh
 | **Insecure Dependencies** | Using outdated packages with known vulnerabilities |
 | **Overly Permissive Access** | Creating API endpoints without authentication checks |
 
-## Code Example 1: Docker with Claude Code
+## 💻 Code Example 1: Docker with Claude Code
 
 ### Creating a Dockerfile:
 
@@ -125,7 +125,7 @@ Claude creates a complete docker-compose.yml with proper networking, environment
   the image size using multi-stage builds.
 ```
 
-## Code Example 2: Security Configuration
+## 💻 Code Example 2: Security Configuration
 
 ### Claude Code's Permission System:
 
@@ -197,7 +197,7 @@ Three options:
 +--------------------------------------------------+
 ```
 
-## Supplementary Example: Security Checklist
+## 💻 Supplementary Example: Security Checklist
 
 ### Before Deploying AI-Generated Code:
 
@@ -271,7 +271,7 @@ For every change Claude makes, ask:
 5. STATE:  Can this corrupt data if it fails halfway?
 ```
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Dockerise a Project
 1. Choose a simple project (Python, Node, or any language)
@@ -322,11 +322,56 @@ For every change Claude makes, ask:
 <div class="quiz-explain">All code — whether written by humans or AI — needs security review before deployment. Check for injection vulnerabilities, hardcoded secrets, proper access controls, and test that it works correctly. AI-generated code is generally high quality but not infallible.</div>
 </div>
 
+<div class="quiz-q" data-answer="1">
+<p>4. What is a git worktree?</p>
+<label><input type="radio" name="q4" value="0"> A visualisation of the git commit history</label>
+<label><input type="radio" name="q4" value="1"> A second working directory from the same repository, allowing you to work on different branches simultaneously</label>
+<label><input type="radio" name="q4" value="2"> A backup of your git repository</label>
+<label><input type="radio" name="q4" value="3"> A tool for merging branches</label>
+<div class="quiz-explain">A git worktree creates a separate working directory linked to the same repository. You can have multiple worktrees on different branches, allowing parallel development without stashing or switching branches in your main directory.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. In a Dockerfile, why should you <code>COPY requirements.txt</code> and run <code>pip install</code> BEFORE <code>COPY . .</code>?</p>
+<label><input type="radio" name="q5" value="0"> Docker caches each layer — if requirements.txt hasn't changed, pip install is skipped on rebuild, saving time</label>
+<label><input type="radio" name="q5" value="1"> It's required by Docker syntax</label>
+<label><input type="radio" name="q5" value="2"> It makes the container start faster</label>
+<label><input type="radio" name="q5" value="3"> It reduces the image size</label>
+<div class="quiz-explain">Docker builds images in layers. By copying requirements.txt first, the pip install layer is cached. When you change your code but not dependencies, Docker reuses the cached pip install layer instead of reinstalling everything, dramatically speeding up builds.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. What security question should you ask about every piece of code that accepts user input?</p>
+<label><input type="radio" name="q6" value="0"> Is the input in English?</label>
+<label><input type="radio" name="q6" value="1"> Is the input less than 100 characters?</label>
+<label><input type="radio" name="q6" value="2"> Does the input contain numbers?</label>
+<label><input type="radio" name="q6" value="3"> Is the input sanitised before being used in queries, commands, or HTML output?</label>
+<div class="quiz-explain">Unsanitised user input is the root cause of most security vulnerabilities: SQL injection, command injection, and XSS attacks. Always validate and sanitise input before using it in database queries, system commands, or web page output.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. When Claude Code shows a permission prompt [Allow] [Deny] [Allow Always], when should you use "Allow Always"?</p>
+<label><input type="radio" name="q7" value="0"> Always — it speeds up your workflow</label>
+<label><input type="radio" name="q7" value="1"> Never — it's a dangerous feature</label>
+<label><input type="radio" name="q7" value="2"> Only for safe, routine operations you're comfortable auto-approving (like reading files)</label>
+<label><input type="radio" name="q7" value="3"> Only when working in a Docker container</label>
+<div class="quiz-explain">"Allow Always" auto-approves that specific tool call in future. It's safe for read operations, but use caution with write operations or bash commands. You can always configure more granular permissions in settings.json.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. What command would you use to list all git worktrees in your repository?</p>
+<label><input type="radio" name="q8" value="0"> <code>git branch --worktrees</code></label>
+<label><input type="radio" name="q8" value="1"> <code>git worktree list</code></label>
+<label><input type="radio" name="q8" value="2"> <code>git status --worktrees</code></label>
+<label><input type="radio" name="q8" value="3"> <code>git log --worktrees</code></label>
+<div class="quiz-explain"><code>git worktree list</code> shows all worktrees associated with your repository, including their paths and the branches they're checked out on. Use <code>git worktree add</code> to create new ones and <code>git worktree remove</code> to clean them up.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations — you've completed Phase 9: Production! You now have the skills to use Claude Code professionally: parallel execution with sub-agents, architectural planning, database operations, CI/CD automation, Docker containerisation, and security best practices.
 

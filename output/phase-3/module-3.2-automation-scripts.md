@@ -432,6 +432,51 @@ using the format YYYY-MM-MonthName.
 <div class="quiz-explain">Preview mode is an important safety measure. Reviewing the results before executing a batch operation helps you avoid unexpected errors. This is a great programming habit.</div>
 </div>
 
+<div class="quiz-q" data-answer="2">
+<p>4. You want to automatically sort 200 downloaded files by type every day. What is the best approach?</p>
+<label><input type="radio" name="q4" value="0"> Sort them manually every day — it only takes an hour</label>
+<label><input type="radio" name="q4" value="1"> Delete all the files and re-download them into the right folders</label>
+<label><input type="radio" name="q4" value="2"> Ask Claude Code to write a script that automatically classifies files by extension, then run it whenever needed</label>
+<label><input type="radio" name="q4" value="3"> Hire someone to organise them for you</label>
+<div class="quiz-explain">This is exactly the kind of repetitive task that automation scripts are designed for. A script that sorts files by extension can be written once and run thousands of times. What takes an hour manually takes only a second with a script.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. What does the Python module <code>shutil</code> help with in the file organiser script?</p>
+<label><input type="radio" name="q5" value="0"> Moving files from one location to another</label>
+<label><input type="radio" name="q5" value="1"> Connecting to the internet</label>
+<label><input type="radio" name="q5" value="2"> Displaying images</label>
+<label><input type="radio" name="q5" value="3"> Running other scripts</label>
+<div class="quiz-explain"><code>shutil</code> (short for "shell utilities") provides functions for high-level file operations like moving, copying, and deleting files. In the organiser script, <code>shutil.move()</code> is used to move each file into its correct category folder.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. A script encounters an error when it runs. What is the easiest way to fix it using Claude Code?</p>
+<label><input type="radio" name="q6" value="0"> Rewrite the entire script from scratch</label>
+<label><input type="radio" name="q6" value="1"> Copy the error message and paste it to Claude Code — ask it to fix the problem and rerun</label>
+<label><input type="radio" name="q6" value="2"> Delete Python and reinstall</label>
+<label><input type="radio" name="q6" value="3"> Ignore the error and hope it goes away</label>
+<div class="quiz-explain">The easiest approach is to share the error message with Claude Code. You can even say "Run the script, and if there are errors, automatically fix them and rerun." Claude Code will read the error, understand the problem, fix the code, and try again.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. In the photo renaming script, what does <code>{seq:03d}</code> mean in <code>f"{date_str}_{seq:03d}"</code>?</p>
+<label><input type="radio" name="q7" value="0"> The sequence number is always 3</label>
+<label><input type="radio" name="q7" value="1"> The file name has 3 characters</label>
+<label><input type="radio" name="q7" value="2"> The date has 3 parts</label>
+<label><input type="radio" name="q7" value="3"> The sequence number is zero-padded to 3 digits (e.g., 001, 002, 010)</label>
+<div class="quiz-explain"><code>:03d</code> is a formatting instruction that pads the number with zeros to fill 3 digits. So 1 becomes 001, 10 becomes 010, and 100 stays as 100. This ensures files sort correctly in alphabetical order.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. What is the main advantage of asking Claude Code to write a script instead of performing the task manually?</p>
+<label><input type="radio" name="q8" value="0"> The script can be reused unlimited times, saving you from repeating the same work</label>
+<label><input type="radio" name="q8" value="1"> Scripts are always faster to write than doing the task once manually</label>
+<label><input type="radio" name="q8" value="2"> Scripts never have any errors</label>
+<label><input type="radio" name="q8" value="3"> You need a script to use Claude Code</label>
+<div class="quiz-explain">The biggest advantage of scripts is reusability. You invest time once to create the script, and then it can run the same task reliably and consistently forever. For tasks you do repeatedly — like organising downloads or renaming photos — this saves enormous amounts of time.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

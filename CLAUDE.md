@@ -124,3 +124,66 @@ claude "為所有已生成的模塊，每個額外生成 5 條練習題，保存
 ```bash
 claude "讀取所有 output/ 目錄下的 .md 文件，生成一個帶超連結的課程總目錄 README.md"
 ```
+
+---
+
+## 項目當前狀態（2026-04-12 更新）
+
+### 已完成功能
+- ✅ 47 個 modules（10 phases + bonus），全部有 quiz HTML
+- ✅ 遊戲化：XP 等級系統（10 級）、成就徽章、排行榜
+- ✅ 學習工具：Flashcards、Cheat Sheets、Prompt Templates、TL;DR、Glossary
+- ✅ 個人化：書籤、筆記、學習路徑、頭像上傳
+- ✅ 用戶管理：登入、Admin panel、JSONBlob 雲端同步
+- ✅ PWA：離線支援、可安裝、Service Worker
+- ✅ UI/UX：深色/淺色模式、手機響應式、搜尋、鍵盤快捷鍵、導覽 tour
+- ✅ GitHub Pages 部署（GitHub Actions workflow）
+- ✅ 自訂域名：learn.auszglobal.com.au（DNS via AWS Route 53 → GitHub Pages）
+
+### 本次 Session 完成的修復和功能
+1. ✅ **Memory Error Fix** — 全部 localStorage.setItem() 加 try-catch 防 QuotaExceededError
+2. ✅ **JSON.parse 保護** — 全部 JSON.parse(localStorage...) 加 try-catch + fallback
+3. ✅ **Streak UI** — 🔥 火焰 icon + 連續日數顯示（sidebar profile）
+4. ✅ **進度匯出/匯入** — 📤📥 JSON 備份/恢復功能（progress、XP、streak、bookmarks）
+5. ✅ **證書 PDF** — 新版證書支援 print-to-PDF + PNG 下載，顯示 stats
+
+### 進行中 / 待完成
+6. ✅ Module 格式統一 — 27 files, 177 headings 加咗 emoji（🎯📖💻✍️🔗）
+7. ✅ Accessibility 基本修復 — ARIA roles、skip link、sr-only labels、prefers-reduced-motion
+8. ✅ 全文搜尋 — 搜索 module 內容 + 顯示 snippet，首次 focus 時建立 index
+9. ✅ Lazy load Mermaid.js — 移除 eager script，按需載入省 ~200KB
+10. ✅ 學習時間追蹤 — per-module timer，sidebar 顯示總時間，含 export/import
+11. ✅ Spaced Repetition Flashcards — Again/Hard/Easy 評分，SM-2 算法，due badge
+12. ✅ 社交分享成就 — LinkedIn、X/Twitter、Copy Link，badge toast 內嵌 Share 按鈕
+13. ✅ 「繼續學習」卡片 — Welcome 頁頂部顯示下一個未完成 module + 整體進度
+14. ✅ 進度里程碑慶祝 — 25%/50%/75%/100% toast 動畫 + 100% 可下載證書
+15. ✅ 模組間快速複習 — 開新 module 時顯示上一個 module 嘅 3 個重點
+16. ✅ 每日學習目標 — sidebar 顯示今日進度 vs 目標，可自訂 target
+17. ✅ 「我唔明」標記 — ❓ 按鈕標記需要複習嘅 module，sidebar 有 dot 提示
+18. ✅ Phase 完成總結 — 完成 phase 後顯示 skills mastered overlay
+
+19. ✅ Dog Assistants — Chandon + TT 做網站吉祥物，登入頁 + 學習中彈出鼓勵訊息
+20. ✅ **內容充實** — Phase 6 同 7 由 ~700 words 擴充到 ~2300 words（x3）
+21. ✅ **Quiz 擴充** — 全部 47 modules 由 3 題加到 8 題（共 376 題）
+22. ✅ **Mini Projects** — 每個 Phase 最後一個 module 加入 15-30 分鐘實戰項目
+
+### 待考慮（暫不需要）
+- ✅ 已遷移到 Firebase Firestore（取代 JSONBlob，數據更穩定）
+- ⬜ 討論區/留言功能
+- ⬜ 互動代碼沙盒（對 CLI 課程幫助有限）
+- ⬜ 老師 Dashboard + 學生分析
+- ⬜ 多語言切換（EN/繁中）
+
+### 已知問題
+- ⚠️ 全部 47 個 module 係英文（CLAUDE.md 要求繁體中文 — 視乎目標讀者決定）
+- ✅ 已移除 JSONBlob，改用 Firebase Firestore
+- ⚠️ 密碼 SHA256 無 salt（建議遷移後改用 bcrypt）
+- ⚠️ Phase 6-9 modules 內容較 Phase 1-5 短
+
+### 技術架構
+- **Frontend**：單一 index.html（inline CSS + JS）
+- **Markdown 渲染**：marked.js + highlight.js
+- **數據存儲**：localStorage + Firebase Firestore（雲端同步）
+- **部署**：GitHub Pages via GitHub Actions
+- **域名**：learn.auszglobal.com.au（GoDaddy → AWS Route 53 NS → GitHub Pages）
+- **CDN 依賴**：highlight.js、marked.js、marked-highlight、mermaid
