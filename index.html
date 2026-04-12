@@ -1674,12 +1674,6 @@ async function sha256(str) {
 function setCurrentUser(user) {
   currentUser = user;
   try { localStorage.setItem('claude-course-user', JSON.stringify(user)); } catch { /* quota exceeded */ }
-  // Redirect to selected course if not already there
-  const selected = localStorage.getItem('selected-course');
-  if (selected === 'gemini' && !window.location.pathname.includes('gemini')) {
-    window.location.href = 'gemini.html';
-    return;
-  }
   document.getElementById('auth-gate').classList.add('hidden');
   updateProfileUI();
 }
@@ -1942,6 +1936,13 @@ async function tryLogin() {
   const found = USERS.find(user => user.hash === hash);
   if (found) {
     setCurrentUser({ name: found.name, role: found.role, uid: found.uid || u });
+    // Redirect to selected course if needed
+    const selected = localStorage.getItem('selected-course');
+    if (selected === 'gemini' && !window.location.pathname.includes('gemini')) {
+      window.location.href = 'gemini.html';
+    } else if (selected === 'claude' && window.location.pathname.includes('gemini')) {
+      window.location.href = 'index.html';
+    }
   } else {
     document.getElementById('auth-error').textContent = 'Incorrect username or password. Please try again.';
     document.getElementById('auth-pass').value = '';
