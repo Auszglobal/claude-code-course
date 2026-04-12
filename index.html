@@ -3763,6 +3763,26 @@ function checkMilestones() {
       showToast(m.icon, m.title, m.msg + extra, 5000);
     }
   });
+  // Cross-course achievement: both courses completed
+  checkDualCourseAchievement();
+}
+
+function checkDualCourseAchievement() {
+  if (!currentUser) return;
+  const dualKey = 'ausz-dual-course-' + currentUser.uid;
+  try { if (localStorage.getItem(dualKey)) return; } catch {}
+  const thisPct = Math.round((getCompletedCount() / ALL_MODULES.length) * 100);
+  let otherPct = 0;
+  try {
+    const otherKey = window.location.pathname.includes('gemini') ? 'claude-course-progress-' : 'gemini-course-progress-';
+    const op = JSON.parse(localStorage.getItem(otherKey + currentUser.uid) || '{}');
+    const otherTotal = window.location.pathname.includes('gemini') ? 47 : 37;
+    otherPct = Math.round((Object.keys(op).filter(k => op[k]).length / otherTotal) * 100);
+  } catch {}
+  if (thisPct === 100 && otherPct === 100) {
+    try { localStorage.setItem(dualKey, Date.now()); } catch {}
+    showToast('&#x1F451;', 'AI Master!', 'You completed BOTH Claude Code AND Google Gemini courses! <button class="share-toast-btn" onclick="shareAchievement(\'Completed both Claude Code and Google Gemini courses\')">Share</button>', 8000);
+  }
 }
 
 function checkNewBadges() {
