@@ -1425,7 +1425,7 @@ async function sha256(str) {
 
 function setCurrentUser(user) {
   currentUser = user;
-  localStorage.setItem('claude-course-user', JSON.stringify(user));
+  try { localStorage.setItem('claude-course-user', JSON.stringify(user)); } catch { /* quota exceeded */ }
   document.getElementById('auth-gate').classList.add('hidden');
   updateProfileUI();
 }
@@ -1472,7 +1472,12 @@ function handleAvatarUpload(e) {
       const size = Math.min(img.width, img.height);
       const sx = (img.width - size) / 2, sy = (img.height - size) / 2;
       ctx.drawImage(img, sx, sy, size, size, 0, 0, 100, 100);
-      localStorage.setItem(getAvatarKey(), canvas.toDataURL('image/jpeg', 0.8));
+      try {
+        localStorage.setItem(getAvatarKey(), canvas.toDataURL('image/jpeg', 0.8));
+      } catch {
+        alert('Storage full — cannot save avatar. Try clearing old data.');
+        return;
+      }
       updateProfileUI();
     };
     img.src = ev.target.result;
@@ -1502,7 +1507,7 @@ async function fetchDynamicUsers() {
           saveDynamicUsers(); // background sync
         }
       }
-      localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers));
+      try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
     } else {
       dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
     }
@@ -1514,7 +1519,7 @@ async function fetchDynamicUsers() {
 
 async function saveDynamicUsers(retries = 2) {
   // Always save to localStorage immediately
-  localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers));
+  try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch { /* quota exceeded */ }
 
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
@@ -1670,7 +1675,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (saved.role === '管理員') saved.role = 'Admin';
         if (saved.role === '學員') saved.role = 'Student';
         if (saved.role === '試用') saved.role = 'Demo';
-        localStorage.setItem('claude-course-user', JSON.stringify(saved));
+        try { localStorage.setItem('claude-course-user', JSON.stringify(saved)); } catch {}
         setCurrentUser(saved);
       }
     } catch {}
@@ -1996,7 +2001,7 @@ function loadProgress() {
 }
 
 function saveProgress() {
-  localStorage.setItem(progressKey(), JSON.stringify(progress));
+  try { localStorage.setItem(progressKey(), JSON.stringify(progress)); } catch { /* quota exceeded */ }
   pushProgressToCloud();
 }
 
@@ -2484,7 +2489,7 @@ function toggleBookmark(moduleId) {
   let bm = getBookmarks();
   if (bm.includes(moduleId)) bm = bm.filter(id => id !== moduleId);
   else bm.push(moduleId);
-  localStorage.setItem('claude-course-bookmarks', JSON.stringify(bm));
+  try { localStorage.setItem('claude-course-bookmarks', JSON.stringify(bm)); } catch { /* quota exceeded */ }
   // Update button state
   const btn = document.querySelector('.bookmark-btn');
   if (btn) { btn.classList.toggle('bookmarked', bm.includes(moduleId)); btn.innerHTML = bm.includes(moduleId) ? '&#9733;' : '&#9734;'; }
@@ -2514,7 +2519,7 @@ function addNotesSection(moduleId) {
   div.querySelector('.notes-textarea').addEventListener('input', (e) => {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
-      localStorage.setItem(getNotesKey(moduleId), e.target.value);
+      try { localStorage.setItem(getNotesKey(moduleId), e.target.value); } catch { /* quota exceeded */ }
       const indicator = document.getElementById('notes-saved');
       indicator.classList.add('show');
       setTimeout(() => indicator.classList.remove('show'), 1500);
@@ -2545,7 +2550,7 @@ let activePath = null;
 function setLearningPath(pathId) {
   if (activePath === pathId) { activePath = null; }
   else { activePath = pathId; }
-  localStorage.setItem('claude-course-path', activePath || '');
+  try { localStorage.setItem('claude-course-path', activePath || ''); } catch { /* quota exceeded */ }
   highlightPathModules();
   showWelcome();
 }
@@ -2600,7 +2605,9 @@ const LEVEL_NAMES = ['Newbie','Learner','Explorer','Builder','Maker','Pro','Expe
 function xpKey() { return 'claude-course-xp-' + (currentUser ? currentUser.uid : '_anon'); }
 
 function getXP() {
-  return JSON.parse(localStorage.getItem(xpKey()) || '{"total":0,"log":{}}');
+  try {
+    return JSON.parse(localStorage.getItem(xpKey()) || '{"total":0,"log":{}}');
+  } catch { return { total: 0, log: {} }; }
 }
 
 function addXP(source, amount, id) {
@@ -2609,7 +2616,7 @@ function addXP(source, amount, id) {
   if (data.log[logKey]) return data; // Already earned
   data.total += amount;
   data.log[logKey] = Date.now();
-  localStorage.setItem(xpKey(), JSON.stringify(data));
+  try { localStorage.setItem(xpKey(), JSON.stringify(data)); } catch { /* quota exceeded */ }
   showToast('&#x2B50;', `+${amount} XP`, source === 'module' ? 'Module completed!' : source === 'quiz' ? 'Quiz passed!' : source === 'flashcard' ? 'Flashcards reviewed!' : 'Streak bonus!', 2500);
   return data;
 }
@@ -2669,14 +2676,15 @@ function closeCheatSheet() {
 function updateStreak() {
   if (!currentUser) return;
   const key = 'claude-course-streak-' + currentUser.uid;
-  const data = JSON.parse(localStorage.getItem(key) || '{"count":0,"lastDate":""}');
+  let data;
+  try { data = JSON.parse(localStorage.getItem(key) || '{"count":0,"lastDate":""}'); } catch { data = { count: 0, lastDate: '' }; }
   const today = new Date().toISOString().split('T')[0];
   if (data.lastDate === today) return data.count;
   const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
   if (data.lastDate === yesterday) { data.count++; }
   else if (data.lastDate !== today) { data.count = 1; }
   data.lastDate = today;
-  localStorage.setItem(key, JSON.stringify(data));
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch { /* quota exceeded */ }
   if (data.count >= 2) {
     addXP('streak', XP_PER_STREAK, 'streak-' + today);
     updateXPDisplay();
@@ -2686,8 +2694,7 @@ function updateStreak() {
 function getStreakCount() {
   if (!currentUser) return 0;
   const key = 'claude-course-streak-' + currentUser.uid;
-  const data = JSON.parse(localStorage.getItem(key) || '{"count":0}');
-  return data.count;
+  try { return JSON.parse(localStorage.getItem(key) || '{"count":0}').count; } catch { return 0; }
 }
 
 // ── Flashcard System ──
@@ -2859,11 +2866,11 @@ function toggleTheme() {
   if (isDark) {
     document.documentElement.removeAttribute('data-theme');
     btn.innerHTML = '&#9790;';
-    localStorage.setItem('claude-course-theme', 'light');
+    try { localStorage.setItem('claude-course-theme', 'light'); } catch {}
   } else {
     document.documentElement.setAttribute('data-theme', 'dark');
     btn.innerHTML = '&#9788;';
-    localStorage.setItem('claude-course-theme', 'dark');
+    try { localStorage.setItem('claude-course-theme', 'dark'); } catch {}
   }
 }
 
@@ -3114,7 +3121,7 @@ function renderTourStep() {
   document.querySelectorAll('.tour-overlay,.tour-highlight,.tour-popover').forEach(e => e.remove());
 
   if (tourStep >= TOUR_STEPS.length) {
-    localStorage.setItem('claude-course-tour-done', '1');
+    try { localStorage.setItem('claude-course-tour-done', '1'); } catch {}
     return;
   }
 
@@ -3159,7 +3166,7 @@ function renderTourStep() {
 function nextTourStep() { tourStep++; renderTourStep(); }
 function endTour() {
   document.querySelectorAll('.tour-overlay,.tour-highlight,.tour-popover').forEach(e => e.remove());
-  localStorage.setItem('claude-course-tour-done', '1');
+  try { localStorage.setItem('claude-course-tour-done', '1'); } catch {}
 }
 
 // ── Init ──
