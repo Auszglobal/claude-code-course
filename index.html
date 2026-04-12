@@ -3585,9 +3585,27 @@ function checkNewBadges() {
     if (isPhaseComplete(p) && !prevEarnedBadges.has(p.id)) {
       const icon = BADGE_ICONS[p.id] || '&#x1F3C6;';
       showToast(icon, `Badge Unlocked!`, `You completed ${p.label} — ${p.title}! <button class="share-toast-btn" onclick="shareAchievement('Completed ${p.label} — ${p.title}')">Share</button>`);
+      showPhaseSummary(p);
     }
   });
   snapshotBadges();
+}
+
+function showPhaseSummary(phase) {
+  const skills = phase.modules.map(m => `<li>${m.title}</li>`).join('');
+  const overlay = document.createElement('div');
+  overlay.className = 'share-menu';
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  overlay.innerHTML = `<div class="share-menu-inner" style="max-width:400px;text-align:left;">
+    <h4 style="text-align:center;margin-bottom:12px;">${phase.icon} ${phase.label} Complete!</h4>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;">Skills you've mastered:</p>
+    <ul style="padding-left:18px;font-size:13px;line-height:1.8;color:var(--text);">${skills}</ul>
+    <p style="font-size:12px;color:var(--text-secondary);margin-top:12px;text-align:center;">
+      ${phase.modules.length} modules &middot; ${phase.modules.length * 3} quiz questions passed
+    </p>
+    <button class="share-btn close" style="margin-top:12px;" onclick="this.closest('.share-menu').remove()">Continue Learning</button>
+  </div>`;
+  document.body.appendChild(overlay);
 }
 
 function shareAchievement(achievement) {
