@@ -1550,7 +1550,7 @@ body {
         <div><div class="auth-dog-avatar"><img src="TT.jpeg" alt="TT"></div><div class="auth-dog-label">TT</div></div>
         <div><div class="auth-dog-avatar"><img src="chandon.jpeg" alt="Chandon"></div><div class="auth-dog-label">Chandon</div></div>
       </div>
-      <h1>Claude Code Complete Guide</h1>
+      <h1>AUSZ Learning Hub</h1>
       <p>Welcome! TT &amp; Chandon are here to help you learn.</p>
       <label for="auth-user" class="sr-only">Username</label>
       <input type="text" id="auth-user" placeholder="Username" autocomplete="username">
@@ -1558,6 +1558,11 @@ body {
       <input type="password" id="auth-pass" placeholder="Password" autocomplete="current-password">
       <button onclick="tryLogin()">Login</button>
       <div class="auth-error" id="auth-error" role="alert" aria-live="polite"></div>
+      <div class="course-picker" id="course-picker" style="margin-top:20px;">
+        <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;">Choose your course:</p>
+        <a href="index.html" class="course-pick-btn" style="display:block;padding:14px;background:linear-gradient(135deg,#008B8B,#00B4A6);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;margin-bottom:8px;">&#x1F916; Claude Code (47 modules)</a>
+        <a href="gemini.html" class="course-pick-btn" style="display:block;padding:14px;background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;">&#x2728; Google Gemini (37 modules)</a>
+      </div>
     </div>
   </div>
 </div>
@@ -1962,6 +1967,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
     <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importProgress(event)">
   </div>
   <button id="admin-add-user-btn" style="display:none;" onclick="openAdmin()">Manage Users</button>
+  <a href="gemini.html" style="display:block;text-align:center;padding:12px;font-size:12px;color:var(--text-secondary);text-decoration:none;border-top:1px solid var(--border);margin-top:8px;">&#x2728; Switch to Gemini Course</a>
 </aside>
 
 <!-- Overlay -->
