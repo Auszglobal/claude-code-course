@@ -1,362 +1,438 @@
-# Module 2.4: Gemini's Long Context Window
+# Module 2.4: The 2-Million-Token Context Window — Gemini's Superpower
 
 ## 🎯 Learning Objectives
-
-By the end of this module, you will be able to:
-
-- Explain what a "context window" is and why Gemini's 2-million-token limit matters
-- Upload large documents (PDFs, codebases, text files) to Gemini for analysis
-- Summarize books, research papers, and lengthy reports in seconds
-- Analyze entire codebases by feeding them into a single conversation
-- Understand the practical limits and best strategies for using long context
+- Understand what a "context window" is and why size matters
+- Know that Gemini offers up to 2 million tokens — far more than most AI models
+- Upload large documents to Gemini and get meaningful summaries
+- Use Gemini to analyze entire codebases at once
+- Understand practical use cases for long-context AI
 
 ## 📖 Theory
 
-### What Is a Context Window?
+### What is a Context Window?
 
-Every AI model has a "context window" -- the amount of text it can see and think about at one time. Think of it like a desk. A small desk only fits a few pages, so if you need to reference a 300-page manual, you have to keep swapping pages in and out. A huge desk lets you spread the entire manual out and see everything at once.
+Imagine you are having a conversation with a friend, but your friend can only remember the last 5 minutes of the conversation. If you talked about your vacation 10 minutes ago, they have already forgotten it. That would make deep conversations pretty frustrating, right?
 
-Most AI models have a desk that fits around 8,000 to 128,000 tokens (roughly 6,000 to 96,000 words). Gemini 1.5 Pro and Gemini 2.0 offer a **2-million-token context window** -- that is roughly **1.5 million words**, or about **15 average-length novels** all visible at once.
+A **context window** is the AI equivalent of memory during a conversation. It is the total amount of text the AI can "see" and remember at one time — including everything you have sent it AND everything it has responded with.
 
-### Why Does This Matter?
+Context windows are measured in **tokens** (roughly 1 token = 0.75 words):
 
-With a small context window, you have to chop your documents into tiny pieces and feed them in one at a time. This means the AI often misses connections between sections. With Gemini's massive context window, you can upload an entire codebase, a full legal contract, or a 500-page technical manual and ask questions about any part of it. The AI sees the whole picture, not just fragments.
+| Model | Context Window | Roughly Equals |
+|-------|---------------|----------------|
+| ChatGPT (GPT-4o) | ~128,000 tokens | ~96,000 words (a long novel) |
+| Claude 3.5 | ~200,000 tokens | ~150,000 words |
+| Gemini 1.5 Pro | **2,000,000 tokens** | **~1,500,000 words (10+ novels!)** |
+| Gemini 2.0 Flash | **1,000,000 tokens** | **~750,000 words** |
 
-### Tokens Explained Simply
+Gemini's context window is **10 to 15 times larger** than most competitors. This is not a small improvement — it is a fundamentally different capability.
 
-A **token** is roughly 3/4 of a word in English. Here are some benchmarks:
+### Why Does a Large Context Window Matter?
 
-| Content | Approximate Tokens |
-|---|---|
-| A tweet (280 characters) | ~70 tokens |
-| A one-page document | ~300 tokens |
-| A 10-page report | ~3,000 tokens |
-| A 300-page novel | ~90,000 tokens |
-| An entire codebase (medium project) | ~200,000-500,000 tokens |
-| Gemini's full capacity | 2,000,000 tokens |
+Think about these real-world scenarios:
 
-So even a large codebase with hundreds of files typically fits within Gemini's context window with plenty of room to spare.
+**Without a large context window** (other AI tools):
+- "Summarize this document" — but the document is too long, so you have to split it into chunks, summarize each chunk separately, then somehow combine the summaries. Information gets lost.
+
+**With Gemini's 2M context window**:
+- "Here is an entire 500-page book. Summarize it." — Done. Gemini reads the whole thing at once.
+
+This is like the difference between:
+- Reading a mystery novel one page at a time, forgetting previous pages (small context)
+- Reading the entire mystery novel and remembering every detail (large context)
 
 ### What Can You Do with 2 Million Tokens?
 
-Here are some practical use cases:
+Here are some mind-blowing use cases:
 
-- **Summarize an entire book** -- Upload a full novel or textbook and ask for chapter-by-chapter summaries.
-- **Analyze legal documents** -- Feed in a 100-page contract and ask "What are the termination clauses?"
-- **Code review at scale** -- Upload your entire project and ask "Find all security vulnerabilities."
-- **Research synthesis** -- Upload 10 research papers and ask "What do these papers agree and disagree on?"
-- **Meeting transcript analysis** -- Upload hours of meeting transcripts and extract action items.
+| Use Case | What You Upload | What You Ask |
+|----------|----------------|--------------|
+| **Book analysis** | An entire novel (60,000-100,000 words) | "What are the main themes? How does the protagonist change?" |
+| **Research synthesis** | 10-20 academic papers | "What do these papers agree on? Where do they contradict?" |
+| **Codebase understanding** | An entire software project (thousands of lines) | "How does the authentication system work? Find potential security issues." |
+| **Legal review** | A long contract or policy document | "Summarize the key obligations and flag any unusual clauses." |
+| **Meeting notes** | A year's worth of meeting transcripts | "What decisions were made about Project X across all meetings?" |
+| **Video analysis** | A 1-hour video | "Summarize the key points. At what timestamp does the speaker discuss AI?" |
 
-## 💻 Code Example 1: Uploading and Summarizing a Large Document
+### How It Works Technically
 
-### Method 1: Using Google AI Studio (Web Interface)
+When you upload a document to Gemini, it gets converted into tokens. Gemini holds all these tokens in memory simultaneously. This means:
+- It can reference page 1 while answering a question about page 500
+- It can find connections between ideas that are far apart in the document
+- It does not lose context or "forget" earlier parts of the conversation
 
-Google AI Studio (aistudio.google.com) is the easiest way to work with large files.
+This is genuinely revolutionary. Before Gemini, working with very long documents required complex "chunking" strategies and often produced incomplete or inconsistent results.
 
-**Step 1:** Go to [aistudio.google.com](https://aistudio.google.com) and sign in.
+## 💻 Code Example 1: Uploading and Analyzing a Document
 
-**Step 2:** Click **"Create New Prompt"** and select a Gemini model with the 1M or 2M context window.
-
-**Step 3:** Click the **paperclip icon** (or drag and drop) to upload your file. Supported formats include:
-- PDF documents
-- Plain text files (.txt)
-- Code files (.py, .js, .html, etc.)
-- CSV and JSON data files
-
-**Step 4:** Once uploaded, you will see the token count displayed. Now type your prompt:
-
-```
-Please provide:
-1. A one-paragraph executive summary of this document
-2. The 5 most important key points
-3. Any action items or recommendations mentioned
-4. Questions that this document leaves unanswered
-```
-
-```
-Expected result (for a hypothetical 50-page annual report):
-┌──────────────────────────────────────────────────────────┐
-│ Token count: 14,832 / 2,000,000                         │
-│                                                          │
-│ Executive Summary:                                       │
-│ The 2024 annual report shows 23% revenue growth...       │
-│                                                          │
-│ Key Points:                                              │
-│ 1. Revenue reached $4.2B, up from $3.4B...               │
-│ 2. New market expansion into Southeast Asia...           │
-│ 3. R&D spending increased by 31%...                      │
-│ ...                                                      │
-└──────────────────────────────────────────────────────────┘
-```
-
-### Method 2: Using the Gemini API with Python
-
-For more control, you can use the API. First, install the library:
-
-```bash
-pip install google-genai
-```
-
-Then create a script:
+Let us upload a text file to Gemini and analyze it.
 
 ```python
-# summarize_document.py -- Upload and summarize a large file with Gemini
+# analyze_document.py
+# Upload a document to Gemini and ask questions about it
 
-from google import genai
+import google.generativeai as genai
 
-# Initialize the client with your API key
-client = genai.Client(api_key="YOUR_API_KEY_HERE")
+genai.configure(api_key="YOUR_API_KEY_HERE")
 
-# Read the document
-with open("large_report.txt", "r") as f:
-    document_text = f.read()
+# Use a model with a large context window
+model = genai.GenerativeModel("gemini-2.0-flash")
 
-# Count approximate tokens (rough estimate: 1 token ≈ 4 characters)
-approx_tokens = len(document_text) // 4
-print(f"Document size: ~{approx_tokens:,} tokens")
+# --- Method 1: Analyze text directly (for smaller documents) ---
 
-# Send to Gemini with the document as context
-response = client.models.generate_content(
-    model="gemini-2.0-flash",
-    contents=[
-        f"Here is a document I need analyzed:\n\n{document_text}\n\n"
-        "Please provide:\n"
-        "1. A one-paragraph summary\n"
-        "2. The 5 most important takeaways\n"
-        "3. Any data points or statistics mentioned\n"
-        "4. Suggested follow-up questions"
-    ]
-)
+# Let's create a sample document (in real use, you'd read from a file)
+sample_document = """
+QUARTERLY BUSINESS REPORT — Q3 2025
+Company: TechNova Solutions
 
+EXECUTIVE SUMMARY
+Revenue grew 23% year-over-year to $4.2M. Customer acquisition cost
+decreased by 15% due to improved marketing automation. The new AI-powered
+product line accounted for 35% of total revenue, up from 12% in Q2.
+Employee satisfaction score improved to 8.1/10 from 7.3/10.
+
+KEY METRICS
+- Revenue: $4.2M (up 23% YoY)
+- Customers: 1,247 (up 18% from Q2)
+- Churn rate: 3.2% (down from 4.8% in Q2)
+- Average deal size: $3,368
+- Net Promoter Score: 72 (up from 65)
+
+PRODUCT UPDATES
+1. AI Assistant Pro launched in July — exceeded targets by 40%
+2. Cloud Migration Tool v2.0 released — 95% customer satisfaction
+3. Data Analytics Dashboard redesigned — page load time reduced by 60%
+
+CHALLENGES
+1. Hiring for senior engineering roles remains difficult (3 positions open 60+ days)
+2. Two enterprise clients delayed renewals pending budget approval
+3. Server costs increased 18% due to AI compute requirements
+
+OUTLOOK
+Q4 pipeline is strong at $5.1M. The holiday season typically sees slower
+enterprise sales but stronger SMB activity. Planning to launch 2 new
+products in Q4.
+"""
+
+# Ask Gemini to analyze the document
+prompt = f"""Here is a quarterly business report. Please provide:
+1. A 3-sentence executive summary for a busy CEO
+2. The top 3 most important metrics and why they matter
+3. The biggest risk facing the company
+4. One actionable recommendation
+
+Document:
+{sample_document}
+"""
+
+response = model.generate_content(prompt)
 print(response.text)
 ```
 
+### Expected Output:
 ```
-Expected output:
-Document size: ~15,200 tokens
+**1. Executive Summary for CEO:**
+TechNova had an excellent Q3 with 23% revenue growth to $4.2M, driven
+primarily by the new AI product line which now represents over a third of
+revenue. Customer metrics are strong with 18% growth and improving
+retention. The main concern is rising AI compute costs and difficulty
+hiring senior engineers.
 
-1. Summary:
-This report covers the Q3 performance of...
+**2. Top 3 Most Important Metrics:**
+- Revenue growth (23% YoY): Shows the core business is accelerating,
+  not just maintaining.
+- AI product revenue share (35%, up from 12%): This dramatic shift
+  indicates the company is successfully pivoting to AI — the future
+  growth engine.
+- Churn rate (3.2%, down from 4.8%): Improving retention means
+  customers are finding lasting value, which compounds revenue growth.
 
-2. Key Takeaways:
-   - Customer acquisition cost decreased by 18%...
-   ...
+**3. Biggest Risk:**
+Rising AI compute costs (up 18%) combined with the AI product line
+growing to 35% of revenue creates a potential margin squeeze. If compute
+costs continue growing faster than revenue, profitability could erode
+even as top-line numbers look healthy.
+
+**4. Actionable Recommendation:**
+Prioritize negotiating volume discounts or reserved capacity with cloud
+providers immediately. As AI products become the majority of revenue,
+controlling compute costs will be critical for maintaining healthy margins.
 ```
 
 ## 💻 Code Example 2: Analyzing an Entire Codebase
 
-One of the most powerful uses of long context is feeding Gemini an entire project and asking questions about it.
-
-### Step 1: Combine Your Codebase into One File
-
-Use this Python script to bundle your project files:
+This is where the large context window truly shines — feeding an entire codebase to Gemini.
 
 ```python
-# bundle_codebase.py -- Combine all code files into one text file for Gemini
+# analyze_codebase.py
+# Upload multiple code files and have Gemini analyze the whole project
 
+import google.generativeai as genai
 import os
 
-def bundle_project(project_dir, output_file, extensions=None):
-    """
-    Combine all code files in a project into a single text file.
+genai.configure(api_key="YOUR_API_KEY_HERE")
+model = genai.GenerativeModel("gemini-2.0-flash")
 
-    Args:
-        project_dir: Path to your project folder.
-        output_file: Where to save the combined file.
-        extensions: List of file extensions to include (e.g., ['.py', '.js']).
-    """
-    if extensions is None:
-        extensions = ['.py', '.js', '.ts', '.html', '.css', '.json', '.md']
-
-    # Folders to skip (you almost never want to include these)
-    skip_dirs = {'node_modules', '.git', '__pycache__', 'venv', '.env', 'dist'}
-
-    all_content = []
-    file_count = 0
-
-    for root, dirs, files in os.walk(project_dir):
-        # Remove skip directories so os.walk does not enter them
-        dirs[:] = [d for d in dirs if d not in skip_dirs]
-
+def read_project_files(directory, extensions=(".py", ".js", ".html", ".css")):
+    """Read all code files from a directory and combine them into one string."""
+    all_code = []
+    
+    for root, dirs, files in os.walk(directory):
+        # Skip hidden directories and common non-essential folders
+        dirs[:] = [d for d in dirs if not d.startswith('.') and d not in 
+                   ['node_modules', '__pycache__', 'venv', '.git']]
+        
         for filename in sorted(files):
             if any(filename.endswith(ext) for ext in extensions):
-                file_path = os.path.join(root, filename)
-                relative_path = os.path.relpath(file_path, project_dir)
-
+                filepath = os.path.join(root, filename)
+                relative_path = os.path.relpath(filepath, directory)
+                
                 try:
-                    with open(file_path, "r", encoding="utf-8") as f:
+                    with open(filepath, "r", encoding="utf-8") as f:
                         content = f.read()
+                    
+                    # Format each file with clear separators
+                    all_code.append(f"\n{'='*60}")
+                    all_code.append(f"FILE: {relative_path}")
+                    all_code.append(f"{'='*60}")
+                    all_code.append(content)
+                except Exception as e:
+                    all_code.append(f"\n[Could not read {relative_path}: {e}]")
+    
+    return "\n".join(all_code)
 
-                    all_content.append(f"\n{'='*60}")
-                    all_content.append(f"FILE: {relative_path}")
-                    all_content.append(f"{'='*60}\n")
-                    all_content.append(content)
-                    file_count += 1
-                except (UnicodeDecodeError, PermissionError):
-                    pass  # Skip binary or inaccessible files
+# --- Example usage ---
 
-    combined = "\n".join(all_content)
+# Point this to any project folder on your computer
+project_dir = "./my-project"  # Change this to your project path!
 
-    with open(output_file, "w", encoding="utf-8") as f:
-        f.write(combined)
+# Check if the directory exists
+if os.path.exists(project_dir):
+    print(f"Reading files from: {project_dir}")
+    codebase = read_project_files(project_dir)
+    
+    # Count tokens (approximate)
+    word_count = len(codebase.split())
+    print(f"Total words: {word_count:,}")
+    print(f"Approximate tokens: {int(word_count * 1.3):,}")
+    print("Sending to Gemini for analysis...\n")
+    
+    # Ask Gemini to analyze the entire codebase
+    prompt = f"""You are a senior software engineer reviewing a codebase.
+    
+Please analyze the following code and provide:
 
-    # Report stats
-    approx_tokens = len(combined) // 4
-    print(f"Bundled {file_count} files")
-    print(f"Total size: {len(combined):,} characters (~{approx_tokens:,} tokens)")
-    print(f"Saved to: {output_file}")
+1. **Architecture Overview**: How is the project structured? What are the main components?
+2. **Code Quality**: Rate the code quality (1-10) and explain why.
+3. **Potential Bugs**: Identify any bugs or error-prone patterns.
+4. **Security Concerns**: Flag any security issues.
+5. **Improvement Suggestions**: List your top 5 recommendations.
 
-    if approx_tokens > 2_000_000:
-        print("WARNING: This exceeds Gemini's 2M token limit!")
-        print("Consider filtering to fewer file types or specific directories.")
+Here is the complete codebase:
 
-# Example usage
-bundle_project(
-    project_dir="./my-web-app",
-    output_file="codebase_bundle.txt",
-    extensions=[".py", ".js", ".html", ".css"]
-)
+{codebase}
+"""
+    
+    response = model.generate_content(prompt)
+    print(response.text)
+else:
+    print(f"Directory not found: {project_dir}")
+    print("Create a project folder with some code files, or change the path!")
+    print("\nHere's a demo with a small inline example instead:\n")
+    
+    # Demo with inline code
+    demo_code = """
+    FILE: app.py
+    from flask import Flask, request
+    import sqlite3
+    
+    app = Flask(__name__)
+    
+    @app.route('/search')
+    def search():
+        query = request.args.get('q')
+        conn = sqlite3.connect('data.db')
+        # WARNING: This is intentionally vulnerable for the demo
+        results = conn.execute(f"SELECT * FROM items WHERE name LIKE '%{query}%'")
+        return str(results.fetchall())
+    """
+    
+    response = model.generate_content(
+        f"Review this code for security issues and bugs:\n{demo_code}"
+    )
+    print(response.text)
 ```
 
+### Expected Output (for the demo security example):
 ```
-Expected output:
-Bundled 47 files
-Total size: 125,400 characters (~31,350 tokens)
-Saved to: codebase_bundle.txt
+**CRITICAL SECURITY ISSUE: SQL Injection Vulnerability**
+
+The code on this line is extremely dangerous:
+    results = conn.execute(f"SELECT * FROM items WHERE name LIKE '%{query}%'")
+
+The user input (`query`) is inserted directly into the SQL string without
+any sanitization. An attacker could input something like:
+    ' OR '1'='1' --
+This would return ALL records in the database, or worse, an attacker could
+use UNION queries to extract sensitive data or DROP TABLE to delete data.
+
+**Fix:**
+Use parameterized queries instead:
+    results = conn.execute(
+        "SELECT * FROM items WHERE name LIKE ?",
+        (f"%{query}%",)
+    )
+
+**Additional Issues:**
+1. No connection closing (use `with` statement or `conn.close()`)
+2. No error handling for database connection failures
+3. No input validation or length limits on the query parameter
+4. Returning raw database results to the user exposes internal structure
 ```
 
-### Step 2: Upload and Ask Questions
+### Tips for Working with Long Documents
 
-Upload `codebase_bundle.txt` to Google AI Studio, then ask:
+```python
+# Practical tips when using Gemini's long context window:
 
+# Tip 1: Use the File API for large files (more efficient)
+# Instead of pasting text, upload the file directly:
+uploaded_file = genai.upload_file("path/to/large_document.pdf")
+response = model.generate_content([
+    "Summarize the key findings in this research paper.",
+    uploaded_file
+])
+
+# Tip 2: Be specific in your questions
+# BAD:  "What does this document say?"
+# GOOD: "What does this document say about climate change impacts on
+#        agriculture in Southeast Asia? List specific statistics mentioned."
+
+# Tip 3: Ask for page/section references
+# "When you cite information, reference the section or page it came from."
+
+# Tip 4: Use structured output requests
+# "Create a table comparing all products mentioned in this document,
+#  with columns for: name, price, target audience, and key features."
 ```
-I have uploaded my entire web application codebase. Please:
-
-1. Describe the overall architecture and how the files relate to each other.
-2. Identify any potential security issues (SQL injection, XSS, hardcoded
-   secrets, etc.).
-3. Find any functions that are defined but never called (dead code).
-4. Suggest the top 3 refactoring improvements for code quality.
-```
-
-Gemini can cross-reference files, trace function calls across modules, and spot patterns that would take a human reviewer hours to find.
-
-### Tips for Working with Large Context
-
-| Tip | Why It Helps |
-|---|---|
-| Put your question AFTER the document | Gemini pays more attention to the end of the context |
-| Be specific in your questions | "Find security bugs" works better than "Review this" |
-| Ask for structured output | Request bullet points, tables, or numbered lists |
-| Upload multiple related files | Gemini can find connections between documents |
-| Check the token counter | Stay under the limit to avoid truncation |
 
 ## ✍️ Hands-On Exercises
 
-### Exercise 1: Summarize Something Real
+### Exercise 1: Summarize a Long Text
+Find a long article, blog post, or document (aim for 2,000+ words). You can use:
+- A Wikipedia article (copy the text)
+- A research paper (download the PDF)
+- A long blog post
+- A chapter from a free ebook (e.g., from Project Gutenberg)
 
-Find a long document you actually need to read -- a terms of service agreement, a textbook chapter, a research paper, or a long article. Upload it to Google AI Studio and ask Gemini to:
+Upload it to Gemini (via AI Studio or the API) and ask:
+1. "Summarize this in 5 bullet points"
+2. "What is the most surprising claim in this text?"
+3. "If I only had 30 seconds to explain this to someone, what would I say?"
 
-1. Summarize it in 3 sentences.
-2. List the 5 most surprising or important facts.
-3. Explain it as if you were telling a friend.
+**Tip**: Try the same document with different summary requests. Notice how Gemini can pull out completely different information depending on what you ask for. This demonstrates that it truly understands the full document.
 
-Compare Gemini's summary with the original. Did it miss anything important? Did it get anything wrong?
+### Exercise 2: Codebase Analyzer
+If you have any coding project on your computer (even a small one from earlier exercises in this course), use the `analyze_codebase.py` script to feed it to Gemini.
 
-**Hint:** Academic papers on Google Scholar or long Wikipedia articles are great free sources to test with.
+If you do not have a project, create a small one:
+1. Create a folder called `my-test-project`
+2. Put 3-4 Python files in it (you can use the expense tracker from Module 2.3!)
+3. Run the codebase analyzer
 
-### Exercise 2: Codebase Explorer
+Ask these follow-up questions:
+- "Which file is the most complex? Why?"
+- "If I wanted to add a new feature to export data as CSV, which file should I modify?"
+- "Write unit tests for the most critical functions"
 
-If you have any code project (even a small one), use the bundling script from Code Example 2 to combine it into one file. Upload it to Gemini and ask:
-
-1. "Explain what this project does in simple terms."
-2. "What would happen if I deleted [specific file]?"
-3. "Write documentation for the main functions."
-
-If you do not have a project of your own, clone a small open-source project from GitHub and try it with that.
-
-**Hint:** Try `git clone https://github.com/pallets/flask` for a well-structured Python project.
-
-## ❓ Quiz
-
-<div id="quiz">
-
-<div class="quiz-question" data-answer="B">
-<p><strong>1.</strong> Approximately how many words can fit in Gemini's 2-million-token context window?</p>
-<label><input type="radio" name="q1" value="A"> A. About 200,000 words</label>
-<label><input type="radio" name="q1" value="B"> B. About 1.5 million words</label>
-<label><input type="radio" name="q1" value="C"> C. About 2 million words</label>
-<label><input type="radio" name="q1" value="D"> D. About 500,000 words</label>
-<div class="quiz-explain" style="display:none;">B -- One token is roughly 3/4 of a word, so 2 million tokens equals approximately 1.5 million words.</div>
-</div>
-
-<div class="quiz-question" data-answer="C">
-<p><strong>2.</strong> What is the "desk" analogy used to explain?</p>
-<label><input type="radio" name="q2" value="A"> A. How fast Gemini processes information</label>
-<label><input type="radio" name="q2" value="B"> B. The cost of using the Gemini API</label>
-<label><input type="radio" name="q2" value="C"> C. The context window -- how much text the AI can see at once</label>
-<label><input type="radio" name="q2" value="D"> D. The number of conversations you can have simultaneously</label>
-<div class="quiz-explain" style="display:none;">C -- A bigger desk lets you spread out more documents at once. Similarly, a bigger context window lets the AI see more of your text simultaneously.</div>
-</div>
-
-<div class="quiz-question" data-answer="A">
-<p><strong>3.</strong> Why does the bundling script skip <code>node_modules</code> and <code>.git</code> folders?</p>
-<label><input type="radio" name="q3" value="A"> A. They contain thousands of files that are not your code and would waste tokens</label>
-<label><input type="radio" name="q3" value="B"> B. Gemini cannot read JavaScript dependency files</label>
-<label><input type="radio" name="q3" value="C"> C. Those folders are encrypted and cannot be opened</label>
-<label><input type="radio" name="q3" value="D"> D. Google's terms of service prohibit uploading them</label>
-<div class="quiz-explain" style="display:none;">A -- node_modules can contain hundreds of thousands of files from third-party libraries, and .git stores version history. Including them would fill up your token budget with irrelevant content.</div>
-</div>
-
-<div class="quiz-question" data-answer="D">
-<p><strong>4.</strong> What is the recommended placement for your question when working with a large document?</p>
-<label><input type="radio" name="q4" value="A"> A. At the very beginning, before the document</label>
-<label><input type="radio" name="q4" value="B"> B. Embedded in the middle of the document</label>
-<label><input type="radio" name="q4" value="C"> C. In a separate conversation</label>
-<label><input type="radio" name="q4" value="D"> D. After the document, at the end of the prompt</label>
-<div class="quiz-explain" style="display:none;">D -- Placing your instructions after the document ensures Gemini pays attention to your specific request. Models tend to give more weight to the end of the context.</div>
-</div>
-
-<div class="quiz-question" data-answer="B">
-<p><strong>5.</strong> Which of the following is NOT a practical use of long context?</p>
-<label><input type="radio" name="q5" value="A"> A. Summarizing a 300-page novel</label>
-<label><input type="radio" name="q5" value="B"> B. Training Gemini to permanently remember your preferences</label>
-<label><input type="radio" name="q5" value="C"> C. Finding security vulnerabilities across a codebase</label>
-<label><input type="radio" name="q5" value="D"> D. Comparing themes across multiple research papers</label>
-<div class="quiz-explain" style="display:none;">B -- Long context lets Gemini see more text in a single conversation, but it does not permanently change the model. Each new conversation starts fresh.</div>
-</div>
-
-<div class="quiz-question" data-answer="A">
-<p><strong>6.</strong> Approximately how many tokens does a 300-page novel use?</p>
-<label><input type="radio" name="q6" value="A"> A. About 90,000 tokens</label>
-<label><input type="radio" name="q6" value="B"> B. About 300,000 tokens</label>
-<label><input type="radio" name="q6" value="C"> C. About 2,000,000 tokens</label>
-<label><input type="radio" name="q6" value="D"> D. About 10,000 tokens</label>
-<div class="quiz-explain" style="display:none;">A -- A typical 300-page novel contains roughly 75,000-90,000 words, which translates to about 90,000 tokens. This is well within Gemini's capacity.</div>
-</div>
-
-<div class="quiz-question" data-answer="C">
-<p><strong>7.</strong> What file formats can you upload to Google AI Studio?</p>
-<label><input type="radio" name="q7" value="A"> A. Only .txt files</label>
-<label><input type="radio" name="q7" value="B"> B. Only PDF documents</label>
-<label><input type="radio" name="q7" value="C"> C. PDFs, text files, code files, CSVs, and more</label>
-<label><input type="radio" name="q7" value="D"> D. Only files under 1 page in length</label>
-<div class="quiz-explain" style="display:none;">C -- Google AI Studio supports a wide variety of formats including PDF, plain text, code files (.py, .js, etc.), CSV, JSON, and others.</div>
-</div>
-
-<div class="quiz-question" data-answer="D">
-<p><strong>8.</strong> What happens if your content exceeds the 2-million-token limit?</p>
-<label><input type="radio" name="q8" value="A"> A. Gemini automatically compresses the content</label>
-<label><input type="radio" name="q8" value="B"> B. The content is split across multiple AI instances</label>
-<label><input type="radio" name="q8" value="C"> C. Gemini processes it but takes much longer</label>
-<label><input type="radio" name="q8" value="D"> D. The content may be truncated, and you should filter to fewer files</label>
-<div class="quiz-explain" style="display:none;">D -- If you exceed the limit, content at the edges may be cut off. The solution is to be selective about what you upload -- focus on the most relevant files and directories.</div>
-</div>
-
-<button class="quiz-submit" onclick="checkQuiz()">Submit Answers</button>
-<div class="quiz-result"></div>
-</div>
+**Tip**: The more files you provide, the more impressive the analysis becomes. Gemini can find connections and patterns across files that would take a human reviewer much longer to spot.
 
 ## 🔗 Next Steps
 
-You have now unlocked one of Gemini's most distinctive superpowers -- the ability to reason over massive amounts of text at once. In **Phase 3**, we will shift from text and code to the visual world. Get ready to explore Gemini's image generation, editing, and design capabilities, starting with creating stunning visuals from simple text descriptions.
+Congratulations — you have completed Phase 2! You now know how to:
+- Write effective prompts with advanced techniques (Module 2.1)
+- Use Gemini Code Assist for real-time coding help (Module 2.2)
+- Build real programs with Gemini's help (Module 2.3)
+- Leverage the massive 2M context window for document and code analysis (Module 2.4)
+
+You have gone from "What is Gemini?" to "I can build and analyze real projects with AI." That is a tremendous leap. The skills you have learned — prompting, debugging, code review, document analysis — are the same skills that professionals use every day. Keep experimenting, keep building, and keep asking Gemini to explain things you do not understand. The more you practice, the more powerful these tools become.
+
+---
+
+<div class="module-quiz">
+<h3>Module Quiz</h3>
+
+<div class="quiz-q" data-answer="2">
+<p>1. How large is Gemini 1.5 Pro's context window?</p>
+<label><input type="radio" name="q1" value="0"> 32,000 tokens</label>
+<label><input type="radio" name="q1" value="1"> 128,000 tokens</label>
+<label><input type="radio" name="q1" value="2"> 2,000,000 tokens (2 million)</label>
+<label><input type="radio" name="q1" value="3"> 10,000,000 tokens</label>
+<div class="quiz-explain">Gemini 1.5 Pro has a context window of 2 million tokens, which is approximately 1.5 million words. This is 10-15 times larger than most competing AI models and enables analyzing entire books or codebases at once.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>2. What is a "context window" in simple terms?</p>
+<label><input type="radio" name="q2" value="0"> A pop-up window in the user interface</label>
+<label><input type="radio" name="q2" value="1"> The total amount of text the AI can see and remember at one time during a conversation</label>
+<label><input type="radio" name="q2" value="2"> A window on your computer screen</label>
+<label><input type="radio" name="q2" value="3"> The number of conversations you can have per day</label>
+<div class="quiz-explain">A context window is the AI's "working memory" — the total amount of text it can process at once, including everything you send and everything it responds with. A larger context window means the AI can handle longer documents and conversations.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>3. Roughly how many words equal 1,000 tokens?</p>
+<label><input type="radio" name="q3" value="0"> About 750 words</label>
+<label><input type="radio" name="q3" value="1"> Exactly 1,000 words</label>
+<label><input type="radio" name="q3" value="2"> About 100 words</label>
+<label><input type="radio" name="q3" value="3"> About 5,000 words</label>
+<div class="quiz-explain">Approximately 1,000 tokens equals about 750 words. Tokens are word fragments — some short words are one token, while longer or uncommon words may be split into multiple tokens. This ratio is a useful rule of thumb.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>4. What is the main advantage of a 2M context window over a 128K context window?</p>
+<label><input type="radio" name="q4" value="0"> It makes the AI respond faster</label>
+<label><input type="radio" name="q4" value="1"> It makes the AI more creative</label>
+<label><input type="radio" name="q4" value="2"> It costs less money</label>
+<label><input type="radio" name="q4" value="3"> You can analyze entire books, codebases, or dozens of documents at once without splitting them</label>
+<div class="quiz-explain">A 2M context window lets you upload vastly larger amounts of text at once — entire novels, complete codebases, or dozens of research papers. With smaller windows, you would need to split documents into chunks and lose context between them.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. What is SQL injection (the vulnerability found in Code Example 2)?</p>
+<label><input type="radio" name="q5" value="0"> A way to make databases run faster</label>
+<label><input type="radio" name="q5" value="1"> An attack where malicious user input manipulates database queries to access or destroy data</label>
+<label><input type="radio" name="q5" value="2"> A method for importing data into SQL databases</label>
+<label><input type="radio" name="q5" value="3"> A type of database backup procedure</label>
+<div class="quiz-explain">SQL injection is a security vulnerability where user input is inserted directly into SQL queries without sanitization. Attackers can craft special input strings that modify the query to access unauthorized data, delete tables, or extract sensitive information. The fix is to use parameterized queries.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>6. What is the best way to get specific answers when analyzing a long document?</p>
+<label><input type="radio" name="q6" value="0"> Ask very vague questions like "What does this say?"</label>
+<label><input type="radio" name="q6" value="1"> Only upload one page at a time</label>
+<label><input type="radio" name="q6" value="2"> Ask specific, targeted questions and request references to sections or pages</label>
+<label><input type="radio" name="q6" value="3"> Use the smallest possible model</label>
+<div class="quiz-explain">Specific, targeted questions produce much better results than vague ones. Asking Gemini to reference specific sections or pages helps you verify the information. For example, "What does section 3 say about revenue growth?" is much better than "What does this document say?"</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>7. What does genai.upload_file() do?</p>
+<label><input type="radio" name="q7" value="0"> Uploads a file to Google's servers so Gemini can analyze it efficiently</label>
+<label><input type="radio" name="q7" value="1"> Saves a file to your local computer</label>
+<label><input type="radio" name="q7" value="2"> Shares a file with other users</label>
+<label><input type="radio" name="q7" value="3"> Converts a file to a different format</label>
+<div class="quiz-explain">genai.upload_file() uploads a file (like a PDF, image, or text file) to Google's servers using the File API. This is more efficient than pasting the content directly into your prompt, especially for large files, and supports file types like PDFs that cannot be pasted as text.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>8. Which of these tasks would benefit MOST from a 2-million-token context window?</p>
+<label><input type="radio" name="q8" value="0"> Asking "What is 2 + 2?"</label>
+<label><input type="radio" name="q8" value="1"> Translating a single sentence to Spanish</label>
+<label><input type="radio" name="q8" value="2"> Generating a 3-line poem</label>
+<label><input type="radio" name="q8" value="3"> Comparing themes across 15 research papers uploaded simultaneously</label>
+<div class="quiz-explain">Comparing themes across 15 research papers requires the AI to hold all papers in memory simultaneously and find connections between them. This is exactly the kind of task where a 2M context window shines — smaller context windows could not fit all 15 papers at once.</div>
+</div>
+
+<button class="quiz-submit">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>

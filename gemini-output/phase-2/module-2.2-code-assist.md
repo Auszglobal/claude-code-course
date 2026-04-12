@@ -1,337 +1,295 @@
 # Module 2.2: Gemini Code Assist in VS Code
 
 ## 🎯 Learning Objectives
-- Understand what Gemini Code Assist is and how it helps you code faster
-- Install and set up Gemini Code Assist in VS Code
+
+By the end of this module, you will be able to:
+
+- Install and configure the Gemini Code Assist extension in VS Code
 - Use AI-powered code completion to write code faster
-- Ask Gemini to explain, generate, and transform code using inline chat
-- Know the difference between Code Assist and using the API directly
+- Ask Gemini to explain unfamiliar code in plain English
+- Generate entire functions or files from natural language descriptions
+- Have inline conversations with Gemini without leaving your editor
 
 ## 📖 Theory
 
-### What is Gemini Code Assist?
+### Your AI Pair Programmer
 
-Imagine you are writing an essay, and a helpful friend is looking over your shoulder. As you type, they suggest how to finish your sentences. When you get stuck, you can ask them "What should I write next?" or "Can you explain this paragraph I found online?"
+Imagine you had a brilliant colleague sitting right next to you while you code -- someone who could finish your sentences, explain confusing code, and even write entire functions when you describe what you need. That is exactly what Gemini Code Assist does inside Visual Studio Code.
 
-**Gemini Code Assist** works exactly like that, but for programming. It is a free extension for **Visual Studio Code** (VS Code) — one of the most popular code editors in the world — that brings Gemini's intelligence directly into your coding workflow.
+**Gemini Code Assist** is a free extension (with generous usage limits) that brings Google's Gemini AI directly into your code editor. Instead of switching between your editor and a browser tab to ask questions, everything happens right where you work.
 
-Here is what it can do:
-- **Code completion**: As you type, it suggests the rest of the line or entire blocks of code
-- **Code generation**: Describe what you want in plain English, and it writes the code
-- **Code explanation**: Highlight code you do not understand, and it explains it
-- **Inline chat**: Ask questions about your code without leaving the editor
-- **Code transformation**: Select code and ask Gemini to refactor, optimize, or convert it
+### How It Works
 
-### VS Code — A Quick Introduction
+Gemini Code Assist operates in several modes:
 
-If you have never used VS Code, do not worry. **Visual Studio Code** (VS Code) is a free, lightweight code editor made by Microsoft. Think of it like a powerful version of Notepad or TextEdit, but designed specifically for writing code. It has:
+1. **Code Completion** -- As you type, Gemini predicts what you are about to write and suggests the next chunk of code. You press `Tab` to accept, or keep typing to ignore it. Think of it like autocomplete on your phone, but for code.
 
-- Syntax highlighting (code is color-coded to make it readable)
-- A built-in terminal (so you can run code without switching windows)
-- Extensions (add-ons that give it new powers — like Gemini Code Assist!)
+2. **Code Explanation** -- Select any code you do not understand, and Gemini will break it down in plain language. It is like having a patient teacher who never gets tired of questions.
 
-### How Does Code Assist Differ from the API?
+3. **Code Generation** -- Describe what you want in English (or any language), and Gemini writes the code for you. You review it, tweak if needed, and move on.
 
-| Feature | Gemini Code Assist (VS Code) | Gemini API (Python) |
-|---------|------------------------------|---------------------|
-| **How you use it** | Inside your code editor while writing | By writing Python scripts |
-| **Best for** | Day-to-day coding help | Building AI-powered apps |
-| **Input** | Your code + natural language | Programmatic prompts |
-| **Setup** | Install an extension | Write code to call the API |
-| **Interaction** | Real-time suggestions as you type | Request-response cycle |
+4. **Inline Chat** -- Open a chat panel right inside VS Code to have a back-and-forth conversation about your code. You can ask follow-up questions, request changes, or explore alternatives.
 
-They complement each other. Code Assist helps you **write code faster**. The API helps you **build apps that use AI**.
+### Why Use It Over the Web Interface?
 
-## 💻 Code Example 1: Installing and Setting Up Code Assist
+The web interface at gemini.google.com is great for general questions, but Code Assist is purpose-built for coding. It understands your project structure, sees the file you are working on, and gives contextually relevant suggestions. It is the difference between asking a stranger for directions versus having a GPS that knows exactly where you are.
 
-### Step 1: Install VS Code (if you do not have it)
+## 💻 Code Example 1: Installing and Setting Up Gemini Code Assist
+
+### Step 1: Open VS Code
+
+Launch Visual Studio Code. If you do not have it yet, download it from [code.visualstudio.com](https://code.visualstudio.com/).
+
+### Step 2: Install the Extension
+
+1. Click the **Extensions** icon in the left sidebar (it looks like four small squares).
+2. In the search bar, type: `Gemini Code Assist`
+3. Find the extension published by **Google** (look for the verified checkmark).
+4. Click **Install**.
 
 ```
-1. Go to https://code.visualstudio.com
-2. Click the big download button (it detects your operating system)
-3. Run the installer:
-   - Mac: Drag VS Code to your Applications folder
-   - Windows: Run the .exe installer (accept all defaults)
-4. Open VS Code
+You should see the Gemini icon appear in your left sidebar after installation.
 ```
 
-### Step 2: Install the Gemini Code Assist Extension
+### Step 3: Sign In
+
+1. Click the **Gemini icon** in the sidebar.
+2. Click **Sign in with Google**.
+3. A browser window opens -- sign in with your Google account.
+4. Return to VS Code. You should see "Gemini Code Assist" ready in the sidebar.
 
 ```
-1. Open VS Code
-2. Click the Extensions icon in the left sidebar
-   (it looks like 4 small squares, or press Ctrl+Shift+X / Cmd+Shift+X)
-3. In the search bar, type: "Gemini Code Assist"
-4. Find "Gemini Code Assist" by Google
-   (look for the official Google logo)
-5. Click "Install"
-6. Wait for it to finish installing (usually 10-30 seconds)
+Expected result:
+┌──────────────────────────────────────┐
+│  Gemini Code Assist                  │
+│  ✓ Signed in as you@gmail.com        │
+│                                      │
+│  Ask Gemini anything...              │
+└──────────────────────────────────────┘
 ```
 
-### Step 3: Sign In with Your Google Account
+### Step 4: Try Code Completion
 
-```
-1. After installation, you will see a Gemini icon in the left sidebar
-2. Click it — a panel opens on the side
-3. Click "Sign in with Google"
-4. A browser window opens — sign in with your Google account
-5. Grant the requested permissions
-6. Return to VS Code — you should see "Signed in" confirmation
-```
-
-📸 [What you should see after setup]
-```
-┌──────────────────────────────────────────────────────────┐
-│  VS Code                                                 │
-│  ┌─────┬──────────────────────┬──────────────────┐       │
-│  │ 📁  │  welcome.py          │  Gemini Chat     │       │
-│  │ 🔍  │                      │                  │       │
-│  │ 🔧  │  (your code here)    │  ✓ Signed in     │       │
-│  │ 🧩  │                      │  Ask Gemini...   │       │
-│  │ ✨  │                      │                  │       │
-│  │     │                      │                  │       │
-│  │ ✨ = Gemini icon            │                  │       │
-│  └─────┴──────────────────────┴──────────────────┘       │
-└──────────────────────────────────────────────────────────┘
-```
-
-### Step 4: Test Code Completion
-
-Create a new file called `test_assist.py` and start typing:
+Create a new file called `hello.py` and start typing:
 
 ```python
-# Create a new file: test_assist.py
-# Start typing the following and PAUSE after each line.
-# Watch for grey "ghost text" suggestions from Gemini!
-
-def calculate_tip(bill_amount, tip_percentage):
-    # After you type the function signature and press Enter,
-    # Gemini should suggest the body of the function!
-    
-    # If you see grey suggestion text, press Tab to accept it.
-    # Press Escape to dismiss it.
+# Create a function that greets a user by name
+def greet_user(
 ```
 
-### Expected Behavior:
-After typing the function name and parameters, you should see grey "ghost text" appear suggesting something like:
+Pause after the opening parenthesis. Within a second or two, Gemini suggests the rest:
+
 ```python
-def calculate_tip(bill_amount, tip_percentage):
-    tip = bill_amount * (tip_percentage / 100)    # <- Gemini suggests this
-    total = bill_amount + tip                      # <- and this
-    return tip, total                              # <- and this
+# Gemini suggests this completion (shown in grey text):
+def greet_user(name):
+    """Greet a user by their name."""
+    print(f"Hello, {name}! Welcome aboard.")
 ```
 
-Press **Tab** to accept the suggestion, or keep typing to ignore it.
+Press **Tab** to accept the suggestion. That is it -- Gemini just wrote your function.
 
-## 💻 Code Example 2: Inline Chat and Code Explanation
+### Step 5: Try Code Explanation
 
-### Using the Chat Panel
+Now suppose you encounter code you do not understand. Select the following code in your editor:
 
-The Gemini chat panel (on the right side of VS Code) is your AI coding buddy. Here are practical examples:
-
-```
-Example 1 — Generate code from description:
-Click in the Gemini chat panel and type:
-
-"Write a Python function that takes a list of student names
- and test scores, and returns the top 3 students with the
- highest scores. Include error handling."
-
-Gemini will generate the complete function with comments!
-```
-
-### Expected Output in Chat:
-```python
-def get_top_students(students: list[dict], top_n: int = 3) -> list[dict]:
-    """
-    Returns the top N students with the highest scores.
-    
-    Args:
-        students: List of dicts with 'name' and 'score' keys
-        top_n: Number of top students to return (default: 3)
-    
-    Returns:
-        List of top N student dicts, sorted by score descending
-    """
-    if not students:
-        raise ValueError("Student list cannot be empty")
-    
-    if top_n <= 0:
-        raise ValueError("top_n must be a positive integer")
-    
-    # Sort students by score in descending order
-    sorted_students = sorted(students, key=lambda x: x['score'], reverse=True)
-    
-    # Return the top N (or all if fewer than N)
-    return sorted_students[:top_n]
-
-
-# Example usage:
-students = [
-    {"name": "Alice", "score": 95},
-    {"name": "Bob", "score": 87},
-    {"name": "Charlie", "score": 92},
-    {"name": "Diana", "score": 98},
-    {"name": "Eve", "score": 88},
-]
-
-top_3 = get_top_students(students)
-for student in top_3:
-    print(f"{student['name']}: {student['score']}")
-```
-
-### Explaining Code You Do Not Understand
-
-If you find code online that you do not understand:
-
-```
-1. Paste the confusing code into your VS Code file
-2. Select (highlight) the code
-3. Right-click and look for "Gemini: Explain this code"
-   OR type in the chat panel: "Explain the selected code"
-```
-
-For example, select this code:
 ```python
 result = [x**2 for x in range(10) if x % 2 == 0]
 ```
 
-Gemini will explain:
-> "This is a **list comprehension** — a compact way to create a list in Python. It does three things:
-> 1. `range(10)` generates numbers 0 through 9
-> 2. `if x % 2 == 0` filters to only even numbers (0, 2, 4, 6, 8)
-> 3. `x**2` squares each number
-> 
-> So the result is `[0, 4, 16, 36, 64]` — the squares of even numbers from 0 to 9."
-
-### Transforming Code
-
-Select some code, then ask Gemini to transform it:
+Right-click and choose **Gemini > Explain This**. Gemini responds with something like:
 
 ```
-Try these commands in the chat:
-- "Convert this function to use async/await"
-- "Add type hints to all parameters"
-- "Rewrite this using a class instead of functions"
-- "Make this code handle errors gracefully"
-- "Add docstrings to all functions"
+This is a list comprehension that:
+1. Loops through numbers 0-9
+2. Filters for even numbers only (x % 2 == 0)
+3. Squares each even number (x**2)
+4. Result: [0, 4, 16, 36, 64]
 ```
+
+## 💻 Code Example 2: Code Generation and Inline Chat
+
+### Generating Code from a Description
+
+Open the Gemini chat panel (click the Gemini icon in the sidebar) and type:
+
+```
+Create a Python function that reads a CSV file and returns the average
+value of a specified column. Include error handling for missing files
+and non-numeric data.
+```
+
+Gemini generates:
+
+```python
+import csv
+
+def average_of_column(file_path, column_name):
+    """
+    Read a CSV file and return the average value of a specified column.
+
+    Args:
+        file_path: Path to the CSV file.
+        column_name: Name of the column to average.
+
+    Returns:
+        The average value as a float, or None if calculation fails.
+    """
+    try:
+        values = []
+        with open(file_path, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                try:
+                    values.append(float(row[column_name]))
+                except (ValueError, KeyError):
+                    continue  # Skip non-numeric or missing values
+
+        if not values:
+            print(f"No numeric values found in column '{column_name}'.")
+            return None
+
+        return sum(values) / len(values)
+
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+        return None
+
+# Example usage
+avg = average_of_column("sales.csv", "revenue")
+if avg is not None:
+    print(f"Average revenue: ${avg:.2f}")
+```
+
+Click **Insert at Cursor** to drop this code right into your file.
+
+### Using Inline Chat for Refinement
+
+Place your cursor inside the function above and press **Ctrl+I** (or **Cmd+I** on Mac) to open inline chat. Type:
+
+```
+Add logging instead of print statements, and add a parameter
+for skipping the first N rows.
+```
+
+Gemini rewrites the function in place with your requested changes. You see a diff view showing what changed, and you can accept or reject each modification.
+
+### Keyboard Shortcuts Worth Remembering
+
+| Action | Windows/Linux | Mac |
+|---|---|---|
+| Accept completion | `Tab` | `Tab` |
+| Dismiss completion | `Esc` | `Esc` |
+| Open inline chat | `Ctrl+I` | `Cmd+I` |
+| Open sidebar chat | Click Gemini icon | Click Gemini icon |
+| Explain selection | Right-click > Gemini > Explain | Right-click > Gemini > Explain |
 
 ## ✍️ Hands-On Exercises
 
-### Exercise 1: Build a Mini Calculator
-Use Gemini Code Assist to help you build a simple calculator:
+### Exercise 1: Auto-Complete Challenge
 
-1. Create a new file called `calculator.py`
-2. Type: `def add(a, b):` and see what Gemini suggests
-3. Accept the suggestion with Tab
-4. Now type `def subtract(` and let Gemini complete it
-5. Continue for multiply and divide
-6. Ask the chat panel: "Add a main menu that lets the user choose an operation and input numbers"
-
-**Tip**: If Gemini's suggestion is not quite right, just keep typing your own version. The more context (code) you provide, the better the suggestions become.
-
-### Exercise 2: Code Explanation Challenge
-Find a piece of code online that you do not understand (try searching "Python one-liners" or "JavaScript tricks"). Paste it into VS Code, select it, and ask Gemini to explain it. Here are three to try:
+Create a new file called `calculator.py`. Start typing each of these function signatures and let Gemini complete them. See how close its suggestions are to what you wanted:
 
 ```python
-# Paste each one into VS Code and ask Gemini to explain:
+def add(a, b):
 
-# 1. What does this do?
-print({i: i**3 for i in range(1, 6)})
+def multiply(a, b):
 
-# 2. What about this?
-words = "hello world foo bar"
-result = " ".join(word.capitalize() for word in words.split())
+def calculate_average(numbers):
 
-# 3. And this?
-matrix = [[1,2,3],[4,5,6],[7,8,9]]
-flat = [num for row in matrix for num in row]
+def convert_celsius_to_fahrenheit(celsius):
 ```
 
-**Tip**: After reading Gemini's explanation, try to predict what each code snippet outputs before running it. Then run it to check!
+**Hint:** If Gemini's suggestion is not quite right, keep typing a few more characters to steer it in the right direction, then pause again.
+
+### Exercise 2: Explain and Generate
+
+1. Find any open-source Python file on GitHub that you do not fully understand.
+2. Paste it into VS Code.
+3. Select the entire file and ask Gemini to explain it.
+4. Then ask Gemini in the chat: "Write a similar function but for [your own use case]."
+
+**Hint:** Try searching GitHub for "Python utility functions" and pick something that looks interesting but unfamiliar.
+
+## ❓ Quiz
+
+<div id="quiz">
+
+<div class="quiz-question" data-answer="B">
+<p><strong>1.</strong> What is the primary advantage of Gemini Code Assist over using Gemini in a browser?</p>
+<label><input type="radio" name="q1" value="A"> A. It uses a more powerful AI model</label>
+<label><input type="radio" name="q1" value="B"> B. It understands your project context and works inside your editor</label>
+<label><input type="radio" name="q1" value="C"> C. It is a paid premium feature with faster responses</label>
+<label><input type="radio" name="q1" value="D"> D. It only works with Google Cloud projects</label>
+<div class="quiz-explain" style="display:none;">B -- Code Assist sees your open files, project structure, and current cursor position, giving it far more context than the web interface.</div>
+</div>
+
+<div class="quiz-question" data-answer="C">
+<p><strong>2.</strong> How do you accept a code completion suggestion from Gemini in VS Code?</p>
+<label><input type="radio" name="q2" value="A"> A. Press Enter</label>
+<label><input type="radio" name="q2" value="B"> B. Click the suggestion with your mouse</label>
+<label><input type="radio" name="q2" value="C"> C. Press Tab</label>
+<label><input type="radio" name="q2" value="D"> D. Press Ctrl+A</label>
+<div class="quiz-explain" style="display:none;">C -- Tab is the standard key to accept an inline code suggestion. Pressing Esc dismisses it.</div>
+</div>
+
+<div class="quiz-question" data-answer="A">
+<p><strong>3.</strong> What happens when you select code, right-click, and choose "Gemini > Explain This"?</p>
+<label><input type="radio" name="q3" value="A"> A. Gemini provides a plain-language explanation of the selected code</label>
+<label><input type="radio" name="q3" value="B"> B. Gemini deletes the code and replaces it with comments</label>
+<label><input type="radio" name="q3" value="C"> C. Gemini runs the code and shows the output</label>
+<label><input type="radio" name="q3" value="D"> D. Gemini translates the code to another programming language</label>
+<div class="quiz-explain" style="display:none;">A -- The Explain feature breaks down what the code does step by step in natural language, making it perfect for learning unfamiliar code.</div>
+</div>
+
+<div class="quiz-question" data-answer="D">
+<p><strong>4.</strong> What keyboard shortcut opens the inline chat in VS Code?</p>
+<label><input type="radio" name="q4" value="A"> A. Ctrl+G / Cmd+G</label>
+<label><input type="radio" name="q4" value="B"> B. Ctrl+Shift+P / Cmd+Shift+P</label>
+<label><input type="radio" name="q4" value="C"> C. Alt+Enter / Option+Enter</label>
+<label><input type="radio" name="q4" value="D"> D. Ctrl+I / Cmd+I</label>
+<div class="quiz-explain" style="display:none;">D -- Ctrl+I (Windows/Linux) or Cmd+I (Mac) opens the inline chat, letting you give Gemini instructions right at your cursor position.</div>
+</div>
+
+<div class="quiz-question" data-answer="B">
+<p><strong>5.</strong> Which of the following is NOT a mode of Gemini Code Assist?</p>
+<label><input type="radio" name="q5" value="A"> A. Code Completion</label>
+<label><input type="radio" name="q5" value="B"> B. Code Deployment</label>
+<label><input type="radio" name="q5" value="C"> C. Code Explanation</label>
+<label><input type="radio" name="q5" value="D"> D. Code Generation</label>
+<div class="quiz-explain" style="display:none;">B -- Gemini Code Assist handles completion, explanation, generation, and inline chat. Deployment is handled by other tools like Google Cloud CLI.</div>
+</div>
+
+<div class="quiz-question" data-answer="A">
+<p><strong>6.</strong> When Gemini suggests a code completion, what does pressing Esc do?</p>
+<label><input type="radio" name="q6" value="A"> A. Dismisses the suggestion so you can keep typing manually</label>
+<label><input type="radio" name="q6" value="B"> B. Accepts the suggestion and moves to the next line</label>
+<label><input type="radio" name="q6" value="C"> C. Opens a menu with alternative suggestions</label>
+<label><input type="radio" name="q6" value="D"> D. Closes VS Code entirely</label>
+<div class="quiz-explain" style="display:none;">A -- Esc dismisses the ghost text suggestion, letting you continue typing your own code without accepting Gemini's prediction.</div>
+</div>
+
+<div class="quiz-question" data-answer="C">
+<p><strong>7.</strong> What is the best analogy for code completion?</p>
+<label><input type="radio" name="q7" value="A"> A. A spell checker that fixes mistakes</label>
+<label><input type="radio" name="q7" value="B"> B. A search engine that finds code online</label>
+<label><input type="radio" name="q7" value="C"> C. Autocomplete on your phone, but for code</label>
+<label><input type="radio" name="q7" value="D"> D. A compiler that converts code to machine language</label>
+<div class="quiz-explain" style="display:none;">C -- Just like your phone predicts the next word in a text message, Gemini predicts the next chunk of code based on what you have typed so far.</div>
+</div>
+
+<div class="quiz-question" data-answer="D">
+<p><strong>8.</strong> After Gemini generates code in the chat panel, how do you add it to your file?</p>
+<label><input type="radio" name="q8" value="A"> A. You must manually copy and paste it</label>
+<label><input type="radio" name="q8" value="B"> B. It is automatically inserted at the top of your file</label>
+<label><input type="radio" name="q8" value="C"> C. You need to save the chat log first</label>
+<label><input type="radio" name="q8" value="D"> D. Click "Insert at Cursor" to place it at your current position</label>
+<div class="quiz-explain" style="display:none;">D -- The chat panel provides an "Insert at Cursor" button that places the generated code exactly where your cursor is in the editor, saving you from manual copy-paste.</div>
+</div>
+
+<button class="quiz-submit" onclick="checkQuiz()">Submit Answers</button>
+<div class="quiz-result"></div>
+</div>
 
 ## 🔗 Next Steps
 
-You now have an AI coding assistant right inside your editor. In **Module 2.3**, we will use Gemini (both Code Assist and the API) to **write real programs** — Python and JavaScript projects, debugging sessions, and code reviews. Time to build something!
-
----
-
-<div class="module-quiz">
-<h3>Module Quiz</h3>
-
-<div class="quiz-q" data-answer="1">
-<p>1. What is Gemini Code Assist?</p>
-<label><input type="radio" name="q1" value="0"> A standalone application for writing code</label>
-<label><input type="radio" name="q1" value="1"> A free VS Code extension that provides AI-powered code completion, generation, and explanation</label>
-<label><input type="radio" name="q1" value="2"> A replacement for the Python programming language</label>
-<label><input type="radio" name="q1" value="3"> A paid service that costs $20/month</label>
-<div class="quiz-explain">Gemini Code Assist is a free extension for Visual Studio Code (VS Code) that brings Google Gemini's AI capabilities directly into your code editor. It provides real-time code suggestions, generation from natural language, and code explanation.</div>
-</div>
-
-<div class="quiz-q" data-answer="0">
-<p>2. How do you accept a code suggestion from Gemini Code Assist?</p>
-<label><input type="radio" name="q2" value="0"> Press the Tab key</label>
-<label><input type="radio" name="q2" value="1"> Click the Accept button</label>
-<label><input type="radio" name="q2" value="2"> Say "yes" out loud</label>
-<label><input type="radio" name="q2" value="3"> Press Ctrl+S</label>
-<div class="quiz-explain">When Gemini Code Assist shows a grey "ghost text" suggestion in your editor, press the Tab key to accept it. Press Escape to dismiss it, or just keep typing your own code to ignore it.</div>
-</div>
-
-<div class="quiz-q" data-answer="3">
-<p>3. What is the keyboard shortcut to open the Extensions panel in VS Code?</p>
-<label><input type="radio" name="q3" value="0"> Ctrl+E / Cmd+E</label>
-<label><input type="radio" name="q3" value="1"> Ctrl+P / Cmd+P</label>
-<label><input type="radio" name="q3" value="2"> Ctrl+T / Cmd+T</label>
-<label><input type="radio" name="q3" value="3"> Ctrl+Shift+X / Cmd+Shift+X</label>
-<div class="quiz-explain">The keyboard shortcut Ctrl+Shift+X (Windows/Linux) or Cmd+Shift+X (Mac) opens the Extensions panel in VS Code, where you can search for and install extensions like Gemini Code Assist.</div>
-</div>
-
-<div class="quiz-q" data-answer="2">
-<p>4. What is the difference between Code Assist and the Gemini API?</p>
-<label><input type="radio" name="q4" value="0"> They are the same thing with different names</label>
-<label><input type="radio" name="q4" value="1"> Code Assist is more powerful than the API</label>
-<label><input type="radio" name="q4" value="2"> Code Assist helps you write code in an editor; the API lets you build AI-powered applications</label>
-<label><input type="radio" name="q4" value="3"> The API is free but Code Assist is paid</label>
-<div class="quiz-explain">Code Assist is designed for day-to-day coding help inside your editor (suggestions, explanations, generation). The API is for building applications that programmatically use Gemini's intelligence. They serve different purposes and complement each other.</div>
-</div>
-
-<div class="quiz-q" data-answer="1">
-<p>5. How can you ask Gemini to explain a piece of code you do not understand?</p>
-<label><input type="radio" name="q5" value="0"> Delete the code and rewrite it from scratch</label>
-<label><input type="radio" name="q5" value="1"> Select the code, right-click, and choose "Gemini: Explain this code" or ask in the chat panel</label>
-<label><input type="radio" name="q5" value="2"> Copy the code and email it to Google</label>
-<label><input type="radio" name="q5" value="3"> Code explanation is not available in Code Assist</label>
-<div class="quiz-explain">You can select any code in your editor, right-click for the Gemini context menu, or type your question in the Gemini chat panel on the side. Both methods work for getting clear explanations of code you find confusing.</div>
-</div>
-
-<div class="quiz-q" data-answer="0">
-<p>6. What does Gemini Code Assist's code completion look like in the editor?</p>
-<label><input type="radio" name="q6" value="0"> Grey "ghost text" that appears after your cursor as you type</label>
-<label><input type="radio" name="q6" value="1"> A pop-up window that blocks your view</label>
-<label><input type="radio" name="q6" value="2"> Red underlined text</label>
-<label><input type="radio" name="q6" value="3"> A notification in the bottom corner</label>
-<div class="quiz-explain">Gemini Code Assist shows suggestions as grey "ghost text" — dimmed text that appears after your cursor. It is non-intrusive and you can accept it with Tab, ignore it by continuing to type, or dismiss it with Escape.</div>
-</div>
-
-<div class="quiz-q" data-answer="3">
-<p>7. Which of these can you NOT do with Gemini Code Assist?</p>
-<label><input type="radio" name="q7" value="0"> Generate code from a natural language description</label>
-<label><input type="radio" name="q7" value="1"> Explain what a piece of code does</label>
-<label><input type="radio" name="q7" value="2"> Refactor or transform selected code</label>
-<label><input type="radio" name="q7" value="3"> Deploy your application to a production server</label>
-<div class="quiz-explain">Gemini Code Assist can generate, explain, and transform code, but it cannot deploy applications to production servers. Deployment requires separate tools and processes. Code Assist focuses on helping you write and understand code.</div>
-</div>
-
-<div class="quiz-q" data-answer="2">
-<p>8. What makes Gemini Code Assist give better suggestions?</p>
-<label><input type="radio" name="q8" value="0"> Having a faster internet connection</label>
-<label><input type="radio" name="q8" value="1"> Using a bigger monitor</label>
-<label><input type="radio" name="q8" value="2"> Providing more context — more code in your file, descriptive function names, and comments</label>
-<label><input type="radio" name="q8" value="3"> Waiting longer before accepting suggestions</label>
-<div class="quiz-explain">Gemini Code Assist uses the surrounding code as context to make better suggestions. The more code you have in your file, combined with clear function names, comments, and docstrings, the more accurate and relevant its suggestions will be.</div>
-</div>
-
-<button class="quiz-submit">Submit Answers</button>
-<div class="quiz-result"></div>
-</div>
+Now that you have Gemini working inside your editor, you are ready to put it to serious use. In **Module 2.3: Writing Real Code with Gemini**, we will tackle real programming tasks -- writing Python and JavaScript from scratch, debugging errors, and using Gemini for code review. You will see how to go from idea to working code with AI as your co-pilot.
