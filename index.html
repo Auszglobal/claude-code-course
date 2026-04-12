@@ -872,6 +872,16 @@ body {
 /* ── Welcome page ── */
 .welcome { text-align: center; padding: 60px 20px; }
 
+/* Daily Goal */
+.daily-goal { margin-top: 6px; font-size: 11px; }
+.dg-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 4px; }
+.dg-fill { height: 100%; background: linear-gradient(90deg, #27ae60, #2ecc71); border-radius: 2px; transition: width 0.4s; }
+.dg-text { display: flex; justify-content: space-between; align-items: center; }
+.dg-label { color: var(--text-secondary); font-size: 10px; }
+.dg-done { color: #27ae60; font-weight: 600; }
+.dg-set { background: none; border: none; color: var(--accent); font-size: 10px; cursor: pointer; padding: 0; }
+.dg-set:hover { text-decoration: underline; }
+
 /* Quick Review */
 .quick-review {
   background: rgba(0,139,139,0.08); border: 1px solid rgba(0,180,166,0.2);
@@ -1537,6 +1547,7 @@ function updateProfileUI() {
   updateProgressUI();
   updateStreakDisplay();
   updateStudyTimeDisplay();
+  updateDailyGoalDisplay();
 }
 
 function handleAvatarUpload(e) {
@@ -1867,6 +1878,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
       <div class="xp-display" id="xp-display"></div>
       <div class="streak-display" id="streak-display"></div>
       <div class="study-time-display" id="study-time-display"></div>
+      <div class="daily-goal" id="daily-goal"></div>
     </div>
     <button class="logout-btn" onclick="logout()">Logout</button>
     <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
@@ -2454,6 +2466,7 @@ function handleQuizSubmit(quiz, moduleId) {
     updateProgressUI();
     checkNewBadges();
     checkMilestones();
+    recordDailyCompletion();
     addXP('module', XP_PER_MODULE, moduleId);
     addXP('quiz', XP_PER_QUIZ, moduleId);
     updateXPDisplay();
@@ -2916,6 +2929,52 @@ function updateStreakDisplay() {
   el.innerHTML = `<span class="streak-flame">&#x1F525;</span>
     <span class="streak-count">${count}</span>
     <span class="streak-label">${count === 1 ? 'day streak' : 'day streak'}</span>`;
+}
+
+// ── Daily Goal ──
+function dailyGoalKey() { return 'claude-course-dailygoal-' + (currentUser ? currentUser.uid : '_anon'); }
+
+function getDailyGoal() {
+  try { return JSON.parse(localStorage.getItem(dailyGoalKey()) || '{"target":2,"log":{}}'); } catch { return { target: 2, log: {} }; }
+}
+
+function getTodayCompleted() {
+  const data = getDailyGoal();
+  const today = new Date().toISOString().split('T')[0];
+  return data.log[today] || 0;
+}
+
+function recordDailyCompletion() {
+  const data = getDailyGoal();
+  const today = new Date().toISOString().split('T')[0];
+  data.log[today] = (data.log[today] || 0) + 1;
+  try { localStorage.setItem(dailyGoalKey(), JSON.stringify(data)); } catch {}
+  updateDailyGoalDisplay();
+}
+
+function setDailyGoalTarget() {
+  const data = getDailyGoal();
+  const input = prompt('Set daily module goal:', data.target);
+  if (input === null) return;
+  const n = parseInt(input);
+  if (isNaN(n) || n < 1 || n > 20) return;
+  data.target = n;
+  try { localStorage.setItem(dailyGoalKey(), JSON.stringify(data)); } catch {}
+  updateDailyGoalDisplay();
+}
+
+function updateDailyGoalDisplay() {
+  const el = document.getElementById('daily-goal');
+  if (!el) return;
+  const data = getDailyGoal();
+  const done = getTodayCompleted();
+  const pct = Math.min(100, Math.round((done / data.target) * 100));
+  const achieved = done >= data.target;
+  el.innerHTML = `<div class="dg-text">
+    <span class="dg-label">&#x1F3AF; Today: <span class="${achieved ? 'dg-done' : ''}">${done}/${data.target}</span> modules</span>
+    <button class="dg-set" onclick="setDailyGoalTarget()">Set goal</button>
+  </div>
+  <div class="dg-bar"><div class="dg-fill" style="width:${pct}%"></div></div>`;
 }
 
 // ── Study Time Tracking ──
@@ -3581,10 +3640,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Restore saved learning path
   activePath = localStorage.getItem('claude-course-path') || null;
   highlightPathModules();
-  // Initialize XP, streak, and study time display
+  // Initialize XP, streak, study time, and daily goal display
   updateXPDisplay();
   updateStreakDisplay();
   updateStudyTimeDisplay();
+  updateDailyGoalDisplay();
 
   document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
   document.getElementById('hamburger').addEventListener('click', openMobileSidebar);
