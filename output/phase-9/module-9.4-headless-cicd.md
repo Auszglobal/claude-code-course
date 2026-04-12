@@ -275,6 +275,51 @@ claude -p "Scan all Python files for: hardcoded secrets, SQL injection,
 <div class="quiz-explain">Without --max-turns, Claude could keep iterating indefinitely in headless mode — searching, reading, trying different approaches — consuming tokens with no human to stop it. Setting a limit ensures the process terminates after a reasonable number of steps.</div>
 </div>
 
+<div class="quiz-q" data-answer="1">
+<p>4. You want Claude Code to generate a JSON report that another script can parse. Which flag do you use?</p>
+<label><input type="radio" name="q4" value="0"> <code>--format json</code></label>
+<label><input type="radio" name="q4" value="1"> <code>--output-format json</code></label>
+<label><input type="radio" name="q4" value="2"> <code>--json-output</code></label>
+<label><input type="radio" name="q4" value="3"> <code>--type json</code></label>
+<div class="quiz-explain">The <code>--output-format json</code> flag tells Claude Code to return its output as structured JSON instead of plain text. This is essential for automation scripts that need to parse Claude's output programmatically.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. In a GitHub Actions workflow, where should you store the ANTHROPIC_API_KEY?</p>
+<label><input type="radio" name="q5" value="0"> In the repository's Settings > Secrets, referenced as <code>${{ secrets.ANTHROPIC_API_KEY }}</code></label>
+<label><input type="radio" name="q5" value="1"> Directly in the workflow YAML file</label>
+<label><input type="radio" name="q5" value="2"> In a .env file committed to the repository</label>
+<label><input type="radio" name="q5" value="3"> In the README.md file</label>
+<div class="quiz-explain">API keys must be stored as encrypted secrets in GitHub repository settings. The workflow accesses them via <code>${{ secrets.ANTHROPIC_API_KEY }}</code>. Never hardcode secrets in YAML files or commit them to the repository.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>6. What is the danger of using <code>--yes</code> flag combined with unrestricted tools in headless mode?</p>
+<label><input type="radio" name="q6" value="0"> It makes Claude Code run slower</label>
+<label><input type="radio" name="q6" value="1"> It costs more tokens</label>
+<label><input type="radio" name="q6" value="2"> Claude auto-approves all actions including destructive ones like deleting files or running harmful commands</label>
+<label><input type="radio" name="q6" value="3"> It disables JSON output</label>
+<div class="quiz-explain">The <code>--yes</code> flag auto-approves every tool call without human review. Combined with full tool access, Claude could delete files, run destructive commands, or make unintended changes. Always pair <code>--yes</code> with <code>--allowedTools</code> restrictions.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. Which combination of flags creates the safest setup for an automated code review bot?</p>
+<label><input type="radio" name="q7" value="0"> <code>--yes</code> with no other restrictions</label>
+<label><input type="radio" name="q7" value="1"> <code>--max-turns 100</code> with all tools allowed</label>
+<label><input type="radio" name="q7" value="2"> No flags at all — use interactive mode</label>
+<label><input type="radio" name="q7" value="3"> <code>--allowedTools "Read,Grep,Glob" --max-turns 10</code></label>
+<div class="quiz-explain">Restricting to read-only tools (Read, Grep, Glob) prevents any code modification, and --max-turns 10 limits execution steps. This is the safest configuration for automated reviews — Claude can analyse but never change your code.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. You want to run a Claude Code security scan every night at 2 AM. Which scheduling tool would you use on Linux/Mac?</p>
+<label><input type="radio" name="q8" value="0"> GitHub Actions (runs only on push events)</label>
+<label><input type="radio" name="q8" value="1"> crontab — add a cron entry with the schedule <code>0 2 * * *</code></label>
+<label><input type="radio" name="q8" value="2"> npm start with a timer flag</label>
+<label><input type="radio" name="q8" value="3"> Claude Code's built-in scheduler</label>
+<div class="quiz-explain">crontab is the standard Linux/Mac scheduling tool. The expression <code>0 2 * * *</code> means "at minute 0 of hour 2, every day." On Windows, you'd use Task Scheduler instead. GitHub Actions can also run on schedules but is cloud-based.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
