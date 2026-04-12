@@ -1,6 +1,6 @@
 # Module 9.4: Headless Mode & CI/CD Pipelines
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Run Claude Code in headless (non-interactive) mode for automation
   - Use CLI flags to control behaviour without human input
@@ -8,7 +8,7 @@
   - Set up automated code review and documentation generation
   - Apply safety practices for unattended Claude Code execution
 
-## Theory
+## 📖 Theory
 
 ### What Is Headless Mode?
 
@@ -38,7 +38,7 @@ Think of it like setting an autopilot:
 | `--max-turns` | Limit how many steps Claude can take | Prevent runaway execution |
 | `--yes` | Auto-approve all tool calls | Use with caution! |
 
-## Code Example 1: Running Claude Code in One-Shot Mode
+## 💻 Code Example 1: Running Claude Code in One-Shot Mode
 
 ### Basic one-shot command:
 
@@ -82,7 +82,7 @@ claude -p "Fix the failing test in test_api.py" \
   --max-turns 5
 ```
 
-## Code Example 2: GitHub Actions Integration
+## 💻 Code Example 2: GitHub Actions Integration
 
 ### Auto-review PRs with Claude Code:
 
@@ -170,7 +170,7 @@ jobs:
             --max-turns 5
 ```
 
-## Supplementary Example: Scheduled Tasks
+## 💻 Supplementary Example: Scheduled Tasks
 
 ### Windows Task Scheduler:
 
@@ -218,7 +218,7 @@ claude -p "Scan all Python files for: hardcoded secrets, SQL injection,
 | Apply simple, well-defined fixes | Navigate complex multi-step decisions |
 | Search for patterns across codebases | Know when to stop and ask a human |
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Your First Headless Command
 1. Navigate to any project directory in your terminal
@@ -279,6 +279,6 @@ claude -p "Scan all Python files for: hardcoded secrets, SQL injection,
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You can now automate Claude Code for unattended tasks. In the final module, **9.5: Docker, Git Worktrees & Security Deep Dive**, we'll cover containerised development, isolated workspaces, and a comprehensive security checklist for AI-assisted coding.

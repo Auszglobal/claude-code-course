@@ -1,6 +1,6 @@
 # Module 2.1: CLAUDE.md -- The AI's Notebook
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Understand the purpose and importance of CLAUDE.md
   - Know where CLAUDE.md should be placed
@@ -8,7 +8,7 @@
   - Have Claude Code follow your specific instructions
   - Master best practices for writing clear directives
 
-## Theory
+## 📖 Theory
 
 ### What Is CLAUDE.md?
 
@@ -67,7 +67,7 @@ When you launch Claude Code in a project folder:
 
 It's like your assistant reviewing the handbook every morning to make sure they don't make mistakes.
 
-## Code Example 1: Creating Your First CLAUDE.md
+## 💻 Code Example 1: Creating Your First CLAUDE.md
 
 ### Step 1: Create a Practice Project Folder
 
@@ -137,7 +137,7 @@ This is a practice project for learning how to use Claude Code.
 
 Claude Code will create this file and start following your rules from this point on.
 
-## Code Example 2: Writing a More Complete CLAUDE.md
+## 💻 Code Example 2: Writing a More Complete CLAUDE.md
 
 Here is a more complete CLAUDE.md example, suitable for a small website project:
 
@@ -197,7 +197,7 @@ Claude Code will create the file, and from then on, whenever you ask it to creat
 
 This is the power of CLAUDE.md -- **you only need to say it once, and it remembers forever**.
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Create a CLAUDE.md for a Project You're Interested In
 
@@ -256,7 +256,7 @@ In the project from Exercise 1, try the following:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Great work! You've learned how to use CLAUDE.md to "teach" Claude Code about your project.
 

@@ -1,6 +1,6 @@
 # Module 9.1: Sub-agents & Parallel Execution
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand what sub-agents are and how they work in Claude Code
   - Identify when parallel execution improves efficiency
@@ -8,7 +8,7 @@
   - Understand git worktrees for isolated agent work
   - Know the limitations and trade-offs of parallel execution
 
-## Theory
+## 📖 Theory
 
 ### What Are Sub-agents?
 
@@ -74,7 +74,7 @@ Sub-agents are most valuable when you have **independent tasks** — work that d
 └─────────────────────┘
 ```
 
-## Code Example 1: Automatic Sub-agent Usage
+## 💻 Code Example 1: Automatic Sub-agent Usage
 
 Claude Code often uses sub-agents automatically when it recognises a task that benefits from parallel execution. You don't need to do anything special:
 
@@ -114,7 +114,7 @@ Claude Code often uses sub-agents automatically when it recognises a task that b
 
 Claude spawns a sub-agent for each file, reads them simultaneously, and combines the summaries.
 
-## Code Example 2: Git Worktrees for Safe Isolation
+## 💻 Code Example 2: Git Worktrees for Safe Isolation
 
 ### What Are Git Worktrees?
 
@@ -160,7 +160,7 @@ A git worktree is like having a **second copy of your project** that shares the 
 
 You can then choose which approach to apply to your main code.
 
-## Supplementary Example: When NOT to Use Sub-agents
+## 💻 Supplementary Example: When NOT to Use Sub-agents
 
 Sub-agents aren't always the answer. Here are the trade-offs:
 
@@ -191,7 +191,7 @@ Is the task independent? (no shared state needed)
 | "Add a column to the database, then update the model, then update the API" | No | Each step depends on the previous |
 | "Compare our auth with 3 different open-source implementations" | Yes | Each comparison is independent |
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Parallel Codebase Exploration
 1. Open a project with at least 10 files
@@ -242,6 +242,6 @@ Is the task independent? (no shared state needed)
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You now understand how Claude Code leverages parallel execution for speed. In the next module, **9.2: Plan Mode & Complex Architecture**, we'll learn how to use Plan Mode to design before building — essential for large, multi-file tasks.

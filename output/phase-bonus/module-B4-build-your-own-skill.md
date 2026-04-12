@@ -1,6 +1,6 @@
 # Module B4: Build Your Own Skill from Scratch
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand the complete structure of a Skill (SKILL.md format) and the purpose of each section
   - Explain how the Progressive Disclosure mechanism saves tokens
@@ -8,7 +8,7 @@
   - Install and test your custom Skill locally
   - Build a dedicated Skill for your most frequently repeated tasks
 
-## Theory
+## 📖 Theory
 
 ### What Is a Skill?
 
@@ -108,7 +108,7 @@ Input and expected output examples. Claude is excellent at "learning from exampl
 
 Lists common errors. When Claude sees these reminders, it proactively avoids these pitfalls.
 
-## Code Example 1: Building a "Python Script Generator" Skill
+## 💻 Code Example 1: Building a "Python Script Generator" Skill
 
 Let's build a truly practical Skill -- every time you ask Claude to write Python, it will automatically follow PEP8 standards and include type hints.
 
@@ -296,7 +296,7 @@ After installing this Skill, every time you tell Claude Code "help me write a Py
 - Follow PEP8 and the 88-character line width limit
 - Add error handling and usage examples
 
-## Code Example 2: Installing and Testing Your Skill
+## 💻 Code Example 2: Installing and Testing Your Skill
 
 ### Step 1: Verify the File Location
 
@@ -384,7 +384,7 @@ In Claude Code, you can use a slash command to view currently loaded Skills:
 
 This will list all detected Skills and their trigger status.
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise: Build a Skill for Your Most Frequently Repeated Task
 
@@ -494,7 +494,7 @@ triggers:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations! You've learned how to build your own Skill from scratch. This is one of the most powerful features in advanced Claude Code usage -- you can encapsulate any repetitive work pattern into a Skill so Claude executes to your standards every time.
 

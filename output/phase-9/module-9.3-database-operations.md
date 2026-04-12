@@ -1,6 +1,6 @@
 # Module 9.3: Database Operations
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Create and query SQLite databases using Claude Code
   - Connect to PostgreSQL databases for production work
@@ -8,7 +8,7 @@
   - Apply safety practices when working with production data
   - Use Claude Code to generate schemas, queries, and seed data
 
-## Theory
+## 📖 Theory
 
 ### Why Databases Matter
 
@@ -39,7 +39,7 @@ Design Schema → Create Tables → Write Queries → Generate Seed Data → Deb
 
 You describe what you need in plain English, and Claude writes the SQL or ORM code.
 
-## Code Example 1: SQLite with Claude Code
+## 💻 Code Example 1: SQLite with Claude Code
 
 ### Creating a database:
 
@@ -94,7 +94,7 @@ You describe what you need in plain English, and Claude writes the SQL or ORM co
 
 Claude writes a query with a JOIN, date comparison, and proper parameter binding.
 
-## Code Example 2: PostgreSQL with Claude Code
+## 💻 Code Example 2: PostgreSQL with Claude Code
 
 ### Connecting to a remote database:
 
@@ -156,7 +156,7 @@ Order.objects.filter(
 ).order_by('-total_revenue')
 ```
 
-## Supplementary Example: Database Migrations
+## 💻 Supplementary Example: Database Migrations
 
 ### What Are Migrations?
 
@@ -205,7 +205,7 @@ Migration 004: Add index on orders.created_at
 | Optimise | "This query is slow — add appropriate indexes" |
 | Debug | "This query returns empty results but the data exists. Help me find why" |
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Build a SQLite Database
 1. Ask Claude Code to create a SQLite database for a simple blog with three tables: authors, posts, and comments
@@ -260,6 +260,6 @@ Migration 004: Add index on orders.created_at
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Now you can work with databases confidently. In the next module, **9.4: Headless Mode & CI/CD Pipelines**, we'll learn how to run Claude Code without a human at the keyboard — perfect for automation, code review bots, and continuous integration.

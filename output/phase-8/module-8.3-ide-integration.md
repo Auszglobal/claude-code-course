@@ -1,6 +1,6 @@
 # Module 8.3: IDE Integration — VS Code & JetBrains
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Install and use the Claude Code extension in VS Code
   - Install and use the Claude Code plugin in JetBrains IDEs
@@ -8,7 +8,7 @@
   - Choose the right interface for different types of tasks
   - Use IDE-specific features like inline diffs and file context
 
-## Theory
+## 📖 Theory
 
 ### Why Use Claude Code Inside an IDE?
 
@@ -38,7 +38,7 @@ Claude Code is available in five different interfaces:
 
 All five interfaces connect to the same Claude models and have the same core capabilities. The difference is in the user experience.
 
-## Code Example 1: Setting Up VS Code Extension
+## 💻 Code Example 1: Setting Up VS Code Extension
 
 ### Step 1: Install the Extension
 
@@ -100,7 +100,7 @@ Claude reads the currently open file and explains it — no need to specify the 
 | Accept/reject changes | Click "Accept" or "Reject" on each diff block |
 | Terminal integration | Claude can still run commands in the VS Code terminal |
 
-## Code Example 2: Setting Up JetBrains Plugin
+## 💻 Code Example 2: Setting Up JetBrains Plugin
 
 ### Step 1: Install the Plugin
 
@@ -156,7 +156,7 @@ View → Tool Windows → Claude Code
 | Run configurations | Claude can create and modify run configs |
 | Refactoring support | Works with the IDE's built-in refactoring tools |
 
-## Supplementary Example: Desktop App & Web Interface
+## 💻 Supplementary Example: Desktop App & Web Interface
 
 ### Claude Code Desktop App
 
@@ -201,7 +201,7 @@ Do you write code daily?
     └── Yes, but no terminal → Use the desktop app
 ```
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Set Up Your Preferred Interface
 1. Choose the interface that matches your workflow (VS Code, JetBrains, desktop, or web)
@@ -254,6 +254,6 @@ Do you write code daily?
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You now know how to use Claude Code across all available interfaces. In the next module, **8.4: Memory System & Multi-Session Workflows**, we'll learn how Claude Code remembers things across conversations — and how to make the most of this feature.

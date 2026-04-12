@@ -1,6 +1,6 @@
 # Module 8.2: Context, Cost & Model Selection
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand what the context window is and how tokens work
   - Use /compact and /clear to manage conversation length
@@ -8,7 +8,7 @@
   - Apply cost-saving strategies to reduce API spending
   - Monitor your usage with the /cost command
 
-## Theory
+## 📖 Theory
 
 ### What Is the Context Window?
 
@@ -63,7 +63,7 @@ Message 4 (8:00) → Full price again — cache expired (more than 5 minutes)
 
 **The takeaway:** If you're actively working, keep a steady pace. A 10-minute coffee break means your next message costs more because the cache expired.
 
-## Code Example 1: Checking and Managing Context
+## 💻 Code Example 1: Checking and Managing Context
 
 ### Checking your usage:
 
@@ -113,7 +113,7 @@ Use /clear when:
 - The conversation is full of dead ends and failed attempts
 - You want Claude to re-examine the code without preconceptions
 
-## Code Example 2: Switching Models
+## 💻 Code Example 2: Switching Models
 
 ### Check your current model:
 
@@ -162,7 +162,7 @@ Use /clear when:
   in src/payments/processor.py and src/queue/worker.py
 ```
 
-## Supplementary Example: Cost-Saving Strategies
+## 💻 Supplementary Example: Cost-Saving Strategies
 
 ### Strategy 1: Read Only What You Need
 
@@ -214,7 +214,7 @@ Don't wait for the "context full" warning. Compact proactively:
 > Now let's work on the API endpoints...
 ```
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Model Selection Practice
 For each scenario below, decide which model you'd use and why:
@@ -271,6 +271,6 @@ For each scenario below, decide which model you'd use and why:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Now you know how to manage your context and costs effectively. In the next module, **8.3: IDE Integration — VS Code & JetBrains**, we'll explore how to use Claude Code inside your favourite code editor for an even smoother workflow.

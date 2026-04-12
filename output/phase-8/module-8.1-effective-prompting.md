@@ -1,6 +1,6 @@
 # Module 8.1: Effective Prompting for Claude Code
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand why prompting Claude Code is different from chatting with ChatGPT
   - Apply five proven prompting patterns for better results
@@ -8,7 +8,7 @@
   - Write clear, actionable instructions that Claude Code can execute precisely
   - Know when to start a new conversation vs continue the current one
 
-## Theory
+## 📖 Theory
 
 ### Why Claude Code Prompting Is Different
 
@@ -94,7 +94,7 @@ Draw clear boundaries around the work.
 | Kitchen sink | Asking for 10 things at once | One task per prompt, or numbered steps |
 | No success criteria | "Make it better" — how will you know? | "The test in test_api.py should pass after this change" |
 
-## Code Example 1: Bad vs Good Prompts in Action
+## 💻 Code Example 1: Bad vs Good Prompts in Action
 
 Let's see the difference in practice. Imagine you have a Python web app with a bug where users can't log out.
 
@@ -129,7 +129,7 @@ Claude Code might:
 
 Claude Code goes straight to the right file, understands the exact problem, and makes a surgical fix.
 
-## Code Example 2: Using Slash Commands for Context Management
+## 💻 Code Example 2: Using Slash Commands for Context Management
 
 As your conversation grows, Claude Code's context window fills up. Here's how to manage it:
 
@@ -169,7 +169,7 @@ As your conversation grows, Claude Code's context window fills up. Here's how to
 - Claude needs to remember decisions you made earlier
 - You're in the middle of a multi-step task
 
-## Supplementary Example: The Prompt Improvement Checklist
+## 💻 Supplementary Example: The Prompt Improvement Checklist
 
 Before sending a prompt, run through this checklist:
 
@@ -201,7 +201,7 @@ Extract [logic] from [source file] into [new file]. Update all imports.
 Don't change any behaviour — the existing tests should still pass.
 ```
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Rewrite Bad Prompts
 Take these vague prompts and rewrite them using the patterns above:
@@ -256,6 +256,6 @@ Take these vague prompts and rewrite them using the patterns above:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Great work! You now know how to communicate effectively with Claude Code. In the next module, **8.2: Context, Cost & Model Selection**, we'll learn how to manage your token budget, choose the right model for each task, and keep your costs under control.

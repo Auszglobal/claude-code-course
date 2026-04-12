@@ -1,6 +1,6 @@
 # Module 9.2: Plan Mode & Complex Architecture
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Activate and use Plan Mode to design before building
   - Understand when planning is valuable vs unnecessary overhead
@@ -8,7 +8,7 @@
   - Use task tracking to monitor progress on complex work
   - Leverage Extended Thinking for deeper analysis
 
-## Theory
+## 📖 Theory
 
 ### Think Before You Build
 
@@ -39,7 +39,7 @@ Imagine a construction company that starts building a house by laying bricks on 
 2. **Ask for a plan** — Include "plan" in your prompt naturally
 3. **Describe uncertainty** — Claude often enters plan mode automatically when the task is complex
 
-## Code Example 1: Using Plan Mode
+## 💻 Code Example 1: Using Plan Mode
 
 ### Activating Plan Mode:
 
@@ -99,7 +99,7 @@ Imagine a construction company that starts building a house by laying bricks on 
 
 Claude adjusts the plan and begins executing it step by step.
 
-## Code Example 2: Task Tracking
+## 💻 Code Example 2: Task Tracking
 
 When working on complex tasks, Claude Code creates tasks to track progress:
 
@@ -157,7 +157,7 @@ For particularly complex problems, Claude Code uses **Extended Thinking** — sp
 
 Extended Thinking activates automatically when Claude determines the task needs deeper analysis. You don't need to do anything special.
 
-## Supplementary Example: Plan Mode Workflow Patterns
+## 💻 Supplementary Example: Plan Mode Workflow Patterns
 
 ### Pattern 1: Explore → Plan → Execute
 
@@ -215,7 +215,7 @@ For very large features:
 | **Rollback strategy** | You know how to undo if something goes wrong |
 | **Success criteria** | You know when the task is truly done |
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Plan Before You Build
 1. Choose a feature you want to add to a project
@@ -272,6 +272,6 @@ For very large features:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Now you know how to plan before building. In the next module, **9.3: Database Operations**, we'll learn how to use Claude Code to create, query, and manage databases — a skill needed for almost every real application.

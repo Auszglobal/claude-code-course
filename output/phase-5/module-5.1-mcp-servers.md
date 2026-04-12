@@ -1,6 +1,6 @@
 # Module 5.1: MCP Servers and External Tools
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand what MCP (Model Context Protocol) is and what it does
   - Explain how MCP servers extend Claude Code's capabilities
@@ -8,7 +8,7 @@
   - Use MCP tools to access external services (such as databases and file systems)
   - Explore available servers in the MCP ecosystem
 
-## Theory
+## 📖 Theory
 
 ### What is MCP?
 
@@ -45,7 +45,7 @@ You (customer)  ->  Claude Code (waiter)  ->  MCP Server (kitchen)  ->  External
 | API servers | An interpreter helping you communicate | GitHub, Slack, Google |
 | Specialised tool servers | A professional technician | Design tools, deployment services |
 
-## Code Example 1: Viewing Your Current MCP Configuration
+## 💻 Code Example 1: Viewing Your Current MCP Configuration
 
 Before installing new MCP servers, let's understand Claude Code's configuration file structure.
 
@@ -86,7 +86,7 @@ MCP servers can be configured in two places:
 ### Expected Output:
 You will see the current contents of your config file. If you haven't configured MCP yet, the file might not have an `mcpServers` section -- that's perfectly normal, we're about to add it.
 
-## Code Example 2: Installing and Configuring an MCP Server
+## 💻 Code Example 2: Installing and Configuring an MCP Server
 
 Let's install a practical MCP server -- the **filesystem server**, which allows Claude Code to safely access files in a specified directory.
 
@@ -165,7 +165,7 @@ If you're curious what the config file looks like, it will be something like thi
 ### Expected Output:
 After running `claude mcp list`, you should see the name and status of the server you just added. If the status shows `connected`, everything is working correctly.
 
-## Supplementary Example: Exploring the MCP Ecosystem
+## 💻 Supplementary Example: Exploring the MCP Ecosystem
 
 The MCP ecosystem is growing rapidly. Here are some commonly used MCP servers:
 
@@ -193,7 +193,7 @@ claude mcp list
 You can also browse all available MCP servers on this website:
 - Official MCP server list: https://github.com/modelcontextprotocol/servers
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Install Your First MCP Server
 1. Choose any MCP server from the table above
@@ -244,6 +244,6 @@ You can also browse all available MCP servers on this website:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Great work! You've learned how to extend Claude Code's capabilities. In the next module, **5.2: Custom Workflows and Hooks**, we'll learn how to set up automatic triggers that make Claude Code run actions you define before or after specific operations -- just like setting up smart home automation rules!

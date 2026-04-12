@@ -1,6 +1,6 @@
 # Module 1.1: What Is Claude Code?
 
-## Learning Objectives
+## 🎯 Learning Objectives
 
 After completing this lesson, you will be able to:
 - Explain what Claude Code is in your own words
@@ -11,7 +11,7 @@ After completing this lesson, you will be able to:
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### What Is Claude Code?
 
@@ -93,7 +93,7 @@ This "ask before acting" design ensures you always stay in control -- Claude Cod
 
 ---
 
-## Code Example 1: Your First Claude Code Conversation
+## 💻 Code Example 1: Your First Claude Code Conversation
 
 > Note: This example is meant to give you a preview of the Claude Code experience. You don't need to actually do this yet -- installation steps will be covered in detail in Module 1.2.
 
@@ -144,7 +144,7 @@ The key point: you don't need to memorise any "commands"! Just describe what you
 
 ---
 
-## Code Example 2: Having Claude Code Create a File for You
+## 💻 Code Example 2: Having Claude Code Create a File for You
 
 Here's a slightly more advanced example showing how Claude Code can create a complete file for you:
 
@@ -182,7 +182,7 @@ Did you notice? Before actually creating the file, Claude Code shows you the con
 
 ---
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Think About Your Use Cases
 
@@ -245,7 +245,7 @@ Try to find and open the terminal on your computer:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations on completing the first lesson! Now you understand what Claude Code is and what it can do.
 

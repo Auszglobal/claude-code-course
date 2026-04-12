@@ -1,6 +1,6 @@
 # Module B3: Top 10 Must-Have Skills -- Supercharge Your Claude Code
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand what Claude Code Skills are and how they extend Claude Code's capabilities
   - Install and use both official and community-contributed Skills
@@ -8,7 +8,7 @@
   - Use the frontend-design Skill to quickly build web pages
   - Use the TDD Skill to practise "write tests first, then code"
 
-## Theory
+## 📖 Theory
 
 ### What Are Skills?
 
@@ -183,7 +183,7 @@ npx skills add BehiSecc/awesome-claude-skills
 
 ---
 
-## Code Example 1: Building a Landing Page with frontend-design
+## 💻 Code Example 1: Building a Landing Page with frontend-design
 
 ### Step 1: Install the Skill
 
@@ -226,7 +226,7 @@ Claude Code will generate `index.html` (structure), `styles.css` (styling + resp
 
 ---
 
-## Code Example 2: Writing Code with the TDD Skill
+## 💻 Code Example 2: Writing Code with the TDD Skill
 
 ### Step 1: Install and Create the Project
 
@@ -313,7 +313,7 @@ The third step is **Refactor** -- Claude Code will optimise the code (e.g., extr
 
 ---
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Install Your First Skill
 Pick a Skill that interests you, install it, launch Claude Code, give it a relevant task, and observe whether its behaviour changes. We recommend starting with `obra/superpowers`.
@@ -359,7 +359,7 @@ Install frontend-design, ask Claude Code to build a web page on a topic you like
 
 ---
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations on getting to know the top 10 must-have Skills! We recommend installing 2-3 Skills you need most to experience the difference, then using skill-creator to build your own Skill to share with your team.
 

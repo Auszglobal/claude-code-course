@@ -1,6 +1,6 @@
 # Module 5.4: Capstone Project
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Independently use Claude Code to build a complete project from scratch
   - Integrate a frontend (HTML/CSS/JS) with a backend (Python)
@@ -8,7 +8,7 @@
   - Use Git for version control and deploy to GitHub Pages
   - Confidently apply Claude Code to a variety of development tasks
 
-## Theory
+## 📖 Theory
 
 ### Your Graduation Project: A Personal Task Manager
 
@@ -960,7 +960,7 @@ Then in the GitHub repository settings:
 ### Expected Output:
 You'll get a public URL that anyone can visit to use your task management system.
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Add a New Feature
 Use Claude Code to add a new feature to your task management system. Here are some ideas:
@@ -1010,7 +1010,7 @@ Based on the features you've added, update the CLAUDE.md to reflect the project'
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 ### Congratulations on Completing the Entire Course!
 

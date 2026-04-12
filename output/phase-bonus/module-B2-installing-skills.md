@@ -1,6 +1,6 @@
 # Module B2: Installing Skills -- 3 Methods
 
-## Learning Objectives
+## 🎯 Learning Objectives
 
 - After completing this lesson you will be able to:
   - Install Skills with a single `npx` command (the easiest method)
@@ -11,7 +11,7 @@
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### Where Are Skills Installed?
 
@@ -48,7 +48,7 @@ Let's learn each method one by one!
 
 ---
 
-## Code Example 1: Method 1 -- npx Installation (Recommended)
+## 💻 Code Example 1: Method 1 -- npx Installation (Recommended)
 
 `npx` is a tool that comes with Node.js and can run installation scripts directly from the internet. If you already have Node.js installed (which you should have from Module 1.2), you can use this method.
 
@@ -176,7 +176,7 @@ After installation, your `~/.claude/skills/` folder will contain new subfolders,
 
 ---
 
-## Code Example 2: Method 2 -- Manual Copy (Most Reliable on Windows)
+## 💻 Code Example 2: Method 2 -- Manual Copy (Most Reliable on Windows)
 
 If npx has issues (network restrictions, version conflicts, etc.), manual copying is the most reliable method. This approach gives you complete control over what gets installed.
 
@@ -318,7 +318,7 @@ ls ~/.claude/skills/
 
 ---
 
-## Code Example 3: Method 3 -- Claude Code Plugin Command
+## 💻 Code Example 3: Method 3 -- Claude Code Plugin Command
 
 The latest version of Claude Code supports managing Skills directly in the conversation, without needing to leave the Claude Code environment.
 
@@ -462,7 +462,7 @@ claude
 
 ---
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Install Your First Skill
 
@@ -530,6 +530,6 @@ Find the SKILL.md file you just installed and open it with any text editor (Note
 
 ---
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations on learning how to install Skills! In the upcoming modules, we'll learn **how to write your own Skill** -- you'll discover that customising a Skill for your specific workflow can multiply Claude Code's efficiency several times over. See you there!

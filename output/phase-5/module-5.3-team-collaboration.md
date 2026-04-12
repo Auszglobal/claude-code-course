@@ -1,6 +1,6 @@
 # Module 5.3: Team Collaboration Best Practices
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand the difference between global and project-level CLAUDE.md configurations
   - Use Claude Code to conduct code reviews
@@ -8,7 +8,7 @@
   - Plan a branching strategy for your team's use of Claude Code
   - Understand permission modes and security considerations
 
-## Theory
+## 📖 Theory
 
 ### Claude Code in a Team Setting
 
@@ -30,7 +30,7 @@ With proper configuration, everyone on the team can:
 
 Key concept: **The project-level CLAUDE.md should be committed to Git**, so that every team member's Claude Code reads the same instructions.
 
-## Code Example 1: Creating a Shared Team CLAUDE.md
+## 💻 Code Example 1: Creating a Shared Team CLAUDE.md
 
 Let's create a comprehensive CLAUDE.md for a team project:
 
@@ -94,7 +94,7 @@ git push
 ### Expected Output:
 After every team member pulls the latest code, their Claude Code will automatically follow the conventions defined in CLAUDE.md.
 
-## Code Example 2: Using Claude Code for Code Reviews
+## 💻 Code Example 2: Using Claude Code for Code Reviews
 
 Claude Code can help you review other people's code. Here's the complete review workflow:
 
@@ -163,7 +163,7 @@ Overall code quality is good! Ready to merge once the above issues are fixed."
 ### Expected Output:
 Your review comments will appear on the PR page, and team members can see and respond to them.
 
-## Code Example 3: Creating a Pull Request with Claude Code
+## 💻 Code Example 3: Creating a Pull Request with Claude Code
 
 Let's walk through the complete process from creating a branch to submitting a PR:
 
@@ -220,7 +220,7 @@ N/A (text-based component)"
 ### Expected Output:
 The command will output the URL of the newly created PR, which you can open in a browser to view.
 
-## Code Example 4: Branching Strategy and Permission Control
+## 💻 Code Example 4: Branching Strategy and Permission Control
 
 ### Recommended Team Branching Strategy
 
@@ -270,7 +270,7 @@ This configuration means:
 
 Commit this configuration to Git and all team members will have the same safety rules applied.
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Create a Team CLAUDE.md
 1. Choose one of your projects (or create a new practice project)
@@ -323,6 +323,6 @@ Commit this configuration to Git and all team members will have the same safety 
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You've now mastered the key skills for team collaboration! In the final module, **5.4: Capstone Project**, we'll apply everything you've learned throughout the entire course to build a complete project from scratch -- this will be your graduation project!

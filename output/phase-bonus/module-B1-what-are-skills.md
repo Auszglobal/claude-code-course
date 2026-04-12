@@ -1,6 +1,6 @@
 # Module B1: What Are Claude Code Skills?
 
-## Learning Objectives
+## 🎯 Learning Objectives
 
 - After completing this lesson you will be able to:
   - Explain what a Claude Code Skill is and how it changes Claude's behaviour
@@ -11,7 +11,7 @@
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### What Are Skills?
 
@@ -121,7 +121,7 @@ This means you write a Skill once and use it everywhere.
 
 ---
 
-## Code Example 1: A Simple SKILL.md File
+## 💻 Code Example 1: A Simple SKILL.md File
 
 Let's see what a Skill file looks like. Here's a Skill that helps write Git commit messages:
 
@@ -196,7 +196,7 @@ After installing this Skill, when you say "help me commit" in Claude Code, Claud
 
 ---
 
-## Code Example 2: With Skill vs Without Skill Comparison
+## 💻 Code Example 2: With Skill vs Without Skill Comparison
 
 Let's see how Claude Code behaves differently on the same task **with** and **without** a Skill.
 
@@ -282,7 +282,7 @@ using React + TypeScript + Tailwind CSS.
 
 ---
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Reading Comprehension
 
@@ -367,6 +367,6 @@ Main rules (3-5):
 
 ---
 
-## Next Steps
+## 🔗 Next Steps
 
 Now that you understand what Skills are, in **Module B2: Installing Skills -- 3 Methods**, we'll get hands-on with installing Skills! You'll learn three different installation methods, from the simplest one-line command to manual file copying, ensuring you can install successfully in any environment.

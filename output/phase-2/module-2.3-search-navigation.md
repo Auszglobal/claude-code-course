@@ -1,6 +1,6 @@
 # Module 2.3: Searching and Navigating the Codebase -- Finding What You Need in a Sea of Files
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Use filename search (Glob) to find specific types of files
   - Use content search (Grep) to find specific text within files
@@ -8,7 +8,7 @@
   - Combine "search + read" workflows
   - Have Claude Code quickly locate information in large projects
 
-## Theory
+## 📖 Theory
 
 ### Why Do You Need Search?
 
@@ -51,7 +51,7 @@ Analogy: you're searching an entire bookshelf for the word "Claude." Grep will t
 
 You don't need to flip through page by page -- Grep does it instantly.
 
-## Code Example 1: Building Practice Files
+## 💻 Code Example 1: Building Practice Files
 
 To practise the search feature, let's first create a project with multiple files. After launching Claude Code, type:
 
@@ -123,7 +123,7 @@ Please find all files in the breakfast folder
 
 This time it will only show the 3 files in the breakfast folder.
 
-## Code Example 2: Content Search + Combined Workflows
+## 💻 Code Example 2: Content Search + Combined Workflows
 
 ### Searching by Content (Grep)
 
@@ -187,7 +187,7 @@ Claude Code will search through all recipe files, analyse the contents, and tell
 
 This is the power of Claude Code -- it doesn't just perform mechanical searches, it can **understand** your question.
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Search Challenge
 
@@ -245,7 +245,7 @@ This exercise simulates a real workflow: find a file first, read it, then modify
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You've now mastered the skill of quickly finding anything in a project! Search + read + edit -- these three skills combined form the core of Claude Code's everyday workflow.
 

@@ -1,6 +1,6 @@
 # Module 1.2: Installing Claude Code
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Understand what Node.js is and why you need it
   - Successfully install Node.js on Windows or Mac
@@ -10,7 +10,7 @@
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### What Is Node.js? Why Do You Need It?
 
@@ -36,7 +36,7 @@ An API Key is a long string of characters that lets Anthropic know "you are the 
 
 ---
 
-## Code Example 1: Installing Node.js
+## 💻 Code Example 1: Installing Node.js
 
 ### Windows Installation Steps
 
@@ -122,7 +122,7 @@ npm --version
 
 ---
 
-## Code Example 2: Getting an API Key and Installing Claude Code
+## 💻 Code Example 2: Getting an API Key and Installing Claude Code
 
 ### Step 1: Create an Anthropic Account and Get an API Key
 
@@ -215,7 +215,7 @@ If you see a welcome message and a prompt, congratulations -- the installation w
 
 ---
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Complete the Full Installation Process
 Follow the steps above to complete the following on your computer:
@@ -272,7 +272,7 @@ Write down these three version numbers in a notebook -- they may come in handy f
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations on completing the installation! Your computer is now set up and ready to go.
 

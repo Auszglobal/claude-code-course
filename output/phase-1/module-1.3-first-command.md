@@ -1,6 +1,6 @@
 # Module 1.3: Your First Command
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Successfully launch Claude Code
   - Understand the different parts of the Claude Code interface
@@ -10,7 +10,7 @@
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### How Claude Code Works
 
@@ -31,7 +31,7 @@ You have three choices:
 
 ---
 
-## Code Example 1: Launching Claude Code and Getting to Know the Interface
+## 💻 Code Example 1: Launching Claude Code and Getting to Know the Interface
 
 ### Step 1: Create a Practice Folder
 
@@ -99,7 +99,7 @@ After a successful launch, you'll see version information, usage tips, and a `>`
 
 ---
 
-## Code Example 2: Giving Your First Command
+## 💻 Code Example 2: Giving Your First Command
 
 ### Have Claude Code Create a Text File
 
@@ -218,7 +218,7 @@ Ctrl + C (hold Ctrl, then press C)
 
 ---
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Create Your Self-Introduction File
 1. Launch Claude Code in the `claude-practice` folder
@@ -270,7 +270,7 @@ Ctrl + C (hold Ctrl, then press C)
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Excellent! You've successfully completed your first interaction with Claude Code and created your first file.
 

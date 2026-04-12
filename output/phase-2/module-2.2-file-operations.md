@@ -1,6 +1,6 @@
 # Module 2.2: Reading and Editing Files -- Let AI Manage Your Files
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Have Claude Code read the contents of any file
   - Have Claude Code create brand new files
@@ -8,7 +8,7 @@
   - Understand what a "diff" (difference comparison) is
   - Review what changes Claude Code made before accepting them
 
-## Theory
+## 📖 Theory
 
 ### Why Are File Operations So Important?
 
@@ -53,7 +53,7 @@ A diff is like the redline markup used when revising contracts. You can clearly 
 
 **Important: Always review the diff before accepting changes!** Just like you'd read the revised terms before signing a contract.
 
-## Code Example 1: Reading and Creating Files
+## 💻 Code Example 1: Reading and Creating Files
 
 ### Preparation
 
@@ -131,7 +131,7 @@ my-first-project/
 └── shopping-list.txt  (just created)
 ```
 
-## Code Example 2: Editing Existing Files
+## 💻 Code Example 2: Editing Existing Files
 
 ### Step 1: Modify Specific Content in a File
 
@@ -218,7 +218,7 @@ Please add a "Learning Progress" section to README.md with the following:
 
 Claude Code will use the Edit tool to add only this section to README.md, without touching any existing content.
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: The Three-Step File Operation
 
@@ -276,7 +276,7 @@ Observe whether Claude Code uses Write or Edit at each step.
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You've now mastered Claude Code's core file operation skills! You can have the AI read, create, and modify any file.
 

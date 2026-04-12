@@ -1,6 +1,6 @@
 # Module 9.5: Docker, Git Worktrees & Security Deep Dive
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Use Claude Code to create Dockerfiles and docker-compose configurations
   - Understand git worktrees for isolated parallel development
@@ -8,7 +8,7 @@
   - Configure Claude Code's permission system for maximum safety
   - Apply a security checklist before deploying AI-assisted code
 
-## Theory
+## 📖 Theory
 
 ### Part 1: Docker with Claude Code
 
@@ -71,7 +71,7 @@ Claude Code writes excellent code, but all code — human or AI-generated — sh
 | **Insecure Dependencies** | Using outdated packages with known vulnerabilities |
 | **Overly Permissive Access** | Creating API endpoints without authentication checks |
 
-## Code Example 1: Docker with Claude Code
+## 💻 Code Example 1: Docker with Claude Code
 
 ### Creating a Dockerfile:
 
@@ -125,7 +125,7 @@ Claude creates a complete docker-compose.yml with proper networking, environment
   the image size using multi-stage builds.
 ```
 
-## Code Example 2: Security Configuration
+## 💻 Code Example 2: Security Configuration
 
 ### Claude Code's Permission System:
 
@@ -197,7 +197,7 @@ Three options:
 +--------------------------------------------------+
 ```
 
-## Supplementary Example: Security Checklist
+## 💻 Supplementary Example: Security Checklist
 
 ### Before Deploying AI-Generated Code:
 
@@ -271,7 +271,7 @@ For every change Claude makes, ask:
 5. STATE:  Can this corrupt data if it fails halfway?
 ```
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Dockerise a Project
 1. Choose a simple project (Python, Node, or any language)
@@ -326,7 +326,7 @@ For every change Claude makes, ask:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations — you've completed Phase 9: Production! You now have the skills to use Claude Code professionally: parallel execution with sub-agents, architectural planning, database operations, CI/CD automation, Docker containerisation, and security best practices.
 

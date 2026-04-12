@@ -1,6 +1,6 @@
 # Module 2.4: Git Basics and Version Control -- Adding a "Save Game" Feature to Your Project
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Understand what Git is and why it's so important
   - Have Claude Code check the Git status of your project
@@ -8,7 +8,7 @@
   - Have Claude Code view the commit history
   - Understand basic version control concepts
 
-## Theory
+## 📖 Theory
 
 ### What Is Git?
 
@@ -82,7 +82,7 @@ Before we start hands-on work, let's understand a few basic concepts:
 
 > Don't worry: These concepts will make sense naturally as you practise. And Claude Code handles these steps for you -- just say "save my work" and you're done.
 
-## Code Example 1: Initialising Git and Making Your First Commit
+## 💻 Code Example 1: Initialising Git and Making Your First Commit
 
 ### Step 1: Create a New Project and Initialise Git
 
@@ -169,7 +169,7 @@ Please commit index.html to Git with the commit message "Create welcome page"
 
 Congratulations! Your first "game save" has been created!
 
-## Code Example 2: Modifying Files and Creating More Save Points
+## 💻 Code Example 2: Modifying Files and Creating More Save Points
 
 ### Step 1: Modify a File
 
@@ -251,7 +251,7 @@ A commit message is like a game save description. A good description lets you qu
 
 > Tip: Good commit messages answer the question "why was this change made" rather than "what was changed." Git already records what was changed (the diff), so the message should explain the reason.
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Complete a Three-Commit Workflow
 
@@ -312,7 +312,7 @@ Experience the power of version control -- you can review how your project has e
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Excellent! You've completed all of Phase 2! Let's recap what you've learned:
 

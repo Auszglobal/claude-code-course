@@ -1,6 +1,6 @@
 # Module 5.2: Custom Workflows and Hooks
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand what Hooks are and their role in Claude Code
   - Distinguish between the three Hook types: PreToolUse, PostToolUse, and Notification
@@ -8,7 +8,7 @@
   - Create custom Slash Commands
   - Design an automated workflow that fits your work habits
 
-## Theory
+## 📖 Theory
 
 ### What Are Hooks?
 
@@ -37,7 +37,7 @@ Hooks can help you:
 3. **Real-time alerts** -- notify you when a long-running task completes
 4. **Quality control** -- automatically run tests after every file write
 
-## Code Example 1: Setting Up a Simple Notification Hook
+## 💻 Code Example 1: Setting Up a Simple Notification Hook
 
 Let's start with the simplest Hook -- popping up a desktop notification when Claude Code needs your attention.
 
@@ -87,7 +87,7 @@ The config file will look like this:
 ### Expected Output:
 Once configured, whenever Claude Code completes a long-running task or needs you to confirm an operation, you'll see a desktop notification popup.
 
-## Code Example 2: Creating a Security Protection Hook
+## 💻 Code Example 2: Creating a Security Protection Hook
 
 Now let's build a more practical Hook -- blocking Claude Code from modifying sensitive files (such as `.env` files).
 
@@ -143,7 +143,7 @@ Let's break down this configuration:
 ### Expected Output:
 When you try to have Claude Code edit a `.env` file, the Hook will intercept the operation and display an error message. Claude Code will tell you that you need to edit it manually.
 
-## Code Example 3: Creating a PostToolUse Hook
+## 💻 Code Example 3: Creating a PostToolUse Hook
 
 This Hook will automatically remind you to make a Git commit after Claude Code edits a file:
 
@@ -168,7 +168,7 @@ This Hook will automatically remind you to make a Git commit after Claude Code e
 ### Expected Output:
 Each time Claude Code modifies or creates a file, you'll see a reminder in the terminal prompting you to commit to Git in a timely manner.
 
-## Code Example 4: Custom Slash Commands
+## 💻 Code Example 4: Custom Slash Commands
 
 In addition to Hooks, Claude Code also supports custom **Slash Commands**. Think of these as keyboard shortcuts for your commonly used operations.
 
@@ -225,7 +225,7 @@ In Claude Code, type a slash followed by the command name:
 ### Expected Output:
 After typing `/format`, Claude Code reads the contents of `.claude/commands/format.md` as a prompt and automatically executes the steps described within.
 
-## Code Example 5: A Complete Workflow Configuration
+## 💻 Code Example 5: A Complete Workflow Configuration
 
 Here's a complete `settings.json` example combining multiple Hook types:
 
@@ -281,7 +281,7 @@ Here's a complete `settings.json` example combining multiple Hook types:
 }
 ```
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Create Your First Hook
 1. Open your `~/.claude/settings.json`
@@ -331,6 +331,6 @@ Here's a complete `settings.json` example combining multiple Hook types:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 You've now learned how to build a personalised Claude Code working environment! In the next module, **5.3: Team Collaboration Best Practices**, we'll learn how to share these configurations across a team, conduct code reviews, and manage Pull Requests -- making Claude Code a great partner for team collaboration.

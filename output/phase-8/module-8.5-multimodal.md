@@ -1,6 +1,6 @@
 # Module 8.5: Multimodal — Images, Screenshots & PDFs
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Use Claude Code to read and understand images and screenshots
   - Implement UI designs from mockup images
@@ -8,7 +8,7 @@
   - Apply multimodal capabilities to real development workflows
   - Understand the limitations of image and PDF processing
 
-## Theory
+## 📖 Theory
 
 ### Claude Code Can See
 
@@ -32,7 +32,7 @@ Think of it like hiring a developer who can also read architectural blueprints, 
 2. **File path** — Tell Claude to read an image: "Read the screenshot at ./error.png"
 3. **Paste from clipboard** — Copy an image and paste it into the chat (IDE extensions)
 
-## Code Example 1: Debugging with Screenshots
+## 💻 Code Example 1: Debugging with Screenshots
 
 Imagine you see an error on your website but the error message is in a screenshot from a colleague.
 
@@ -69,7 +69,7 @@ Imagine you see an error on your website but the error message is in a screensho
 
 Claude reads views.py, finds line 34, and adds the appropriate null check — all from seeing a screenshot.
 
-## Code Example 2: Building UI from a Design Mockup
+## 💻 Code Example 2: Building UI from a Design Mockup
 
 ### Step 1: Share a design image
 
@@ -104,7 +104,7 @@ Claude reads views.py, finds line 34, and adds the appropriate null check — al
 
 Claude compares the design to its implementation and adjusts spacing, colours, or layout to match more closely.
 
-## Supplementary Example: Reading PDF Documents
+## 💻 Supplementary Example: Reading PDF Documents
 
 ### Reading a short PDF:
 
@@ -155,7 +155,7 @@ Claude identifies differences like wrong colours, misaligned elements, missing i
 | Large PDFs | Must be read in chunks of 20 pages max |
 | Handwriting | Works but accuracy varies with legibility |
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Screenshot Debugging
 1. Take a screenshot of any error message on your screen (terminal error, browser error, etc.)
@@ -209,6 +209,6 @@ Claude identifies differences like wrong colours, misaligned elements, missing i
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations — you've completed Phase 8: Mastery! You now know how to prompt effectively, manage costs, use IDE integrations, leverage the memory system, and work with images and PDFs. In the next phase, **Phase 9: Production**, we'll learn the tools and techniques for production-grade development — sub-agents, databases, CI/CD, and security.

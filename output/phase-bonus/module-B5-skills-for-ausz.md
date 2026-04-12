@@ -1,13 +1,13 @@
 # Module B5: Building Custom Skills for a Real Business
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - Understand how to turn real business processes into Claude Code Skills
 - Learn to write a complete SKILL.md for invoice automation
 - Learn to write a complete SKILL.md for booking intake
 - Learn to write a complete SKILL.md for a daily operations report
 - Master how to reference existing code, APIs, and data formats within a Skill
 
-## Theory
+## 📖 Theory
 
 ### Why Does a Real Business Need Custom Skills?
 
@@ -101,7 +101,7 @@ The key to this Skill is the **error classification rules** -- they teach Claude
 
 ---
 
-## Code Example 1: invoice-automation SKILL.md (Complete Version)
+## 💻 Code Example 1: invoice-automation SKILL.md (Complete Version)
 
 Now let's look at the most complex Skill -- invoice automation. You can copy and paste this file directly, saving it to your `.claude/skills/` directory.
 
@@ -202,7 +202,7 @@ All modes can add the `--auto` flag to skip confirmation prompts.
 
 ---
 
-## Code Example 2: booking-intake SKILL.md (Complete Version)
+## 💻 Code Example 2: booking-intake SKILL.md (Complete Version)
 
 Save the following as `~/.claude/skills/booking-intake.md`:
 
@@ -280,7 +280,7 @@ Before filling the form, check: date format (DD/MM/YYYY or YYYY-MM-DD), 24-hour 
 
 ---
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Add New Metrics to daily-ops-reporter
 
@@ -348,7 +348,7 @@ Using this simplified template, design a Skill for your own work:
 
 ---
 
-## Next Steps
+## 🔗 Next Steps
 
 Congratulations on completing Bonus Module B5! You've now learned how to build three complete Claude Code Skills for a real business.
 

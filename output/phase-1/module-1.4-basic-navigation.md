@@ -1,6 +1,6 @@
 # Module 1.4: Basic Navigation
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson, you will be able to:
   - Understand the concept of "working directory"
   - Ask Claude Code to list files in a folder
@@ -10,7 +10,7 @@
 
 ---
 
-## Theory
+## 📖 Theory
 
 ### What Is a "Working Directory"?
 
@@ -50,7 +50,7 @@ C:\Users\kin\Documents\report.txt
 
 ---
 
-## Code Example 1: Exploring Files and Folders
+## 💻 Code Example 1: Exploring Files and Folders
 
 ### Preparation
 
@@ -137,7 +137,7 @@ claude-practice/           <- Your main practice folder
 
 ---
 
-## Code Example 2: Navigation and Reading Files
+## 💻 Code Example 2: Navigation and Reading Files
 
 ### Reading Files in Different Locations
 
@@ -216,7 +216,7 @@ Here are some commonly used natural language navigation commands:
 
 ---
 
-## Hands-On Practice
+## ✍️ Hands-On Exercises
 
 ### Exercise 1: Build Your Study Notes System
 1. Launch Claude Code (in the `claude-practice` folder)
@@ -275,7 +275,7 @@ Here are some commonly used natural language navigation commands:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Great work! You've now mastered the basic navigation skills in Claude Code -- knowing where you are, browsing files, reading contents, and working across different folders.
 

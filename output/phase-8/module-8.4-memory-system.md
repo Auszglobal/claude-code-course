@@ -1,6 +1,6 @@
 # Module 8.4: Memory System & Multi-Session Workflows
 
-## Learning Objectives
+## 🎯 Learning Objectives
 - After completing this lesson you will be able to:
   - Understand the three layers of Claude Code's memory system
   - Set up and organise CLAUDE.md files at global, project, and folder levels
@@ -8,7 +8,7 @@
   - Design effective multi-session workflows for large projects
   - Know what belongs in CLAUDE.md versus what auto-memory should handle
 
-## Theory
+## 📖 Theory
 
 ### The Problem: Claude Forgets Everything
 
@@ -70,7 +70,7 @@ This is just the current conversation. It disappears when you close the session.
 └─────────────────────────────┘
 ```
 
-## Code Example 1: Creating an Effective CLAUDE.md
+## 💻 Code Example 1: Creating an Effective CLAUDE.md
 
 ### Global CLAUDE.md (applies to all projects):
 
@@ -138,7 +138,7 @@ Example content:
 +--------------------------------------------------+
 ```
 
-## Code Example 2: Using Auto-Memory
+## 💻 Code Example 2: Using Auto-Memory
 
 ### Telling Claude to remember something:
 
@@ -186,7 +186,7 @@ Claude deletes the relevant memory file.
 
 Claude reads its memory files and tells you what it knows.
 
-## Supplementary Example: Multi-Session Workflow Strategies
+## 💻 Supplementary Example: Multi-Session Workflow Strategies
 
 ### Strategy 1: The Checkpoint Pattern
 
@@ -236,7 +236,7 @@ Update your project CLAUDE.md as the project evolves:
 | Code patterns to follow | CLAUDE.md (project) |
 | Temporary debugging notes | Don't save — just use conversation context |
 
-## Hands-On Exercises
+## ✍️ Hands-On Exercisess
 
 ### Exercise 1: Create Your CLAUDE.md Files
 1. Create a global `~/.claude/CLAUDE.md` with your personal preferences
@@ -291,6 +291,6 @@ Update your project CLAUDE.md as the project evolves:
 <div class="quiz-result"></div>
 </div>
 
-## Next Steps
+## 🔗 Next Steps
 
 Excellent! You now understand how Claude Code's memory works across sessions. In the next module, **8.5: Multimodal — Images, Screenshots & PDFs**, we'll explore Claude Code's ability to see and understand images, not just text.
