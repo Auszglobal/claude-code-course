@@ -571,6 +571,17 @@
 .study-time-val { font-weight: 600; color: var(--accent); }
 .study-time-lbl { color: var(--text-secondary); font-size: 10px; }
 
+/* Share Menu */
+.share-menu { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9000; display: flex; align-items: center; justify-content: center; }
+.share-menu-inner { background: var(--bg); border-radius: 12px; padding: 24px; min-width: 280px; text-align: center; }
+.share-menu-inner h4 { margin-bottom: 16px; color: var(--text); }
+.share-btn { display: block; width: 100%; padding: 10px; margin: 6px 0; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; color: #fff; }
+.share-btn.linkedin { background: #0077B5; }
+.share-btn.twitter { background: #1DA1F2; }
+.share-btn.copy { background: var(--accent); }
+.share-btn.close { background: rgba(255,255,255,0.1); color: var(--text-secondary); }
+.share-toast-btn { background: var(--accent); color: #fff; border: none; padding: 2px 10px; border-radius: 4px; font-size: 10px; cursor: pointer; margin-left: 6px; }
+
 /* Flashcard Rating */
 .fc-rating { text-align: center; margin-top: 8px; }
 .fc-rate-btn { border: none; color: #fff; padding: 6px 16px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600; }
@@ -3383,10 +3394,27 @@ function checkNewBadges() {
   PHASES.forEach(p => {
     if (isPhaseComplete(p) && !prevEarnedBadges.has(p.id)) {
       const icon = BADGE_ICONS[p.id] || '&#x1F3C6;';
-      showToast(icon, `Badge Unlocked!`, `You completed ${p.label} — ${p.title}!`);
+      showToast(icon, `Badge Unlocked!`, `You completed ${p.label} — ${p.title}! <button class="share-toast-btn" onclick="shareAchievement('Completed ${p.label} — ${p.title}')">Share</button>`);
     }
   });
   snapshotBadges();
+}
+
+function shareAchievement(achievement) {
+  const name = currentUser ? currentUser.name : 'A student';
+  const text = `${name} just earned an achievement on Claude Code Complete Guide: ${achievement}! 🎉`;
+  const url = 'https://learn.auszglobal.com.au';
+  const shareMenu = document.createElement('div');
+  shareMenu.className = 'share-menu';
+  shareMenu.innerHTML = `
+    <div class="share-menu-inner">
+      <h4>Share your achievement</h4>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}" target="_blank" class="share-btn linkedin">LinkedIn</a>
+      <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}" target="_blank" class="share-btn twitter">X / Twitter</a>
+      <button class="share-btn copy" onclick="navigator.clipboard.writeText('${text.replace(/'/g, "\\'")} ${url}');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Link',1500);">Copy Link</button>
+      <button class="share-btn close" onclick="this.closest('.share-menu').remove()">Close</button>
+    </div>`;
+  document.body.appendChild(shareMenu);
 }
 
 // ── Onboarding Tour ──
