@@ -1455,6 +1455,40 @@ body {
   .sidebar, .topbar, .page-nav { display: none !important; }
   .main { margin-left: 0 !important; }
 }
+
+/* Dog Assistant */
+.dog-assistant {
+  position: fixed; bottom: 20px; right: 20px; z-index: 5000;
+  display: flex; align-items: flex-end; gap: 10px;
+  animation: dogSlideIn 0.4s ease-out;
+}
+@keyframes dogSlideIn { from { transform: translateY(80px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.dog-bubble {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 16px 16px 4px 16px;
+  padding: 14px 18px; max-width: 280px; box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  font-size: 13px; line-height: 1.6; color: var(--text); position: relative;
+}
+.dog-bubble .dog-name { font-weight: 700; color: var(--accent); font-size: 11px; margin-bottom: 4px; }
+.dog-bubble .dog-close {
+  position: absolute; top: 6px; right: 10px; background: none; border: none;
+  color: var(--text-secondary); cursor: pointer; font-size: 14px;
+}
+.dog-avatar {
+  width: 60px; height: 60px; border-radius: 50%; overflow: hidden;
+  border: 2px solid var(--accent); flex-shrink: 0; background: #1a1a2e;
+}
+.dog-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Login page dogs */
+.auth-dogs {
+  display: flex; justify-content: center; gap: 16px; margin-bottom: 16px;
+}
+.auth-dog-avatar {
+  width: 70px; height: 70px; border-radius: 50%; overflow: hidden;
+  border: 3px solid var(--accent); background: #1a1a2e;
+}
+.auth-dog-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.auth-dog-label { text-align: center; font-size: 10px; color: var(--text-secondary); margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -1463,8 +1497,12 @@ body {
 <!-- Password Gate -->
 <div id="auth-gate" role="dialog" aria-modal="true" aria-label="Login">
   <div class="auth-box">
+    <div class="auth-dogs">
+      <div><div class="auth-dog-avatar"><img src="tt.png" alt="TT"></div><div class="auth-dog-label">TT</div></div>
+      <div><div class="auth-dog-avatar"><img src="chandon.png" alt="Chandon"></div><div class="auth-dog-label">Chandon</div></div>
+    </div>
     <h1>Claude Code Complete Guide</h1>
-    <p>Please enter your username and password to continue</p>
+    <p>Welcome! TT &amp; Chandon are here to help you learn.</p>
     <label for="auth-user" class="sr-only">Username</label>
     <input type="text" id="auth-user" placeholder="Username" autocomplete="username">
     <label for="auth-pass" class="sr-only">Password</label>
@@ -2479,9 +2517,11 @@ function handleQuizSubmit(quiz, moduleId) {
     addXP('module', XP_PER_MODULE, moduleId);
     addXP('quiz', XP_PER_QUIZ, moduleId);
     updateXPDisplay();
+    setTimeout(() => showDogTip('tt'), 1500);
   } else {
     resultEl.className = 'quiz-result fail';
     resultEl.innerHTML = `You scored ${correct}/${total} (${pct}%) — Need 70% to pass. <br><button class="quiz-retry" onclick="retryQuiz(this)">Try Again</button>`;
+    setTimeout(() => showDogTip('chandon'), 1500);
   }
 
   quiz.querySelector('.quiz-submit').disabled = true;
@@ -3693,6 +3733,56 @@ function endTour() {
   try { localStorage.setItem('claude-course-tour-done', '1'); } catch {}
 }
 
+// ── Dog Assistants (Chandon & TT) ──
+const DOG_TIPS = {
+  chandon: {
+    img: 'chandon.png', name: 'Chandon',
+    tips: [
+      "Don't rush — take your time to understand each concept before moving on.",
+      "Try the hands-on exercises! Reading alone won't make you a pro.",
+      "Stuck? Use the ❓ button to flag this module for later review.",
+      "Remember to take breaks. Your brain needs time to absorb new info.",
+      "Check the Cheat Sheet for quick reference — it's a real time saver!",
+    ]
+  },
+  tt: {
+    img: 'tt.png', name: 'TT',
+    tips: [
+      "Hey! You're doing great! Keep that streak going! 🔥",
+      "Pro tip: use the flashcards to boost your memory!",
+      "Almost done with this phase — don't give up now!",
+      "You've been studying for a while — maybe grab a coffee? ☕",
+      "Quiz time! Make sure you score 70% to unlock the next module.",
+    ]
+  }
+};
+
+let _dogTimer = null;
+function showDogTip(who) {
+  // Remove existing
+  document.querySelectorAll('.dog-assistant').forEach(el => el.remove());
+  const dog = DOG_TIPS[who || (Math.random() > 0.5 ? 'chandon' : 'tt')];
+  const tip = dog.tips[Math.floor(Math.random() * dog.tips.length)];
+  const el = document.createElement('div');
+  el.className = 'dog-assistant';
+  el.innerHTML = `<div class="dog-bubble">
+    <button class="dog-close" onclick="this.closest('.dog-assistant').remove()">&times;</button>
+    <div class="dog-name">${dog.name} says:</div>
+    ${tip}
+  </div>
+  <div class="dog-avatar"><img src="${dog.img}" alt="${dog.name}"></div>`;
+  document.body.appendChild(el);
+  // Auto dismiss after 8s
+  setTimeout(() => { if (el.parentNode) el.remove(); }, 8000);
+}
+
+function scheduleDogTips() {
+  if (_dogTimer) clearInterval(_dogTimer);
+  // Show first tip after 30s, then every 3 minutes
+  setTimeout(() => showDogTip(), 30000);
+  _dogTimer = setInterval(() => showDogTip(), 180000);
+}
+
 // ── Init ──
 document.addEventListener('DOMContentLoaded', async () => {
   configureMarked();
@@ -3742,6 +3832,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Start onboarding tour for first-time users
   setTimeout(() => startTour(), 800);
+
+  // Start dog assistant tips
+  scheduleDogTips();
 
   // Register service worker for PWA / offline
   if ('serviceWorker' in navigator) {
