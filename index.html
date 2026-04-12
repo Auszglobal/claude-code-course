@@ -1213,6 +1213,7 @@ body {
 .search-result-item:hover { background: rgba(0,180,166,0.15); color: #e2e8f0; }
 .search-result-item .sr-phase { font-size: 10px; color: var(--accent); text-transform: uppercase; }
 .search-result-item .sr-title { font-weight: 600; }
+.search-result-item .sr-snippet { font-size: 11px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .search-result-item mark { background: rgba(0,180,166,0.3); color: #fff; border-radius: 2px; padding: 0 2px; }
 
 /* ── Bookmark ── */
@@ -2535,28 +2536,60 @@ function addCopyButtons() {
   });
 }
 
-// ── Search ──
+// ── Search (full-text) ──
+let _searchIndex = null;
+async function buildSearchIndex() {
+  if (_searchIndex) return _searchIndex;
+  _searchIndex = {};
+  await Promise.all(ALL_MODULES.map(async m => {
+    try {
+      const res = await fetch(m.file);
+      if (res.ok) _searchIndex[m.id] = (await res.text()).toLowerCase().replace(/[#*`<>|[\]]/g, ' ');
+    } catch { _searchIndex[m.id] = ''; }
+  }));
+  return _searchIndex;
+}
+
 function initSearch() {
   const input = document.getElementById('search-input');
   const results = document.getElementById('search-results');
+  let searchTimer;
+  // Prefetch index on first focus
+  input.addEventListener('focus', () => buildSearchIndex(), { once: true });
+
   input.addEventListener('input', () => {
+    clearTimeout(searchTimer);
     const q = input.value.trim().toLowerCase();
     if (q.length < 2) { results.classList.remove('active'); return; }
-    const matches = ALL_MODULES.filter(m =>
-      m.title.toLowerCase().includes(q) || m.id.toLowerCase().includes(q) ||
-      m.phase.title.toLowerCase().includes(q) || m.phase.desc.toLowerCase().includes(q)
-    ).slice(0, 10);
-    if (matches.length === 0) { results.innerHTML = '<div class="search-result-item">No results found</div>'; }
-    else {
-      results.innerHTML = matches.map(m => {
-        const highlighted = m.title.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>');
-        return `<div class="search-result-item" onclick="loadModule('${m.id}','${m.file}');document.getElementById('search-results').classList.remove('active');document.getElementById('search-input').value='';">
-          <div class="sr-phase">${m.phase.label} — ${m.phase.title}</div>
-          <div class="sr-title">${m.id} ${highlighted}</div>
-        </div>`;
-      }).join('');
-    }
-    results.classList.add('active');
+    searchTimer = setTimeout(async () => {
+      const idx = await buildSearchIndex();
+      const escQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const matches = ALL_MODULES.filter(m =>
+        m.title.toLowerCase().includes(q) || m.id.toLowerCase().includes(q) ||
+        m.phase.title.toLowerCase().includes(q) || m.phase.desc.toLowerCase().includes(q) ||
+        (idx[m.id] && idx[m.id].includes(q))
+      ).slice(0, 10);
+      if (matches.length === 0) { results.innerHTML = '<div class="search-result-item">No results found</div>'; }
+      else {
+        results.innerHTML = matches.map(m => {
+          const highlighted = m.title.replace(new RegExp(`(${escQ})`, 'gi'), '<mark>$1</mark>');
+          // Show content snippet if matched in body
+          let snippet = '';
+          if (idx[m.id] && idx[m.id].includes(q)) {
+            const pos = idx[m.id].indexOf(q);
+            const start = Math.max(0, pos - 40);
+            const raw = idx[m.id].slice(start, pos + q.length + 40).trim();
+            snippet = `<div class="sr-snippet">...${raw.replace(new RegExp(`(${escQ})`, 'gi'), '<mark>$1</mark>')}...</div>`;
+          }
+          return `<div class="search-result-item" onclick="loadModule('${m.id}','${m.file}');document.getElementById('search-results').classList.remove('active');document.getElementById('search-input').value='';">
+            <div class="sr-phase">${m.phase.label} — ${m.phase.title}</div>
+            <div class="sr-title">${m.id} ${highlighted}</div>
+            ${snippet}
+          </div>`;
+        }).join('');
+      }
+      results.classList.add('active');
+    }, 200);
   });
   document.addEventListener('click', e => {
     if (!e.target.closest('.search-container')) results.classList.remove('active');
