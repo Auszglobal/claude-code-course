@@ -876,6 +876,10 @@ body {
 }
 
 /* Top bar */
+.topbar-logo {
+  width: 36px; height: 36px; border-radius: 8px; object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.1); flex-shrink: 0;
+}
 .topbar {
   position: sticky;
   top: 0;
@@ -1281,7 +1285,11 @@ body {
   .main { margin-left: 0; }
   .hamburger { display: block; }
   .content-wrapper { padding: 24px 16px 60px; }
-  .topbar { padding: 0 16px; }
+  .topbar-logo {
+  width: 36px; height: 36px; border-radius: 8px; object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.1); flex-shrink: 0;
+}
+.topbar { padding: 0 16px; }
   .markdown-body h1 { font-size: 22px; }
   .markdown-body h2 { font-size: 18px; }
   .phase-cards { grid-template-columns: 1fr; }
@@ -2046,6 +2054,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
   <header class="topbar">
     <div style="display:flex;align-items:center;gap:12px">
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">&#9776;</button>
+      <img src="gemini-logo.PNG" alt="Gemini" class="topbar-logo">
       <div class="breadcrumb" id="breadcrumb">Home</div>
     </div>
     <div class="topbar-right">
