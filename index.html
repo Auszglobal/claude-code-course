@@ -2862,49 +2862,78 @@ function closeFlashcards() {
 
 // ── Completion Certificate ──
 function generateCertificate() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 1200; canvas.height = 800;
-  const ctx = canvas.getContext('2d');
-  // Background
-  const grad = ctx.createLinearGradient(0, 0, 1200, 800);
-  grad.addColorStop(0, '#1A1A2E'); grad.addColorStop(1, '#0d1b2a');
-  ctx.fillStyle = grad; ctx.fillRect(0, 0, 1200, 800);
-  // Border
-  ctx.strokeStyle = '#00B4A6'; ctx.lineWidth = 4;
-  ctx.strokeRect(30, 30, 1140, 740);
-  ctx.strokeStyle = 'rgba(0,180,166,0.3)'; ctx.lineWidth = 1;
-  ctx.strokeRect(40, 40, 1120, 720);
-  // Title
-  ctx.fillStyle = '#00B4A6'; ctx.font = 'bold 16px Arial'; ctx.textAlign = 'center';
-  ctx.fillText('CERTIFICATE OF COMPLETION', 600, 120);
-  ctx.fillStyle = '#e2e8f0'; ctx.font = 'bold 42px Georgia';
-  ctx.fillText('Claude Code Complete Guide', 600, 200);
-  // Subtitle
-  ctx.fillStyle = '#718096'; ctx.font = '18px Arial';
-  ctx.fillText('This certifies that', 600, 290);
-  // Name
-  ctx.fillStyle = '#00B4A6'; ctx.font = 'bold 36px Georgia';
-  ctx.fillText(currentUser ? currentUser.name : 'Student', 600, 350);
-  // Details
-  ctx.fillStyle = '#a0aec0'; ctx.font = '16px Arial';
-  ctx.fillText('has successfully completed all ' + ALL_MODULES.length + ' modules', 600, 420);
-  ctx.fillText('covering the complete learning path from installation to production.', 600, 450);
-  // Phases completed
+  const name = currentUser ? currentUser.name : 'Student';
   const completedPhases = PHASES.filter(p => isPhaseComplete(p)).length;
-  ctx.fillText(completedPhases + ' phases completed | ' + ALL_MODULES.length + ' modules | ' + (ALL_MODULES.length * 3) + ' quiz questions passed', 600, 490);
-  // Date
-  ctx.fillStyle = '#718096'; ctx.font = '14px Arial';
-  ctx.fillText('Issued on ' + new Date().toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' }), 600, 560);
-  // Logo text
-  ctx.fillStyle = '#008B8B'; ctx.font = 'bold 20px Arial';
-  ctx.fillText('AUSZ Global', 600, 640);
-  ctx.fillStyle = '#718096'; ctx.font = '13px Arial';
-  ctx.fillText('auszglobal.com.au', 600, 665);
-  // Download
-  const link = document.createElement('a');
-  link.download = 'claude-code-certificate-' + (currentUser ? currentUser.name.toLowerCase().replace(/\s+/g, '-') : 'student') + '.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
+  const date = new Date().toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' });
+  const xp = getXP().total;
+  const lvl = getLevel(xp);
+  const lvlName = LEVEL_NAMES[lvl - 1] || 'Newbie';
+
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head><title>Certificate — ${name}</title>
+<style>
+@media print { @page { size: landscape; margin: 0; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .no-print { display: none !important; } }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: #f0f0f0; font-family: Georgia, serif; }
+.cert { width: 1100px; height: 750px; background: linear-gradient(135deg, #1A1A2E, #0d1b2a); position: relative; padding: 50px; color: #e2e8f0; }
+.border-outer { position: absolute; inset: 20px; border: 3px solid #00B4A6; }
+.border-inner { position: absolute; inset: 28px; border: 1px solid rgba(0,180,166,0.3); }
+.content { position: relative; z-index: 1; text-align: center; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+.label { color: #00B4A6; font-size: 14px; letter-spacing: 6px; text-transform: uppercase; font-family: Arial, sans-serif; }
+h1 { font-size: 38px; color: #e2e8f0; margin: 8px 0; }
+.subtitle { color: #718096; font-size: 17px; font-family: Arial, sans-serif; }
+.student-name { color: #00B4A6; font-size: 34px; margin: 10px 0; }
+.details { color: #a0aec0; font-size: 15px; font-family: Arial, sans-serif; line-height: 1.8; }
+.stats { display: flex; gap: 40px; margin: 16px 0; }
+.stat { text-align: center; }
+.stat-val { color: #00B4A6; font-size: 28px; font-weight: bold; font-family: Arial; }
+.stat-lbl { color: #718096; font-size: 11px; font-family: Arial; letter-spacing: 1px; text-transform: uppercase; }
+.footer { color: #718096; font-size: 13px; font-family: Arial, sans-serif; margin-top: auto; }
+.footer strong { color: #008B8B; font-size: 18px; display: block; margin-bottom: 4px; }
+.actions { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; }
+.actions button { padding: 10px 24px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; }
+.btn-pdf { background: #00B4A6; color: #fff; }
+.btn-png { background: #334155; color: #e2e8f0; }
+</style></head><body>
+<div class="cert">
+  <div class="border-outer"></div><div class="border-inner"></div>
+  <div class="content">
+    <div class="label">Certificate of Completion</div>
+    <h1>Claude Code Complete Guide</h1>
+    <div class="subtitle">This certifies that</div>
+    <div class="student-name">${name}</div>
+    <div class="details">has successfully completed the full course covering<br>AI-powered programming with Claude Code</div>
+    <div class="stats">
+      <div class="stat"><div class="stat-val">${completedPhases}</div><div class="stat-lbl">Phases</div></div>
+      <div class="stat"><div class="stat-val">${ALL_MODULES.length}</div><div class="stat-lbl">Modules</div></div>
+      <div class="stat"><div class="stat-val">${xp}</div><div class="stat-lbl">XP Earned</div></div>
+      <div class="stat"><div class="stat-val">Lv.${lvl}</div><div class="stat-lbl">${lvlName}</div></div>
+    </div>
+    <div class="footer">
+      <strong>AUSZ Global</strong>
+      auszglobal.com.au &nbsp;|&nbsp; Issued ${date}
+    </div>
+  </div>
+</div>
+<div class="actions no-print">
+  <button class="btn-pdf" onclick="window.print()">&#x1F4C4; Save as PDF</button>
+  <button class="btn-png" onclick="downloadPNG()">&#x1F5BC; Download PNG</button>
+</div>
+<scr` + `ipt>
+function downloadPNG(){
+  const c=document.querySelector('.cert'),r=c.getBoundingClientRect();
+  const canvas=document.createElement('canvas');canvas.width=r.width*2;canvas.height=r.height*2;
+  const ctx=canvas.getContext('2d');ctx.scale(2,2);
+  import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js')
+    .catch(()=>null).then(()=>{
+      if(typeof html2canvas!=='undefined'){html2canvas(c,{scale:2,useCORS:true}).then(cv=>{
+        const a=document.createElement('a');a.download='certificate-${name.toLowerCase().replace(/\\s+/g,'-')}.png';
+        a.href=cv.toDataURL('image/png');a.click();});}
+      else{alert('PNG download requires internet. Use Save as PDF instead.');}
+    });
+}
+</scr` + `ipt></body></html>`);
+  w.document.close();
 }
 
 // ── Estimated Reading Time ──
