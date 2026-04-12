@@ -124,3 +124,53 @@ claude "為所有已生成的模塊，每個額外生成 5 條練習題，保存
 ```bash
 claude "讀取所有 output/ 目錄下的 .md 文件，生成一個帶超連結的課程總目錄 README.md"
 ```
+
+---
+
+## 項目當前狀態（2026-04-12 更新）
+
+### 已完成功能
+- ✅ 47 個 modules（10 phases + bonus），全部有 quiz HTML
+- ✅ 遊戲化：XP 等級系統（10 級）、成就徽章、排行榜
+- ✅ 學習工具：Flashcards、Cheat Sheets、Prompt Templates、TL;DR、Glossary
+- ✅ 個人化：書籤、筆記、學習路徑、頭像上傳
+- ✅ 用戶管理：登入、Admin panel、JSONBlob 雲端同步
+- ✅ PWA：離線支援、可安裝、Service Worker
+- ✅ UI/UX：深色/淺色模式、手機響應式、搜尋、鍵盤快捷鍵、導覽 tour
+- ✅ GitHub Pages 部署（GitHub Actions workflow）
+- ✅ 自訂域名：learn.auszglobal.com.au（DNS via AWS Route 53 → GitHub Pages）
+
+### 本次 Session 完成的修復和功能
+1. ✅ **Memory Error Fix** — 全部 localStorage.setItem() 加 try-catch 防 QuotaExceededError
+2. ✅ **JSON.parse 保護** — 全部 JSON.parse(localStorage...) 加 try-catch + fallback
+3. ✅ **Streak UI** — 🔥 火焰 icon + 連續日數顯示（sidebar profile）
+4. ✅ **進度匯出/匯入** — 📤📥 JSON 備份/恢復功能（progress、XP、streak、bookmarks）
+5. ✅ **證書 PDF** — 新版證書支援 print-to-PDF + PNG 下載，顯示 stats
+
+### 進行中 / 待完成
+6. ⬜ Module 格式統一（全部 ## headings 加 emoji：🎯📖💻✍️🔗）
+7. ⬜ Accessibility 基本修復（aria-label、focus trap、role="dialog"）
+8. ⬜ 全文搜尋（搜埋 module 內容，唔止標題）
+9. ⬜ Lazy load Mermaid.js（只喺需要時載入）
+10. ⬜ 學習時間追蹤圖表
+11. ⬜ Spaced Repetition Flashcards
+12. ⬜ 社交分享成就（LinkedIn/Twitter）
+13. ⬜ 遷移到 Firebase/Supabase（取代 JSONBlob）
+14. ⬜ 討論區/留言功能
+15. ⬜ 互動代碼沙盒
+16. ⬜ 老師 Dashboard + 學生分析
+17. ⬜ 多語言切換（EN/繁中）
+
+### 已知問題
+- ⚠️ 全部 47 個 module 係英文（CLAUDE.md 要求繁體中文 — 視乎目標讀者決定）
+- ⚠️ JSONBlob ID 公開在 HTML source（安全風險）
+- ⚠️ 密碼 SHA256 無 salt（建議遷移後改用 bcrypt）
+- ⚠️ Phase 6-9 modules 內容較 Phase 1-5 短
+
+### 技術架構
+- **Frontend**：單一 index.html（inline CSS + JS）
+- **Markdown 渲染**：marked.js + highlight.js
+- **數據存儲**：localStorage + JSONBlob（雲端同步）
+- **部署**：GitHub Pages via GitHub Actions
+- **域名**：learn.auszglobal.com.au（GoDaddy → AWS Route 53 NS → GitHub Pages）
+- **CDN 依賴**：highlight.js、marked.js、marked-highlight、mermaid
