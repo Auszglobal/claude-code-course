@@ -449,6 +449,51 @@ so that all tests pass.
 <div class="quiz-explain">A good test needs: a clear name (describes what's being tested), uses assert to verify the result, and the function name starts with test_ (so pytest can find it). Option A tests nothing, C doesn't verify the result, and D isn't in pytest format.</div>
 </div>
 
+<div class="quiz-q" data-answer="1">
+<p>4. What are the three steps (AAA pattern) that make up a well-structured test?</p>
+<label><input type="radio" name="q4" value="0"> Ask, Answer, Approve</label>
+<label><input type="radio" name="q4" value="1"> Arrange (prepare data), Act (execute the feature), Assert (check the result)</label>
+<label><input type="radio" name="q4" value="2"> Add, Apply, Adjust</label>
+<label><input type="radio" name="q4" value="3"> Analyse, Assume, Accept</label>
+<div class="quiz-explain">The AAA pattern stands for Arrange (set up the test data), Act (run the function you're testing), and Assert (verify the result matches your expectations). Just like test-driving a car: sit in the seat (Arrange), start the engine (Act), check if it runs smoothly (Assert).</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. What are "edge cases" in testing?</p>
+<label><input type="radio" name="q5" value="0"> Extreme or unusual inputs like 0, negative numbers, empty strings, or very large values</label>
+<label><input type="radio" name="q5" value="1"> Tests that run at the edge of your screen</label>
+<label><input type="radio" name="q5" value="2"> Tests that take the longest to run</label>
+<label><input type="radio" name="q5" value="3"> Tests written by someone else</label>
+<div class="quiz-explain">Edge cases are boundary or extreme inputs that often reveal bugs. For example: what happens when you divide by 0? What happens with an empty list? What about a negative number? These unusual scenarios are where most bugs hide, so testing them is crucial.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. A test expects <code>percentage(200, 15)</code> to return 30, but it returns 3000. What is the most likely cause?</p>
+<label><input type="radio" name="q6" value="0"> The test is wrong</label>
+<label><input type="radio" name="q6" value="1"> pytest is not installed correctly</label>
+<label><input type="radio" name="q6" value="2"> The computer made a calculation error</label>
+<label><input type="radio" name="q6" value="3"> The percentage function forgot to divide by 100</label>
+<div class="quiz-explain">200 * 15 = 3000, but 15% of 200 should be 200 * 15 / 100 = 30. The function is multiplying but not dividing by 100 to convert the percentage. This is exactly the kind of bug that tests are designed to catch.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. Why should each test function verify only one thing?</p>
+<label><input type="radio" name="q7" value="0"> Because pytest can only run one assertion per function</label>
+<label><input type="radio" name="q7" value="1"> Because it makes the test file shorter</label>
+<label><input type="radio" name="q7" value="2"> Because if the test fails, you immediately know exactly which specific behaviour is broken</label>
+<label><input type="radio" name="q7" value="3"> Because Python has a limit on assertions per function</label>
+<div class="quiz-explain">When a test that checks only one thing fails, you instantly know what went wrong. If a test checks 10 things at once and fails, you have to investigate which of the 10 caused the failure. Focused tests make debugging much faster.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. You modified a function and want to make sure you didn't break anything. What is the fastest way to check?</p>
+<label><input type="radio" name="q8" value="0"> Run the existing test suite — if all tests pass, your change is likely safe</label>
+<label><input type="radio" name="q8" value="1"> Read through every line of code in the project</label>
+<label><input type="radio" name="q8" value="2"> Ask a colleague to review every file</label>
+<label><input type="radio" name="q8" value="3"> Delete the changes and start over</label>
+<div class="quiz-explain">This is the core value of having a test suite. After any modification, you run all the tests with a single command. If everything passes, you can be confident your changes didn't break existing functionality. This takes seconds instead of hours of manual verification.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

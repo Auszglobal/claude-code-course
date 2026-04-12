@@ -420,6 +420,51 @@ and you can never guess correctly.
 <div class="quiz-explain">The correct order is: discover the problem (Identify), figure out why it went wrong (Understand), modify the code (Fix), then test again to confirm the problem is resolved (Verify). If there are still issues, repeat the cycle.</div>
 </div>
 
+<div class="quiz-q" data-answer="3">
+<p>4. A Python script crashes with <code>FileNotFoundError: [Errno 2] No such file or directory: 'data.csv'</code>. What does this mean?</p>
+<label><input type="radio" name="q4" value="0"> Python is not installed correctly</label>
+<label><input type="radio" name="q4" value="1"> The file data.csv is corrupted</label>
+<label><input type="radio" name="q4" value="2"> Your computer is out of storage space</label>
+<label><input type="radio" name="q4" value="3"> The script tried to open a file called data.csv, but it doesn't exist at the expected location</label>
+<div class="quiz-explain">A FileNotFoundError means the program tried to access a file that doesn't exist at the specified path. The most common causes are: the file hasn't been created yet, the filename is misspelled, or the script is running from a different directory than expected.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. You write <code>scores = [80, 90, 70]</code> and then <code>average = scores[0] + scores[1] + scores[2] / 3</code>. The result is 193.33 instead of 80. What type of error is this?</p>
+<label><input type="radio" name="q5" value="0"> Syntax error — the code won't run</label>
+<label><input type="radio" name="q5" value="1"> Logic error — the code runs but the result is wrong because of operator precedence</label>
+<label><input type="radio" name="q5" value="2"> Runtime error — the code crashes</label>
+<label><input type="radio" name="q5" value="3"> Installation error — Python is broken</label>
+<div class="quiz-explain">This is a logic error. The code runs without crashing, but division happens before addition (mathematical operator precedence), so only 70 is divided by 3, not the full sum. The fix is to add parentheses: <code>(scores[0] + scores[1] + scores[2]) / 3</code>.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>6. Which of the following is the most effective way to describe a bug to Claude Code?</p>
+<label><input type="radio" name="q6" value="0"> "When I run calculate_total() with input [80, 90, 70], I expected 240 but got 170. Here's the error: ..."</label>
+<label><input type="radio" name="q6" value="1"> "The program doesn't work"</label>
+<label><input type="radio" name="q6" value="2"> "There's a bug somewhere"</label>
+<label><input type="radio" name="q6" value="3"> "Please fix everything"</label>
+<div class="quiz-explain">The formula for effective error reporting is: What you did + What you expected + What actually happened + The error message. This gives Claude Code all the information it needs to quickly diagnose and fix the problem.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. You see the error <code>IndentationError: unexpected indent</code>. What is the most likely cause?</p>
+<label><input type="radio" name="q7" value="0"> A variable name is misspelled</label>
+<label><input type="radio" name="q7" value="1"> A file is missing</label>
+<label><input type="radio" name="q7" value="2"> The spacing (indentation) of a line is inconsistent with the rest of the code</label>
+<label><input type="radio" name="q7" value="3"> You forgot to install a module</label>
+<div class="quiz-explain">Python uses indentation (spaces at the beginning of lines) to structure code. An IndentationError means a line has unexpected spacing — perhaps extra spaces were added, or tabs and spaces were mixed. Claude Code can fix this easily.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. After Claude Code fixes a bug, the debugging cycle says you should "Verify." What does that mean?</p>
+<label><input type="radio" name="q8" value="0"> Read through the entire codebase line by line</label>
+<label><input type="radio" name="q8" value="1"> Run the program again to confirm the fix worked and the error no longer occurs</label>
+<label><input type="radio" name="q8" value="2"> Ask Claude Code if it's sure the fix is correct</label>
+<label><input type="radio" name="q8" value="3"> Delete the file and recreate it</label>
+<div class="quiz-explain">Verification means running the program again to confirm the problem is actually resolved. Sometimes fixing one bug reveals another, so it's important to test after every fix. If the problem persists, you go back to the "Identify" step and continue the cycle.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
