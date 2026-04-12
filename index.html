@@ -563,6 +563,14 @@
 .xp-text { font-size: 9px; color: var(--text-secondary); white-space: nowrap; }
 .xp-toast-bonus { font-size: 11px; color: #ffd700; font-weight: 700; }
 
+/* Study Time */
+.study-time-display {
+  display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px;
+}
+.study-time-icon { font-size: 13px; }
+.study-time-val { font-weight: 600; color: var(--accent); }
+.study-time-lbl { color: var(--text-secondary); font-size: 10px; }
+
 /* Streak Display */
 .streak-display {
   display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px;
@@ -1487,6 +1495,7 @@ function updateProfileUI() {
   loadProgress();
   updateProgressUI();
   updateStreakDisplay();
+  updateStudyTimeDisplay();
 }
 
 function handleAvatarUpload(e) {
@@ -1677,6 +1686,7 @@ function exportProgress() {
     progress: progress,
     xp: getXP(),
     streak: (() => { try { return JSON.parse(localStorage.getItem('claude-course-streak-' + currentUser.uid) || '{}'); } catch { return {}; } })(),
+    studyTime: getStudyTime(),
     bookmarks: getBookmarks(),
     exportDate: new Date().toISOString()
   };
@@ -1703,6 +1713,7 @@ function importProgress(e) {
       try { localStorage.setItem(xpKey(), JSON.stringify(data.xp)); } catch {}
       if (data.streak) { try { localStorage.setItem('claude-course-streak-' + currentUser.uid, JSON.stringify(data.streak)); } catch {} }
       if (data.bookmarks) { try { localStorage.setItem('claude-course-bookmarks', JSON.stringify(data.bookmarks)); } catch {} }
+      if (data.studyTime) { try { localStorage.setItem(studyTimeKey(), JSON.stringify(data.studyTime)); } catch {} }
       updateProgressUI();
       updateXPDisplay();
       updateStreakDisplay();
@@ -1814,6 +1825,7 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
       <span class="profile-progress" id="profile-progress-display"></span>
       <div class="xp-display" id="xp-display"></div>
       <div class="streak-display" id="streak-display"></div>
+      <div class="study-time-display" id="study-time-display"></div>
     </div>
     <button class="logout-btn" onclick="logout()">Logout</button>
     <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
@@ -2182,6 +2194,7 @@ function configureMarked() {
 
 // ── Load module ──
 async function loadModule(moduleId, filePath) {
+  startStudyTimer(moduleId);
   currentModuleId = moduleId;
 
   // Update active state in sidebar
@@ -2833,6 +2846,60 @@ function updateStreakDisplay() {
     <span class="streak-label">${count === 1 ? 'day streak' : 'day streak'}</span>`;
 }
 
+// ── Study Time Tracking ──
+let _studyStart = null;
+let _studyModuleId = null;
+
+function studyTimeKey() { return 'claude-course-studytime-' + (currentUser ? currentUser.uid : '_anon'); }
+
+function getStudyTime() {
+  try { return JSON.parse(localStorage.getItem(studyTimeKey()) || '{}'); } catch { return {}; }
+}
+
+function startStudyTimer(moduleId) {
+  // Save time for previous module
+  if (_studyModuleId && _studyStart) {
+    const elapsed = Math.round((Date.now() - _studyStart) / 1000);
+    if (elapsed > 3 && elapsed < 7200) { // between 3s and 2h
+      const data = getStudyTime();
+      data[_studyModuleId] = (data[_studyModuleId] || 0) + elapsed;
+      try { localStorage.setItem(studyTimeKey(), JSON.stringify(data)); } catch {}
+    }
+  }
+  _studyModuleId = moduleId;
+  _studyStart = Date.now();
+}
+
+function getTotalStudyMinutes() {
+  const data = getStudyTime();
+  const totalSec = Object.values(data).reduce((a, b) => a + b, 0);
+  return Math.round(totalSec / 60);
+}
+
+function updateStudyTimeDisplay() {
+  const el = document.getElementById('study-time-display');
+  if (!el) return;
+  const mins = getTotalStudyMinutes();
+  const hrs = Math.floor(mins / 60);
+  const m = mins % 60;
+  const display = hrs > 0 ? `${hrs}h ${m}m` : `${m}m`;
+  el.innerHTML = `<span class="study-time-icon">&#x23F1;</span>
+    <span class="study-time-val">${display}</span>
+    <span class="study-time-lbl">studied</span>`;
+}
+
+// Save time when leaving page
+window.addEventListener('beforeunload', () => {
+  if (_studyModuleId && _studyStart) {
+    const elapsed = Math.round((Date.now() - _studyStart) / 1000);
+    if (elapsed > 3 && elapsed < 7200) {
+      const data = getStudyTime();
+      data[_studyModuleId] = (data[_studyModuleId] || 0) + elapsed;
+      try { localStorage.setItem(studyTimeKey(), JSON.stringify(data)); } catch {}
+    }
+  }
+});
+
 // ── Flashcard System ──
 const FLASHCARD_DATA = {
   'phase-1': [
@@ -3345,9 +3412,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Restore saved learning path
   activePath = localStorage.getItem('claude-course-path') || null;
   highlightPathModules();
-  // Initialize XP and streak display
+  // Initialize XP, streak, and study time display
   updateXPDisplay();
   updateStreakDisplay();
+  updateStudyTimeDisplay();
 
   document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
   document.getElementById('hamburger').addEventListener('click', openMobileSidebar);
