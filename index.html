@@ -101,16 +101,21 @@ var db = firebase.firestore();
 .course-card.claude-card.active { border-color: #D97706; background: rgba(217,119,6,0.1); }
 .course-card.gemini-card.active { border-color: #4285F4; background: rgba(66,133,244,0.1); }
 .cc-logo {
-  width: 48px; height: 48px; border-radius: 12px; display: flex;
-  align-items: center; justify-content: center; flex-shrink: 0;
+  width: 56px; height: 56px; border-radius: 14px; display: flex;
+  flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.claude-card .cc-logo { background: rgba(217,119,6,0.15); }
-.gemini-card .cc-logo { background: rgba(66,133,244,0.15); }
+.cc-logo .logo-icon { font-size: 22px; line-height: 1; }
+.cc-logo .logo-text { font-size: 9px; font-weight: 800; letter-spacing: 0.5px; margin-top: 2px; }
+.claude-logo { background: linear-gradient(135deg, #D97706, #B45309); }
+.claude-logo .logo-text { color: #fff; }
+.gemini-logo { background: linear-gradient(135deg, #4285F4, #1a73e8); }
+.gemini-logo .logo-text { color: #fff; }
 .cc-info { flex: 1; }
-.cc-name { font-size: 16px; font-weight: 700; color: #fff; }
+.cc-name { font-size: 15px; font-weight: 700; color: #fff; }
+.cc-sub { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 1px; }
 .claude-card .cc-name { color: #F59E0B; }
 .gemini-card .cc-name { color: #60A5FA; }
-.cc-desc { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.cc-desc { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; }
 .cc-tags { display: flex; gap: 6px; margin-top: 6px; }
 .cc-tags span {
   font-size: 9px; padding: 2px 8px; border-radius: 10px;
@@ -724,6 +729,15 @@ body {
   border-bottom: 1px solid rgba(255,255,255,0.08);
   flex-shrink: 0;
 }
+.course-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 8px; margin-bottom: 8px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.5px;
+}
+.claude-badge { background: linear-gradient(135deg, #D97706, #B45309); color: #fff; }
+.gemini-badge { background: linear-gradient(135deg, #4285F4, #1a73e8); color: #fff; }
+.cb-icon { font-size: 14px; }
+.cb-text { text-transform: lowercase; }
 
 .sidebar-header h1 {
   font-size: 18px;
@@ -1563,24 +1577,28 @@ body {
     <div class="auth-intro">
       <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;text-align:center;">Choose your course</p>
       <a href="index.html" class="course-card claude-card active" onclick="selectCourse(event,'claude')">
-        <div class="cc-logo">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm2.07-7.75l-.9.92C11.45 10.9 11 11.5 11 13h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H6c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="#D97706"/></svg>
+        <div class="cc-logo claude-logo">
+          <span class="logo-icon">&#x2728;</span>
+          <span class="logo-text">claude</span>
         </div>
         <div class="cc-info">
           <div class="cc-name">Claude Code</div>
+          <div class="cc-sub">by Anthropic</div>
           <div class="cc-desc">AI-powered programming &middot; 47 modules</div>
-          <div class="cc-tags"><span>Terminal</span><span>Coding</span><span>Automation</span></div>
+          <div class="cc-tags"><span>Terminal</span><span>Coding</span><span>MCP</span><span>SDK</span></div>
         </div>
         <div class="cc-check" id="check-claude">&#x2713;</div>
       </a>
       <a href="gemini.html" class="course-card gemini-card" onclick="selectCourse(event,'gemini')">
-        <div class="cc-logo">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#4285F4"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z" fill="white"/></svg>
+        <div class="cc-logo gemini-logo">
+          <span class="logo-icon">&#x2733;</span>
+          <span class="logo-text">Gemini</span>
         </div>
         <div class="cc-info">
           <div class="cc-name">Google Gemini</div>
+          <div class="cc-sub">by Google DeepMind</div>
           <div class="cc-desc">Images, Video, Workspace &middot; 37 modules</div>
-          <div class="cc-tags"><span>Images</span><span>Video</span><span>Maps</span></div>
+          <div class="cc-tags"><span>Images</span><span>Video</span><span>Maps</span><span>Workspace</span></div>
         </div>
         <div class="cc-check" id="check-gemini"></div>
       </a>
@@ -1975,8 +1993,12 @@ document.getElementById('auth-user')?.addEventListener('keypress', e => { if (e.
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <h1>Claude Code Complete Guide</h1>
-    <p>Your AI-Powered Programming Journey from Zero to Hero</p>
+    <div class="course-badge claude-badge">
+      <span class="cb-icon">&#x2728;</span>
+      <span class="cb-text">claude</span>
+    </div>
+    <h1>Claude Code</h1>
+    <p>AI-Powered Programming &middot; by Anthropic</p>
   </div>
 
   <div class="progress-container">
