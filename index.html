@@ -29,7 +29,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked-highlight@2.2.1/lib/index.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<!-- mermaid loaded on demand -->
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -2248,8 +2248,17 @@ async function loadModule(moduleId, filePath) {
       pre.replaceWith(div);
     });
     if (contentEl.querySelector('.mermaid')) {
-      mermaid.initialize({ startOnLoad: false, theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'default' });
-      mermaid.run({ nodes: contentEl.querySelectorAll('.mermaid') });
+      const runMermaid = () => {
+        mermaid.initialize({ startOnLoad: false, theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'default' });
+        mermaid.run({ nodes: contentEl.querySelectorAll('.mermaid') });
+      };
+      if (typeof mermaid !== 'undefined') { runMermaid(); }
+      else {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+        s.onload = runMermaid;
+        document.head.appendChild(s);
+      }
     }
 
     // Show prev/next
