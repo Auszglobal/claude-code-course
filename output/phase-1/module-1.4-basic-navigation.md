@@ -320,6 +320,87 @@ Here are some commonly used natural language navigation commands:
 <div class="quiz-result"></div>
 </div>
 
+## 🏗️ Mini Project: Organise a Project Folder
+
+Put everything you learned in Phase 1 together by creating a well-organised project folder from scratch — using only Claude Code commands.
+
+### Requirements
+- Create a main project folder with at least 3 subfolders
+- Create at least 5 files spread across different subfolders
+- Each file should have meaningful content (not just empty files)
+- Navigate between folders and verify everything is in the right place
+- Display the final folder structure as a tree
+
+### Step-by-Step Guide
+
+1. **Open your terminal and launch Claude Code in your practice area:**
+
+   **Windows:**
+   ```bash
+   cd C:\claude-practice
+   claude
+   ```
+   **Mac:**
+   ```bash
+   cd ~/claude-practice
+   claude
+   ```
+
+2. **Ask Claude Code to create the project structure:**
+   ```
+   Create a folder called my-first-project with the following structure:
+   - A subfolder called docs/ containing a file called README.txt with the text "Welcome to my first project!"
+   - A subfolder called src/ containing a file called app.txt with the text "This is where the main code goes"
+   - A subfolder called assets/ containing a file called notes.txt with the text "Images and resources go here"
+   ```
+
+3. **Add more files to the structure:**
+   ```
+   Inside my-first-project, add the following:
+   - In docs/, create a file called setup-guide.txt with the text "Step 1: Install Claude Code. Step 2: Start building!"
+   - In src/, create a file called helpers.txt with the text "Helper functions and utilities"
+   ```
+
+4. **Navigate and verify your work:**
+   ```
+   Show me the complete folder structure of my-first-project, including all subfolders and files
+   ```
+
+5. **Read a file to confirm its contents:**
+   ```
+   Read the contents of README.txt inside the docs folder of my-first-project
+   ```
+
+6. **Search for a file:**
+   ```
+   Find all .txt files inside my-first-project
+   ```
+
+### Expected Result
+
+After completing all steps, your folder structure should look like this:
+
+```
+my-first-project/
+├── assets/
+│   └── notes.txt
+├── docs/
+│   ├── README.txt
+│   └── setup-guide.txt
+└── src/
+    ├── app.txt
+    └── helpers.txt
+```
+
+You should have 5 files across 3 subfolders, each with meaningful content that you can read and verify.
+
+### Bonus Challenge
+- Add a fourth subfolder called `tests/` with a file called `checklist.txt` that lists 3 things you learned in Phase 1
+- Ask Claude Code to count how many total files are in the entire `my-first-project` folder (including subfolders)
+- Try asking Claude Code to find only files that contain the word "code" in their contents
+
+---
+
 ## 🔗 Next Steps
 
 Great work! You've now mastered the basic navigation skills in Claude Code -- knowing where you are, browsing files, reading contents, and working across different folders.

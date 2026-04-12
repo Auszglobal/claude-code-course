@@ -393,6 +393,125 @@ Using this simplified template, design a Skill for your own work:
 
 ---
 
+## 🏗️ Mini Project: Build a Custom Skill
+
+Create your own SKILL.md from scratch for a task you actually do in your daily work or personal life. You will go through the full Define-Evaluate-Iterate-Deploy process and end up with a working, reusable Skill.
+
+### Requirements
+- Write a complete SKILL.md file with all required sections (Role, Data Sources, Rules, Output Format, Error Handling)
+- The Skill should automate a real task you do at least once a week
+- Test the Skill by running it in Claude Code at least twice
+- Iterate on it at least once based on the test results
+- Save it to your `~/.claude/skills/` directory so it persists
+
+### Step-by-Step Guide
+
+1. **Choose a task to automate. Here are some ideas:**
+   - Organise your Downloads folder by file type (images, documents, videos, etc.)
+   - Generate a weekly summary of Git commits across your projects
+   - Read a folder of text files and create a combined table of contents
+   - Check a list of website URLs and report which ones are down
+   - Format a messy CSV file into a clean, consistent structure
+
+   For this walkthrough, we will build a **Downloads Folder Organiser** Skill.
+
+2. **Create the skills directory (if it does not exist):**
+   ```bash
+   mkdir -p ~/.claude/skills
+   ```
+
+3. **Start Claude Code and define your Skill:**
+   ```bash
+   cd ~/Downloads
+   claude
+   ```
+
+   ```
+   Help me create a SKILL.md file for a Downloads folder organiser. Save it to ~/.claude/skills/organize-downloads.md with the following content:
+
+   Role: You are a file organisation assistant. Your job is to sort files in the Downloads folder into subfolders by type.
+
+   Rules:
+   - Images (.png, .jpg, .jpeg, .gif, .svg, .webp) go into Downloads/Images/
+   - Documents (.pdf, .doc, .docx, .txt, .md) go into Downloads/Documents/
+   - Spreadsheets (.csv, .xlsx, .xls) go into Downloads/Spreadsheets/
+   - Archives (.zip, .tar, .gz, .rar) go into Downloads/Archives/
+   - Videos (.mp4, .mov, .avi, .mkv) go into Downloads/Videos/
+   - Everything else goes into Downloads/Other/
+   - Never move files that are less than 1 minute old (they might still be downloading)
+   - Create the subfolders if they do not exist
+   - Print a summary showing how many files were moved to each folder
+
+   Error Handling:
+   - If a file is locked or in use, skip it and log a warning
+   - If a filename conflict occurs, add a number suffix (e.g., report(2).pdf)
+   - Never delete any files
+   ```
+
+4. **Test the Skill:**
+   ```
+   Run the organize-downloads Skill on my Downloads folder
+   ```
+
+   Or if you set up the slash command:
+   ```
+   /organize-downloads
+   ```
+
+5. **Review the results:**
+   ```
+   Show me the current structure of my Downloads folder, including the new subfolders
+   ```
+
+6. **Iterate -- improve the Skill based on what you see:**
+   ```
+   Update the organize-downloads Skill to also:
+   - Move installer files (.dmg, .exe, .msi, .pkg) into a Downloads/Installers/ folder
+   - Add a "dry run" mode where it only lists what it WOULD move, without actually moving anything
+   - Save a log file to Downloads/organize-log-YYYY-MM-DD.txt
+   ```
+
+7. **Test the updated Skill:**
+   ```
+   Run the organize-downloads Skill in dry-run mode first. Show me what it would do.
+   ```
+
+8. **If everything looks good, run it for real:**
+   ```
+   Run the organize-downloads Skill (not dry-run, actually move the files)
+   ```
+
+### Expected Result
+
+After completing all steps, you should have:
+- `~/.claude/skills/organize-downloads.md` — a complete SKILL.md file
+- Your Downloads folder neatly organised into subfolders (Images, Documents, Spreadsheets, Archives, Videos, Installers, Other)
+- A log file in Downloads showing what was moved
+- The experience of going through the Define-Evaluate-Iterate-Deploy cycle with a real Skill
+
+```
+$ claude "/organize-downloads"
+
+Downloads Folder Organiser — 2026-04-12
+Files processed: 23
+  Images/     — 8 files moved
+  Documents/  — 6 files moved
+  Archives/   — 3 files moved
+  Videos/     — 2 files moved
+  Installers/ — 1 file moved
+  Other/      — 3 files moved
+  Skipped (too recent): 0
+  Skipped (in use): 0
+Log saved to: Downloads/organize-log-2026-04-12.txt
+```
+
+### Bonus Challenge
+- Create a second Skill for a completely different task (e.g., `/weekly-git-summary` that lists all your commits from the past 7 days across multiple repos)
+- Add a scheduling rule so your Downloads organiser runs automatically every Sunday at 9 AM
+- Share your SKILL.md with a friend or colleague and have them test it on their machine -- see if your instructions are clear enough for Claude to follow without modification
+
+---
+
 ## 🔗 Next Steps
 
 Congratulations on completing Bonus Module B5! You've now learned how to build three complete Claude Code Skills for a real business.

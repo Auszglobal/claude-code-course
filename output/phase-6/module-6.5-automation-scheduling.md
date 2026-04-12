@@ -302,6 +302,94 @@ List 5 tasks you do repeatedly at work or in your personal life. For each one, d
 
 > Hint: If a task involves one tool and one action, it is a Skill (Level 1). If it chains 3+ steps with multiple tools, it is a Plugin (Level 2). If it needs to run on a timer, it is Scheduled (Level 3). If you need to trigger it remotely, add Dispatch (Level 4).
 
+## 🏗️ Mini Project: Daily Report Automation
+
+Build a simple automated daily report system that collects information from your project folder and generates a summary file -- then set it up to run on a schedule.
+
+### Requirements
+- Create a Skill (as a .md file) that generates a daily project report
+- The report should include: file count, recent changes, and a summary
+- Set up the Skill to run automatically on a timer (using cron or Task Scheduler)
+- The output should be saved to a reports/ folder with the date in the filename
+
+### Step-by-Step Guide
+
+1. **Create the project folder and start Claude Code:**
+   ```bash
+   mkdir -p ~/daily-report-project/reports
+   cd ~/daily-report-project
+   claude
+   ```
+
+2. **Create a sample project to report on:**
+   ```
+   Create the following files so we have something to report on:
+   - README.md with the text "Daily Report Automation Project"
+   - src/app.py with a simple Python hello world script
+   - src/utils.py with a function called format_date that returns today's date as YYYY-MM-DD
+   - data/sample.json with a small JSON array of 3 items: [{name: "Task A"}, {name: "Task B"}, {name: "Task C"}]
+   ```
+
+3. **Create the Skill file:**
+   ```
+   Create a file at .claude/commands/daily_report.md with these instructions:
+   
+   "Generate a daily project report. Do the following:
+   1. Count the total number of files in the project (excluding .git and node_modules)
+   2. List any files modified in the last 24 hours
+   3. Count the lines of code in each .py file
+   4. Read data/sample.json and report how many items it contains
+   5. Save the report to reports/report-YYYY-MM-DD.md using today's date"
+   ```
+
+4. **Test the Skill manually:**
+   ```
+   Run /daily_report and check the generated report in the reports/ folder
+   ```
+
+5. **Set up automated scheduling:**
+
+   **Mac/Linux -- using cron:**
+   ```bash
+   # Open your crontab for editing
+   crontab -e
+   
+   # Add this line to run every day at 8:00 AM:
+   0 8 * * * cd ~/daily-report-project && claude "/daily_report" --yes >> ~/daily-report-project/reports/cron.log 2>&1
+   ```
+
+   **Windows -- using Task Scheduler:**
+   ```
+   Ask Claude Code: "Help me create a Windows Task Scheduler entry that runs 
+   the /daily_report skill every day at 8:00 AM in the ~/daily-report-project folder"
+   ```
+
+6. **Verify it works by running it once more:**
+   ```bash
+   cd ~/daily-report-project
+   claude "/daily_report" --yes
+   ```
+
+   Then check the reports/ folder:
+   ```bash
+   ls reports/
+   ```
+
+### Expected Result
+
+After completing all steps, you should have:
+- A `.claude/commands/daily_report.md` Skill file
+- At least one generated report in `reports/report-YYYY-MM-DD.md`
+- A cron job (Mac/Linux) or Task Scheduler entry (Windows) set to run daily
+- The report file contains: total file count, recently modified files, lines of code per .py file, and a data summary
+
+### Bonus Challenge
+- Add a section to the report that checks whether any Python files have syntax errors (ask Claude to try importing them)
+- Modify the Skill to also email the report to yourself using a simple Python script with `smtplib`
+- Create a second Skill called `/weekly_summary` that reads all daily reports from the past 7 days and produces a weekly overview
+
+---
+
 ## 🔗 Next Step
 
 Congratulations on completing Phase 6! You now understand the full Claude Cowork ecosystem — from basic setup to advanced automation. In Phase 7, we will dive into advanced Claude Code patterns, where you will learn to build more sophisticated developer workflows.

@@ -498,6 +498,96 @@ so that all tests pass.
 <div class="quiz-result"></div>
 </div>
 
+## 🏗️ Mini Project: Test Suite for a Calculator
+
+Build a fully tested calculator from scratch. You will create the calculator program, write a comprehensive test suite, intentionally break things to see tests catch bugs, and then fix them.
+
+### Requirements
+- Create a calculator with at least 6 operations (add, subtract, multiply, divide, power, modulo)
+- Write at least 20 test cases covering normal inputs, edge cases, and error cases
+- All tests must pass when the calculator is correct
+- Intentionally introduce a bug, confirm a test catches it, then fix it
+
+### Step-by-Step Guide
+
+1. **Set up the project folder:**
+   ```bash
+   mkdir -p ~/claude-practice/calculator-project
+   cd ~/claude-practice/calculator-project
+   claude
+   ```
+
+2. **Ask Claude Code to create the calculator:**
+   ```
+   Create a file called calculator.py with the following functions:
+   - add(a, b) — returns a + b
+   - subtract(a, b) — returns a - b
+   - multiply(a, b) — returns a * b
+   - divide(a, b) — returns a / b, raises ValueError if b is 0
+   - power(a, b) — returns a raised to the power of b
+   - modulo(a, b) — returns the remainder of a / b, raises ValueError if b is 0
+   Each function should have a docstring explaining what it does.
+   ```
+
+3. **Ask Claude Code to write a comprehensive test suite:**
+   ```
+   Write a test file called test_calculator.py using pytest. Include at least 20 tests:
+   - 3 tests per function for normal cases
+   - Edge cases: zero, negative numbers, very large numbers, decimals
+   - Error cases: division by zero, modulo by zero
+   Save it as test_calculator.py.
+   ```
+
+4. **Install pytest (if not already installed) and run the tests:**
+   ```
+   Run the command: pip install pytest && pytest test_calculator.py -v
+   ```
+
+   You should see all 20+ tests pass with green PASSED labels.
+
+5. **Intentionally break a function to see a test fail:**
+   ```
+   Change the multiply function in calculator.py so it adds instead of multiplies (return a + b instead of return a * b). Then run the tests again.
+   ```
+
+   You should see some tests FAIL with clear error messages showing expected vs actual values.
+
+6. **Fix the bug and confirm all tests pass again:**
+   ```
+   Fix the multiply function back to the correct implementation. Run the tests one more time to confirm everything passes.
+   ```
+
+7. **Add one more function and its tests:**
+   ```
+   Add a new function called average(numbers) that takes a list of numbers and returns their average. It should raise a ValueError if the list is empty. Then add 3 tests for it in test_calculator.py. Run all tests.
+   ```
+
+### Expected Result
+
+When you are done, you should have:
+- `calculator.py` with 7 functions, each with a docstring
+- `test_calculator.py` with 23+ tests covering normal, edge, and error cases
+- All tests passing (green) when you run `pytest test_calculator.py -v`
+- The experience of seeing tests catch a bug you intentionally introduced
+
+```
+======================== test session starts ========================
+collected 23 items
+
+test_calculator.py::test_add_positive_numbers PASSED
+test_calculator.py::test_add_negative_numbers PASSED
+... (all tests) ...
+test_calculator.py::test_average_empty_list_raises_error PASSED
+
+======================== 23 passed in 0.05s ========================
+```
+
+### Bonus Challenge
+- Add a `percentage(amount, percent)` function and write tests for tricky cases like 0%, 100%, and 200%
+- Ask Claude Code: "Are there any edge cases I missed in my test suite?" and see what it suggests
+
+---
+
 ## 🔗 Next Steps
 
 Congratulations on completing all of Phase 3! You've learned:

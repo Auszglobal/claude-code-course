@@ -402,6 +402,149 @@ Claude 仍然遵守你在 `settings.json` 中設定的所有 hooks 和權限規�
 <div class="quiz-result"></div>
 </div>
 
+## 🏗️ Mini Project: Autonomous Code Reviewer
+
+Build an autonomous code review agent using `/loop` that watches a project for changes, runs linting and tests, and generates a review report -- all without manual intervention.
+
+### Requirements
+- Set up a small project with a few Python files and tests
+- Use `/loop` to monitor the project for changes
+- When changes are detected, automatically run a linter (flake8) and tests (pytest)
+- Generate a review report summarising the results
+- The agent should fix simple linting issues automatically
+
+### Step-by-Step Guide
+
+1. **Create the project to be reviewed:**
+   ```bash
+   mkdir -p ~/code-review-agent/src
+   mkdir -p ~/code-review-agent/tests
+   mkdir -p ~/code-review-agent/reports
+   cd ~/code-review-agent
+   git init
+   ```
+
+2. **Create sample Python files with some intentional issues:**
+
+   Save the following as `src/calculator.py`:
+   ```python
+   # calculator.py - a simple calculator with some style issues
+
+   import os, sys    # flake8 will flag this (multiple imports on one line)
+
+   def add(a,b):     # flake8 will flag missing spaces after commas
+       return a+b
+
+   def subtract(a, b):
+       return a - b
+
+   def multiply(a, b):
+       result = a * b
+       return result
+
+   def divide(a, b):
+       if b == 0:
+           raise ValueError("Cannot divide by zero")
+       return a / b
+   ```
+
+   Save the following as `tests/test_calculator.py`:
+   ```python
+   import sys, os
+   sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+   from calculator import add, subtract, multiply, divide
+   import pytest
+
+   def test_add():
+       assert add(2, 3) == 5
+
+   def test_subtract():
+       assert subtract(10, 4) == 6
+
+   def test_multiply():
+       assert multiply(3, 4) == 12
+
+   def test_divide():
+       assert divide(10, 2) == 5.0
+
+   def test_divide_by_zero():
+       with pytest.raises(ValueError):
+           divide(1, 0)
+   ```
+
+3. **Install the tools:**
+   ```bash
+   pip install flake8 pytest
+   ```
+
+4. **Make an initial commit:**
+   ```bash
+   git add -A
+   git commit -m "Initial project with calculator and tests"
+   ```
+
+5. **Start Claude Code and launch the autonomous reviewer:**
+   ```bash
+   cd ~/code-review-agent
+   claude
+   ```
+
+   ```
+   /loop 2m "Do the following: 1) Run 'git diff' to check for any uncommitted changes. 2) If there are changes, run 'flake8 src/' and 'pytest tests/ -v'. 3) If flake8 reports fixable style issues (like missing whitespace or multiple imports on one line), fix them automatically. 4) Save a review report to reports/review-latest.md that lists: files changed, lint issues found, lint issues auto-fixed, and test results. 5) If there are no changes, just report 'No changes detected'."
+   ```
+
+6. **In a separate terminal, make a change to trigger the reviewer:**
+   ```bash
+   cd ~/code-review-agent
+   
+   # Add a new function with some style issues
+   cat >> src/calculator.py << 'EOF'
+
+   def power(a,b):
+       return a**b
+   EOF
+   ```
+
+7. **Watch the autonomous reviewer detect the change, fix the lint issues, and generate a report.**
+
+8. **After a few iterations, stop the loop by pressing Esc. Then check the report:**
+   ```bash
+   cat reports/review-latest.md
+   ```
+
+### Expected Result
+
+After the loop runs at least once with detected changes, you should see:
+- The linting issues in `src/calculator.py` automatically fixed (spaces added after commas, imports split onto separate lines)
+- All tests passing
+- A `reports/review-latest.md` file containing a summary like:
+
+```
+# Code Review Report — 2026-04-12 10:30
+
+## Files Changed
+- src/calculator.py (modified)
+
+## Linting (flake8)
+- Issues found: 3
+- Auto-fixed: 3 (E231 whitespace, E401 multiple imports)
+- Remaining: 0
+
+## Tests (pytest)
+- Total: 5
+- Passed: 5
+- Failed: 0
+
+## Status: ALL GREEN
+```
+
+### Bonus Challenge
+- Add a `--strict` mode to the loop prompt that also checks for missing docstrings and auto-adds them
+- Have the agent commit the fixes automatically with a message like "Auto-fix: resolve linting issues"
+- Try the dynamic mode (`/loop` without a time interval) and observe how Claude adjusts the check frequency
+
+---
+
 ## 🔗 下一步
 
 恭喜你完成了 Phase 9 的所有模塊！你已經掌握了 Claude Code 的高級生產環境技巧，包括 Sub-agents、Plan Mode、資料庫操作、CI/CD、Docker 安全，以及本課的 `/loop` 自主 Agent 模式。

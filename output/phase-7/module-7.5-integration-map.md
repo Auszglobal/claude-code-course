@@ -365,6 +365,113 @@ Ask Claude Code to help you write the script. Start simple — even 10 lines of 
 <div class="quiz-result"></div>
 </div>
 
+## 🏗️ Mini Project: Two-Tool Automation Pipeline
+
+Build a working automation pipeline that connects two services together: read data from a CSV file (simulating a data source like Google Sheets) and send a formatted summary to a Slack-compatible webhook (or save it as a notification file if you do not have Slack).
+
+### Requirements
+- Read sales data from a CSV file
+- Calculate totals and generate a summary
+- Send the summary to a Slack webhook (or save as a formatted notification file)
+- Use environment variables for any sensitive values (webhook URLs, tokens)
+- Handle errors gracefully (missing file, bad data, failed webhook)
+
+### Step-by-Step Guide
+
+1. **Create the project folder and start Claude Code:**
+   ```bash
+   mkdir -p ~/two-tool-pipeline
+   cd ~/two-tool-pipeline
+   claude
+   ```
+
+2. **Create the sample data file:**
+   ```
+   Create a file called sales_data.csv with the following content:
+   date,product,quantity,price
+   2026-04-10,Widget A,5,29.99
+   2026-04-10,Widget B,3,49.99
+   2026-04-11,Widget A,8,29.99
+   2026-04-11,Widget C,2,99.99
+   2026-04-12,Widget B,6,49.99
+   2026-04-12,Widget A,4,29.99
+   ```
+
+3. **Create the pipeline script:**
+   ```
+   Create a Python script called pipeline.py that does the following:
+   1. Read sales_data.csv using the csv module (no pandas needed)
+   2. Calculate: total revenue, total items sold, best-selling product, and the number of unique products
+   3. Format the results as a Slack-style message with this structure:
+      "Daily Sales Report — 2026-04-12
+       Total Revenue: $X,XXX.XX
+       Total Items Sold: XX
+       Best-Selling Product: Widget A (XX units)
+       Unique Products: X"
+   4. Try to POST the message to a Slack webhook URL from an environment variable called SLACK_WEBHOOK_URL
+   5. If SLACK_WEBHOOK_URL is not set, save the message to a file called notification.txt instead
+   6. Print a success message either way
+   Use only standard library modules plus 'requests' for the HTTP call.
+   ```
+
+4. **Create a .env file for the webhook URL:**
+   ```
+   Create a .env file with this content:
+   SLACK_WEBHOOK_URL=https://hooks.slack.com/services/YOUR/WEBHOOK/URL
+   
+   Also create a .gitignore file that includes .env
+   ```
+
+5. **Install the requests library (if not already installed) and run the pipeline:**
+   ```bash
+   pip install requests python-dotenv
+   python pipeline.py
+   ```
+
+   Since you probably do not have a real Slack webhook, the script should fall back to saving `notification.txt`.
+
+6. **Check the output:**
+   ```bash
+   cat notification.txt
+   ```
+
+7. **Add error handling and test with bad data:**
+   ```
+   Create a file called bad_data.csv with some intentionally broken rows (missing price, non-numeric quantity). 
+   Then modify pipeline.py to accept a filename as a command-line argument:
+     python pipeline.py bad_data.csv
+   Make sure it logs warnings for bad rows but still processes the valid ones.
+   ```
+
+### Expected Result
+
+After completing all steps, you should have:
+- `sales_data.csv` with sample data
+- `pipeline.py` that reads CSV, calculates totals, and sends/saves a notification
+- `notification.txt` containing a formatted sales summary
+- `.env` and `.gitignore` files for secure configuration
+- The script handles missing files and bad data without crashing
+
+```
+$ python pipeline.py
+SLACK_WEBHOOK_URL not set — saving to notification.txt instead.
+Daily Sales Report saved to notification.txt
+
+$ cat notification.txt
+Daily Sales Report — 2026-04-12
+Total Revenue: $1,039.72
+Total Items Sold: 28
+Best-Selling Product: Widget A (17 units)
+Unique Products: 3
+```
+
+### Bonus Challenge
+- Add a second data source: create a `returns_data.csv` and subtract returns from the totals in the report
+- If you have a Discord server, get a Discord webhook URL (free) and send the notification there instead of Slack -- the webhook format is almost identical
+- Add a `--format html` flag that generates an HTML email version of the report instead of plain text
+
+---
+
 ## 🔗 Next Steps
 
 Congratulations! You have completed Phase 7 — Integrations. You now understand how Claude Code connects to the entire ecosystem of tools that modern teams use every day. In **Phase 8**, we will explore advanced workflows that combine everything you have learned — building real-world automation systems that run with minimal human intervention.

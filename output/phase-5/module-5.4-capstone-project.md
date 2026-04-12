@@ -1055,6 +1055,72 @@ Based on the features you've added, update the CLAUDE.md to reflect the project'
 <div class="quiz-result"></div>
 </div>
 
+## 🏗️ Bonus Mini Challenge: Add a "Due Date" Feature
+
+You have built a working task manager -- now extend it with a due date feature. This challenge tests your ability to modify both frontend and backend code, update tests, and redeploy.
+
+### Requirements
+- Each task should optionally have a due date
+- Tasks that are past their due date should be highlighted in red
+- Add a "Sort by due date" button to the frontend
+- Update the backend and tests to handle the new field
+- Commit and push the changes
+
+### Step-by-Step Guide
+
+1. **Start Claude Code in your task-manager project:**
+   ```bash
+   cd ~/task-manager
+   claude
+   ```
+
+2. **Update the backend to support due dates:**
+   ```
+   Modify the add_task function in backend/task_manager.py to accept an optional due_date parameter (format: YYYY-MM-DD). Store it in the task object. If no due date is given, set it to null.
+   ```
+
+3. **Update the frontend to show and set due dates:**
+   ```
+   Update frontend/index.html and frontend/app.js to:
+   - Add a date input field next to the task input
+   - Display the due date next to each task
+   - Highlight tasks in red if the due date is in the past
+   - Add a "Sort by due date" button that reorders the list
+   ```
+
+4. **Update the tests:**
+   ```
+   Add 3 new tests to tests/test_task_manager.py:
+   - test_add_task_with_due_date
+   - test_add_task_without_due_date
+   - test_list_tasks_sorts_by_due_date
+   Then run all tests to make sure nothing is broken.
+   ```
+
+5. **Run the tests:**
+   ```bash
+   python -m unittest tests/test_task_manager.py -v
+   ```
+
+6. **Commit and push:**
+   ```
+   Commit all changes with the message "Add due date feature with sorting and overdue highlighting" and push to GitHub
+   ```
+
+### Expected Result
+
+When you are done, your task manager should:
+- Let you add tasks with or without a due date
+- Show a red highlight on overdue tasks
+- Sort tasks by due date when the button is clicked
+- Pass all existing tests plus the 3 new ones
+
+### Bonus Challenge
+- Add a notification badge in the page title showing the count of overdue tasks (e.g., "(3) Task Manager")
+- Add a "Due This Week" filter that only shows tasks due in the next 7 days
+
+---
+
 ## 🔗 Next Steps
 
 ### Congratulations on Completing the Entire Course!

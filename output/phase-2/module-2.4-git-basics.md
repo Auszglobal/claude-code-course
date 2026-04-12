@@ -357,6 +357,93 @@ Experience the power of version control -- you can review how your project has e
 <div class="quiz-result"></div>
 </div>
 
+## 🏗️ Mini Project: Your First Repository
+
+Bring together everything from Phase 2 by creating a real Git repository with a CLAUDE.md file, multiple commits, and pushing it to GitHub.
+
+### Requirements
+- Create a new project folder and initialise it as a Git repository
+- Add a CLAUDE.md configuration file with project rules
+- Create at least 2 other files (e.g., index.html and style.css)
+- Make at least 3 separate commits with clear, descriptive messages
+- Push the repository to GitHub so it is publicly accessible
+
+### Step-by-Step Guide
+
+1. **Create the project folder and start Claude Code:**
+
+   **Windows (Git Bash) and Mac / Linux:**
+   ```bash
+   mkdir ~/Desktop/my-portfolio
+   cd ~/Desktop/my-portfolio
+   claude
+   ```
+
+2. **Initialise Git and create your CLAUDE.md:**
+   ```
+   Please initialise a Git repository here, then create a CLAUDE.md file with the following content:
+   - Project name: My Portfolio
+   - Description: A simple personal website
+   - Code style: Use 2-space indentation for HTML/CSS
+   - Rule: All images must have alt text
+   ```
+
+3. **Commit the CLAUDE.md:**
+   ```
+   Please commit CLAUDE.md to Git with the message "Add project configuration file"
+   ```
+
+4. **Create an index.html file:**
+   ```
+   Create a simple index.html with a welcome heading that says "Welcome to My Portfolio" and a short paragraph about yourself. Keep it simple — just HTML, no CSS yet.
+   ```
+
+5. **Commit the HTML file:**
+   ```
+   Please commit index.html with the message "Add homepage with welcome message"
+   ```
+
+6. **Create a stylesheet:**
+   ```
+   Create a style.css file that makes the page look nice — center the text, add a pleasant background colour, and use a clean font. Then link it in index.html.
+   ```
+
+7. **Commit the styling changes:**
+   ```
+   Please commit all changes with the message "Add stylesheet and improve homepage design"
+   ```
+
+8. **Review your commit history:**
+   ```
+   Show me the full Git commit history for this project
+   ```
+
+9. **Push to GitHub (requires a GitHub account):**
+   ```
+   Help me create a new public repository on GitHub called my-portfolio and push all my commits to it
+   ```
+
+   If you don't have the `gh` CLI installed, Claude Code will guide you through creating the repo on github.com manually and running:
+   ```bash
+   git remote add origin https://github.com/YOUR-USERNAME/my-portfolio.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+### Expected Result
+
+When you are done, you should have:
+- A GitHub repository at `https://github.com/YOUR-USERNAME/my-portfolio`
+- 3 commits visible in the commit history, each with a clear message
+- 3 files in the repo: `CLAUDE.md`, `index.html`, and `style.css`
+- Running `git log` shows all 3 commits with timestamps and descriptions
+
+### Bonus Challenge
+- Enable GitHub Pages on your repository (Settings > Pages > Deploy from branch > main) and visit your live website at `https://YOUR-USERNAME.github.io/my-portfolio`
+- Add a fourth commit that updates the page content, push it, and watch your live site update automatically
+
+---
+
 ## 🔗 Next Steps
 
 Excellent! You've completed all of Phase 2! Let's recap what you've learned:

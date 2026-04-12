@@ -330,6 +330,102 @@ Commit and push all changes to GitHub
 <div class="quiz-result"></div>
 </div>
 
+## 🏗️ Mini Project: Deploy a Personal Portfolio
+
+Build a polished personal portfolio webpage and deploy it live to the internet using GitHub Pages. By the end, you will have a real URL you can share with anyone.
+
+### Requirements
+- Create a single-page portfolio website with HTML and CSS
+- Include at least 3 sections: an introduction, a skills list, and a contact section
+- Deploy it to GitHub Pages with a working public URL
+- Make at least one update after the initial deployment
+
+### Step-by-Step Guide
+
+1. **Create the project folder and start Claude Code:**
+   ```bash
+   mkdir ~/Desktop/portfolio
+   cd ~/Desktop/portfolio
+   claude
+   ```
+
+2. **Ask Claude Code to build the portfolio page:**
+   ```
+   Create a personal portfolio website with a single index.html and style.css file.
+   Include:
+   - A header with my name "Your Name" and a short tagline
+   - An "About Me" section with 2-3 sentences
+   - A "Skills" section listing: Claude Code, HTML/CSS, Git, Problem Solving
+   - A "Contact" section with a placeholder email address
+   Make it look clean and modern with a pleasant colour scheme. Mobile-friendly.
+   ```
+
+3. **Preview the page locally:**
+
+   Open the file in your browser to check it looks good:
+
+   **Windows:**
+   ```bash
+   start index.html
+   ```
+   **Mac:**
+   ```bash
+   open index.html
+   ```
+
+4. **Initialise Git and make the first commit:**
+   ```
+   Initialise a Git repository, then commit all files with the message "Initial portfolio site"
+   ```
+
+5. **Create a GitHub repository and push:**
+   ```
+   Help me create a new public GitHub repository called portfolio and push my code to it
+   ```
+
+   If you need to do it manually:
+   - Go to [github.com/new](https://github.com/new) and create a repository called `portfolio` (public, no README)
+   - Then tell Claude Code:
+   ```
+   Connect this project to my GitHub repo at https://github.com/YOUR-USERNAME/portfolio.git and push
+   ```
+
+6. **Enable GitHub Pages:**
+   - Go to your repository on GitHub
+   - Click **Settings** > **Pages**
+   - Under "Source," select **Deploy from a branch**
+   - Choose **main** branch, **/ (root)** folder
+   - Click **Save**
+   - Wait 2-3 minutes, then visit `https://YOUR-USERNAME.github.io/portfolio/`
+
+7. **Make an update and redeploy:**
+   ```
+   Add a "Projects" section to my portfolio that lists 3 projects:
+   1. "Calculator" - A Python calculator with full test suite
+   2. "File Organiser" - A folder organisation system
+   3. "This Portfolio" - The website you are looking at right now
+   Then commit and push with the message "Add projects section"
+   ```
+
+8. **Verify the update is live:**
+
+   Wait 2-3 minutes, then refresh your portfolio URL. The new Projects section should appear.
+
+### Expected Result
+
+You should have:
+- A live website at `https://YOUR-USERNAME.github.io/portfolio/`
+- A clean, mobile-friendly portfolio with 4 sections (About, Skills, Projects, Contact)
+- 2 commits in your Git history
+- A URL you can share with friends, family, or put on your resume
+
+### Bonus Challenge
+- Add a dark mode toggle button using a small bit of JavaScript (ask Claude Code to help)
+- Add a favicon (the small icon that appears in the browser tab)
+- Try using a custom domain name if you own one (GitHub Pages supports this in Settings > Pages > Custom domain)
+
+---
+
 ## 🔗 Next Steps
 
 Congratulations on completing all of Phase 4! Let's review what you learned in this phase:

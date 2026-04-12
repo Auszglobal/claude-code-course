@@ -254,6 +254,92 @@ Claude identifies differences like wrong colours, misaligned elements, missing i
 <div class="quiz-result"></div>
 </div>
 
+## 🏗️ Mini Project: Screenshot-to-Code
+
+Take a screenshot of a real website (or use a provided design image) and use Claude Code's multimodal capabilities to recreate it as a fully working HTML/CSS page. Then iterate until it closely matches the original.
+
+### Requirements
+- Capture or download a screenshot of a simple web page (e.g., a login form, a pricing card, or a landing hero section)
+- Ask Claude Code to build HTML/CSS from the screenshot
+- Compare the result to the original and iterate at least once
+- The final page should be responsive (works on mobile and desktop)
+- Save the screenshot and the generated code in the same project folder
+
+### Step-by-Step Guide
+
+1. **Create the project folder:**
+   ```bash
+   mkdir -p ~/screenshot-to-code/designs
+   mkdir -p ~/screenshot-to-code/output
+   cd ~/screenshot-to-code
+   ```
+
+2. **Capture a screenshot of a simple web page:**
+
+   Pick one of these options:
+   - **Option A:** Take a screenshot of any simple website you like (a login page, a product card, etc.) and save it as `designs/target.png`
+   - **Option B:** Ask Claude Code to create a target design for you:
+     ```
+     Create a simple HTML login page with a centered card containing: a logo placeholder, email and password fields, a "Sign In" button (blue), and a "Forgot password?" link. Save it as designs/target.html. Then take a screenshot of it and save as designs/target.png.
+     ```
+
+   **Taking a screenshot:**
+   - **Mac:** Press `Cmd + Shift + 4`, select the area, file saves to Desktop. Move it:
+     ```bash
+     mv ~/Desktop/Screenshot*.png ~/screenshot-to-code/designs/target.png
+     ```
+   - **Windows:** Press `Win + Shift + S`, paste into Paint, save as `designs/target.png`
+
+3. **Start Claude Code and feed it the screenshot:**
+   ```bash
+   cd ~/screenshot-to-code
+   claude
+   ```
+
+   ```
+   Look at the screenshot at designs/target.png. Build an HTML page with inline CSS that matches this design as closely as possible. Save the HTML file to output/index.html. Make it responsive.
+   ```
+
+4. **Open the generated page and compare:**
+
+   **Mac:**
+   ```bash
+   open output/index.html
+   ```
+   **Windows:**
+   ```bash
+   start output/index.html
+   ```
+
+   Place the browser window next to the original screenshot and look for differences.
+
+5. **Ask Claude to compare and fix:**
+   ```
+   Read the screenshot at designs/target.png again. Then read the file output/index.html. Compare the two and list all visual differences. Fix them so output/index.html matches the screenshot more closely.
+   ```
+
+6. **Repeat step 5 until you are satisfied with the match.**
+
+7. **Add responsive behaviour:**
+   ```
+   Make sure output/index.html looks good on a phone screen (max-width: 480px). The login card should take up the full width with some padding on mobile.
+   ```
+
+### Expected Result
+
+After completing all steps, you should have:
+- `designs/target.png` — the original screenshot
+- `output/index.html` — a responsive HTML page that closely matches the screenshot
+- The page should look good on both desktop and mobile
+- You will have experienced the iterative "compare and refine" workflow that makes multimodal development powerful
+
+### Bonus Challenge
+- Try a more complex screenshot: a full landing page with a navigation bar, hero section, and footer
+- Ask Claude Code to also extract the exact colours from the screenshot and list them as CSS variables
+- Create a side-by-side comparison page that shows the original screenshot next to an iframe of your built page
+
+---
+
 ## 🔗 Next Steps
 
 Congratulations — you've completed Phase 8: Mastery! You now know how to prompt effectively, manage costs, use IDE integrations, leverage the memory system, and work with images and PDFs. In the next phase, **Phase 9: Production**, we'll learn the tools and techniques for production-grade development — sub-agents, databases, CI/CD, and security.
