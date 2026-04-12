@@ -872,6 +872,21 @@ body {
 /* ── Welcome page ── */
 .welcome { text-align: center; padding: 60px 20px; }
 
+/* Continue Learning */
+.continue-section {
+  background: linear-gradient(135deg, rgba(0,139,139,0.15), rgba(0,180,166,0.08));
+  border: 1px solid rgba(0,180,166,0.3); border-radius: 12px; padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+  margin-bottom: 24px; transition: all 0.2s;
+}
+.continue-section:hover { border-color: var(--accent); transform: translateY(-2px); }
+.continue-label { font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+.continue-title { font-size: 18px; font-weight: 700; color: var(--text); }
+.continue-phase { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.continue-right { text-align: center; }
+.continue-pct { font-size: 28px; font-weight: 700; color: var(--accent); }
+.continue-sub { font-size: 11px; color: var(--text-secondary); }
+
 .welcome-icon {
   font-size: 64px;
   margin-bottom: 24px;
@@ -2543,10 +2558,29 @@ function showWelcome() {
     </div>`;
   });
 
+  // Build continue learning section
+  let continueHTML = '';
+  const nextModule = ALL_MODULES.find(m => !progress[m.id]);
+  if (nextModule && getCompletedCount() > 0) {
+    const pct = Math.round((getCompletedCount() / ALL_MODULES.length) * 100);
+    continueHTML = `<div class="continue-section" onclick="loadModule('${nextModule.id}','${nextModule.file}')">
+      <div class="continue-left">
+        <div class="continue-label">&#x1F449; Continue where you left off</div>
+        <div class="continue-title">${nextModule.id} — ${nextModule.title}</div>
+        <div class="continue-phase">${nextModule.phase.label}: ${nextModule.phase.title}</div>
+      </div>
+      <div class="continue-right">
+        <div class="continue-pct">${pct}%</div>
+        <div class="continue-sub">${getCompletedCount()}/${ALL_MODULES.length}</div>
+      </div>
+    </div>`;
+  }
+
   document.getElementById('content').innerHTML = `<div class="welcome">
     <span class="welcome-icon">&#x1F4BB;</span>
     <h2>Claude Code Complete Guide</h2>
     <p>Learn AI-powered programming with Claude Code, step by step from zero.<br>${ALL_MODULES.length} modules covering the complete learning path from installation to real-world projects.</p>
+    ${continueHTML}
     ${getPathsHTML()}
     <div class="team-leaderboard">
       <h3>Team Progress</h3>
