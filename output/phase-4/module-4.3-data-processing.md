@@ -337,6 +337,51 @@ You can double-click those PNG images in your file explorer to view the charts.
 <div class="quiz-explain">matplotlib's default font may not include all characters needed for your locale. If chart titles or labels appear as boxes or garbled text, you can fix this by setting <code>rcParams["font.sans-serif"]</code> to specify a font that includes the characters you need.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. What does <code>df.head()</code> do in pandas?</p>
+<label><input type="radio" name="q4" value="0"> Displays the first 5 rows of the data for a quick preview</label>
+<label><input type="radio" name="q4" value="1"> Deletes the first 5 rows of data</label>
+<label><input type="radio" name="q4" value="2"> Sorts the data by the first column</label>
+<label><input type="radio" name="q4" value="3"> Renames the column headers</label>
+<div class="quiz-explain"><code>df.head()</code> returns the first 5 rows of the DataFrame by default. It's a quick way to preview your data and verify it loaded correctly before running analysis.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. You want to create a chart showing how sales change over time. Which chart type is most appropriate?</p>
+<label><input type="radio" name="q5" value="0"> Pie chart</label>
+<label><input type="radio" name="q5" value="1"> Line chart</label>
+<label><input type="radio" name="q5" value="2"> Bar chart</label>
+<label><input type="radio" name="q5" value="3"> Scatter plot</label>
+<div class="quiz-explain">Line charts are ideal for showing trends over time because they connect data points in chronological order, making it easy to see whether values are going up, down, or staying stable. Pie charts show proportions, and bar charts compare categories.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. What does <code>sort_values(ascending=False)</code> do?</p>
+<label><input type="radio" name="q6" value="0"> Sorts values in alphabetical order</label>
+<label><input type="radio" name="q6" value="1"> Sorts values from smallest to largest</label>
+<label><input type="radio" name="q6" value="2"> Removes duplicate values</label>
+<label><input type="radio" name="q6" value="3"> Sorts values from largest to smallest (descending order)</label>
+<div class="quiz-explain">Setting <code>ascending=False</code> tells pandas to sort in descending order (largest first). The default is <code>ascending=True</code>, which sorts from smallest to largest.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. What command do you need to run before using pandas for the first time?</p>
+<label><input type="radio" name="q7" value="0"> <code>python install pandas</code></label>
+<label><input type="radio" name="q7" value="1"> <code>import pandas</code></label>
+<label><input type="radio" name="q7" value="2"> <code>pip install pandas</code></label>
+<label><input type="radio" name="q7" value="3"> <code>download pandas</code></label>
+<div class="quiz-explain"><code>pip install pandas</code> downloads and installs the pandas library. This is a one-time setup step. After installing, you use <code>import pandas as pd</code> in your Python script to use it.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. Why is JSON considered better than CSV for data with nested structures?</p>
+<label><input type="radio" name="q8" value="0"> JSON supports hierarchical nesting (objects inside objects), while CSV is flat rows and columns</label>
+<label><input type="radio" name="q8" value="1"> JSON files are always smaller than CSV files</label>
+<label><input type="radio" name="q8" value="2"> CSV cannot store text data</label>
+<label><input type="radio" name="q8" value="3"> JSON loads faster than CSV</label>
+<div class="quiz-explain">JSON naturally supports nested data — for example, a person can have a list of addresses, each with city and street fields. CSV is flat (rows and columns only), so representing nested data requires workarounds like extra columns or multiple files.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

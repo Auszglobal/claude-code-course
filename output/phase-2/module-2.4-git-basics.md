@@ -308,6 +308,51 @@ Experience the power of version control -- you can review how your project has e
 <div class="quiz-explain">A good commit message should clearly describe why this change was made. "Add user login form page" lets you immediately know what this commit did when reviewing history in the future. The other options are too vague and don't provide useful information.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. What does "untracked" mean in Git terminology?</p>
+<label><input type="radio" name="q4" value="0"> Git sees the file but hasn't been told to track its changes yet</label>
+<label><input type="radio" name="q4" value="1"> The file has been deleted</label>
+<label><input type="radio" name="q4" value="2"> The file is corrupted</label>
+<label><input type="radio" name="q4" value="3"> The file is being tracked by another program</label>
+<div class="quiz-explain">"Untracked" means Git knows the file exists but hasn't been instructed to monitor it. It's like a new item on your desk that you haven't decided whether to file yet. You need to add it to the staging area before Git will include it in a commit.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>5. What is the "staging area" in the Git workflow?</p>
+<label><input type="radio" name="q5" value="0"> A folder where deleted files are stored</label>
+<label><input type="radio" name="q5" value="1"> A preparation zone where changes are gathered before being officially committed</label>
+<label><input type="radio" name="q5" value="2"> A place where Git stores error logs</label>
+<label><input type="radio" name="q5" value="3"> The same as the working directory</label>
+<div class="quiz-explain">The staging area is like an outbox. You place changes there when they're ready to be committed. This gives you control over which changes to include in each commit — you don't have to save everything at once.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>6. You've made changes to 3 files. You want to save (commit) only 2 of them. Is this possible with Git?</p>
+<label><input type="radio" name="q6" value="0"> No — Git always commits all changed files at once</label>
+<label><input type="radio" name="q6" value="1"> No — you must commit each file in a separate session</label>
+<label><input type="radio" name="q6" value="2"> Yes — you can choose which files to add to the staging area before committing</label>
+<label><input type="radio" name="q6" value="3"> Yes — but only if you delete the third file first</label>
+<div class="quiz-explain">Git lets you selectively add files to the staging area. You can tell Claude Code: "Commit only index.html and style.css with the message..." and the third file's changes will remain uncommitted for later.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. Why is version control compared to a "save game" system?</p>
+<label><input type="radio" name="q7" value="0"> Because programming is like playing a game</label>
+<label><input type="radio" name="q7" value="1"> Because Git was originally designed for games</label>
+<label><input type="radio" name="q7" value="2"> Because you can only save once</label>
+<label><input type="radio" name="q7" value="3"> Because you can save your project's state at any point and return to any previous save later</label>
+<div class="quiz-explain">Just like a game save lets you go back to a previous point if things go wrong, Git commits let you record your project's state and return to any earlier version. This safety net means you can experiment boldly without fear of permanently breaking things.</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>8. You accidentally broke your project after several changes. How can Git help?</p>
+<label><input type="radio" name="q8" value="0"> You can view the commit history and go back to the last working version</label>
+<label><input type="radio" name="q8" value="1"> Git automatically prevents all bugs</label>
+<label><input type="radio" name="q8" value="2"> Git will fix the code for you</label>
+<label><input type="radio" name="q8" value="3"> You have to start the project from scratch</label>
+<div class="quiz-explain">This is one of Git's greatest strengths. When something goes wrong, you can view the history of commits and restore your project to a previous state where everything was working. This is why making frequent, descriptive commits is so important.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

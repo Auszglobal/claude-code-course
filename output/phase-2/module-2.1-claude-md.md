@@ -252,6 +252,51 @@ In the project from Exercise 1, try the following:
 <div class="quiz-explain">Claude Code re-reads CLAUDE.md every time a new conversation starts, so your changes will take effect in the next session. You can also ask Claude Code to re-read CLAUDE.md during a conversation.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. What happens if you launch Claude Code in a project folder that does NOT have a CLAUDE.md file?</p>
+<label><input type="radio" name="q4" value="0"> Claude Code still works, but without any project-specific instructions — like a new employee who hasn't read the company handbook</label>
+<label><input type="radio" name="q4" value="1"> Claude Code refuses to start</label>
+<label><input type="radio" name="q4" value="2"> Claude Code automatically creates a CLAUDE.md for you</label>
+<label><input type="radio" name="q4" value="3"> Claude Code shows an error message</label>
+<div class="quiz-explain">CLAUDE.md is optional. Without it, Claude Code still works perfectly well — it just won't know your project-specific preferences and rules. Adding a CLAUDE.md helps Claude Code understand your needs and produce more consistent results.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>5. Which of the following is a good "Prohibited Actions" rule for CLAUDE.md?</p>
+<label><input type="radio" name="q5" value="0"> "Don't make mistakes"</label>
+<label><input type="radio" name="q5" value="1"> "Be careful"</label>
+<label><input type="radio" name="q5" value="2"> "Do a good job"</label>
+<label><input type="radio" name="q5" value="3"> "Do not delete any existing files without explicit permission"</label>
+<div class="quiz-explain">Good rules are specific and actionable. "Do not delete any existing files" is clear and unambiguous. Vague instructions like "be careful" or "don't make mistakes" don't give Claude Code enough information to follow.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. You want Claude Code to always write CSS class names in kebab-case (e.g., main-header). Where should you put this instruction?</p>
+<label><input type="radio" name="q6" value="0"> In a separate settings.json file</label>
+<label><input type="radio" name="q6" value="1"> In the CLAUDE.md file, under a "Naming Conventions" or "Rules" section</label>
+<label><input type="radio" name="q6" value="2"> You must tell Claude Code every single time</label>
+<label><input type="radio" name="q6" value="3"> This cannot be configured</label>
+<div class="quiz-explain">CLAUDE.md is the perfect place for naming conventions and style rules. Once written in CLAUDE.md, Claude Code will follow them in every conversation without you having to repeat the instruction each time.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. A CLAUDE.md file contains: "Primary colour: #2C3E50". When you ask Claude Code to create an HTML page, what will it do?</p>
+<label><input type="radio" name="q7" value="0"> Ignore the colour specification entirely</label>
+<label><input type="radio" name="q7" value="1"> Ask you to confirm the colour each time</label>
+<label><input type="radio" name="q7" value="2"> Automatically use #2C3E50 as the primary colour in the page</label>
+<label><input type="radio" name="q7" value="3"> Display an error because HTML doesn't support colour codes</label>
+<div class="quiz-explain">Claude Code reads and follows the instructions in CLAUDE.md. If you specify a primary colour, Claude Code will use it automatically whenever it creates HTML or CSS files. This is the power of CLAUDE.md — you say it once and it remembers.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. Which analogy best describes the relationship between CLAUDE.md and Claude Code?</p>
+<label><input type="radio" name="q8" value="0"> A remote control and a TV</label>
+<label><input type="radio" name="q8" value="1"> An onboarding handbook and a new employee</label>
+<label><input type="radio" name="q8" value="2"> A power cable and a laptop</label>
+<label><input type="radio" name="q8" value="3"> A keyboard and a monitor</label>
+<div class="quiz-explain">CLAUDE.md is like an onboarding handbook for a new employee. It tells Claude Code about the project, the rules to follow, and the things to avoid — ensuring it works according to your specific needs and preferences.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

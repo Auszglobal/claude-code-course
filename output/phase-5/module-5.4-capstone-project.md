@@ -1006,6 +1006,51 @@ Based on the features you've added, update the CLAUDE.md to reflect the project'
 <div class="quiz-explain">GitHub Pages is a static web hosting service, suitable for deploying HTML, CSS, JavaScript, and other frontend files. Backend programs need other services (like AWS or Heroku) for deployment.</div>
 </div>
 
+<div class="quiz-q" data-answer="2">
+<p>4. In the task manager's backend, what does <code>max([t["id"] for t in tasks], default=0) + 1</code> do?</p>
+<label><input type="radio" name="q4" value="0"> Deletes the task with the highest ID</label>
+<label><input type="radio" name="q4" value="1"> Counts the total number of tasks</label>
+<label><input type="radio" name="q4" value="2"> Finds the highest existing ID and adds 1 to create a unique new ID</label>
+<label><input type="radio" name="q4" value="3"> Sorts all tasks by their ID</label>
+<div class="quiz-explain">This expression finds the maximum ID currently in the task list and adds 1, ensuring every new task gets a unique ID. The <code>default=0</code> handles the case when the list is empty (so the first task gets ID 1).</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. Why does the frontend use <code>localStorage</code> instead of the Python backend's JSON file?</p>
+<label><input type="radio" name="q5" value="0"> Because a static HTML page deployed to GitHub Pages cannot communicate with a Python backend</label>
+<label><input type="radio" name="q5" value="1"> Because localStorage is faster than JSON</label>
+<label><input type="radio" name="q5" value="2"> Because JSON files cannot store task data</label>
+<label><input type="radio" name="q5" value="3"> Because Python is not supported by modern browsers</label>
+<div class="quiz-explain">GitHub Pages only hosts static files (HTML, CSS, JS). It cannot run Python scripts. The frontend uses localStorage (browser storage) as a standalone solution. In a production app, you'd need a server to bridge the frontend and backend.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. What is the purpose of the <code>escapeHtml()</code> function in the frontend code?</p>
+<label><input type="radio" name="q6" value="0"> It makes text display in bold</label>
+<label><input type="radio" name="q6" value="1"> It prevents XSS attacks by converting special HTML characters to safe text</label>
+<label><input type="radio" name="q6" value="2"> It translates text to different languages</label>
+<label><input type="radio" name="q6" value="3"> It compresses the text to save storage space</label>
+<div class="quiz-explain">XSS (Cross-Site Scripting) attacks happen when user input containing HTML/JavaScript is rendered directly on the page. <code>escapeHtml()</code> converts special characters like <code>&lt;</code> and <code>&gt;</code> into safe text, preventing malicious code injection.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>7. Why is a <code>.gitignore</code> file important for this project?</p>
+<label><input type="radio" name="q7" value="0"> It makes Git run faster</label>
+<label><input type="radio" name="q7" value="1"> It automatically backs up important files</label>
+<label><input type="radio" name="q7" value="2"> It encrypts sensitive files before committing</label>
+<label><input type="radio" name="q7" value="3"> It tells Git which files to exclude from version control, like test data and system files</label>
+<div class="quiz-explain">The .gitignore file prevents unwanted files (test data, OS files like .DS_Store, IDE settings) from being committed to the repository. This keeps the repo clean and avoids sharing irrelevant or sensitive files.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>8. What does the <code>git checkout --orphan gh-pages</code> command do in the deployment process?</p>
+<label><input type="radio" name="q8" value="0"> It downloads a backup of the repository</label>
+<label><input type="radio" name="q8" value="1"> It deletes all branches except main</label>
+<label><input type="radio" name="q8" value="2"> It creates a new branch with no commit history, perfect for deploying only the frontend files</label>
+<label><input type="radio" name="q8" value="3"> It merges all branches together</label>
+<div class="quiz-explain">An orphan branch starts with no history — a clean slate. This is useful for GitHub Pages because you only want the frontend files on the deployment branch, without the backend code or full project history.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

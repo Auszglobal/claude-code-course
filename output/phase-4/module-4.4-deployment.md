@@ -281,6 +281,51 @@ Commit and push all changes to GitHub
 <div class="quiz-explain">Adobe Photoshop is image editing software, not a website hosting platform. GitHub Pages, Netlify, and Vercel are all platforms that can host static websites for free.</div>
 </div>
 
+<div class="quiz-q" data-answer="0">
+<p>4. What does <code>git push -u origin main</code> do?</p>
+<label><input type="radio" name="q4" value="0"> Uploads your local code to GitHub and sets up tracking between your local main branch and the remote</label>
+<label><input type="radio" name="q4" value="1"> Downloads code from GitHub to your computer</label>
+<label><input type="radio" name="q4" value="2"> Deletes the remote repository</label>
+<label><input type="radio" name="q4" value="3"> Creates a new branch called "origin"</label>
+<div class="quiz-explain"><code>git push</code> uploads your commits to GitHub. The <code>-u</code> flag sets up tracking so future pushes only need <code>git push</code> without specifying the remote and branch. <code>origin</code> is the remote name, and <code>main</code> is the branch.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>5. You deployed your website but see a 404 error when visiting the URL. What is the most likely cause?</p>
+<label><input type="radio" name="q5" value="0"> Your internet connection is too slow</label>
+<label><input type="radio" name="q5" value="1"> GitHub Pages doesn't support your browser</label>
+<label><input type="radio" name="q5" value="2"> You need to pay for a GitHub premium account</label>
+<label><input type="radio" name="q5" value="3"> GitHub Pages deployment takes a few minutes — wait 2-3 minutes and try again</label>
+<div class="quiz-explain">After enabling GitHub Pages or pushing an update, there's a delay of 1-3 minutes before the site goes live. If you see a 404 immediately after deployment, simply wait and refresh. If it persists, check that index.html is in the correct directory.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>6. Why must a GitHub Pages repository be set to "Public" on the free plan?</p>
+<label><input type="radio" name="q6" value="0"> Because private repositories don't support HTML files</label>
+<label><input type="radio" name="q6" value="1"> Because the free version of GitHub Pages only works with public repositories</label>
+<label><input type="radio" name="q6" value="2"> Because public repositories load faster</label>
+<label><input type="radio" name="q6" value="3"> Because Git doesn't work with private repositories</label>
+<div class="quiz-explain">GitHub's free tier only enables GitHub Pages for public repositories. To use GitHub Pages with a private repository, you need a paid GitHub plan (Pro, Team, or Enterprise).</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>7. What is the correct order of the deployment update workflow?</p>
+<label><input type="radio" name="q7" value="0"> git push → git commit → git add → wait</label>
+<label><input type="radio" name="q7" value="1"> git commit → git add → git push → wait</label>
+<label><input type="radio" name="q7" value="2"> git add → git commit → git push → wait for auto-update</label>
+<label><input type="radio" name="q7" value="3"> git push → wait → git add → git commit</label>
+<div class="quiz-explain">The correct workflow is: (1) <code>git add</code> to stage your changes, (2) <code>git commit</code> to save them with a message, (3) <code>git push</code> to upload to GitHub, then (4) wait 1-3 minutes for GitHub Pages to rebuild.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>8. What advantage does Netlify's drag-and-drop deployment have over GitHub Pages?</p>
+<label><input type="radio" name="q8" value="0"> It supports more programming languages</label>
+<label><input type="radio" name="q8" value="1"> You can deploy by simply dragging a folder into the browser — no Git knowledge required</label>
+<label><input type="radio" name="q8" value="2"> It provides a faster internet connection</label>
+<label><input type="radio" name="q8" value="3"> It costs less than GitHub Pages</label>
+<div class="quiz-explain">Netlify allows you to deploy by dragging your project folder directly into the Netlify dashboard in your browser. This is much simpler for beginners who haven't learned Git yet. GitHub Pages requires Git commands.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>

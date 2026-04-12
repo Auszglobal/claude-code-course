@@ -330,6 +330,51 @@ Go back to the personal website you built in Module 4.1 and ask Claude Code to a
 <div class="quiz-explain">Good programs should use try/except to handle potential errors and show friendly messages. Infinite retries can cause the program to hang, and crashing outright gives users a terrible experience.</div>
 </div>
 
+<div class="quiz-q" data-answer="2">
+<p>4. What does the status code 200 mean in an API response?</p>
+<label><input type="radio" name="q4" value="0"> The server is offline</label>
+<label><input type="radio" name="q4" value="1"> The request was rejected due to invalid credentials</label>
+<label><input type="radio" name="q4" value="2"> The request was successful and data was returned</label>
+<label><input type="radio" name="q4" value="3"> The data was not found</label>
+<div class="quiz-explain">HTTP status code 200 means "OK" — the request succeeded and the server returned the requested data. Other common codes include 404 (not found) and 500 (server error).</div>
+</div>
+
+<div class="quiz-q" data-answer="0">
+<p>5. In the weather tool code, what is the purpose of the <code>timeout=10</code> parameter in <code>requests.get(url, timeout=10)</code>?</p>
+<label><input type="radio" name="q5" value="0"> It tells the program to wait a maximum of 10 seconds for a response before giving up</label>
+<label><input type="radio" name="q5" value="1"> It limits the response to 10 lines of data</label>
+<label><input type="radio" name="q5" value="2"> It sends the request 10 times for reliability</label>
+<label><input type="radio" name="q5" value="3"> It caches the response for 10 seconds</label>
+<div class="quiz-explain">The timeout parameter prevents the program from hanging indefinitely if the server doesn't respond. After 10 seconds with no reply, the program moves on to the error handling code instead of waiting forever.</div>
+</div>
+
+<div class="quiz-q" data-answer="3">
+<p>6. What is the purpose of curly braces <code>{}</code> in JSON?</p>
+<label><input type="radio" name="q6" value="0"> They mark the beginning of a comment</label>
+<label><input type="radio" name="q6" value="1"> They indicate a list of items</label>
+<label><input type="radio" name="q6" value="2"> They are used for mathematical calculations</label>
+<label><input type="radio" name="q6" value="3"> They wrap a group of key-value pairs into a single object</label>
+<div class="quiz-explain">In JSON, curly braces <code>{}</code> define an object — a collection of key-value pairs. Square brackets <code>[]</code> are used for lists (arrays). Understanding this distinction is key to reading API responses.</div>
+</div>
+
+<div class="quiz-q" data-answer="1">
+<p>7. You're building an app that shows random dog pictures using the Dog CEO API. Which Python module could you use to automatically open the image URL in the user's browser?</p>
+<label><input type="radio" name="q7" value="0"> os</label>
+<label><input type="radio" name="q7" value="1"> webbrowser</label>
+<label><input type="radio" name="q7" value="2"> json</label>
+<label><input type="radio" name="q7" value="3"> requests</label>
+<div class="quiz-explain">Python's built-in <code>webbrowser</code> module can open URLs in the user's default browser. The <code>requests</code> module fetches data from APIs, and <code>json</code> parses JSON data, but neither opens URLs in a browser.</div>
+</div>
+
+<div class="quiz-q" data-answer="2">
+<p>8. Why do free, public APIs (like wttr.in or dog.ceo) not require an API key?</p>
+<label><input type="radio" name="q8" value="0"> Because they don't return real data</label>
+<label><input type="radio" name="q8" value="1"> Because they are broken and insecure</label>
+<label><input type="radio" name="q8" value="2"> Because they are designed for open public access and learning, with no sensitive data involved</label>
+<label><input type="radio" name="q8" value="3"> Because API keys haven't been invented yet</label>
+<div class="quiz-explain">Some APIs are intentionally open for public use, especially those providing general information (weather, random images, quotes). APIs that access private data (email, banking) always require authentication via API keys or tokens.</div>
+</div>
+
 <button class="quiz-submit">Submit Answers</button>
 <div class="quiz-result"></div>
 </div>
