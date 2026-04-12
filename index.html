@@ -1498,7 +1498,7 @@ async function fetchDynamicUsers() {
     if (res.ok) {
       dynamicUsers = await res.json();
       // Merge any locally-saved users that didn't sync yet
-      const local = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
+      let local; try { local = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { local = []; }
       if (local.length > dynamicUsers.length) {
         const cloudHashes = new Set(dynamicUsers.map(u => u.hash));
         const unsyncedLocal = local.filter(u => !cloudHashes.has(u.hash));
@@ -1509,11 +1509,11 @@ async function fetchDynamicUsers() {
       }
       try { localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(dynamicUsers)); } catch {}
     } else {
-      dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
+      try { dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { dynamicUsers = []; }
     }
   } catch {
     // Offline — use local cache
-    dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
+    try { dynamicUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]'); } catch { dynamicUsers = []; }
   }
 }
 
@@ -2389,8 +2389,8 @@ function showWelcome() {
   const circumference = 2 * Math.PI * 35;
   USERS.filter(u => u.role !== 'Admin').forEach(user => {
     const uid = user.uid || user.name.toLowerCase().replace(/\s+/g, '');
-    const progressData = sharedProgress[uid]
-      || JSON.parse(localStorage.getItem('claude-course-progress-' + uid) || '{}');
+    let progressData = sharedProgress[uid];
+    if (!progressData) { try { progressData = JSON.parse(localStorage.getItem('claude-course-progress-' + uid) || '{}'); } catch { progressData = {}; } }
     const completed = ALL_MODULES.filter(m => progressData[m.id]).length;
     const pct = Math.round((completed / ALL_MODULES.length) * 100);
     const offset = circumference - (circumference * pct / 100);
