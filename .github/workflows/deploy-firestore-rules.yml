@@ -99,37 +99,37 @@ jobs:
           print('Ruleset created:', ruleset_name)
 
           # Step 3: point cloud.firestore release at the new ruleset.
-          # The release may not exist yet on a brand-new project (PATCH
-          # would 404), so we fall through to POST in that case.
+          # PATCH semantics on this API are fussy ("Unknown name rulesetName"
+          # despite docs); use DELETE + POST to swap the release atomically.
+          # Firestore continues serving the last-known ruleset between the
+          # two ops (release-resolution caches), so the gap is benign.
           release_path = 'projects/' + PROJECT + '/releases/cloud.firestore'
-          patch_body = json.dumps({
-              'release': {
-                  'name': release_path,
-                  'rulesetName': ruleset_name,
-              },
-          }).encode()
-          # Try update first (PATCH).
-          patch_url = 'https://firebaserules.googleapis.com/v1/' + release_path + '?updateMask=rulesetName'
-          patch_req = urllib.request.Request(
-              patch_url, data=json.dumps({'rulesetName': ruleset_name}).encode(),
-              headers=auth_headers, method='PATCH',
+          # DELETE existing release (404 is fine — first-ever deploy).
+          del_req = urllib.request.Request(
+              'https://firebaserules.googleapis.com/v1/' + release_path,
+              headers=auth_headers, method='DELETE',
           )
           try:
-              with urllib.request.urlopen(patch_req, timeout=30) as r:
-                  print('Release PATCH OK:', r.status, r.read().decode()[:200])
-                  sys.exit(0)
+              with urllib.request.urlopen(del_req, timeout=30) as r:
+                  print('Old release DELETE ok')
           except urllib.error.HTTPError as e:
-              if e.code != 404:
-                  print('Release PATCH failed:', e.code, e.read().decode())
+              if e.code == 404:
+                  print('No existing release to delete (first deploy)')
+              else:
+                  print('Old release DELETE failed:', e.code, e.read().decode())
                   sys.exit(1)
-          # Fall through: POST to create the release.
+          # POST the new release.
           status, resp = post(
               'https://firebaserules.googleapis.com/v1/projects/' + PROJECT + '/releases',
-              patch_body,
+              json.dumps({
+                  'name': release_path,
+                  'rulesetName': ruleset_name,
+              }).encode(),
               auth_headers,
           )
           if status != 200:
               print('Release POST failed:', status, resp)
               sys.exit(1)
           print('Release created:', resp.get('name'))
+          print('Active rulesetName:', resp.get('rulesetName'))
           PYEOF
