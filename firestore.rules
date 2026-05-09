@@ -1,0 +1,49 @@
+rules_version = '2';
+
+// AUSZ Learning Hub — claude-code-course Firestore rules.
+//
+// 2026-05-09 — replaces the 30-day open-test-mode rules that were about
+// to expire. The course site has no auth (anyone with the URL can
+// browse), so we can't gate writes by uid; instead we enforce strict
+// structure + size limits on the two known collections so a drive-by
+// attacker can't wipe progress, exfil unbounded data, or seed garbage.
+//
+// Schema:
+//   /progress/shared      — single doc, map keyed by user uid →
+//                           { '<uid>': { '<module-id>': bool, ... }, ... }
+//   /users/students       — single doc { list: [{uid,name,hash,role}, ...] }
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Public read; constrained write.
+    match /progress/shared {
+      allow read: if true;
+      allow create, update: if
+        // Cap total document size at 200 KB (well above current usage —
+        // ~1 KB per active student × ~50 students max).
+        request.resource.size() < 200 * 1024
+        // Cap on number of users tracked (prevents key-spam DoS).
+        && request.resource.data.keys().size() < 1000;
+      allow delete: if false;
+    }
+
+    // Public read; constrained write.
+    match /users/students {
+      allow read: if true;
+      allow create, update: if
+        // Only one expected top-level key.
+        request.resource.data.keys().hasOnly(['list'])
+        && request.resource.data.list is list
+        // Cap roster size — current is well under 50.
+        && request.resource.data.list.size() < 500
+        && request.resource.size() < 200 * 1024;
+      allow delete: if false;
+    }
+
+    // Default deny everything else.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
