@@ -10,17 +10,126 @@ on:
       - '.github/workflows/deploy-firestore-rules.yml'
   workflow_dispatch:
 
+# Why this workflow does NOT use `firebase-tools deploy`:
+# `firebase-tools` calls serviceusage.googleapis.com first to verify the
+# Firestore API is enabled, which requires roles/serviceusage.services.use
+# on the GCP project — a role the human Firebase admin doesn't always
+# carry. We deploy via the firebaserules.googleapis.com REST API directly,
+# which only requires firebaserules.releases.update — covered by Firebase
+# Editor / Owner roles. Trade-off: zero firebase-tools dependency, no
+# preflight checks (caller is responsible for ensuring Firestore is
+# already enabled, which it is for any project that has data).
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Deploy Firestore rules
-        run: npx -y firebase-tools@latest deploy --only firestore:rules --project claude-code-course-df778 --non-interactive
+      - name: Deploy Firestore rules via REST API
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          REFRESH_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: claude-code-course-df778
+        run: |
+          python3 << 'PYEOF'
+          import json
+          import os
+          import sys
+          import urllib.request
+          import urllib.parse
+
+          REFRESH = os.environ['REFRESH_TOKEN']
+          PROJECT = os.environ['PROJECT_ID']
+
+          # Well-known Firebase CLI OAuth client.
+          CLIENT_ID = '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com'
+          CLIENT_SECRET = 'j9iVZfS8kkCEFUPaAeJV0sAi'
+
+          def post(url, data, headers):
+              req = urllib.request.Request(
+                  url, data=data, headers=headers, method='POST',
+              )
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      return r.status, json.loads(r.read().decode())
+              except urllib.error.HTTPError as e:
+                  return e.code, json.loads(e.read().decode())
+
+          # Step 1: refresh -> access_token
+          token_body = urllib.parse.urlencode({
+              'client_id': CLIENT_ID,
+              'client_secret': CLIENT_SECRET,
+              'refresh_token': REFRESH,
+              'grant_type': 'refresh_token',
+          }).encode()
+          status, resp = post(
+              'https://oauth2.googleapis.com/token',
+              token_body,
+              {'Content-Type': 'application/x-www-form-urlencoded'},
+          )
+          if status != 200:
+              print('OAuth refresh failed:', status, resp)
+              sys.exit(1)
+          access_token = resp['access_token']
+          print('OAuth refresh OK; access_token expires in', resp.get('expires_in'), 'sec')
+
+          auth_headers = {
+              'Authorization': 'Bearer ' + access_token,
+              'Content-Type': 'application/json',
+          }
+
+          # Step 2: upload ruleset content
+          rules_text = open('firestore.rules').read()
+          ruleset_body = json.dumps({
+              'source': {
+                  'files': [
+                      {'name': 'firestore.rules', 'content': rules_text},
+                  ],
+              },
+          }).encode()
+          status, resp = post(
+              'https://firebaserules.googleapis.com/v1/projects/' + PROJECT + '/rulesets',
+              ruleset_body,
+              auth_headers,
+          )
+          if status != 200:
+              print('Ruleset create failed:', status, resp)
+              sys.exit(1)
+          ruleset_name = resp['name']
+          print('Ruleset created:', ruleset_name)
+
+          # Step 3: point cloud.firestore release at the new ruleset.
+          # The release may not exist yet on a brand-new project (PATCH
+          # would 404), so we fall through to POST in that case.
+          release_path = 'projects/' + PROJECT + '/releases/cloud.firestore'
+          patch_body = json.dumps({
+              'release': {
+                  'name': release_path,
+                  'rulesetName': ruleset_name,
+              },
+          }).encode()
+          # Try update first (PATCH).
+          patch_url = 'https://firebaserules.googleapis.com/v1/' + release_path + '?updateMask=rulesetName'
+          patch_req = urllib.request.Request(
+              patch_url, data=json.dumps({'rulesetName': ruleset_name}).encode(),
+              headers=auth_headers, method='PATCH',
+          )
+          try:
+              with urllib.request.urlopen(patch_req, timeout=30) as r:
+                  print('Release PATCH OK:', r.status, r.read().decode()[:200])
+                  sys.exit(0)
+          except urllib.error.HTTPError as e:
+              if e.code != 404:
+                  print('Release PATCH failed:', e.code, e.read().decode())
+                  sys.exit(1)
+          # Fall through: POST to create the release.
+          status, resp = post(
+              'https://firebaserules.googleapis.com/v1/projects/' + PROJECT + '/releases',
+              patch_body,
+              auth_headers,
+          )
+          if status != 200:
+              print('Release POST failed:', status, resp)
+              sys.exit(1)
+          print('Release created:', resp.get('name'))
+          PYEOF
