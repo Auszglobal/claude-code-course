@@ -1719,7 +1719,29 @@ async function pushProgressToCloud() {
   sharedProgress[currentUser.uid] = { ...progress };
   try {
     await db.collection('gemini-progress').doc('shared').set(sharedProgress, { merge: true });
-  } catch { /* silent fail, localStorage still works */ }
+  } catch (err) {
+    console.error('Cloud progress sync failed:', err);
+    if (typeof showToast === 'function') {
+      showToast('&#x26A0;&#xFE0F;', 'Cloud sync failed', 'Saved on this device only — try refreshing the page.', 5000);
+    }
+  }
+}
+
+async function reconcileProgress() {
+  if (!currentUser) return;
+  const cloud = (sharedProgress && sharedProgress[currentUser.uid]) || {};
+  let pulled = false, hasNew = false;
+  for (const k of Object.keys(cloud)) {
+    if (cloud[k] && !progress[k]) { progress[k] = true; pulled = true; }
+  }
+  for (const k of Object.keys(progress)) {
+    if (progress[k] && !cloud[k]) { hasNew = true; break; }
+  }
+  if (pulled) {
+    try { localStorage.setItem(progressKey(), JSON.stringify(progress)); } catch {}
+    updateProgressUI();
+  }
+  if (hasNew || pulled) await pushProgressToCloud();
 }
 
 let USERS = [];
@@ -1774,6 +1796,7 @@ function updateProfileUI() {
     if (adminBtn) adminBtn.style.display = currentUser.role === 'Admin' ? 'block' : 'none';
   }
   loadProgress();
+  reconcileProgress();
   updateProgressUI();
   updateStreakDisplay();
   updateStudyTimeDisplay();

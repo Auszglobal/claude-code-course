@@ -28,6 +28,15 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Gemini sister course — same shape as /progress/shared.
+    match /gemini-progress/shared {
+      allow read: if true;
+      allow create, update: if
+        request.resource.size() < 200 * 1024
+        && request.resource.data.keys().size() < 1000;
+      allow delete: if false;
+    }
+
     // Public read; constrained write.
     match /users/students {
       allow read: if true;
