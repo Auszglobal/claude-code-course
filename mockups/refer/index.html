@@ -178,12 +178,39 @@
     text-decoration:none; border-radius:10px; font-size:13px; font-weight:600;
   }
 
+  /* Real App Store / Google Play badges (used in hero + before footer) */
+  .store-badges{
+    display:flex; gap:12px; justify-content:center; align-items:center;
+    flex-wrap:wrap;
+  }
+  .store-badges a{
+    display:inline-flex; transition:transform .12s, opacity .12s;
+  }
+  .store-badges a:hover{opacity:.9}
+  .store-badges a:active{transform:scale(.97)}
+  .store-badges img{height:44px; width:auto; display:block}
+  .hero-stores{margin-top:22px}
+  .hero-stores .label{
+    display:block; font-size:11px; letter-spacing:.6px; text-transform:uppercase;
+    opacity:.7; margin-bottom:10px;
+  }
+  .download-cta{
+    padding:38px 22px; text-align:center; background:#fff;
+    border-top:1px solid var(--line);
+  }
+  .download-cta h2{font-size:20px; margin:0 0 6px; font-weight:800}
+  .download-cta .sub{
+    font-size:14px; color:var(--muted); margin:0 0 22px;
+  }
+
   @media(max-width:360px){
     .hero{padding:36px 16px 46px}
     .cta-wrap{padding:24px 18px}
     .section,.why{padding:32px 18px}
     .why-card{padding:16px}
     .stores a{padding:10px; font-size:12px}
+    .store-badges img{height:40px}
+    .download-cta{padding:32px 18px}
   }
   @media(min-width:600px){
     h1{font-size:clamp(34px, 4vw, 44px)}
@@ -210,6 +237,18 @@
   </h1>
   <p>Australia's premium chauffeur — European fleet only, every driver vetted, on-time pickup guaranteed.</p>
   <div class="from-line" id="from-line">A friend sent this to you 🤝</div>
+
+  <div class="hero-stores">
+    <span class="label">Already know AUSZ? Download direct</span>
+    <div class="store-badges">
+      <a href="https://apps.apple.com/au/app/ausz-global/id1536305659" target="_blank" rel="noopener noreferrer" aria-label="Download AUSZ on the App Store">
+        <img src="app-store-badge.svg" alt="Download on the App Store">
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=au.com.auszglobal" target="_blank" rel="noopener noreferrer" aria-label="Get AUSZ on Google Play">
+        <img src="google-play-badge.svg" alt="Get it on Google Play">
+      </a>
+    </div>
+  </div>
 </section>
 
 <section class="cta-wrap">
@@ -287,6 +326,19 @@
   </div>
 </section>
 
+<section class="download-cta">
+  <h2>Get the AUSZ app</h2>
+  <p class="sub">Your AU$50 credit lands in your account once your first trip completes.</p>
+  <div class="store-badges">
+    <a href="https://apps.apple.com/au/app/ausz-global/id1536305659" target="_blank" rel="noopener noreferrer" aria-label="Download AUSZ on the App Store">
+      <img src="app-store-badge.svg" alt="Download on the App Store">
+    </a>
+    <a href="https://play.google.com/store/apps/details?id=au.com.auszglobal" target="_blank" rel="noopener noreferrer" aria-label="Get AUSZ on Google Play">
+      <img src="google-play-badge.svg" alt="Get it on Google Play">
+    </a>
+  </div>
+</section>
+
 <footer>
   AUSZ Global Pty Ltd · Sydney · Melbourne · Brisbane · Perth<br>
   <a href="https://www.auszglobal.com.au/">auszglobal.com.au</a>
@@ -301,9 +353,13 @@
     <div class="check">✓</div>
     <h3>Check your phone</h3>
     <p>We sent a verification code. Enter it in the AUSZ app — your AU$50 will be waiting after your first ride.</p>
-    <div class="stores">
-      <a href="#" onclick="alert('App Store link — wire on launch')">App Store</a>
-      <a href="#" onclick="alert('Google Play link — wire on launch')">Google Play</a>
+    <div class="store-badges">
+      <a href="https://apps.apple.com/au/app/ausz-global/id1536305659" target="_blank" rel="noopener noreferrer" aria-label="Download AUSZ on the App Store">
+        <img src="app-store-badge.svg" alt="Download on the App Store">
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=au.com.auszglobal" target="_blank" rel="noopener noreferrer" aria-label="Get AUSZ on Google Play">
+        <img src="google-play-badge.svg" alt="Get it on Google Play">
+      </a>
     </div>
   </div>
 </div>
