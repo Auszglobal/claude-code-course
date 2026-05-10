@@ -279,6 +279,72 @@
   }
   .terms-link a{color:var(--accent); text-decoration:none}
 
+  /* Section group + driver-only styling */
+  .section-divider{
+    text-align:center; padding:36px 20px 0; max-width:600px; margin:0 auto;
+  }
+  .section-divider h3{
+    margin:0 0 4px; font-size:14px; color:var(--muted);
+    letter-spacing:1.5px; text-transform:uppercase; font-weight:800;
+  }
+  .section-divider .h-line{
+    height:1px; background:linear-gradient(90deg,transparent,var(--line),transparent);
+    margin:0 0 12px;
+  }
+  .section-divider p{margin:0 0 8px; font-size:13px; color:var(--muted)}
+
+  /* Driver app accent — uses dark + green for bonus */
+  .driver .app-bar{background:#0F172A}
+  .qr-card{
+    background:#fff; border-radius:14px; padding:18px;
+    box-shadow:0 4px 14px rgba(0,0,0,.08); margin:-20px 16px 0;
+    text-align:center; position:relative;
+  }
+  .qr-card .label{
+    font-size:11px; color:var(--muted); text-transform:uppercase;
+    letter-spacing:.5px; font-weight:700;
+  }
+  .qr-img{
+    width:140px; height:140px; margin:10px auto 8px;
+    background:
+      linear-gradient(45deg,#0f172a 25%,transparent 25%) 0 0/8px 8px,
+      linear-gradient(-45deg,#0f172a 25%,transparent 25%) 0 4px/8px 8px,
+      linear-gradient(45deg,transparent 75%,#0f172a 75%) 4px -4px/8px 8px,
+      linear-gradient(-45deg,transparent 75%,#0f172a 75%) -4px 0/8px 8px,
+      #fff;
+    border:8px solid #fff; box-shadow:0 0 0 2px var(--line);
+    border-radius:6px; position:relative;
+  }
+  .qr-img::after{
+    content:''; position:absolute; inset:50% 50% 0 0;
+    transform:translate(-50%,-50%); width:32px; height:32px;
+    background:#0F172A; border:3px solid #fff; border-radius:6px;
+    top:50%; left:50%; margin:-16px 0 0 -16px;
+  }
+  .qr-img-inner{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:36px; height:36px; background:#0F172A; border:4px solid #fff;
+    border-radius:6px; color:var(--gold); display:flex;
+    align-items:center; justify-content:center; font-weight:800; font-size:11px;
+    letter-spacing:.5px; z-index:2;
+  }
+  .qr-card .code{
+    font-size:22px; font-weight:800; color:var(--primary);
+    letter-spacing:3px; margin:8px 0 4px; font-family:'SF Mono',Menlo,monospace;
+  }
+  .driver-stats .stat .num{font-size:18px}
+  .driver-stats .stat.green .num{color:#059669}
+
+  .pay-row{
+    display:flex; align-items:center; padding:10px 14px; gap:10px;
+    background:#f0fdf4; border-radius:10px; margin:8px 16px 0;
+    border:1px solid #bbf7d0;
+  }
+  .pay-row .ic{font-size:18px}
+  .pay-row .body{flex:1; font-size:12px}
+  .pay-row .body strong{display:block; font-size:13px; color:#065f46}
+  .pay-row .body small{color:#15803d}
+
   /* Mobile responsive */
   @media(max-width:1180px){
     .phone{width:340px; height:680px}
@@ -293,7 +359,13 @@
 
 <div class="page-head">
   <h1>AUSZ Refer &amp; Earn — In-App Mockup</h1>
-  <p>Three surfaces · slim Home banner · Settings row · Detail screen</p>
+  <p>Passenger app · 3 surfaces. Driver app · 2 surfaces. Code does double-duty: $50 reward + auto-saves preferred driver.</p>
+</div>
+
+<div class="section-divider">
+  <h3>Passenger App</h3>
+  <div class="h-line"></div>
+  <p>Code earns $50 ride credit + auto-saves the chauffeur as preferred driver.</p>
 </div>
 
 <div class="frames">
@@ -525,6 +597,176 @@
           <div class="terms-link">
             Credit posts after friend's first trip completes.
             <a href="#">Terms</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider">
+  <h3>Driver App</h3>
+  <div class="h-line"></div>
+  <p>Driver gets a personal QR code · share with passengers · earn $50 per first-trip-completed referral, paid in weekly settlement.</p>
+</div>
+
+<div class="frames">
+
+  <!-- ============ DRIVER SETTINGS ============ -->
+  <div class="frame-wrap driver">
+    <div class="frame-label" style="color:#0F172A">Driver — Settings</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span class="status-right">●●● ● 100%</span>
+        </div>
+        <div class="scroll">
+          <div class="settings-header">
+            <div class="settings-back">‹</div>
+            <div class="av" style="background:linear-gradient(135deg,#FCD34D,#D4AF37); color:#000">JH</div>
+            <div class="nm">John He</div>
+            <div class="ph">Driver · ID 79</div>
+          </div>
+
+          <!-- Inbox callout banner: code reveal push -->
+          <div class="banner refer" style="margin:14px 14px 0; background:linear-gradient(135deg,#0F172A,#1E3A8A); padding:12px 14px;">
+            <span class="pill-50">NEW</span>
+            <div class="icon-circle">📬</div>
+            <div class="body">
+              <strong>Your referral code is ready</strong>
+              <span>Share QR with passengers · earn $50 each</span>
+            </div>
+            <span class="chev">›</span>
+          </div>
+
+          <div class="section-title">Earnings</div>
+          <div class="section-card">
+            <div class="row">
+              <div class="ic" style="background:#fef3c7; color:#a16207">💵</div>
+              <div class="label">Weekly settlement</div>
+              <div class="trail">$1,847</div>
+              <div class="chev">›</div>
+            </div>
+            <!-- ★ Driver Refer & Earn row ★ -->
+            <div class="row refer-row">
+              <div class="ic" style="background:linear-gradient(135deg,#1E3A8A,#2563EB); color:#fff">🎁</div>
+              <div class="label">Refer &amp; earn</div>
+              <span class="badge-50">$50</span>
+              <div class="chev">›</div>
+            </div>
+            <div class="row">
+              <div class="ic blue">📊</div>
+              <div class="label">Performance</div>
+              <div class="chev">›</div>
+            </div>
+            <div class="row">
+              <div class="ic gray">📄</div>
+              <div class="label">Documents</div>
+              <div class="chev">›</div>
+            </div>
+          </div>
+
+          <div class="section-title">Account</div>
+          <div class="section-card">
+            <div class="row">
+              <div class="ic blue">👤</div>
+              <div class="label">Profile</div>
+              <div class="chev">›</div>
+            </div>
+            <div class="row">
+              <div class="ic gray">💬</div>
+              <div class="label">Help &amp; support</div>
+              <div class="chev">›</div>
+            </div>
+            <div class="row">
+              <div class="ic gray">🚪</div>
+              <div class="label">Log out</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DRIVER REFER DETAIL ============ -->
+  <div class="frame-wrap driver">
+    <div class="frame-label" style="color:#0F172A">Driver — Refer detail</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="status-bar" style="color:#fff">
+          <span>9:41</span>
+          <span class="status-right">●●● ● 100%</span>
+        </div>
+        <div class="scroll" style="padding-bottom:24px">
+          <div class="refer-hero">
+            <div class="refer-back">‹</div>
+            <div class="crown">🎁</div>
+            <h2>Earn $50 per passenger</h2>
+            <div class="amt" style="font-size:36px">+$50</div>
+            <p>Each first-time passenger you refer who completes their first trip earns you AU$50 — added to your next weekly settlement.</p>
+          </div>
+
+          <div class="qr-card">
+            <div class="label">Your code · share QR</div>
+            <div class="qr-img">
+              <div class="qr-img-inner">AUS</div>
+            </div>
+            <div class="code">JOHN12K</div>
+            <div class="code-actions">
+              <button>📥 Save QR</button>
+              <button class="primary">📤 Share</button>
+            </div>
+          </div>
+
+          <div class="stats driver-stats">
+            <div class="stat">
+              <div class="num">7</div>
+              <div class="lbl">Shared</div>
+            </div>
+            <div class="stat">
+              <div class="num">3</div>
+              <div class="lbl">Joined</div>
+            </div>
+            <div class="stat green">
+              <div class="num">$150</div>
+              <div class="lbl">Earned</div>
+            </div>
+          </div>
+
+          <div class="pay-row">
+            <div class="ic">💵</div>
+            <div class="body">
+              <strong>$50 in this week's settlement</strong>
+              <small>Sandy Chan · first trip · paid Mon</small>
+            </div>
+          </div>
+
+          <div class="activity" style="margin-top:14px">
+            <h4>Recent referrals</h4>
+            <div class="activity-row">
+              <div style="font-size:18px">👤</div>
+              <div class="who">Sandy C. <small>First trip done · auto-saved as preferred</small></div>
+              <span class="pill paid">+$50</span>
+            </div>
+            <div class="activity-row">
+              <div style="font-size:18px">👤</div>
+              <div class="who">Matt W. <small>Signed up · awaiting first trip</small></div>
+              <span class="pill pending">Pending</span>
+            </div>
+            <div class="activity-row">
+              <div style="font-size:18px">📨</div>
+              <div class="who">Brian K. <small>QR scanned · not signed up yet</small></div>
+              <span class="pill pending">Sent</span>
+            </div>
+          </div>
+
+          <div class="terms-link">
+            Bonus posts in next weekly settlement after friend's first trip.
+            <a href="#">Driver terms</a>
           </div>
         </div>
       </div>
