@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>You've got AU$50 off your first AUSZ ride</title>
+<meta name="description" content="A friend invited you to AUSZ — Australia's premium European chauffeur. Claim AU$50 ride credit.">
+<meta name="theme-color" content="#008B8B">
+<meta property="og:title" content="AU$50 off your first AUSZ chauffeur ride">
+<meta property="og:description" content="European fleet. Preferred driver. Premium chauffeur in Sydney, Melbourne, Brisbane & Perth.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --teal:#008B8B; --accent:#00B4A6; --dark:#1A1A2E;
+    --ink:#1A1A2E; --muted:#6b7280; --line:#e5e7eb; --bg:#f8fafc;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--ink); background:#fff; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    padding:18px 20px; display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--line); background:#fff;
+    position:sticky; top:0; z-index:10;
+  }
+  .logo{font-weight:800; letter-spacing:.5px; color:var(--dark); font-size:18px}
+  .logo span{color:var(--teal)}
+  .header-link{font-size:13px; color:var(--muted); text-decoration:none}
+
+  /* HERO */
+  .hero{
+    background:linear-gradient(135deg,var(--dark) 0%,#0d3a4a 60%,var(--teal) 100%);
+    color:#fff; padding:48px 22px 56px;
+    text-align:center;
+  }
+  .badge{
+    display:inline-block; background:rgba(255,255,255,.12); color:#fff;
+    padding:6px 14px; border-radius:100px; font-size:12px; letter-spacing:.5px;
+    text-transform:uppercase; margin-bottom:18px;
+    border:1px solid rgba(255,255,255,.18);
+  }
+  h1{
+    font-size:34px; line-height:1.15; margin:0 0 10px; font-weight:800;
+  }
+  h1 .amount{
+    color:var(--accent); font-size:54px; display:block; margin:6px 0;
+  }
+  .hero p{
+    margin:14px auto 0; max-width:520px; font-size:16px; opacity:.9;
+  }
+  .from-line{
+    margin-top:18px; padding:10px 16px; display:inline-block;
+    background:rgba(255,255,255,.08); border-radius:8px; font-size:14px;
+  }
+
+  /* CTA */
+  .cta-wrap{
+    background:#fff; padding:30px 22px; border-radius:16px 16px 0 0;
+    margin-top:-30px; position:relative; box-shadow:0 -4px 24px rgba(0,0,0,.06);
+  }
+  .form-card{
+    max-width:440px; margin:0 auto;
+  }
+  .form-card label{
+    display:block; font-size:13px; color:var(--muted); margin:14px 0 6px;
+    font-weight:600;
+  }
+  .form-card input{
+    width:100%; padding:14px 14px; border:1.5px solid var(--line);
+    border-radius:10px; font-size:16px; font-family:inherit;
+    transition:border-color .15s;
+  }
+  .form-card input:focus{
+    outline:none; border-color:var(--teal);
+    box-shadow:0 0 0 3px rgba(0,139,139,.15);
+  }
+  .btn-primary{
+    width:100%; padding:16px; margin-top:22px;
+    background:var(--teal); color:#fff; border:none; border-radius:10px;
+    font-size:16px; font-weight:700; cursor:pointer; letter-spacing:.2px;
+    transition:background .15s, transform .05s;
+  }
+  .btn-primary:hover{background:#006d6d}
+  .btn-primary:active{transform:scale(.98)}
+  .btn-secondary{
+    display:block; width:100%; padding:14px; margin-top:12px;
+    background:#fff; color:var(--teal); border:1.5px solid var(--teal);
+    border-radius:10px; font-size:14px; font-weight:600; text-align:center;
+    text-decoration:none; cursor:pointer;
+  }
+  .legal{
+    font-size:11px; color:var(--muted); text-align:center; margin-top:14px;
+    line-height:1.5;
+  }
+  .legal a{color:var(--muted)}
+
+  /* HOW IT WORKS */
+  .section{padding:40px 22px}
+  .section h2{
+    font-size:22px; margin:0 0 8px; text-align:center; font-weight:800;
+  }
+  .section .sub{
+    font-size:14px; color:var(--muted); text-align:center; margin:0 0 28px;
+  }
+  .steps{max-width:520px; margin:0 auto}
+  .step{
+    display:flex; gap:16px; padding:16px 0; border-bottom:1px solid var(--line);
+  }
+  .step:last-child{border-bottom:none}
+  .step .num{
+    flex-shrink:0; width:32px; height:32px; border-radius:50%;
+    background:var(--teal); color:#fff; display:flex; align-items:center;
+    justify-content:center; font-weight:800; font-size:14px;
+  }
+  .step .body strong{display:block; margin-bottom:4px; font-size:15px}
+  .step .body p{margin:0; color:var(--muted); font-size:14px}
+
+  /* WHY */
+  .why{background:var(--bg); padding:40px 22px}
+  .why-grid{
+    max-width:540px; margin:0 auto; display:grid; gap:14px;
+  }
+  .why-card{
+    background:#fff; padding:20px; border-radius:12px;
+    border:1px solid var(--line); display:flex; gap:14px; align-items:start;
+  }
+  .why-card .icon{
+    flex-shrink:0; width:40px; height:40px; border-radius:10px;
+    background:rgba(0,180,166,.12); display:flex; align-items:center;
+    justify-content:center; font-size:20px;
+  }
+  .why-card strong{display:block; margin-bottom:4px; font-size:15px; color:var(--dark)}
+  .why-card p{margin:0; font-size:13.5px; color:var(--muted); line-height:1.5}
+
+  /* FOOTER */
+  footer{
+    padding:28px 22px; background:var(--dark); color:rgba(255,255,255,.7);
+    text-align:center; font-size:12px; line-height:1.6;
+  }
+  footer a{color:var(--accent); text-decoration:none}
+  footer .terms{margin-top:10px; font-size:11px; opacity:.7}
+
+  /* SUCCESS MODAL */
+  .modal-bg{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,.5);
+    align-items:center; justify-content:center; z-index:100; padding:20px;
+  }
+  .modal-bg.show{display:flex}
+  .modal{
+    background:#fff; border-radius:16px; max-width:380px; width:100%;
+    padding:32px 24px; text-align:center;
+  }
+  .modal .check{
+    width:60px; height:60px; border-radius:50%; background:var(--accent);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    font-size:30px; margin:0 auto 16px;
+  }
+  .modal h3{margin:0 0 8px; font-size:20px}
+  .modal p{margin:0 0 20px; color:var(--muted); font-size:14px}
+  .stores{display:flex; gap:10px; justify-content:center; margin-top:8px}
+  .stores a{
+    flex:1; padding:12px; background:var(--dark); color:#fff;
+    text-decoration:none; border-radius:10px; font-size:13px; font-weight:600;
+  }
+
+  @media(min-width:600px){
+    h1{font-size:42px}
+    h1 .amount{font-size:64px}
+    .hero{padding:64px 22px 72px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">AUS<span>Z</span></div>
+  <a class="header-link" href="https://www.auszglobal.com.au/">auszglobal.com.au</a>
+</header>
+
+<section class="hero">
+  <div class="badge">You've been invited</div>
+  <h1>
+    Your first ride is on us<span class="amount">AU$50</span>
+    in chauffeur credit
+  </h1>
+  <p>Australia's premium chauffeur — European fleet only, every driver vetted, on-time pickup guaranteed.</p>
+  <div class="from-line" id="from-line">A friend sent this to you 🤝</div>
+</section>
+
+<section class="cta-wrap">
+  <form class="form-card" id="claimForm">
+    <label for="name">First name</label>
+    <input type="text" id="name" required autocomplete="given-name" placeholder="Sandy">
+
+    <label for="phone">Mobile (Australia)</label>
+    <input type="tel" id="phone" required autocomplete="tel" placeholder="04xx xxx xxx" pattern="^(\+?61|0)4\d{8}$">
+
+    <button type="submit" class="btn-primary">Claim my AU$50 →</button>
+    <a href="auszglobal://refer" class="btn-secondary">Already on AUSZ — open the app</a>
+
+    <div class="legal">
+      We'll text you a verification code. By continuing you agree to our
+      <a href="https://www.auszglobal.com.au/privacy-policy/">Privacy Policy</a>.
+      Credit lands automatically after your first completed trip.
+    </div>
+  </form>
+</section>
+
+<section class="section">
+  <h2>How it works</h2>
+  <p class="sub">Three steps. No promo codes to remember.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <strong>Sign up — 1 minute</strong>
+        <p>Verify your mobile. We'll text you the app link and reserve your AU$50.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <strong>Book your first ride</strong>
+        <p>Open the AUSZ app, choose a vehicle, set pickup and destination. Pay as normal.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <strong>AU$50 lands automatically</strong>
+        <p>Once your trip completes, credit posts to your account. Use it on your next booking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <h2 style="margin-bottom:8px">Why riders choose AUSZ</h2>
+  <p class="sub">Not just a ride. A chauffeur experience.</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="icon">🚗</div>
+      <div>
+        <strong>European fleet only</strong>
+        <p>Mercedes-Benz, BMW, Audi. No Camrys. No surprises.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="icon">⭐</div>
+      <div>
+        <strong>Preferred driver</strong>
+        <p>Save the chauffeur you like and re-request them on every booking — only on AUSZ.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="icon">⏱️</div>
+      <div>
+        <strong>Reliable pickup</strong>
+        <p>On-time arrival, no waiting at the airport. Our drivers track your flight in real time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  AUSZ Global Pty Ltd · Sydney · Melbourne · Brisbane · Perth<br>
+  <a href="https://www.auszglobal.com.au/">auszglobal.com.au</a>
+  <div class="terms">
+    AU$50 credit applied after first completed trip. Credit non-transferable, no cash value.
+    One credit per new passenger. Standard surcharges (e.g. 22:00–05:00 night surcharge) apply transparently.
+  </div>
+</footer>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <div class="check">✓</div>
+    <h3>Check your phone</h3>
+    <p>We sent a verification code. Enter it in the AUSZ app — your AU$50 will be waiting after your first ride.</p>
+    <div class="stores">
+      <a href="#" onclick="alert('App Store link — wire on launch')">App Store</a>
+      <a href="#" onclick="alert('Google Play link — wire on launch')">Google Play</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Read ?from=Name&code=XXX from URL
+  const params = new URLSearchParams(location.search);
+  const from = params.get('from');
+  const code = params.get('code') || 'DEMO';
+  if (from) {
+    document.getElementById('from-line').textContent = from + ' sent you AU$50 🤝';
+  }
+
+  document.getElementById('claimForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    // Mockup — real flow POSTs to /api/refer/intent {phone, name, code}
+    document.getElementById('modal').classList.add('show');
+  });
+
+  document.getElementById('modal').addEventListener('click', function(e){
+    if (e.target === this) this.classList.remove('show');
+  });
+</script>
+</body>
+</html>
