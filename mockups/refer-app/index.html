@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AUSZ — Refer & Earn (in-app mockup)</title>
+<meta name="theme-color" content="#1E3A8A">
+<style>
+  :root{
+    --primary:#1E3A8A; --accent:#3B82F6; --dark:#0F172A;
+    --gold:#D4AF37;
+    --ink:#0F172A; --muted:#6b7280; --line:#e5e7eb;
+    --bg:#f1f5f9; --card:#ffffff;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  body{
+    margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page-head{
+    text-align:center; padding:34px 20px 20px;
+  }
+  .page-head h1{
+    margin:0 0 6px; font-size:22px; font-weight:800;
+  }
+  .page-head p{margin:0; color:var(--muted); font-size:14px}
+
+  /* Frame grid */
+  .frames{
+    display:flex; gap:28px; padding:20px; justify-content:center;
+    flex-wrap:wrap; align-items:flex-start;
+  }
+  .frame-wrap{display:flex; flex-direction:column; align-items:center}
+  .frame-label{
+    margin-bottom:12px; font-size:13px; font-weight:700;
+    color:var(--primary); letter-spacing:.5px; text-transform:uppercase;
+  }
+
+  /* Phone frame */
+  .phone{
+    width:360px; height:720px; background:#000; border-radius:42px;
+    padding:8px; box-shadow:0 12px 40px rgba(0,0,0,.18);
+    position:relative; flex-shrink:0;
+  }
+  .screen{
+    width:100%; height:100%; background:#fff; border-radius:34px;
+    overflow:hidden; position:relative;
+  }
+  .notch{
+    position:absolute; top:8px; left:50%; transform:translateX(-50%);
+    width:120px; height:28px; background:#000; border-radius:0 0 18px 18px;
+    z-index:5;
+  }
+  .status-bar{
+    height:36px; padding:8px 22px 0; display:flex; align-items:center;
+    justify-content:space-between; font-size:11px; font-weight:700;
+    color:var(--ink);
+  }
+  .status-right{display:flex; gap:5px; align-items:center; font-size:10px}
+  .scroll{height:calc(100% - 36px); overflow-y:auto; padding-bottom:80px}
+
+  /* ===== HOME SCREEN ===== */
+  .app-bar{
+    background:var(--dark); padding:12px 18px 18px; color:#fff;
+    border-radius:0 0 24px 24px;
+  }
+  .app-bar .top-row{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:14px;
+  }
+  .app-bar .greet{font-size:13px; opacity:.7}
+  .app-bar .name{font-size:17px; font-weight:700}
+  .app-bar .credit{
+    color:var(--gold); font-size:12px; margin-top:2px; font-weight:600;
+  }
+  .avatar{
+    width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--primary));
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:14px;
+  }
+
+  .next-booking{
+    background:rgba(255,255,255,.08); border-radius:14px; padding:14px;
+    backdrop-filter:blur(10px);
+  }
+  .next-booking .label{
+    font-size:10px; opacity:.7; text-transform:uppercase; letter-spacing:.5px;
+  }
+  .next-booking .when{font-size:14px; font-weight:600; margin-top:4px}
+  .next-booking .route{font-size:12px; opacity:.85; margin-top:6px}
+
+  .cta-row{display:flex; gap:10px; margin-top:14px}
+  .cta-row .btn-gold{
+    flex:1; background:var(--gold); color:#000; border:none;
+    padding:12px; border-radius:10px; font-weight:700; font-size:14px;
+  }
+  .cta-row .btn-outline{
+    flex:1; background:transparent; color:#fff;
+    border:1.5px solid rgba(255,255,255,.4);
+    padding:12px; border-radius:10px; font-weight:600; font-size:14px;
+  }
+
+  /* Banners on home */
+  .banner-stack{padding:16px 16px 0}
+  .banner{
+    background:#fff; border-radius:14px; padding:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,.06); margin-bottom:12px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .banner.kin{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+  .banner.sandra{background:linear-gradient(135deg,#dbeafe,#bfdbfe)}
+  .banner .icon-circle{
+    width:40px; height:40px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:20px;
+  }
+  .banner .body{flex:1; min-width:0}
+  .banner .body strong{
+    display:block; font-size:14px; color:var(--ink); margin-bottom:2px;
+  }
+  .banner .body span{font-size:12px; color:var(--muted)}
+  .banner .chev{color:var(--muted); font-size:18px}
+
+  /* NEW: Refer banner — slim version per Kin "細 column" */
+  .banner.refer{
+    background:linear-gradient(135deg,#1E3A8A 0%,#2563EB 100%);
+    color:#fff; position:relative; overflow:hidden;
+    border:1px solid rgba(255,255,255,.15);
+  }
+  .banner.refer::before{
+    content:''; position:absolute; top:-20px; right:-20px;
+    width:80px; height:80px; border-radius:50%;
+    background:rgba(255,255,255,.08);
+  }
+  .banner.refer .icon-circle{
+    background:rgba(255,255,255,.2); color:#fff;
+  }
+  .banner.refer .body strong{color:#fff; font-weight:700}
+  .banner.refer .body span{color:rgba(255,255,255,.8)}
+  .banner.refer .chev{color:#fff}
+  .pill-50{
+    position:absolute; top:8px; right:14px;
+    background:var(--gold); color:#000;
+    font-size:10px; font-weight:800; padding:3px 8px; border-radius:100px;
+    letter-spacing:.3px;
+  }
+
+  /* ===== SETTINGS SCREEN ===== */
+  .settings-header{
+    background:var(--dark); padding:16px 18px 26px; color:#fff;
+    border-radius:0 0 20px 20px; text-align:center; position:relative;
+  }
+  .settings-back{
+    position:absolute; top:16px; left:14px; width:32px; height:32px;
+    background:rgba(255,255,255,.1); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .settings-header .av{
+    width:64px; height:64px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--primary));
+    margin:6px auto 8px; display:flex; align-items:center; justify-content:center;
+    font-size:22px; font-weight:700; color:#fff;
+    border:3px solid rgba(255,255,255,.2);
+  }
+  .settings-header .nm{font-size:16px; font-weight:700}
+  .settings-header .ph{font-size:12px; opacity:.7}
+
+  .section-card{
+    background:#fff; margin:14px 14px 0; border-radius:16px;
+    box-shadow:0 1px 3px rgba(0,0,0,.05); overflow:hidden;
+  }
+  .section-title{
+    font-size:11px; color:var(--muted); padding:10px 16px 6px;
+    text-transform:uppercase; letter-spacing:.6px; font-weight:700;
+  }
+  .row{
+    display:flex; align-items:center; padding:14px 16px; gap:14px;
+    border-bottom:1px solid var(--line);
+  }
+  .row:last-child{border-bottom:none}
+  .row .ic{
+    width:28px; height:28px; border-radius:8px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+  }
+  .row .ic.blue{background:#dbeafe; color:var(--primary)}
+  .row .ic.green{background:#d1fae5; color:#059669}
+  .row .ic.gold{background:#fef3c7; color:#a16207}
+  .row .ic.purple{background:#ede9fe; color:#6d28d9}
+  .row .ic.gray{background:#f3f4f6; color:#374151}
+  .row .label{flex:1; font-size:14px; font-weight:500}
+  .row .trail{font-size:12px; color:var(--muted)}
+  .row .badge-50{
+    background:var(--gold); color:#000; font-size:10px; font-weight:800;
+    padding:3px 7px; border-radius:100px; margin-right:4px;
+  }
+  .row .chev{color:var(--muted); font-size:14px}
+
+  .row.refer-row{
+    background:linear-gradient(90deg,rgba(30,58,138,.04),transparent);
+  }
+  .row.refer-row .label{color:var(--primary); font-weight:600}
+
+  /* ===== REFER DETAIL SCREEN ===== */
+  .refer-hero{
+    background:linear-gradient(135deg,var(--dark) 0%,#1E3A8A 60%,#2563EB 100%);
+    color:#fff; padding:18px 18px 32px; text-align:center;
+    position:relative;
+  }
+  .refer-back{
+    position:absolute; top:16px; left:14px; width:32px; height:32px;
+    background:rgba(255,255,255,.1); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .refer-hero .crown{font-size:32px; margin-bottom:4px}
+  .refer-hero h2{
+    margin:0 0 6px; font-size:20px; font-weight:800;
+  }
+  .refer-hero .amt{
+    color:#FCD34D; font-size:42px; font-weight:800; line-height:1;
+    margin:6px 0 4px;
+  }
+  .refer-hero p{margin:6px auto 0; max-width:280px; font-size:13px; opacity:.9}
+
+  .code-card{
+    margin:-20px 16px 0; background:#fff; border-radius:14px;
+    padding:18px; box-shadow:0 4px 14px rgba(0,0,0,.08);
+    text-align:center; position:relative;
+  }
+  .code-card .label{
+    font-size:11px; color:var(--muted); text-transform:uppercase;
+    letter-spacing:.5px; font-weight:700;
+  }
+  .code-card .code{
+    font-size:28px; font-weight:800; color:var(--primary);
+    letter-spacing:4px; margin:6px 0; font-family:'SF Mono',Menlo,monospace;
+  }
+  .code-actions{display:flex; gap:8px; margin-top:10px}
+  .code-actions button{
+    flex:1; padding:10px; border-radius:8px; font-size:12px; font-weight:700;
+    border:1.5px solid var(--primary); background:#fff; color:var(--primary);
+  }
+  .code-actions .primary{background:var(--primary); color:#fff}
+
+  .stats{
+    display:flex; gap:8px; padding:16px; margin-top:8px;
+  }
+  .stat{
+    flex:1; background:#fff; border-radius:12px; padding:12px;
+    text-align:center; box-shadow:0 1px 3px rgba(0,0,0,.05);
+  }
+  .stat .num{font-size:20px; font-weight:800; color:var(--ink)}
+  .stat .lbl{font-size:10px; color:var(--muted); margin-top:2px;
+    text-transform:uppercase; letter-spacing:.4px;
+  }
+
+  .activity{
+    background:#fff; margin:0 16px; border-radius:14px;
+    padding:14px; box-shadow:0 1px 3px rgba(0,0,0,.05);
+  }
+  .activity h4{
+    margin:0 0 10px; font-size:13px; font-weight:700;
+  }
+  .activity-row{
+    display:flex; align-items:center; gap:10px; padding:8px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .activity-row:last-child{border-bottom:none}
+  .activity-row .who{flex:1; font-size:13px}
+  .activity-row .who small{display:block; color:var(--muted); font-size:11px}
+  .activity-row .pill{
+    font-size:10px; padding:3px 8px; border-radius:100px; font-weight:700;
+  }
+  .activity-row .pill.paid{background:#d1fae5; color:#065f46}
+  .activity-row .pill.pending{background:#fef3c7; color:#92400e}
+
+  .terms-link{
+    text-align:center; padding:16px; font-size:11px; color:var(--muted);
+  }
+  .terms-link a{color:var(--accent); text-decoration:none}
+
+  /* Mobile responsive */
+  @media(max-width:1180px){
+    .phone{width:340px; height:680px}
+  }
+  @media(max-width:780px){
+    .frames{flex-direction:column; align-items:center; gap:36px; padding:16px}
+    .phone{width:340px; height:680px}
+  }
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>AUSZ Refer &amp; Earn — In-App Mockup</h1>
+  <p>Three surfaces · slim Home banner · Settings row · Detail screen</p>
+</div>
+
+<div class="frames">
+
+  <!-- ============ HOME ============ -->
+  <div class="frame-wrap">
+    <div class="frame-label">Home</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span class="status-right">●●● ● 100%</span>
+        </div>
+        <div class="scroll">
+          <div class="app-bar">
+            <div class="top-row">
+              <div>
+                <div class="greet">Welcome back</div>
+                <div class="name">Sandy Chan</div>
+                <div class="credit">Credit AU$25</div>
+              </div>
+              <div class="avatar">SC</div>
+            </div>
+            <div class="next-booking">
+              <div class="label">Next booking</div>
+              <div class="when">Tomorrow 7:30 AM</div>
+              <div class="route">Double Bay → SYD T1</div>
+            </div>
+            <div class="cta-row">
+              <button class="btn-gold">New booking</button>
+              <button class="btn-outline">History</button>
+            </div>
+          </div>
+
+          <div class="banner-stack">
+            <div class="banner kin">
+              <div class="icon-circle" style="background:rgba(217,119,6,.2)">🤖</div>
+              <div class="body">
+                <strong>Ask Kin</strong>
+                <span>Your AI booking assistant</span>
+              </div>
+              <span class="chev">›</span>
+            </div>
+
+            <div class="banner sandra">
+              <div class="icon-circle" style="background:rgba(37,99,235,.2)">👩‍💼</div>
+              <div class="body">
+                <strong>Concierge — Sandra</strong>
+                <span>Restaurants, events, more</span>
+              </div>
+              <span class="chev">›</span>
+            </div>
+
+            <!-- ★ NEW: Refer & Earn slim banner (small column) ★ -->
+            <div class="banner refer">
+              <span class="pill-50">$50</span>
+              <div class="icon-circle">🎁</div>
+              <div class="body">
+                <strong>Refer &amp; earn AU$50</strong>
+                <span>Share code <b style="color:#FCD34D">SANDY5HX</b></span>
+              </div>
+              <span class="chev">›</span>
+            </div>
+
+            <div class="banner" style="background:#f0fdf4">
+              <div class="icon-circle" style="background:rgba(5,150,105,.2)">⭐</div>
+              <div class="body">
+                <strong>Join AuszCorp</strong>
+                <span>$9.90/mo · 5% off rides</span>
+              </div>
+              <span class="chev">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SETTINGS ============ -->
+  <div class="frame-wrap">
+    <div class="frame-label">Settings</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span class="status-right">●●● ● 100%</span>
+        </div>
+        <div class="scroll">
+          <div class="settings-header">
+            <div class="settings-back">‹</div>
+            <div class="av">SC</div>
+            <div class="nm">Sandy Chan</div>
+            <div class="ph">+61 4XX XXX 521</div>
+          </div>
+
+          <div class="section-title">Account</div>
+          <div class="section-card">
+            <div class="row">
+              <div class="ic blue">👤</div>
+              <div class="label">Profile</div>
+              <div class="chev">›</div>
+            </div>
+            <div class="row">
+              <div class="ic gray">🔒</div>
+              <div class="label">Change password</div>
+              <div class="chev">›</div>
+            </div>
+          </div>
+
+          <div class="section-title">Payment &amp; rewards</div>
+          <div class="section-card">
+            <div class="row">
+              <div class="ic blue">💳</div>
+              <div class="label">Payment methods</div>
+              <div class="chev">›</div>
+            </div>
+            <div class="row">
+              <div class="ic gold">💰</div>
+              <div class="label">Reward credit</div>
+              <div class="trail">AU$25</div>
+              <div class="chev">›</div>
+            </div>
+            <!-- ★ NEW: Refer & Earn settings row ★ -->
+            <div class="row refer-row">
+              <div class="ic" style="background:linear-gradient(135deg,#1E3A8A,#2563EB); color:#fff">🎁</div>
+              <div class="label">Refer &amp; earn</div>
+              <span class="badge-50">$50</span>
+              <div class="chev">›</div>
+            </div>
+            <div class="row">
+              <div class="ic green">⭐</div>
+              <div class="label">AuszCorp membership</div>
+              <div class="trail">Active</div>
+              <div class="chev">›</div>
+            </div>
+            <div class="row">
+              <div class="ic purple">👥</div>
+              <div class="label">Saved passengers</div>
+              <div class="chev">›</div>
+            </div>
+            <div class="row">
+              <div class="ic blue">🚘</div>
+              <div class="label">Driver preferences</div>
+              <div class="chev">›</div>
+            </div>
+          </div>
+
+          <div class="section-title">Support</div>
+          <div class="section-card">
+            <div class="row">
+              <div class="ic gray">💬</div>
+              <div class="label">Customer support</div>
+              <div class="chev">›</div>
+            </div>
+            <div class="row">
+              <div class="ic gray">🚪</div>
+              <div class="label">Log out</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ REFER DETAIL ============ -->
+  <div class="frame-wrap">
+    <div class="frame-label">Refer detail (tap-into)</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="status-bar" style="color:#fff">
+          <span>9:41</span>
+          <span class="status-right">●●● ● 100%</span>
+        </div>
+        <div class="scroll" style="padding-bottom:24px">
+          <div class="refer-hero">
+            <div class="refer-back">‹</div>
+            <div class="crown">🎁</div>
+            <h2>Refer a friend</h2>
+            <div class="amt">AU$50</div>
+            <p>Each friend who completes their first ride earns you both AU$50 in chauffeur credit.</p>
+          </div>
+
+          <div class="code-card">
+            <div class="label">Your code</div>
+            <div class="code">SANDY5HX</div>
+            <div class="code-actions">
+              <button>📋 Copy</button>
+              <button class="primary">📤 Share link</button>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="num">3</div>
+              <div class="lbl">Sent</div>
+            </div>
+            <div class="stat">
+              <div class="num">1</div>
+              <div class="lbl">Joined</div>
+            </div>
+            <div class="stat">
+              <div class="num" style="color:var(--gold)">$50</div>
+              <div class="lbl">Earned</div>
+            </div>
+          </div>
+
+          <div class="activity">
+            <h4>Recent</h4>
+            <div class="activity-row">
+              <div style="font-size:18px">👤</div>
+              <div class="who">Matthew W. <small>Joined · first ride done</small></div>
+              <span class="pill paid">+$50</span>
+            </div>
+            <div class="activity-row">
+              <div style="font-size:18px">👤</div>
+              <div class="who">Lisa T. <small>Signed up 2 days ago</small></div>
+              <span class="pill pending">Pending</span>
+            </div>
+            <div class="activity-row">
+              <div style="font-size:18px">📨</div>
+              <div class="who">Brian K. <small>Sent — not yet signed up</small></div>
+              <span class="pill pending">Sent</span>
+            </div>
+          </div>
+
+          <div class="terms-link">
+            Credit posts after friend's first trip completes.
+            <a href="#">Terms</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
