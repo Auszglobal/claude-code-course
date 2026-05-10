@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AUSZ Refer — Pick a blue</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    background:#f1f5f9; color:#0F172A; padding:24px 12px 48px;
+  }
+  .head{text-align:center; margin-bottom:24px}
+  .head h1{margin:0 0 6px; font-size:22px; font-weight:800}
+  .head p{margin:0; color:#64748b; font-size:14px}
+  .grid{
+    display:flex; gap:24px; justify-content:center; flex-wrap:wrap;
+    align-items:flex-start;
+  }
+  .col{display:flex; flex-direction:column; align-items:center; gap:10px}
+  .label{
+    font-size:13px; font-weight:800; letter-spacing:.5px;
+    text-transform:uppercase; color:#1E3A8A;
+  }
+  .swatch{
+    font-family:'SF Mono',Menlo,monospace; font-size:11px; color:#334155;
+  }
+  .phone{
+    width:300px; height:540px; background:#000; border-radius:38px;
+    padding:6px; box-shadow:0 8px 24px rgba(0,0,0,.18);
+  }
+  .screen{
+    width:100%; height:100%; background:#fff; border-radius:32px;
+    overflow:hidden; position:relative;
+  }
+  .notch{
+    position:absolute; top:6px; left:50%; transform:translateX(-50%);
+    width:96px; height:22px; background:#000; border-radius:0 0 14px 14px;
+    z-index:5;
+  }
+  .status{
+    height:30px; padding:6px 18px 0; display:flex;
+    justify-content:space-between; align-items:center; font-size:10px;
+    font-weight:700;
+  }
+  .scroll{height:calc(100% - 30px); overflow-y:auto}
+
+  .topbar{
+    display:flex; align-items:center; padding:8px 14px;
+    border-bottom:1px solid #e5e7eb; font-size:14px; font-weight:700;
+  }
+  .topbar .back{margin-right:10px; color:#0F172A}
+
+  /* HERO — variable bg */
+  .hero{
+    color:#fff; padding:18px 14px 28px; text-align:center;
+  }
+  .hero .gift{font-size:26px}
+  .hero h2{margin:4px 0 4px; font-size:15px; font-weight:700}
+  .hero .amt{
+    font-size:34px; font-weight:800; line-height:1;
+    color:#FCD34D; margin:4px 0 4px;
+  }
+  .hero p{margin:4px auto 0; max-width:230px; font-size:11px; opacity:.95}
+
+  /* CODE CARD */
+  .code-card{
+    margin:-16px 12px 0; background:#fff; border-radius:12px;
+    padding:14px; box-shadow:0 4px 12px rgba(0,0,0,.08); text-align:center;
+  }
+  .code-card .lbl{
+    font-size:9px; color:#94a3b8; letter-spacing:1px; font-weight:700;
+  }
+  .qr-fake{
+    width:90px; height:90px; margin:8px auto 6px;
+    background:
+      conic-gradient(#0F172A 25%, transparent 25% 50%, #0F172A 50% 75%, transparent 75%) 0 0/12px 12px,
+      #fff;
+    border:6px solid #fff; box-shadow:0 0 0 1px #cbd5e1;
+    border-radius:4px;
+  }
+  .code-card .code{
+    font-size:18px; font-weight:800; color:#1E3A8A;
+    letter-spacing:3px; font-family:'SF Mono',Menlo,monospace; margin:4px 0;
+  }
+  .code-actions{display:flex; gap:6px; margin-top:8px}
+  .code-actions button{
+    flex:1; padding:8px; border-radius:8px; font-size:11px; font-weight:700;
+    border:1.5px solid #1E3A8A; background:#fff; color:#1E3A8A;
+  }
+  .code-actions .pri{background:#1E3A8A; color:#fff}
+
+  .stats{display:flex; gap:6px; padding:10px 12px}
+  .stat{
+    flex:1; background:#fff; border-radius:10px; padding:8px;
+    text-align:center; box-shadow:0 1px 3px rgba(0,0,0,.05);
+  }
+  .stat .n{font-size:14px; font-weight:800}
+  .stat .l{font-size:8px; color:#94a3b8; letter-spacing:.5px;
+    text-transform:uppercase; font-weight:700; margin-top:1px}
+
+  /* Variant backgrounds */
+  .v1 .hero{background:#3B82F6}  /* blue-500 — current "too bright" */
+  .v2 .hero{background:#60A5FA}  /* blue-400 */
+  .v3 .hero{background:#93C5FD}  /* blue-300 */
+  .v4 .hero{background:#BFDBFE}  /* blue-200 */
+
+  /* On lighter shades, white text loses contrast — use dark instead */
+  .v3 .hero,.v4 .hero{color:#0F172A}
+  .v3 .hero .amt,.v4 .hero .amt{color:#1E3A8A}
+  .v3 .hero p,.v4 .hero p{color:#334155; opacity:1}
+
+  @media(max-width:680px){
+    .grid{gap:30px}
+  }
+</style>
+</head>
+<body>
+
+<div class="head">
+  <h1>Pick a blue</h1>
+  <p>Same hero · same content · 4 background shades. Tap your favourite to tell Kin.</p>
+</div>
+
+<div class="grid">
+
+  <!-- Variant 1: blue-500 #3B82F6 (current) -->
+  <div class="col v1">
+    <div class="label">A · Bright</div>
+    <div class="swatch">#3B82F6 (current — "too bright")</div>
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="status"><span>9:41</span><span>●● 100%</span></div>
+      <div class="scroll">
+        <div class="topbar"><span class="back">‹</span><span>Refer &amp; Earn</span></div>
+        <div class="hero">
+          <div class="gift">🎁</div>
+          <h2>Earn AU$50 per passenger</h2>
+          <div class="amt">+$50</div>
+          <p>Each new passenger you refer earns you AU$50 in your weekly settlement.</p>
+        </div>
+        <div class="code-card">
+          <div class="lbl">YOUR CODE · SHARE QR</div>
+          <div class="qr-fake"></div>
+          <div class="code">KINY7797</div>
+          <div class="code-actions">
+            <button>Copy</button><button class="pri">Share</button>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="n">7</div><div class="l">Shared</div></div>
+          <div class="stat"><div class="n">3</div><div class="l">Joined</div></div>
+          <div class="stat"><div class="n" style="color:#059669">$150</div><div class="l">Earned</div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Variant 2: blue-400 #60A5FA -->
+  <div class="col v2">
+    <div class="label">B · Sky</div>
+    <div class="swatch">#60A5FA (recommended)</div>
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="status"><span>9:41</span><span>●● 100%</span></div>
+      <div class="scroll">
+        <div class="topbar"><span class="back">‹</span><span>Refer &amp; Earn</span></div>
+        <div class="hero">
+          <div class="gift">🎁</div>
+          <h2>Earn AU$50 per passenger</h2>
+          <div class="amt">+$50</div>
+          <p>Each new passenger you refer earns you AU$50 in your weekly settlement.</p>
+        </div>
+        <div class="code-card">
+          <div class="lbl">YOUR CODE · SHARE QR</div>
+          <div class="qr-fake"></div>
+          <div class="code">KINY7797</div>
+          <div class="code-actions">
+            <button>Copy</button><button class="pri">Share</button>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="n">7</div><div class="l">Shared</div></div>
+          <div class="stat"><div class="n">3</div><div class="l">Joined</div></div>
+          <div class="stat"><div class="n" style="color:#059669">$150</div><div class="l">Earned</div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Variant 3: blue-300 #93C5FD (text becomes dark) -->
+  <div class="col v3">
+    <div class="label">C · Soft</div>
+    <div class="swatch">#93C5FD (dark text)</div>
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="status"><span>9:41</span><span>●● 100%</span></div>
+      <div class="scroll">
+        <div class="topbar"><span class="back">‹</span><span>Refer &amp; Earn</span></div>
+        <div class="hero">
+          <div class="gift">🎁</div>
+          <h2>Earn AU$50 per passenger</h2>
+          <div class="amt">+$50</div>
+          <p>Each new passenger you refer earns you AU$50 in your weekly settlement.</p>
+        </div>
+        <div class="code-card">
+          <div class="lbl">YOUR CODE · SHARE QR</div>
+          <div class="qr-fake"></div>
+          <div class="code">KINY7797</div>
+          <div class="code-actions">
+            <button>Copy</button><button class="pri">Share</button>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="n">7</div><div class="l">Shared</div></div>
+          <div class="stat"><div class="n">3</div><div class="l">Joined</div></div>
+          <div class="stat"><div class="n" style="color:#059669">$150</div><div class="l">Earned</div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Variant 4: blue-200 #BFDBFE (lightest, dark text) -->
+  <div class="col v4">
+    <div class="label">D · Pastel</div>
+    <div class="swatch">#BFDBFE (dark text)</div>
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="status"><span>9:41</span><span>●● 100%</span></div>
+      <div class="scroll">
+        <div class="topbar"><span class="back">‹</span><span>Refer &amp; Earn</span></div>
+        <div class="hero">
+          <div class="gift">🎁</div>
+          <h2>Earn AU$50 per passenger</h2>
+          <div class="amt">+$50</div>
+          <p>Each new passenger you refer earns you AU$50 in your weekly settlement.</p>
+        </div>
+        <div class="code-card">
+          <div class="lbl">YOUR CODE · SHARE QR</div>
+          <div class="qr-fake"></div>
+          <div class="code">KINY7797</div>
+          <div class="code-actions">
+            <button>Copy</button><button class="pri">Share</button>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="n">7</div><div class="l">Shared</div></div>
+          <div class="stat"><div class="n">3</div><div class="l">Joined</div></div>
+          <div class="stat"><div class="n" style="color:#059669">$150</div><div class="l">Earned</div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+</div>
+
+<div style="text-align:center; margin-top:36px; font-size:12px; color:#64748b;">
+  Note: variants C and D switch text to dark (white-on-light fails contrast).<br>
+  Gold $50 stays on white only when bg is dark enough — on light bg it shifts to navy.
+</div>
+
+</body>
+</html>
